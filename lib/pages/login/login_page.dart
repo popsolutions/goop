@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:goop/config/routes.dart';
+import 'package:goop/pages/components/goop_button.dart';
+import 'package:goop/pages/components/goop_colors.dart';
+import 'package:goop/pages/components/goop_images.dart';
 import 'package:goop/pages/components/goop_text_form_field.dart';
 
 class LoginPage extends StatefulWidget {
@@ -10,20 +15,51 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context).size;
+
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
       child: Scaffold(
         appBar: AppBar(),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              GoopTextFormField(
-                hintText: "E-mail",
+        body: Center(
+          child: SingleChildScrollView(
+            child: Container(
+              width: mediaQuery.width * .8,
+              child: Column(
+                children: [
+                  Container(
+                    height: 190,
+                    child: SvgPicture.asset(GoopImages.login),
+                  ),
+                  GoopTextFormField(
+                    hintText: "E-mail",
+                  ),
+                  GoopTextFormField(
+                    hintText: "Senha",
+                  ),
+                  TextButton(
+                    child: Text(
+                      'Esqueci minha senha',
+                      style: TextStyle(
+                        fontSize: 16,
+                        decoration: TextDecoration.underline,
+                        color: GoopColors.darkBlue,
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        Routes.recover_password,
+                      );
+                    },
+                  ),
+                  GoopButton(
+                    text: 'Entrar',
+                    action: () {},
+                  ),
+                ],
               ),
-              GoopTextFormField(
-                hintText: "Senha",
-              ),
-            ],
+            ),
           ),
         ),
       ),
