@@ -39,7 +39,9 @@ class InitialPage extends StatelessWidget {
               buttonColor: Colors.white,
               textColor: GoopColors.red,
               borderColor: GoopColors.red,
-              action: () {},
+              action: () {
+                Navigator.pushNamed(context, Routes.register);
+              },
             ),
             GoopButton(
               text: 'Entrar com Facebook',
