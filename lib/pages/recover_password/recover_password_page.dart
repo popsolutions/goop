@@ -9,7 +9,7 @@ class RecoverPasswordPage extends StatelessWidget {
   Widget build(BuildContext context) {
     TextStyle style(double fontSize) {
       return TextStyle(
-        fontFamily: 'Roboto',
+        fontFamily: 'RobotoCondensed',
         fontSize: fontSize,
         fontWeight: FontWeight.bold,
       );

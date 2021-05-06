@@ -56,7 +56,13 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   GoopButton(
                     text: 'Entrar',
-                    action: () {},
+                    action: () {
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        Routes.home,
+                        (route) => false,
+                      );
+                    },
                   ),
                 ],
               ),

@@ -19,7 +19,7 @@ class _RegisterPageState extends State<RegisterPage> {
       appBar: AppBar(
         title: Container(
           width: 100,
-          child: SvgPicture.asset(GoopImages.cadastro),
+          //child: SvgPicture.asset(GoopImages.cadastro),
         ),
         centerTitle: true,
       ),
