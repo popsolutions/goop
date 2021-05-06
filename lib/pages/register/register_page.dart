@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:goop/pages/components/goop_back.dart';
 import 'package:goop/pages/components/goop_button.dart';
 import 'package:goop/pages/components/goop_colors.dart';
 import 'package:goop/pages/components/goop_form_register.dart';
@@ -17,9 +18,11 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: GoopBack(),
         title: Container(
           width: 100,
-          //child: SvgPicture.asset(GoopImages.cadastro),
+          child: SvgPicture.asset(GoopImages.cadastro),
         ),
         centerTitle: true,
       ),

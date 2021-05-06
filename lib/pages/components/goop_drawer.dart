@@ -27,22 +27,39 @@ class GoopDrawer extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              DrawerHeader(
-                padding: EdgeInsets.all(0),
-                decoration: BoxDecoration(
-                  color: GoopColors.red,
-                ),
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CircleAvatar(
-                        minRadius: 40,
-                        child: Icon(Icons.person),
-                      ),
-                      Text('Marília Costa'),
-                      Text('Missões Cumpridas: 0'),
-                    ],
+              Container(
+                height: MediaQuery.of(context).size.height * .4,
+                child: DrawerHeader(
+                  padding: EdgeInsets.all(0),
+                  decoration: BoxDecoration(
+                    color: GoopColors.red,
+                  ),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircleAvatar(
+                          minRadius: 40,
+                          child: Icon(Icons.person),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          'Marília Costa',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        Text(
+                          'Missões Cumpridas: 0',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

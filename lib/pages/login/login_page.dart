@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:goop/config/routes.dart';
+import 'package:goop/pages/components/goop_back.dart';
 import 'package:goop/pages/components/goop_button.dart';
 import 'package:goop/pages/components/goop_colors.dart';
 import 'package:goop/pages/components/goop_images.dart';
@@ -15,16 +16,17 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context).size;
-
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: GoopBack(),
+        ),
         body: Center(
           child: SingleChildScrollView(
             child: Container(
-              width: mediaQuery.width * .8,
+              width: MediaQuery.of(context).size.width * .8,
               child: Column(
                 children: [
                   Container(

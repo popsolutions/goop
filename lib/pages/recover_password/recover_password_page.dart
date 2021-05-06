@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:goop/pages/components/goop_back.dart';
 import 'package:goop/pages/components/goop_button.dart';
 import 'package:goop/pages/components/goop_images.dart';
 import 'package:goop/pages/components/goop_text_form_field.dart';
@@ -16,7 +17,10 @@ class RecoverPasswordPage extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: GoopBack(),
+      ),
       body: Center(
         child: Container(
           width: MediaQuery.of(context).size.width * .8,
