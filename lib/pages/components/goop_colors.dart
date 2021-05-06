@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class GoopColors {
   static const neutralGrey = Color(0xFFF0F5F7);
   static const grey = Color(0xFF1C1B1B);
+  static const textGrey = Color(0xFF808B96);
   static const pink = Color(0xFFAE007A);
   static const purple = Color(0xFF502784);
   static const orange = Color(0xFFEC421E);

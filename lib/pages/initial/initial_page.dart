@@ -27,6 +27,7 @@ class InitialPage extends StatelessWidget {
                 ),
               ],
             ),
+            SizedBox(height: 30),
             GoopButton(
               text: 'Login',
               action: () => Navigator.pushNamed(
@@ -49,8 +50,7 @@ class InitialPage extends StatelessWidget {
               action: () {},
             ),
             Container(
-              margin: EdgeInsets.only(top: 30),
-              height: 45,
+              margin: EdgeInsets.only(top: 40),
               width: 100,
               child: SvgPicture.asset(GoopImages.charisma),
             ),

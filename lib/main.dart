@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
           ),
           fillColor: GoopColors.neutralGrey,
           hintStyle: TextStyle(
-            color: GoopColors.grey,
+            color: GoopColors.textGrey,
             fontSize: 18,
             fontFamily: 'Roboto',
             fontWeight: FontWeight.w600,

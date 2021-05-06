@@ -28,6 +28,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 children: [
                   Container(
+                    margin: EdgeInsets.only(bottom: 30),
                     height: 190,
                     child: SvgPicture.asset(GoopImages.login),
                   ),
