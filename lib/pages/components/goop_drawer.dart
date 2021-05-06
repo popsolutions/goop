@@ -108,7 +108,9 @@ class GoopDrawer extends StatelessWidget {
                       goopTile(
                         title: 'Configurações',
                         img: GoopImages.settings,
-                        action: () {},
+                        action: () {
+                          Navigator.pushNamed(context, Routes.settings);
+                        },
                       ),
                       SizedBox(height: 20),
                       goopTile(
