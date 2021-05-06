@@ -30,12 +30,25 @@ class SettingsPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Center(
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: SvgPicture.asset(
-                      GoopImages.avatar,
-                      height: 150,
-                    ),
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {},
+                        child: SvgPicture.asset(
+                          GoopImages.avatar,
+                          height: 150,
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        'Marília',
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: GoopColors.red,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(height: 30),

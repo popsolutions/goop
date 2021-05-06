@@ -38,9 +38,9 @@ class GoopDrawer extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        CircleAvatar(
-                          minRadius: 40,
-                          child: Icon(Icons.person),
+                        SvgPicture.asset(
+                          GoopImages.avatar,
+                          height: 150,
                         ),
                         SizedBox(height: 10),
                         Text(
