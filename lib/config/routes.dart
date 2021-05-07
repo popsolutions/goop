@@ -6,4 +6,6 @@ class Routes {
   static const String recover_password = 'recover_password';
   static const String home = 'home';
   static const String settings = 'settings';
+  static const String mission_completed = 'mission_completed';
+  static const String mission_home = 'mission_home';
 }

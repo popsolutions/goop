@@ -14,4 +14,7 @@ class GoopImages {
   static const settings = 'assets/images/settings.svg';
   static const quit = 'assets/images/quit.svg';
   static const close = 'assets/images/close.svg';
+  static const mission_completed = 'assets/images/mission_completed.svg';
+  static const rocket_completed = 'assets/images/rocket_completed.svg';
+  static const msg_completed = 'assets/images/msg_completed.svg';
 }

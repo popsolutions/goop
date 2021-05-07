@@ -75,7 +75,12 @@ class GoopDrawer extends StatelessWidget {
                         Flexible(
                           child: GoopButton(
                             text: 'Missões',
-                            action: () {},
+                            action: () {
+                              Navigator.pushNamed(
+                                context,
+                                Routes.mission_completed,
+                              );
+                            },
                           ),
                         ),
                         SizedBox(width: 20),

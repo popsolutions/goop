@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
           filled: true,
           contentPadding: const EdgeInsets.only(
             left: 23,
-            top: 25,
+            top: 25, 
             bottom: 25,
           ),
           fillColor: GoopColors.neutralGrey,
