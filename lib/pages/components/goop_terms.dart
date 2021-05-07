@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:goop/utils/goop_colors.dart';
-import 'package:goop/utils/goop_images.dart';
+import 'goop_close.dart';
 
 class GoopTerms extends StatelessWidget {
   @override
@@ -23,25 +21,7 @@ class GoopTerms extends StatelessWidget {
               fontWeight: FontWeight.w900,
             ),
           ),
-          GestureDetector(
-            onTap: () => Navigator.pop(context),
-            child: Stack(
-              alignment: Alignment(0, 0),
-              children: [
-                SvgPicture.asset(
-                  GoopImages.close,
-                  width: 40,
-                ),
-                Text(
-                  'X',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w900,
-                    color: GoopColors.red,
-                  ),
-                )
-              ],
-            ),
-          ),
+          GoopClose(),
         ],
       ),
       content: Text(

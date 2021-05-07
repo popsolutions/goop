@@ -36,6 +36,7 @@ class GoopButton extends StatelessWidget {
           style: TextStyle(
             color: textColor,
             fontSize: 18,
+            fontWeight: FontWeight.bold
           ),
         ),
         onPressed: action,

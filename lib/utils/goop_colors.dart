@@ -14,5 +14,6 @@ class GoopColors {
   static const neutralGreen = Color(0xFF199685);
   static const blue = Color(0xFF0061AC);
   static const red = Color(0xFFDF0047);
+  static const redSplash = Color(0xFFDF0D47);
   static const darkBlue = Color(0xFF20243A);
 }

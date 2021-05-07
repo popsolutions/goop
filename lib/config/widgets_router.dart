@@ -7,6 +7,7 @@ import 'package:goop/pages/recover_password_page/recover_password_page.dart';
 import 'package:goop/pages/register_page/register_page.dart';
 import 'package:goop/pages/settings_page/settings_page.dart';
 import 'package:goop/pages/splash_page/splash_page.dart';
+import 'package:goop/pages/wallet_page/wallet_page.dart';
 
 class WidgetsRouter {
   static final routes = {
@@ -18,5 +19,6 @@ class WidgetsRouter {
     Routes.home: (_) => HomePage(),
     Routes.settings: (_) => SettingsPage(),
     Routes.mission_completed: (context) => MissionCompletedPage(),
+    Routes.wallet: (context) => WalletPage(),
   };
 }

@@ -65,11 +65,8 @@ class GoopDrawer extends StatelessWidget {
               ),
               Column(
                 children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 15,
-                      vertical: 30,
-                    ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: Row(
                       children: [
                         Flexible(
@@ -98,7 +95,12 @@ class GoopDrawer extends StatelessWidget {
                       goopTile(
                         title: 'Carteira',
                         img: GoopImages.wallet,
-                        action: () {},
+                        action: () {
+                          Navigator.pushNamed(
+                            context,
+                            Routes.wallet,
+                          );
+                        },
                       ),
                       goopTile(
                         title: 'Minha Conta',

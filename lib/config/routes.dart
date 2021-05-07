@@ -8,4 +8,5 @@ class Routes {
   static const String settings = 'settings';
   static const String mission_completed = 'mission_completed';
   static const String mission_home = 'mission_home';
+  static const String wallet = 'wallet';
 }

@@ -13,13 +13,20 @@ class HomePage extends StatelessWidget {
         actions: [
           Container(
             width: 45,
-            margin: EdgeInsets.only(right: 20),
+            margin: const EdgeInsets.only(right: 20),
             child: SvgPicture.asset(GoopImages.red_smile),
           ),
         ],
       ),
       drawer: GoopDrawer(),
-      body: Container(),
+      body: Container(
+        height: double.infinity,
+        width: double.infinity,
+        child: Image.asset( //DEVERÁ SER SUBSTITUÍDO PELO MAPA REAL
+          GoopImages.map,
+          fit: BoxFit.cover, 
+        ),
+      ),
     );
   }
 }

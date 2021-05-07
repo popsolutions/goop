@@ -10,19 +10,27 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+      SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+      ),
     );
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        splashColor: Color(0xFFDF0D47),
+        textTheme: TextTheme(
+          headline1: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ),
+        splashColor: GoopColors.redSplash,
         scaffoldBackgroundColor: Colors.white,
         appBarTheme: AppBarTheme(elevation: 0),
         inputDecorationTheme: const InputDecorationTheme(
           filled: true,
           contentPadding: const EdgeInsets.only(
             left: 23,
-            top: 25, 
+            top: 25,
             bottom: 25,
           ),
           fillColor: GoopColors.neutralGrey,
@@ -34,7 +42,9 @@ class MyApp extends StatelessWidget {
           ),
           border: OutlineInputBorder(
             borderSide: BorderSide.none,
-            borderRadius: BorderRadius.all(Radius.circular(55)),
+            borderRadius: BorderRadius.all(
+              Radius.circular(55),
+            ),
           ),
         ),
         primaryColor: Colors.white,
