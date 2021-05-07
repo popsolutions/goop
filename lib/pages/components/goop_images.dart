@@ -13,4 +13,5 @@ class GoopImages {
   static const faq = 'assets/images/faq.svg';
   static const settings = 'assets/images/settings.svg';
   static const quit = 'assets/images/quit.svg';
+  static const close = 'assets/images/close.svg';
 }

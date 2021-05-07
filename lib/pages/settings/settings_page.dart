@@ -4,6 +4,7 @@ import 'package:goop/pages/components/goop_back.dart';
 import 'package:goop/pages/components/goop_button.dart';
 import 'package:goop/pages/components/goop_colors.dart';
 import 'package:goop/pages/components/goop_images.dart';
+import 'package:goop/pages/components/goop_terms.dart';
 import 'package:goop/pages/components/goop_text_form_field.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -55,6 +56,7 @@ class SettingsPage extends StatelessWidget {
                 GoopTextFormField(hintText: 'E-mail'),
                 GoopTextFormField(hintText: 'Celular'),
                 GoopTextFormField(hintText: 'PIX'),
+                SizedBox(height: 15),
                 TextButton(
                   child: Text(
                     'Sobre o GoOp',
@@ -67,7 +69,12 @@ class SettingsPage extends StatelessWidget {
                     'Termos de Uso',
                     style: style(),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (_) => GoopTerms(),
+                    );
+                  },
                 ),
                 TextButton(
                   child: Text(
