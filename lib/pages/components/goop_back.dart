@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'goop_images.dart';
+import 'package:goop/utils/goop_images.dart';
 
 class GoopBack extends StatelessWidget {
   @override

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goop/pages/components/goop_back.dart';
 import 'package:goop/pages/components/goop_button.dart';
-import 'package:goop/pages/components/goop_colors.dart';
-import 'package:goop/pages/components/goop_images.dart';
 import 'package:goop/pages/components/goop_terms.dart';
 import 'package:goop/pages/components/goop_text_form_field.dart';
+import 'package:goop/utils/goop_colors.dart';
+import 'package:goop/utils/goop_images.dart';
 
 class SettingsPage extends StatelessWidget {
   style() {

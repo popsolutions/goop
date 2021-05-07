@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:goop/config/routes.dart';
 import 'package:goop/config/widgets_router.dart';
-import 'package:goop/pages/components/goop_colors.dart';
+import 'package:goop/utils/goop_colors.dart';
 
 void main() => runApp(MyApp());
 

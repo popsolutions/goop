@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:goop/pages/components/goop_colors.dart';
 import 'package:goop/pages/components/goop_drawer.dart';
-import 'package:goop/pages/components/goop_images.dart';
+import 'package:goop/utils/goop_colors.dart';
+import 'package:goop/utils/goop_images.dart';
 
 class HomePage extends StatelessWidget {
   @override

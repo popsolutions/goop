@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:goop/config/routes.dart';
-import '../components/goop_colors.dart';
-import '../components/goop_images.dart';
+import 'package:goop/utils/goop_colors.dart';
+import 'package:goop/utils/goop_images.dart';
 
 class SplashPage extends StatelessWidget {
   @override

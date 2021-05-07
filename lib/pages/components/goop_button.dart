@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:goop/pages/components/goop_colors.dart';
+import 'package:goop/utils/goop_colors.dart';
 
 class GoopButton extends StatelessWidget {
   final String text;

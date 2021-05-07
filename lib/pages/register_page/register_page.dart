@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:goop/pages/components/goop_back.dart';
 import 'package:goop/pages/components/goop_button.dart';
-import 'package:goop/pages/components/goop_colors.dart';
 import 'package:goop/pages/components/goop_form_register.dart';
-import 'package:goop/pages/components/goop_images.dart';
+import 'package:goop/utils/goop_colors.dart';
+import 'package:goop/utils/goop_images.dart';
 
 class RegisterPage extends StatefulWidget {
   @override

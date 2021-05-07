@@ -3,20 +3,22 @@ import 'package:flutter_svg/svg.dart';
 import 'package:goop/config/routes.dart';
 import 'package:goop/pages/components/goop_back.dart';
 import 'package:goop/pages/components/goop_button.dart';
-import 'package:goop/pages/components/goop_images.dart';
+import 'package:goop/utils/goop_images.dart';
 
 class MissionCompletedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 100,
+        toolbarHeight: 80,
         centerTitle: true,
         automaticallyImplyLeading: false,
         leading: GoopBack(),
         title: Container(
           height: 80,
-          child: SvgPicture.asset(GoopImages.mission_completed),
+          child: SvgPicture.asset(
+            GoopImages.mission_completed,
+          ),
         ),
       ),
       body: Center(
@@ -26,17 +28,24 @@ class MissionCompletedPage extends StatelessWidget {
             children: [
               Container(
                 height: 250,
-                child: SvgPicture.asset(GoopImages.rocket_completed),
+                child: SvgPicture.asset(
+                  GoopImages.rocket_completed,
+                ),
               ),
               Container(
                 height: 100,
-                child: SvgPicture.asset(GoopImages.msg_completed),
+                child: SvgPicture.asset(
+                  GoopImages.msg_completed,
+                ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 30),
               GoopButton(
                 text: 'Home',
                 action: () {
-                  Navigator.pushNamed(context, Routes.home);
+                  Navigator.pushNamed(
+                    context,
+                    Routes.home,
+                  );
                 },
               ),
             ],
