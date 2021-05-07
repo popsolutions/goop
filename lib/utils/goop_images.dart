@@ -23,4 +23,5 @@ class GoopImages {
   static const money = '$_base/money.svg';
   static const available_balance = '$_base/available_balance.svg';
   static const pix = '$_base/pix.svg';
+  static const draw_money = '$_base/draw_money.svg';
 }
