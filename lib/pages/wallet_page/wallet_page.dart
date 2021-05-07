@@ -10,7 +10,7 @@ import 'package:goop/pages/components/goop_wallet_verification.dart';
 import 'package:goop/utils/goop_images.dart';
 
 class WalletPage extends StatelessWidget {
-  final bool isCompleted = true; //ALTERNAR PARA MUDAR TELA
+  final bool isCompleted = false; //ALTERNAR PARA MUDAR TELA
 
   @override
   Widget build(BuildContext context) {
