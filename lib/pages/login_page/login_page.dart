@@ -39,6 +39,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   GoopTextFormField(
                     hintText: "Senha",
+                    obscureText: true,
                   ),
                   TextButton(
                     child: Text(

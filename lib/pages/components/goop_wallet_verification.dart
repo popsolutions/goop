@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:goop/pages/components/goop_close.dart';
 import 'package:goop/utils/goop_colors.dart';
 
 class GoopWalletVerification extends StatelessWidget {

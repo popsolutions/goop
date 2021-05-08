@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 
 class GoopTextFormField extends StatelessWidget {
   final String hintText;
+  final bool obscureText;
 
   const GoopTextFormField({
     Key key,
     this.hintText,
+    this.obscureText = false,
   }) : super(key: key);
 
   @override
@@ -13,6 +15,7 @@ class GoopTextFormField extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(bottom: 20),
       child: TextFormField(
+        obscureText: obscureText,
         decoration: InputDecoration(
           hintText: hintText,
         ),
