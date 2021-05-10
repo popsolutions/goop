@@ -24,6 +24,7 @@ class GoopDrawer extends StatelessWidget {
         bottomRight: Radius.circular(35),
       ),
       child: Drawer(
+        
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -66,7 +67,7 @@ class GoopDrawer extends StatelessWidget {
               Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    padding: EdgeInsets.symmetric(horizontal: 15),
                     child: Row(
                       children: [
                         Flexible(
@@ -75,7 +76,7 @@ class GoopDrawer extends StatelessWidget {
                             action: () {
                               Navigator.pushNamed(
                                 context,
-                                Routes.mission_completed,
+                                Routes.mission_home,
                               );
                             },
                           ),
@@ -94,7 +95,7 @@ class GoopDrawer extends StatelessWidget {
                     children: [
                       goopTile(
                         title: 'Carteira',
-                        img: GoopImages.wallet,
+                        img: GoopImages.wallet_red, 
                         action: () {
                           Navigator.pushNamed(
                             context,

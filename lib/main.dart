@@ -26,9 +26,9 @@ class MyApp extends StatelessWidget {
         splashColor: GoopColors.redSplash,
         scaffoldBackgroundColor: Colors.white,
         appBarTheme: AppBarTheme(elevation: 0),
-        inputDecorationTheme: const InputDecorationTheme(
+        inputDecorationTheme: InputDecorationTheme(
           filled: true,
-          contentPadding: const EdgeInsets.only(
+          contentPadding: EdgeInsets.only(
             left: 23,
             top: 25,
             bottom: 25,
