@@ -1,6 +1,7 @@
 class GoopImages {
   static const _base = 'assets/images';
   static const logo = '$_base/logo.svg';
+  static const logo_white = '$_base/logo_white.svg';
   static const initial = '$_base/initial.svg';
   static const login = '$_base/login.svg';
   static const recover_password = '$_base/recover_password.svg';
