@@ -15,6 +15,7 @@ class GoopTextFormField extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(bottom: 20),
       child: TextFormField(
+        textAlign: TextAlign.center,
         obscureText: obscureText,
         decoration: InputDecoration(
           hintText: hintText,

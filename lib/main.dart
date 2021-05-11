@@ -10,9 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-      ),
+      SystemUiOverlayStyle(statusBarColor: Colors.transparent),
     );
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -21,6 +19,16 @@ class MyApp extends StatelessWidget {
           headline1: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
+          ),
+          headline2: TextStyle(
+            color: Colors.deepPurple[900],
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+          headline3: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+            fontSize: 20,
           ),
         ),
         splashColor: GoopColors.redSplash,

@@ -1,14 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:goop/config/routes.dart';
 import 'package:goop/models/info.dart';
-import 'package:goop/pages/components/goop_back.dart';
 import 'package:goop/pages/components/goop_button.dart';
-import 'package:goop/pages/components/goop_card.dart';
+import 'package:goop/pages/components/goop_mission_body.dart';
+import '../components/goop_back.dart';
 import 'package:goop/utils/goop_images.dart';
 
-class MissionAboutPage extends StatelessWidget {
+class MissionAboutPage extends StatefulWidget {
+  @override
+  _MissionAboutPageState createState() => _MissionAboutPageState();
+}
+
+enum MissionStatus {
+  Completed,
+  InProgress,
+  Closed,
+}
+
+class _MissionAboutPageState extends State<MissionAboutPage> {
+  var status = MissionStatus.Closed; //ALTERAR PARA MUDAR TELA
+
+  situacional({ifCompleted, ifInProgress, ifClosed}) {
+    if (status == MissionStatus.Completed) {
+      return ifCompleted;
+    } else if (status == MissionStatus.InProgress) {
+      return ifInProgress;
+    } else {
+      return ifClosed;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final TextStyle theme = Theme.of(context).textTheme.headline2;
     final InfoMission info = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
@@ -16,56 +41,91 @@ class MissionAboutPage extends StatelessWidget {
         automaticallyImplyLeading: false,
         leading: GoopBack(),
         title: Container(
-          height: 40,
+          height: status == MissionStatus.Completed ? 40 : 60,
           child: SvgPicture.asset(
-            GoopImages.mission_about,
+            status == MissionStatus.Completed
+                ? GoopImages.mission_about
+                : GoopImages.mission_in_progress,
           ),
         ),
       ),
       body: Center(
-        child: Column(
-          children: [
-            SvgPicture.asset(
-              GoopImages.rocket,
-              width: MediaQuery.of(context).size.width * .6,
-            ),
-            GoopCard(
-              info: info,
-              border: Colors.transparent,
-              showPrinceAndTime: false,
-            ),
-            Text('Como executar a missão:'),
-            Container(
-              width: MediaQuery.of(context).size.width * .7,
-              child: Divider(
-                color: Colors.deepPurple,
-              ),
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width * .8,
-              child: ListTile(
-                leading: Icon(Icons.star_border),
-                title: TextButton(
-                  child: Text('Tirar foto da gôndola de cervejas'),
-                  onPressed: () {},
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              GoopMissionBody(info: info),
+              situacional(
+                ifCompleted: Text(
+                  '3 horas',
+                  style: theme,
+                ),
+                ifInProgress: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      GoopImages.clock,
+                      height: 60,
+                    ),
+                    SizedBox(width: 20),
+                    Text(
+                      '2:08:00',
+                      style: theme,
+                    ),
+                  ],
+                ),
+                ifClosed: Text(
+                  'Tempo Esgotado',
+                  style: theme,
                 ),
               ),
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width * .8,
-              child: ListTile(
-                leading: Icon(Icons.star_border),
-                title: TextButton(
-                  child: Text('Comparativo de preços'),
-                  onPressed: () {},
+              SizedBox(height: 10),
+              situacional(
+                ifCompleted: Column(
+                  children: [
+                    Text(
+                      'Prêmio da missão:',
+                      style: theme,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * .7,
+                      child: Divider(
+                        color: Colors.deepPurple,
+                      ),
+                    ),
+                    Text(
+                      'R\$ 15,00',
+                      style: theme,
+                    ),
+                  ],
+                ),
+                ifInProgress: Container(),
+                ifClosed: Container(),
+              ),
+              SizedBox(height: 20),
+              situacional(
+                ifCompleted: Container(
+                  margin: EdgeInsets.only(bottom: 30),
+                  child: GoopButton(
+                    text: 'Iniciar',
+                    action: () {},
+                  ),
+                ),
+                ifInProgress: Container(),
+                ifClosed: Container(
+                  margin: EdgeInsets.only(bottom: 30),
+                  child: GoopButton(
+                    text: 'Enviar',
+                    action: () {
+                      Navigator.pushNamed(
+                        context,
+                        Routes.mission_completed,
+                      );
+                    },
+                  ),
                 ),
               ),
-            ),
-            GoopButton(
-              text: 'Inciar',
-              action: () {},
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

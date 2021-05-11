@@ -44,7 +44,7 @@ class MissionCompletedPage extends StatelessWidget {
                 action: () {
                   Navigator.pushNamed(
                     context,
-                    Routes.home,
+                    Routes.white_splash,
                   );
                 },
               ),

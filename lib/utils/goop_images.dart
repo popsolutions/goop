@@ -30,4 +30,8 @@ class GoopImages {
   static const pix = '$_base/pix.svg';
   static const draw_money = '$_base/draw_money.svg';
   static const local = '$_base/local.svg';
+  static const mission_in_progress = '$_base/mission_in_progress.svg';
+  static const price_comparison = '$_base/price_comparison.svg';
+  static const questions = '$_base/questions.svg';
+  static const clock = '$_base/clock.svg';
 }

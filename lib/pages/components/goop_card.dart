@@ -39,7 +39,7 @@ class GoopCard extends StatelessWidget {
           children: [
             Text(
               info.title,
-              style: Theme.of(context).textTheme.headline1,
+              style: Theme.of(context).textTheme.headline3,
             ),
             Text(
               info.address,

@@ -15,9 +15,7 @@ class MissionHomePage extends StatelessWidget {
         centerTitle: true,
         title: Container(
           height: 40,
-          child: SvgPicture.asset(
-            GoopImages.mission,
-          ),
+          child: SvgPicture.asset(GoopImages.mission),
         ),
       ),
       drawer: GoopDrawer(),
