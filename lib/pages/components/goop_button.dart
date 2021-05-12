@@ -7,6 +7,7 @@ class GoopButton extends StatelessWidget {
   final Color buttonColor;
   final Color textColor;
   final Color borderColor;
+  final bool isLoading;
 
   const GoopButton({
     Key key,
@@ -15,6 +16,7 @@ class GoopButton extends StatelessWidget {
     this.buttonColor = GoopColors.red,
     this.textColor = GoopColors.neutralGrey,
     this.borderColor = Colors.transparent,
+    this.isLoading = false,
   }) : super(key: key);
 
   @override
@@ -31,14 +33,15 @@ class GoopButton extends StatelessWidget {
             side: BorderSide(color: borderColor),
           ),
         ),
-        child: Text(
-          text,
-          style: TextStyle(
-            color: textColor,
-            fontSize: 18,
-            fontWeight: FontWeight.bold
-          ),
-        ),
+        child: isLoading
+            ? CircularProgressIndicator()
+            : Text(
+                text,
+                style: TextStyle(
+                    color: textColor,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+              ),
         onPressed: action,
       ),
     );
