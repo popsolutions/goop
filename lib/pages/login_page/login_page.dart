@@ -28,7 +28,11 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     final odoo = Odoo();
     _loginController = LoginController(
-        LoginFacade(LoginServiceImpl(odoo), UserServiceImpl(odoo)));
+      LoginFacade(
+        LoginServiceImpl(odoo),
+        UserServiceImpl(odoo),
+      ),
+    );
     _loginReaction =
         reaction((_) => _loginController.loginRequest.status, _onLoginRequest);
     super.initState();
@@ -107,15 +111,17 @@ class _LoginPageState extends State<LoginPage> {
                       );
                     },
                   ),
-                  Observer(builder: (_) {
-                    return GoopButton(
-                      isLoading: _loginController.isLoading,
-                      text: 'Entrar',
-                      action: _loginController.canNext
-                          ? _loginController.submit
-                          : null,
-                    );
-                  }),
+                  Observer(
+                    builder: (_) {
+                      return GoopButton(
+                        isLoading: _loginController.isLoading,
+                        text: 'Entrar',
+                        action: _loginController.canNext
+                            ? _loginController.submit
+                            : null,
+                      );
+                    },
+                  ),
                 ],
               ),
             ),

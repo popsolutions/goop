@@ -4,8 +4,6 @@ import '../../config/exceptions/authentication_exception.dart';
 import '../../config/http/odoo_api.dart';
 import '../../models/login_dto.dart';
 import '../../models/login_result.dart';
-import '../../models/login_result.dart';
-import '../../models/login_result.dart';
 
 class LoginServiceImpl {
   final Odoo _odoo;

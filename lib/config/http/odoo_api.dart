@@ -24,8 +24,8 @@ class Odoo {
     return _serverURL + path;
   }
 
-  setSessionId(String session_id) {
-    _sessionId = session_id;
+  setSessionId(String sessionIid) {
+    _sessionId = sessionIid;
   }
 
   initOdoo() async {
@@ -193,7 +193,7 @@ class Odoo {
     _headers["Content-type"] = "application/json; charset=UTF-8";
     _headers["Cookie"] = prefs.getString("session");
     print("------------------------------------------->>>");
-    print("REQUEST: ${url}");
+    print("REQUEST: $url");
     print("------------------------------------------->>>");
     final response =
         await _client.post(Uri.parse(url), body: body, headers: _headers);
