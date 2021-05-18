@@ -1,5 +1,4 @@
 import 'package:goop/models/login_dto.dart';
-import 'package:goop/models/login_result.dart';
 import 'package:goop/services/login/login_facade_impl.dart';
 import 'package:mobx/mobx.dart';
 
