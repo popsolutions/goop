@@ -11,20 +11,18 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  uuid:
   shared_preferences:
+  uuid:
   http:
   rxdart:
-  mobx:
   flutter_mobx:
+  mobx:
   data_connection_checker:
   cpf_cnpj_validator:
   flutter_svg:
   image_picker:
-  location:
-  get_it:
+  provider:
   latlng:
-
   cupertino_icons: ^1.0.2
 
 dev_dependencies:

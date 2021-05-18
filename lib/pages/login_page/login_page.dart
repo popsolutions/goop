@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:goop/config/app/authentication_controller.dart';
 import 'package:goop/config/http/odoo_api.dart';
 import 'package:goop/config/routes.dart';
 import 'package:goop/pages/components/goop_back.dart';
@@ -13,6 +14,7 @@ import 'package:goop/services/login/login_facade_impl.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
 import 'package:mobx/mobx.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key key}) : super(key: key);
@@ -21,6 +23,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  AuthenticationController _authenticationController;
   LoginController _loginController;
   ReactionDisposer _loginReaction;
 
@@ -36,6 +39,13 @@ class _LoginPageState extends State<LoginPage> {
     _loginReaction =
         reaction((_) => _loginController.loginRequest.status, _onLoginRequest);
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    _authenticationController =
+        Provider.of<AuthenticationController>(context, listen: false);
+    super.didChangeDependencies();
   }
 
   @override
@@ -57,6 +67,8 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _onSuccess() {
+    final user = _loginController.loginRequest.value;
+    _authenticationController.authenticate(user);
     Navigator.pushNamedAndRemoveUntil(
       context,
       Routes.home,

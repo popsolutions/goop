@@ -6,6 +6,9 @@ import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
 
 class GoopDrawer extends StatelessWidget {
+  final String name;
+
+  const GoopDrawer({Key key, this.name}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     ListTile goopTile({String title, img, action}) {
@@ -24,7 +27,6 @@ class GoopDrawer extends StatelessWidget {
         bottomRight: Radius.circular(35),
       ),
       child: Drawer(
-        
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -45,7 +47,7 @@ class GoopDrawer extends StatelessWidget {
                         ),
                         SizedBox(height: 10),
                         Text(
-                          'Marília Costa',
+                          name,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 20,
@@ -95,7 +97,7 @@ class GoopDrawer extends StatelessWidget {
                     children: [
                       goopTile(
                         title: 'Carteira',
-                        img: GoopImages.wallet_red, 
+                        img: GoopImages.wallet_red,
                         action: () {
                           Navigator.pushNamed(
                             context,
