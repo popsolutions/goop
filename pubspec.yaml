@@ -34,8 +34,8 @@ dependencies:
   flutter_svg:
   image_picker:
   location: 
-  get_it:
   latlng: 
+  provider: ^5.0.0
 
 
 
