@@ -14,7 +14,7 @@ class User {
   final String cnpjCpf;
   final String educationLevel;
   final String gender;
-  final String missionsCount;
+  final int missionsCount;
   final String mobile;
   final String email;
   final String street;
