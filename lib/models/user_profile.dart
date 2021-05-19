@@ -6,7 +6,7 @@ class UserProfile {
   String cnpjCpf;
   String educationLevel;
   String gender;
-  String missionsCount;
+  int missionsCount;
   String mobile;
   String email;
   String street;
