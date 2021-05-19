@@ -1,3 +1,5 @@
+import 'package:goop/models/user_profile.dart';
+
 import '../../config/http/odoo_api.dart';
 import '../../models/basic_user_dto.dart';
 import '../constants.dart';
@@ -16,14 +18,28 @@ class UserServiceImpl {
     return UserBasicDto.fromJson(json);
   }
 
-  Future<dynamic> findProfile(int partnerId) async {
+  Future<UserProfile> findProfile(int partnerId) async {
     final response = await _odoo.searchRead(Strings.resPartner, [
       ["id", "=", partnerId]
     ], [
-      'name'
+      'name',
+      'image',
+      'birthdate',
+      'function',
+      'cnpj_cpf',
+      'education_level',
+      'gender',
+      'missions_count',
+      'mobile',
+      'email',
+      'street',
+      'city',
+      'district',
+      'state',
+      'signup_url'
     ]);
 
-    return response.getRecords().first;
+    return UserProfile.fromJson(response.getRecords().first);
   }
 
   /*

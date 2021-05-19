@@ -8,6 +8,20 @@ class User {
   final int companyId;
   final int partnerId;
   final bool userCompanies;
+  final String image;
+  final String birthdate;
+  final String function;
+  final String cnpjCpf;
+  final String educationLevel;
+  final String gender;
+  final String missionsCount;
+  final String mobile;
+  final String email;
+  final String street;
+  final String city;
+  final String district;
+  final String state;
+  final String signupUrl;
 
   User({
     this.sessionId,
@@ -19,21 +33,49 @@ class User {
     this.companyId,
     this.partnerId,
     this.userCompanies,
+    this.image,
+    this.birthdate,
+    this.function,
+    this.cnpjCpf,
+    this.educationLevel,
+    this.gender,
+    this.missionsCount,
+    this.mobile,
+    this.email,
+    this.street,
+    this.city,
+    this.district,
+    this.state,
+    this.signupUrl,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) {
+  User copyWith({
+    final String sessionId,
+    final int uid,
+    final bool isAdmin,
+    final String name,
+    final String username,
+    final String partnerDisplayName,
+    final int companyId,
+    final int partnerId,
+    final bool userCompanies,
+    final String image,
+    final String birthdate,
+    final String function,
+    final String cnpjCpf,
+    final String educationLevel,
+    final String gender,
+    final String missionsCount,
+    final String mobile,
+    final String email,
+    final String street,
+    final String city,
+    final String district,
+    final String state,
+    final String signupUrl,
+  }) {
     return User(
-      sessionId: json['session_id'],
-      uid: json['uid'],
-      isAdmin: json['is_admin'],
-      name: json['name'] is! bool ? json['name'] : "N/A",
-      username: json['username'] is! bool ? json['username'] : "N/A",
-      partnerDisplayName: json['partner_display_name'] is! bool
-          ? json['partner_display_name']
-          : "N/A",
-      companyId: json['company_id'],
-      partnerId: json['partner_id'],
-      userCompanies: json['user_companies'],
+      name: name ?? this.name,
     );
   }
 }
