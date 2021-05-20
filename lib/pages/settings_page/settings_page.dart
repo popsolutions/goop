@@ -134,7 +134,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                   ),
                   SizedBox(height: 30),
-                  GoopTextFormField(
+                  GoopTextFormField( //TODO: Atualizar os dados ao salvar 
                     hintText: 'E-mail',
                     validator: Validators.validateEmail,
                     initialValue: _controller.email,

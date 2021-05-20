@@ -46,7 +46,10 @@ class UserServiceImpl {
 
   Future<void> update(UpdateUser updateProfileDto) async {
     final response = await _odoo.write(
-        'res.partner', [updateProfileDto.partnerId], updateProfileDto.toJson());
+      Strings.resPartner,
+      [updateProfileDto.partnerId],
+      updateProfileDto.toJson(),
+    );
     print(response);
   }
 
