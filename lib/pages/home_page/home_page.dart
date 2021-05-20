@@ -24,7 +24,7 @@ class HomePage extends StatelessWidget {
         ],
       ),
       drawer: GoopDrawer(
-        name: user.name,
+        user: user,
       ),
       body: Container(
         height: double.infinity,
