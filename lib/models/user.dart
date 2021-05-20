@@ -16,6 +16,7 @@ class User {
   final String gender;
   final int missionsCount;
   final String mobile;
+  final String phone;
   final String email;
   final String street;
   final String city;
@@ -28,6 +29,7 @@ class User {
     this.uid,
     this.isAdmin,
     this.name,
+    this.phone,
     this.username,
     this.partnerDisplayName,
     this.companyId,

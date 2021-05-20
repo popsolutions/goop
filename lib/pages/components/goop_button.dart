@@ -34,7 +34,9 @@ class GoopButton extends StatelessWidget {
           ),
         ),
         child: isLoading
-            ? CircularProgressIndicator()
+            ? CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation(Colors.white),
+              )
             : Text(
                 text,
                 style: TextStyle(

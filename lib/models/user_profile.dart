@@ -1,6 +1,7 @@
 class UserProfile {
   String name;
   String image;
+  String phone;
   String birthdate;
   String function;
   String cnpjCpf;
@@ -15,25 +16,28 @@ class UserProfile {
   String state;
   String signupUrl;
 
-  UserProfile(
-      {this.name,
-      this.image,
-      this.birthdate,
-      this.function,
-      this.cnpjCpf,
-      this.educationLevel,
-      this.gender,
-      this.missionsCount,
-      this.mobile,
-      this.email,
-      this.street,
-      this.city,
-      this.district,
-      this.state,
-      this.signupUrl});
+  UserProfile({
+    this.name,
+    this.phone,
+    this.image,
+    this.birthdate,
+    this.function,
+    this.cnpjCpf,
+    this.educationLevel,
+    this.gender,
+    this.missionsCount,
+    this.mobile,
+    this.email,
+    this.street,
+    this.city,
+    this.district,
+    this.state,
+    this.signupUrl,
+  });
 
   UserProfile.fromJson(Map<String, dynamic> json) {
     name = valueOrNull(json['name']);
+    phone = valueOrNull(json['phone']);
     image = valueOrNull(json['image']);
     birthdate = valueOrNull(json['birthdate']);
     function = valueOrNull(json['function']);
