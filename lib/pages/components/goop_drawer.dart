@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:goop/config/routes.dart';
+import 'package:goop/models/user.dart';
 import 'package:goop/pages/components/goop_button.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
 
 class GoopDrawer extends StatelessWidget {
-  final String name;
+  final User user;
 
-  const GoopDrawer({Key key, this.name}) : super(key: key);
+  const GoopDrawer({Key key, this.user}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     ListTile goopTile({String title, img, action}) {
@@ -47,20 +49,22 @@ class GoopDrawer extends StatelessWidget {
                         ),
                         SizedBox(height: 10),
                         Text(
-                          name,
+                          user.name,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 20,
                           ),
                         ),
                         SizedBox(height: 5),
-                        Text(
-                          'Missões Cumpridas: 0',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                          ),
-                        ),
+                        Observer(builder: (_) {
+                          return Text(
+                            'Missões Cumpridas: ${user.missionsCount}',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                            ),
+                          );
+                        }),
                       ],
                     ),
                   ),

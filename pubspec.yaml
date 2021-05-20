@@ -19,6 +19,9 @@ dependencies:
   mobx:
   data_connection_checker:
   cpf_cnpj_validator:
+  email_validator: ^2.0.1
+  khmer_phone_validator: ^0.0.2
+  mask_text_input_formatter: ^1.2.1
   flutter_svg:
   image_picker:
   provider:
@@ -37,14 +40,14 @@ flutter:
   assets:
     - assets/images/
 
-  fonts:
-    - family: Schyler
-      fonts:
-        - asset: fonts/Schyler-Regular.ttf
-        - asset: fonts/Schyler-Italic.ttf
-          style: italic
-    - family: Trajan Pro
-      fonts:
-        - asset: fonts/TrajanPro.ttf
-        - asset: fonts/TrajanPro_Bold.ttf
-          weight: 700
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
+  #   - family: Trajan Pro
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
