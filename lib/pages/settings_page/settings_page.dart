@@ -11,9 +11,7 @@ import 'package:goop/pages/settings_page/settings_controller.dart';
 import 'package:goop/services/login/user_service.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
-import 'package:goop/utils/validators/cpf_validator.dart';
-import 'package:goop/utils/validators/email_validator.dart';
-import 'package:goop/utils/validators/phone_validator.dart';
+import 'package:goop/utils/validators.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
@@ -144,20 +142,20 @@ class _SettingsPageState extends State<SettingsPage> {
                   SizedBox(height: 30),
                   GoopTextFormField(
                     hintText: 'E-mail',
-                    validator: validateEmail,
+                    validator: Validators.validateEmail,
                     initialValue: _controller.email,
                     onChanged: (e) => _controller.email = e.trim(),
                   ),
                   GoopTextFormField(
                     hintText: 'Celular',
-                    validator: validatePhone,
+                    validator: Validators.validatePhone,
                     inputFormatters: [phoneFormatter],
                     initialValue: _controller.phone,
                     onChanged: (e) => _controller.phone = e.trim(),
                   ),
                   GoopTextFormField(
                     hintText: 'CPF',
-                    validator: validateCPF,
+                    validator: Validators.validateCPF,
                     inputFormatters: [cpfFormatter],
                     initialValue: _controller.cpf,
                     onChanged: (e) => _controller.cpf = e.trim(),

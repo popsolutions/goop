@@ -1,8 +1,6 @@
 import 'package:goop/models/update_user.dart';
 import 'package:goop/services/login/user_service.dart';
-import 'package:goop/utils/validators/cpf_validator.dart';
-import 'package:goop/utils/validators/email_validator.dart';
-import 'package:goop/utils/validators/phone_validator.dart';
+import 'package:goop/utils/validators.dart';
 import 'package:mobx/mobx.dart';
 part 'settings_controller.g.dart';
 
@@ -30,9 +28,9 @@ abstract class _SettingsControllerBase with Store {
 
   @computed
   bool get canNext =>
-      validateEmail(email) == null &&
-      validatePhone(phone) == null &&
-      validateCPF(cpf) == null;
+      Validators.validateEmail(email) == null &&
+      Validators.validatePhone(phone) == null &&
+      Validators.validateCPF(cpf) == null;
 
   @observable
   ObservableFuture _updateRequest = ObservableFuture.value(null);
