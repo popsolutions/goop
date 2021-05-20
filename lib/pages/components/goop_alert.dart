@@ -3,7 +3,7 @@ import 'package:goop/pages/components/goop_close.dart';
 
 class GoopAlert extends StatelessWidget {
   final String title;
-  final contet;
+  final dynamic contet;
 
   GoopAlert({
     this.title,
@@ -24,12 +24,11 @@ class GoopAlert extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           title != null
-              ? Text(
-                  title,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w900,
-                  ),
-                )
+              ? title
+              // style: TextStyle(
+              //   fontWeight: FontWeight.w900,
+              // ),
+              //)
               : Container(),
           GoopClose(),
         ],

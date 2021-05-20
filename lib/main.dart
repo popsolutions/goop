@@ -41,10 +41,10 @@ class MyApp extends StatelessWidget {
               color: Colors.black,
               fontSize: 20,
             ),
-            headline4: TextStyle(
-              fontSize: 15,
+            headline4 : TextStyle(
               decoration: TextDecoration.underline,
               color: GoopColors.red,
+              fontSize: 14,
             ),
           ),
           splashColor: GoopColors.redSplash,

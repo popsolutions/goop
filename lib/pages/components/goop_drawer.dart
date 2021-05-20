@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:goop/config/app/authentication_controller.dart';
 import 'package:goop/config/routes.dart';
-import 'package:goop/models/user.dart';
 import 'package:goop/pages/components/goop_button.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
+import 'package:provider/provider.dart';
 
 class GoopDrawer extends StatelessWidget {
-  final User user;
-
-  const GoopDrawer({Key key, this.user}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final authenticationController =
+        Provider.of<AuthenticationController>(context);
+    final user = authenticationController.currentUser;
+
     ListTile goopTile({String title, img, action}) {
       return ListTile(
         dense: true,
@@ -56,15 +57,13 @@ class GoopDrawer extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 5),
-                        Observer(builder: (_) {
-                          return Text(
-                            'Missões Cumpridas: ${user.missionsCount}',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                            ),
-                          );
-                        }),
+                        Text(
+                          'Missões Cumpridas: ${user.missionsCount}',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                          ),
+                        ),
                       ],
                     ),
                   ),

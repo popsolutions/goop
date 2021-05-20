@@ -24,8 +24,7 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   AuthenticationController authenticationController;
   final _controller = SettingsController(
-    UserServiceImpl(Odoo()),
-  ); //TODO: MUDAR INJEÇÃO DE DEPENDECIA
+      UserServiceImpl(Odoo())); //TODO: MUDAR INJEÇÃO DE DEPENDECIA
 
   ReactionDisposer _reactionDisposer;
 
@@ -56,8 +55,8 @@ class _SettingsPageState extends State<SettingsPage> {
         context,
         listen: false,
       );
-      final user = authenticationController.currentUser;
 
+      final user = authenticationController.currentUser;
       _controller.id = user.partnerId;
       _controller.cpf = user.cnpjCpf ?? '';
       _controller.phone = user.phone ?? '';
@@ -93,16 +92,11 @@ class _SettingsPageState extends State<SettingsPage> {
     print('Deu erro');
   }
 
-  style() {
-    return TextStyle(
-      fontSize: 15,
-      decoration: TextDecoration.underline,
-      color: GoopColors.red,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    final authenticationController =
+        Provider.of<AuthenticationController>(context);
+    final user = authenticationController.currentUser;
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
       child: Scaffold(
@@ -129,9 +123,9 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         SizedBox(height: 20),
                         Text(
-                          'Marília',
+                          '${user.name}',
                           style: TextStyle(
-                            fontSize: 30,
+                            fontSize: 25,
                             fontWeight: FontWeight.bold,
                             color: GoopColors.red,
                           ),
