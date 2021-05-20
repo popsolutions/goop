@@ -1,3 +1,4 @@
+import 'package:goop/models/update_user.dart';
 import 'package:goop/models/user_profile.dart';
 
 import '../../config/http/odoo_api.dart';
@@ -23,6 +24,7 @@ class UserServiceImpl {
       ["id", "=", partnerId]
     ], [
       'name',
+      'phone',
       'image',
       'birthdate',
       'function',
@@ -40,6 +42,12 @@ class UserServiceImpl {
     ]);
 
     return UserProfile.fromJson(response.getRecords().first);
+  }
+
+  Future<void> update(UpdateUser updateProfileDto) async {
+    final response = await _odoo.write(
+        'res.partner', [updateProfileDto.partnerId], updateProfileDto.toJson());
+    print(response);
   }
 
   /*

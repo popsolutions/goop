@@ -16,6 +16,7 @@ class LoginFacade {
     );
     return User(
       companyId: loginResponse.companyId,
+      phone: userProfile.phone,
       isAdmin: loginResponse.isAdmin,
       name: loginResponse.name,
       partnerDisplayName: loginResponse.partnerDisplayName,
