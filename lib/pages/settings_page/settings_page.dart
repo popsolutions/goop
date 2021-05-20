@@ -8,14 +8,6 @@ import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
 
 class SettingsPage extends StatelessWidget {
-  style() {
-    return TextStyle(
-      fontSize: 15,
-      decoration: TextDecoration.underline,
-      color: GoopColors.red,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,14 +52,14 @@ class SettingsPage extends StatelessWidget {
                 TextButton(
                   child: Text(
                     'Sobre o GoOp',
-                    style: style(),
+                    style: Theme.of(context).textTheme.headline4,
                   ),
                   onPressed: () {},
                 ),
                 TextButton(
                   child: Text(
                     'Termos de Uso',
-                    style: style(),
+                    style: Theme.of(context).textTheme.headline4,
                   ),
                   onPressed: () {
                     showDialog(
@@ -89,7 +81,7 @@ class SettingsPage extends StatelessWidget {
                 TextButton(
                   child: Text(
                     'Desativar minha conta',
-                    style: style(),
+                    style: Theme.of(context).textTheme.headline4,
                   ),
                   onPressed: () {},
                 ),
