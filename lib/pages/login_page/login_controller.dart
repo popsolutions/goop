@@ -14,23 +14,23 @@ abstract class _LoginControllerBase with Store {
 
   @observable
   ObservableFuture<User> loginRequest = ObservableFuture.value(null);
-
   @observable
   String login = '';
-
   @observable
   String password = '';
 
   @computed
   bool get canNext => login.isNotEmpty && password.isNotEmpty;
-
   @computed
   bool get isLoading => loginRequest.status == FutureStatus.pending;
 
   @action
   void submit() {
     loginRequest = _loginFacade
-        .login(LoginDto(login.trim(), password.trim()))
+        .login(LoginDto(
+          login.trim(),
+          password.trim(),
+        ))
         .asObservable();
   }
 }

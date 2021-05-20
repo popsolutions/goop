@@ -11,7 +11,9 @@ class LoginFacade {
 
   Future<User> login(LoginDto loginDto) async {
     final loginResponse = await _loginService.login(loginDto);
-    final userProfile = await _userService.findProfile(loginResponse.partnerId);
+    final userProfile = await _userService.findProfile(
+      loginResponse.partnerId,
+    );
     return User(
       companyId: loginResponse.companyId,
       isAdmin: loginResponse.isAdmin,
