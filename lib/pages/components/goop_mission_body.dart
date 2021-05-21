@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goop/config/routes.dart';
-import 'package:goop/models/info.dart';
+import 'package:goop/models/mission.dart';
 import 'package:goop/pages/components/goop_card.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
 
 class GoopMissionBody extends StatefulWidget {
-  final InfoMission info;
-  GoopMissionBody({@required this.info});
+  final MissionModel mission;
+  GoopMissionBody({@required this.mission});
 
   @override
   _GoopMissionBodyState createState() => _GoopMissionBodyState();
@@ -30,7 +30,7 @@ class _GoopMissionBodyState extends State<GoopMissionBody> {
           width: MediaQuery.of(context).size.width * .6,
         ),
         GoopCard(
-          info: widget.info,
+          mission: widget.mission,
           border: Colors.transparent,
           showPrinceAndTime: false,
         ),

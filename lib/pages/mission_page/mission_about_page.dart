@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goop/config/routes.dart';
-import 'package:goop/models/info.dart';
+import 'package:goop/models/mission.dart';
 import 'package:goop/pages/components/goop_button.dart';
 import 'package:goop/pages/components/goop_mission_body.dart';
 import '../components/goop_back.dart';
@@ -19,7 +19,7 @@ enum MissionStatus {
 }
 
 class _MissionAboutPageState extends State<MissionAboutPage> {
-  var status = MissionStatus.Closed; //ALTERAR PARA MUDAR TELA
+  var status = MissionStatus.Completed; //ALTERAR PARA MUDAR TELA
 
   situacional({ifCompleted, ifInProgress, ifClosed}) {
     if (status == MissionStatus.Completed) {
@@ -34,7 +34,7 @@ class _MissionAboutPageState extends State<MissionAboutPage> {
   @override
   Widget build(BuildContext context) {
     final TextStyle theme = Theme.of(context).textTheme.headline2;
-    final InfoMission info = ModalRoute.of(context).settings.arguments;
+    final MissionModel mission = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
       appBar: AppBar(
@@ -53,7 +53,7 @@ class _MissionAboutPageState extends State<MissionAboutPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              GoopMissionBody(info: info),
+              GoopMissionBody(mission: mission),
               situacional(
                 ifCompleted: Text(
                   '3 horas',
@@ -83,7 +83,7 @@ class _MissionAboutPageState extends State<MissionAboutPage> {
                 ifCompleted: Column(
                   children: [
                     Text(
-                      'Prêmio da missão:',
+                      'Prêmio da missão: ',
                       style: theme,
                     ),
                     Container(
@@ -93,7 +93,7 @@ class _MissionAboutPageState extends State<MissionAboutPage> {
                       ),
                     ),
                     Text(
-                      'R\$ 15,00',
+                      'R\$ ${mission.reward.toStringAsFixed(2) ?? ''}',
                       style: theme,
                     ),
                   ],

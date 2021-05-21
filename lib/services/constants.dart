@@ -3,4 +3,5 @@ class Strings {
   static const String resUsers = "res.users";
   static const String missions = 'pops.missions';
   static const String meassurement = 'pops.meassurement';
+  static const String establishment = 'pops.establishment';
 }

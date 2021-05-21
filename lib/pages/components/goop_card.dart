@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:goop/config/routes.dart';
-import 'package:goop/models/info.dart';
+import 'package:goop/models/mission.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
 
 class GoopCard extends StatelessWidget {
-  final InfoMission info;
+  final MissionModel mission;
   final Color border;
   final bool showPrinceAndTime;
 
   const GoopCard({
     Key key,
-    @required this.info,
+    @required this.mission,
     this.border = GoopColors.grey,
     this.showPrinceAndTime = true,
   }) : super(key: key);
@@ -24,7 +24,7 @@ class GoopCard extends StatelessWidget {
         Navigator.pushNamed(
           context,
           Routes.mission_about,
-          arguments: info,
+          arguments: mission,
         );
       },
       child: Container(
@@ -38,11 +38,11 @@ class GoopCard extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              info.title,
+              mission.name ?? '',
               style: Theme.of(context).textTheme.headline3,
             ),
             Text(
-              info.address,
+              mission.address ?? '',
               style: Theme.of(context).textTheme.headline1,
             ),
             Container(
@@ -52,7 +52,7 @@ class GoopCard extends StatelessWidget {
               ),
             ),
             Text(
-              info.content,
+              mission.subject ?? '',
               style: Theme.of(context).textTheme.headline1,
             ),
             Container(
@@ -75,7 +75,7 @@ class GoopCard extends StatelessWidget {
                         width: 20,
                       ),
                       title: Text(
-                        'R\$ ${info.price.toStringAsFixed(2)}',
+                        'R\$ ${mission.reward.toStringAsFixed(2) ?? 0.00}',
                         style: Theme.of(context).textTheme.headline1,
                       ),
                     ),
@@ -90,7 +90,7 @@ class GoopCard extends StatelessWidget {
                         width: 20,
                       ),
                       title: Text(
-                        info.time,
+                        mission.time ?? '',
                         style: Theme.of(context).textTheme.headline1,
                       ),
                     ),
