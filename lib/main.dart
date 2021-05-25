@@ -6,6 +6,11 @@ import 'package:goop/config/widgets_router.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:provider/provider.dart';
 
+// DADOS PARA ACESSO DO APP
+// dev.charismabi.com
+// support@popsolutions.co
+// 1ND1C0p4c1f1c0
+
 void main() {
   final authenticationController = AuthenticationController();
   runApp(MyApp(authenticationController: authenticationController));
@@ -41,7 +46,7 @@ class MyApp extends StatelessWidget {
               color: Colors.black,
               fontSize: 20,
             ),
-            headline4 : TextStyle(
+            headline4: TextStyle(
               decoration: TextDecoration.underline,
               color: GoopColors.red,
               fontSize: 14,
