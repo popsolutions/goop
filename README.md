@@ -1,6 +1,20 @@
 # goop
 
-A new Flutter project.
+Goop Missions and Meassurements for Point of Sales.
+
+Provides Missions MAP
+
+Provides Missions LIST
+
+Meassurement type
+
+--Quizz
+
+--Photo
+
+--Quizz + Photo
+
+--Product Price Comparison
 
 ## Getting Started
 
