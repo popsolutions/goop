@@ -1,5 +1,5 @@
 import 'package:goop/models/mission.dart';
-import 'package:goop/services/mission_service.dart';
+import 'package:goop/services/mission/mission_service.dart';
 import 'package:mobx/mobx.dart';
 part 'mission_controller.g.dart';
 

@@ -1,20 +1,20 @@
 import 'package:goop/models/user_profile.dart';
 
-class Establishment {
+class EstablishmentModel {
   String name;
   String address;
   String latitude;
   String longitude;
 
-  Establishment({
+  EstablishmentModel({
     this.name,
     this.address,
     this.latitude,
     this.longitude,
   });
 
-  factory Establishment.fromJson(Map<String, dynamic> map) {
-    return Establishment(
+  factory EstablishmentModel.fromJson(Map<String, dynamic> map) {
+    return EstablishmentModel(
       name: valueOrNull(map['name']),
       address: valueOrNull(map['address']),
       latitude: valueOrNull(map['latitude']),

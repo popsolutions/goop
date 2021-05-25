@@ -30,6 +30,7 @@ class _GoopMissionBodyState extends State<GoopMissionBody> {
           width: MediaQuery.of(context).size.width * .6,
         ),
         GoopCard(
+          goToPage: false,
           mission: widget.mission,
           border: Colors.transparent,
           showPrinceAndTime: false,

@@ -88,9 +88,7 @@ class _MissionAboutPageState extends State<MissionAboutPage> {
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width * .7,
-                      child: Divider(
-                        color: Colors.deepPurple,
-                      ),
+                      child: Divider(color: Colors.deepPurple),
                     ),
                     Text(
                       'R\$ ${mission.reward.toStringAsFixed(2) ?? ''}',

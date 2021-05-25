@@ -9,24 +9,28 @@ class GoopCard extends StatelessWidget {
   final MissionModel mission;
   final Color border;
   final bool showPrinceAndTime;
+  final bool goToPage;
 
   const GoopCard({
     Key key,
     @required this.mission,
     this.border = GoopColors.grey,
     this.showPrinceAndTime = true,
+    this.goToPage = true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(
-          context,
-          Routes.mission_about,
-          arguments: mission,
-        );
-      },
+      onTap: !goToPage
+          ? null
+          : () {
+              Navigator.pushNamed(
+                context,
+                Routes.mission_about,
+                arguments: mission,
+              );
+            },
       child: Container(
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(

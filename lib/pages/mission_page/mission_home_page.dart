@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:goop/config/http/odoo_api.dart';
 import 'package:goop/pages/components/goop_card.dart';
 import 'package:goop/pages/components/goop_drawer.dart';
-import 'package:goop/services/mission_service.dart';
+import 'package:goop/services/mission/mission_service.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
 import 'package:mobx/mobx.dart';
