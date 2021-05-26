@@ -15,9 +15,9 @@ abstract class _LoginControllerBase with Store {
   @observable
   ObservableFuture<User> loginRequest = ObservableFuture.value(null);
   @observable
-  String login = '';
+  String login = 'support@popsolutions.co';
   @observable
-  String password = '';
+  String password = '1ND1C0p4c1f1c0';
 
   @computed
   bool get canNext => login.isNotEmpty && password.isNotEmpty;
