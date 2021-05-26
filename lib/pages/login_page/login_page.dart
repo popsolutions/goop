@@ -99,12 +99,12 @@ class _LoginPageState extends State<LoginPage> {
                     child: SvgPicture.asset(GoopImages.login),
                   ),
                   GoopTextFormField(
-                    initialValue: 'support@popsolutions.co',
+                    initialValue: _loginController.login,
                     hintText: "E-mail",
                     onChanged: (e) => _loginController.login = e,
                   ),
                   GoopTextFormField(
-                    initialValue: '1ND1C0p4c1f1c0',
+                    initialValue: _loginController.password,
                     hintText: "Senha",
                     onChanged: (e) => _loginController.password = e,
                     obscureText: true,
