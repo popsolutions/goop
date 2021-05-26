@@ -64,10 +64,7 @@ class _MissionHomePageState extends State<MissionHomePage> {
                     separatorBuilder: (_, index) => SizedBox(height: 10),
                     itemBuilder: (_, index) {
                       final item = items[index];
-
-                      return GoopCard(
-                        mission: item,
-                      );
+                      return GoopCard(mission: item);
                     },
                   );
               }
