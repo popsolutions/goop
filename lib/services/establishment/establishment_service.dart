@@ -6,9 +6,9 @@ class EstablishmentService {
   final Odoo _odoo;
   EstablishmentService(this._odoo);
 
-  Future<List<EstablishmentModel>> getMissions() async {
+  Future<List<EstablishmentModel>> getMissionEstablishments() async {
     final response = await _odoo.searchRead(Strings.establishment, [], []);
-    final json = response.getResult() as List;
+    final json = response.getRecords() as List;
     return json.map((e) => EstablishmentModel.fromJson(e)).toList();
   }
 }

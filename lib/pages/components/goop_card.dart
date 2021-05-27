@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:goop/config/routes.dart';
+import 'package:goop/models/establishment.dart';
 import 'package:goop/models/mission.dart';
+import 'package:goop/models/mission_dto.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
 
 class GoopCard extends StatelessWidget {
   final MissionModel mission;
+  final EstablishmentModel establishment;
+  final MissionDto missionDto;
   final Color border;
   final bool showPrinceAndTime;
   final bool goToPage;
@@ -14,6 +18,8 @@ class GoopCard extends StatelessWidget {
   const GoopCard({
     Key key,
     @required this.mission,
+    this.establishment,
+    this.missionDto,
     this.border = GoopColors.grey,
     this.showPrinceAndTime = true,
     this.goToPage = true,
@@ -42,13 +48,16 @@ class GoopCard extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              mission.name ?? '',
+              establishment.name ?? '',
               style: Theme.of(context).textTheme.headline3,
             ),
+            SizedBox(height: 5),
             Text(
-              mission.address ?? '',
+              establishment.address ?? '',
               style: Theme.of(context).textTheme.headline1,
+              textAlign: TextAlign.center,
             ),
+            SizedBox(height: 5),
             Container(
               width: MediaQuery.of(context).size.width * .7,
               child: Divider(
@@ -58,6 +67,7 @@ class GoopCard extends StatelessWidget {
             Text(
               mission.subject ?? '',
               style: Theme.of(context).textTheme.headline1,
+              textAlign: TextAlign.center,
             ),
             Container(
               width: MediaQuery.of(context).size.width * .7,

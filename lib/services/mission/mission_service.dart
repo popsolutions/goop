@@ -8,7 +8,6 @@ class MissionService {
 
   Future<List<MissionModel>> getMissions() async {
     final response = await _odoo.searchRead(Strings.missions, [], []);
-
     final json = response.getRecords() as List;
     return json.map((e) => MissionModel.fromJson(e)).toList();
   }

@@ -7,6 +7,7 @@ class MissionController = _MissionControllerBase with _$MissionController;
 
 abstract class _MissionControllerBase with Store {
   final MissionService _missionService;
+
   _MissionControllerBase(this._missionService);
 
   @observable

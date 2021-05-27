@@ -4,6 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:goop/config/http/odoo_api.dart';
 import 'package:goop/pages/components/goop_card.dart';
 import 'package:goop/pages/components/goop_drawer.dart';
+import 'package:goop/services/establishment/establishment_controller.dart';
+import 'package:goop/services/establishment/establishment_service.dart';
 import 'package:goop/services/mission/mission_service.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
@@ -18,11 +20,14 @@ class MissionHomePage extends StatefulWidget {
 
 class _MissionHomePageState extends State<MissionHomePage> {
   final _missionsController = MissionController(MissionService(Odoo()));
+  final _establishmentsController =
+      EstablishmentController(EstablishmentService(Odoo()));
 
   @override
   void initState() {
     super.initState();
     _missionsController.load();
+    _establishmentsController.load();
   }
 
   @override
@@ -44,31 +49,42 @@ class _MissionHomePageState extends State<MissionHomePage> {
             width: MediaQuery.of(context).size.width * .9,
           ),
           Expanded(
-            child: Observer(builder: (_) {
-              final response = _missionsController.missionsRequest;
+            child: Observer(
+              builder: (_) {
+                final responseMissions = _missionsController.missionsRequest;
+                final responseEstablishments =
+                    _establishmentsController.missionsRequest;
 
-              switch (response.status) {
-                case FutureStatus.rejected:
-                  return Center(child: Text('Deu erro'));
-                case FutureStatus.pending:
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                default:
-                  final items = response.value;
-                  if (items.isEmpty) {
-                    return Center(child: Text('Está vazio'));
-                  }
-                  return ListView.separated(
-                    itemCount: items.length,
-                    separatorBuilder: (_, index) => SizedBox(height: 10),
-                    itemBuilder: (_, index) {
-                      final item = items[index];
-                      return GoopCard(mission: item);
-                    },
-                  );
-              }
-            }),
+                switch (responseMissions.status) {
+                  case FutureStatus.rejected:
+                    return Center(child: Text('Deu erro'));
+                  case FutureStatus.pending:
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  default:
+                    final missions = responseMissions.value;
+                    final establishments = responseEstablishments.value;
+
+                    if (missions.isEmpty) {
+                      return Center(child: Text('Está vazio'));
+                    }
+                    return ListView.separated(
+                      itemCount: missions.length,
+                      separatorBuilder: (_, index) => SizedBox(height: 10),
+                      itemBuilder: (_, index) {
+                        final mission = missions[index];
+                        final establishment = establishments[index];
+
+                        return GoopCard(
+                          mission: mission,
+                          establishment: establishment,
+                        );
+                      },
+                    );
+                }
+              },
+            ),
           ),
         ],
       ),
