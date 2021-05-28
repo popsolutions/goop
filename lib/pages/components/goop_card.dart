@@ -66,9 +66,7 @@ class GoopCard extends StatelessWidget {
             ),
             Container(
               width: MediaQuery.of(context).size.width * .7,
-              child: Divider(
-                color: Colors.black,
-              ),
+              child: Divider(color: Colors.black),
             ),
             if (showPrinceAndTime)
               Row(
