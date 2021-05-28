@@ -6,8 +6,6 @@ import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
 
 class GoopCard extends StatelessWidget {
-  //final MissionModel mission;
-  //final EstablishmentModel establishment;
   final MissionDto missionDto;
   final Color border;
   final bool showPrinceAndTime;
@@ -15,8 +13,6 @@ class GoopCard extends StatelessWidget {
 
   const GoopCard({
     Key key,
-    //@required this.mission,
-    //this.establishment,
     @required this.missionDto,
     this.border = GoopColors.grey,
     this.showPrinceAndTime = true,
@@ -42,12 +38,13 @@ class GoopCard extends StatelessWidget {
           border: Border.all(color: border),
         ),
         padding: EdgeInsets.all(20),
-        width: MediaQuery.of(context).size.width * .8,
+        width: MediaQuery.of(context).size.width * .9,
         child: Column(
           children: [
             Text(
               missionDto.nameEstablishment ?? '',
               style: Theme.of(context).textTheme.headline3,
+              textAlign: TextAlign.center,
             ),
             SizedBox(height: 5),
             Text(

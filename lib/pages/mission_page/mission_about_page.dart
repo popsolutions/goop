@@ -19,7 +19,7 @@ enum MissionStatus {
 }
 
 class _MissionAboutPageState extends State<MissionAboutPage> {
-  var status = MissionStatus.Completed; //ALTERAR PARA MUDAR TELA
+  var status = MissionStatus.InProgress; //ALTERAR PARA MUDAR TELA
 
   situacional({ifCompleted, ifInProgress, ifClosed}) {
     if (status == MissionStatus.Completed) {
