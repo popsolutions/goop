@@ -32,9 +32,9 @@ class GoopCard extends StatelessWidget {
           ? null
           : () {
               Navigator.pushNamed(
-                context,
-                Routes.mission_about,
-                arguments: mission,
+                context, Routes.mission_about,
+                arguments: missionDto,
+                //TODO: FAZER COM QUE PASSE O DTO PARA PROXIMA PAGINA
               );
             },
       child: Container(
