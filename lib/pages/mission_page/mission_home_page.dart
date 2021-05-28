@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:goop/config/http/odoo_api.dart';
+import 'package:goop/models/mission_dto.dart';
 import 'package:goop/pages/components/goop_card.dart';
 import 'package:goop/pages/components/goop_drawer.dart';
 import 'package:goop/services/establishment/establishment_controller.dart';
@@ -55,34 +56,59 @@ class _MissionHomePageState extends State<MissionHomePage> {
                 final responseEstablishments =
                     _establishmentsController.missionsRequest;
 
-                switch (responseMissions.status) {
-                  case FutureStatus.rejected:
-                    return Center(child: Text('Deu erro'));
-                  case FutureStatus.pending:
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  default:
-                    final missions = responseMissions.value;
-                    final establishments = responseEstablishments.value;
-
-                    if (missions.isEmpty) {
-                      return Center(child: Text('Está vazio'));
-                    }
-                    return ListView.separated(
-                      itemCount: missions.length,
-                      separatorBuilder: (_, index) => SizedBox(height: 10),
-                      itemBuilder: (_, index) {
-                        final mission = missions[index];
-                        final establishment = establishments[index];
-
-                        return GoopCard(
-                          mission: mission,
-                          establishment: establishment,
-                        );
-                      },
-                    );
+                if (responseMissions.status == FutureStatus.rejected ||
+                    responseEstablishments.status == FutureStatus.rejected) {
+                  return Center(child: Text('Deu erro'));
+                } else if (responseMissions.status == FutureStatus.pending ||
+                    responseEstablishments.status == FutureStatus.pending) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
                 }
+
+                final missions = responseMissions.value;
+                final establishments = responseEstablishments.value;
+
+                if (missions.isEmpty) {
+                  return Center(child: Text('Está vazio'));
+                }
+                return ListView.separated(
+                  itemCount: missions.length,
+                  separatorBuilder: (_, index) => SizedBox(height: 10),
+                  itemBuilder: (_, index) {
+                    final mission = missions[index];
+                    final establishment = establishments[index];
+
+                    return GoopCard(
+                      missionDto: MissionDto(
+                        name: mission.name,
+                        subject: mission.subject,
+                        partnerId: mission.partnerId,
+                        establishmentId: mission.establishmentId,
+                        measurementCount: mission.measurementCount,
+                        createByUserId: mission.createByUserId,
+                        limit: mission.createByUserId,
+                        priority: mission.createByUserId,
+                        scores: mission.scores,
+                        reward: mission.reward,
+                        typeMission: mission.typeMission,
+                        instructions: mission.typeMission,
+                        missionState: mission.typeMission,
+                        address: mission.typeMission,
+                        dateCreated: mission.typeMission,
+                        dateFinished: mission.typeMission,
+                        price: mission.price,
+                        time: mission.time,
+                        nameEstablishment: establishment.name,
+                        addressEstablishment: establishment.address,
+                        latitude: establishment.latitude,
+                        longitude: establishment.longitude,
+                      ),
+                      // mission: mission,
+                      // establishment: establishment,
+                    );
+                  },
+                );
               },
             ),
           ),

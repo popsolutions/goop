@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goop/config/routes.dart';
-import 'package:goop/models/mission.dart';
+import 'package:goop/models/mission_dto.dart';
 import 'package:goop/pages/components/goop_button.dart';
 import 'package:goop/pages/components/goop_mission_body.dart';
 import '../components/goop_back.dart';
@@ -34,7 +34,7 @@ class _MissionAboutPageState extends State<MissionAboutPage> {
   @override
   Widget build(BuildContext context) {
     final TextStyle theme = Theme.of(context).textTheme.headline2;
-    final MissionModel mission = ModalRoute.of(context).settings.arguments;
+    final MissionDto missionDto = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
       appBar: AppBar(
@@ -53,7 +53,7 @@ class _MissionAboutPageState extends State<MissionAboutPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              GoopMissionBody(mission: mission),
+              GoopMissionBody(missionDto: missionDto),
               situacional(
                 ifCompleted: Text(
                   '3 horas',
@@ -91,7 +91,7 @@ class _MissionAboutPageState extends State<MissionAboutPage> {
                       child: Divider(color: Colors.deepPurple),
                     ),
                     Text(
-                      'R\$ ${mission.reward.toStringAsFixed(2) ?? ''}',
+                      'R\$ ${missionDto.reward.toStringAsFixed(2) ?? ''}',
                       style: theme,
                     ),
                   ],

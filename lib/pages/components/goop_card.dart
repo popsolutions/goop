@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:goop/config/routes.dart';
-import 'package:goop/models/establishment.dart';
-import 'package:goop/models/mission.dart';
 import 'package:goop/models/mission_dto.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
 
 class GoopCard extends StatelessWidget {
-  final MissionModel mission;
-  final EstablishmentModel establishment;
+  //final MissionModel mission;
+  //final EstablishmentModel establishment;
   final MissionDto missionDto;
   final Color border;
   final bool showPrinceAndTime;
@@ -17,9 +15,9 @@ class GoopCard extends StatelessWidget {
 
   const GoopCard({
     Key key,
-    @required this.mission,
-    this.establishment,
-    this.missionDto,
+    //@required this.mission,
+    //this.establishment,
+    @required this.missionDto,
     this.border = GoopColors.grey,
     this.showPrinceAndTime = true,
     this.goToPage = true,
@@ -48,12 +46,12 @@ class GoopCard extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              establishment.name ?? '',
+              missionDto.nameEstablishment ?? '',
               style: Theme.of(context).textTheme.headline3,
             ),
             SizedBox(height: 5),
             Text(
-              establishment.address ?? '',
+              missionDto.addressEstablishment ?? '',
               style: Theme.of(context).textTheme.headline1,
               textAlign: TextAlign.center,
             ),
@@ -65,7 +63,7 @@ class GoopCard extends StatelessWidget {
               ),
             ),
             Text(
-              mission.subject ?? '',
+              missionDto.subject ?? '',
               style: Theme.of(context).textTheme.headline1,
               textAlign: TextAlign.center,
             ),
@@ -89,7 +87,7 @@ class GoopCard extends StatelessWidget {
                         width: 20,
                       ),
                       title: Text(
-                        'R\$ ${mission.reward.toStringAsFixed(2) ?? 0.00}',
+                        'R\$ ${missionDto.reward.toStringAsFixed(2) ?? 0.00}',
                         style: Theme.of(context).textTheme.headline1,
                       ),
                     ),
@@ -104,7 +102,7 @@ class GoopCard extends StatelessWidget {
                         width: 20,
                       ),
                       title: Text(
-                        mission.time ?? '',
+                        missionDto.time ?? '',
                         style: Theme.of(context).textTheme.headline1,
                       ),
                     ),
