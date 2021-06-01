@@ -8,7 +8,7 @@ class EstablishmentService {
 
   Future<List<EstablishmentModel>> getMissionEstablishments() async {
     final response = await _odoo.searchRead(Strings.establishment, [], []);
-    final json = response.getRecords() as List;
+    final List json = response.getRecords();
     return json.map((e) => EstablishmentModel.fromJson(e)).toList();
   }
 }

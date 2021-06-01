@@ -21,6 +21,7 @@ class GoopCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return GestureDetector(
       onTap: !goToPage
           ? null
@@ -42,27 +43,27 @@ class GoopCard extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              missionDto.nameEstablishment ?? '',
+              missionDto.name ?? '',
               style: Theme.of(context).textTheme.headline3,
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 5),
             Text(
-              missionDto.addressEstablishment ?? '',
+              missionDto.address ?? '',
               style: Theme.of(context).textTheme.headline1,
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 5),
             Container(
               width: MediaQuery.of(context).size.width * .7,
-              child: Divider(
-                color: Colors.black,
-              ),
+              child: Divider(color: Colors.black),
             ),
-            Text(
-              missionDto.subject ?? '',
-              style: Theme.of(context).textTheme.headline1,
-              textAlign: TextAlign.center,
+            Container(
+              width: MediaQuery.of(context).size.width * .75,
+              child: Text(
+                missionDto.subject ?? '',
+                style: Theme.of(context).textTheme.headline1,
+              ),
             ),
             Container(
               width: MediaQuery.of(context).size.width * .7,

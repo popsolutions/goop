@@ -7,7 +7,6 @@ import '../../models/login_result.dart';
 
 class LoginServiceImpl {
   final Odoo _odoo;
-
   LoginServiceImpl(this._odoo);
 
   Future<LoginResult> login(LoginDto loginDto) async {
@@ -26,5 +25,6 @@ class LoginServiceImpl {
       throw AuthenticationException("invalid username or password");
     }
     return LoginResult.fromJson(data['result']);
+    
   }
 }

@@ -5,7 +5,6 @@ class MissionDto {
   String name;
   String subject;
   int partnerId;
-  int establishmentId;
   int measurementCount;
   int createByUserId;
   int limit;
@@ -20,11 +19,12 @@ class MissionDto {
   String dateFinished;
   double price;
   String time;
+  int establishmentId;
   String nameEstablishment;
   String addressEstablishment;
   String latitude;
   String longitude;
-  
+
   MissionDto({
     this.id,
     this.name,

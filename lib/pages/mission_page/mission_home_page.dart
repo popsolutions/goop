@@ -11,8 +11,10 @@ import 'package:goop/services/mission/mission_service.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
 import 'package:mobx/mobx.dart';
+import 'package:provider/provider.dart';
 
 import 'mission_controller.dart';
+import 'mission_provider.dart';
 
 class MissionHomePage extends StatefulWidget {
   @override
@@ -21,6 +23,8 @@ class MissionHomePage extends StatefulWidget {
 
 class _MissionHomePageState extends State<MissionHomePage> {
   final _missionsController = MissionController(MissionService(Odoo()));
+  //final _missionsController = Provider.of<MissionProvider>(context);
+
   final _establishmentsController =
       EstablishmentController(EstablishmentService(Odoo()));
 
@@ -54,7 +58,7 @@ class _MissionHomePageState extends State<MissionHomePage> {
               builder: (_) {
                 final responseMissions = _missionsController.missionsRequest;
                 final responseEstablishments =
-                    _establishmentsController.missionsRequest;
+                    _establishmentsController.establishmentsRequest;
 
                 if (responseMissions.status == FutureStatus.rejected ||
                     responseEstablishments.status == FutureStatus.rejected) {
@@ -72,6 +76,7 @@ class _MissionHomePageState extends State<MissionHomePage> {
                 if (missions.isEmpty) {
                   return Center(child: Text('Está vazio'));
                 }
+
                 return ListView.separated(
                   itemCount: missions.length,
                   separatorBuilder: (_, index) => SizedBox(height: 10),
@@ -87,25 +92,24 @@ class _MissionHomePageState extends State<MissionHomePage> {
                         establishmentId: mission.establishmentId,
                         measurementCount: mission.measurementCount,
                         createByUserId: mission.createByUserId,
-                        limit: mission.createByUserId,
-                        priority: mission.createByUserId,
+                        limit: mission.limit,
+                        priority: mission.priority,
                         scores: mission.scores,
                         reward: mission.reward,
                         typeMission: mission.typeMission,
-                        instructions: mission.typeMission,
-                        missionState: mission.typeMission,
-                        address: mission.typeMission,
-                        dateCreated: mission.typeMission,
-                        dateFinished: mission.typeMission,
+                        instructions: mission.instructions,
+                        missionState: mission.missionState,
+                        address: mission.address,
+                        dateCreated: mission.dateCreated,
+                        dateFinished: mission.dateFinished,
                         price: mission.price,
                         time: mission.time,
                         nameEstablishment: establishment.name,
                         addressEstablishment: establishment.address,
                         latitude: establishment.latitude,
                         longitude: establishment.longitude,
+                        id: establishment.id,
                       ),
-                      // mission: mission,
-                      // establishment: establishment,
                     );
                   },
                 );

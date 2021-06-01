@@ -15,7 +15,7 @@ abstract class _EstablishmentControllerBase with Store {
   ObservableFuture<List<EstablishmentModel>> _establishmentsRequest =
       ObservableFuture.value(null);
 
-  ObservableFuture<List<EstablishmentModel>> get missionsRequest =>
+  ObservableFuture<List<EstablishmentModel>> get establishmentsRequest =>
       _establishmentsRequest;
 
   @action

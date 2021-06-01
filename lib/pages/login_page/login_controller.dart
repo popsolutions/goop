@@ -33,4 +33,9 @@ abstract class _LoginControllerBase with Store {
         ))
         .asObservable();
   }
+
+  Future loadMissions() async {
+    
+  }
+
 }
