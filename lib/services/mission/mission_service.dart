@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:goop/config/http/odoo_api.dart';
 import 'package:goop/models/establishment.dart';
 import 'package:goop/models/mission.dart';
@@ -20,15 +19,9 @@ class MissionService {
     final List json = response.getRecords();
     final mapa = json.map((e) => MissionModel.fromJson(e)).toList();
 
-    // for (var c = 0; c < 200; c++) {
-    //   mapa.add(mapa[0]);
-    //   mapa.add(mapa[1]);
-    // }
-
     for (var c = 0; c < mapa.length; c++) {
       setMission(mapa[c], c);
     }
-
     return mapa;
   }
 

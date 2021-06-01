@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import '../config/http/odoo_api.dart';
 import '../pages/mission_page/mission_controller.dart';
 import 'establishment/establishment_controller.dart';
@@ -11,7 +9,8 @@ class ServiceNotifier {
 
   final missionsController = MissionController(MissionService(Odoo()));
 
-  final establishmentsController = EstablishmentController(EstablishmentService(Odoo()));
+  final establishmentsController =
+      EstablishmentController(EstablishmentService(Odoo()));
 
   init() async {
     if (initialization == true) return;
@@ -19,7 +18,5 @@ class ServiceNotifier {
     missionsController.load();
     establishmentsController.load();
     initialization = true;
-
   }
-
 }
