@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:goop/config/http/odoo_api.dart';
 import 'package:goop/models/establishment.dart';
 import 'package:goop/models/mission.dart';
@@ -17,24 +19,29 @@ class MissionService {
     );
     final List json = response.getRecords();
     final mapa = json.map((e) => MissionModel.fromJson(e)).toList();
-    await getOpenMissions(mapa);
+
+    // for (var c = 0; c < 200; c++) {
+    //   mapa.add(mapa[0]);
+    //   mapa.add(mapa[1]);
+    // }
+
+    for (var c = 0; c < mapa.length; c++) {
+      setMission(mapa[c], c);
+    }
+
     return mapa;
   }
 
-  //
-  Future<dynamic> getOpenMissions(List<MissionModel> lista) async {
-    for (var c = 0; c < lista.length; c++) {
-      final element = lista[c];
-      final response = await _odoo.searchRead(
-        Strings.establishment,
-        [
-          ['id', '=', element.establishmentId]
-        ],
-        [],
-      );
-      final List json = response.getRecords();
-      final mapa = json.map((e) => EstablishmentModel.fromJson(e)).toList();
-      element.address = mapa[0].address;
-    }
+  void setMission(MissionModel mission, int c) async {
+    final response = await _odoo.searchRead(
+      Strings.establishment,
+      [
+        ['id', '=', mission.establishmentId]
+      ],
+      [],
+    );
+    final List json = response.getRecords();
+    final mapa = json.map((e) => EstablishmentModel.fromJson(e)).toList();
+    mission.address = mapa[0].address;
   }
 }
