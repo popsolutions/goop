@@ -3,17 +3,22 @@ import 'package:flutter/services.dart';
 import 'package:goop/config/app/authentication_controller.dart';
 import 'package:goop/config/routes.dart';
 import 'package:goop/config/widgets_router.dart';
+import 'package:goop/services/ServiceNotifier.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:provider/provider.dart';
 
 void main() {
   final authenticationController = AuthenticationController();
-  runApp(MyApp(authenticationController: authenticationController));
+  final ServiceNotifier serviceNotifier = ServiceNotifier();
+
+  runApp(MyApp(authenticationController: authenticationController, serviceNotifier: serviceNotifier));
 }
 
 class MyApp extends StatelessWidget {
   final AuthenticationController authenticationController;
-  MyApp({Key key, this.authenticationController}) : super(key: key);
+  final ServiceNotifier serviceNotifier;
+
+  MyApp({Key key, this.authenticationController, this.serviceNotifier}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -22,6 +27,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider(create: (_) => authenticationController),
+        Provider(create: (_) => serviceNotifier),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

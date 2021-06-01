@@ -5,6 +5,7 @@ import 'package:goop/config/http/odoo_api.dart';
 import 'package:goop/models/mission_dto.dart';
 import 'package:goop/pages/components/goop_card.dart';
 import 'package:goop/pages/components/goop_drawer.dart';
+import 'package:goop/services/ServiceNotifier.dart';
 import 'package:goop/services/establishment/establishment_controller.dart';
 import 'package:goop/services/establishment/establishment_service.dart';
 import 'package:goop/services/mission/mission_service.dart';
@@ -22,21 +23,26 @@ class MissionHomePage extends StatefulWidget {
 }
 
 class _MissionHomePageState extends State<MissionHomePage> {
-  final _missionsController = MissionController(MissionService(Odoo()));
+  MissionController _missionsController = null;
   //final _missionsController = Provider.of<MissionProvider>(context);
 
-  final _establishmentsController =
-      EstablishmentController(EstablishmentService(Odoo()));
+  EstablishmentController _establishmentsController = null;
 
   @override
   void initState() {
     super.initState();
-    _missionsController.load();
-    _establishmentsController.load();
   }
 
   @override
   Widget build(BuildContext context) {
+
+    ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context);
+
+    if (_missionsController == null) {
+      _missionsController = serviceNotifier.missionsController;
+      _establishmentsController = serviceNotifier.establishmentsController;
+    }
+
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: GoopColors.red),

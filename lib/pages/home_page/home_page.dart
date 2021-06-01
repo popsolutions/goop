@@ -4,10 +4,16 @@ import 'package:goop/pages/components/goop_drawer.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:provider/provider.dart';
+import 'package:goop/services/ServiceNotifier.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context);
+    serviceNotifier.init();
+
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: GoopColors.red),
