@@ -30,7 +30,7 @@ class _MissionHomePageState extends State<MissionHomePage> {
   @override
   Widget build(BuildContext context) {
     ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context);
-
+    
     if (_missionsController == null) {
       _missionsController = serviceNotifier.missionsController;
       _establishmentsController = serviceNotifier.establishmentsController;
