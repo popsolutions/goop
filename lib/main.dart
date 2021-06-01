@@ -7,13 +7,10 @@ import 'package:goop/utils/goop_colors.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  final authenticationController = AuthenticationController();
-  runApp(MyApp(authenticationController: authenticationController));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final AuthenticationController authenticationController;
-  MyApp({Key key, this.authenticationController}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -21,7 +18,9 @@ class MyApp extends StatelessWidget {
     );
     return MultiProvider(
       providers: [
-        Provider(create: (_) => authenticationController),
+        Provider<AuthenticationController>(
+          create: (_) => AuthenticationController(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

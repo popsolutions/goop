@@ -11,10 +11,8 @@ import 'package:goop/services/mission/mission_service.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
 import 'package:mobx/mobx.dart';
-import 'package:provider/provider.dart';
 
 import 'mission_controller.dart';
-import 'mission_provider.dart';
 
 class MissionHomePage extends StatefulWidget {
   @override
