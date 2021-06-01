@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:goop/config/http/odoo_api.dart';
 import 'package:goop/models/mission_dto.dart';
 import 'package:goop/pages/components/goop_card.dart';
 import 'package:goop/pages/components/goop_drawer.dart';
+import 'package:goop/services/ServiceNotifier.dart';
 import 'package:goop/services/establishment/establishment_controller.dart';
-import 'package:goop/services/establishment/establishment_service.dart';
-import 'package:goop/services/mission/mission_service.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
 import 'package:mobx/mobx.dart';
+import 'package:provider/provider.dart';
 
 import 'mission_controller.dart';
 
@@ -20,21 +19,23 @@ class MissionHomePage extends StatefulWidget {
 }
 
 class _MissionHomePageState extends State<MissionHomePage> {
-  final _missionsController = MissionController(MissionService(Odoo()));
-  //final _missionsController = Provider.of<MissionProvider>(context);
-
-  final _establishmentsController =
-      EstablishmentController(EstablishmentService(Odoo()));
+  MissionController _missionsController;
+  EstablishmentController _establishmentsController;
 
   @override
   void initState() {
     super.initState();
-    _missionsController.load();
-    _establishmentsController.load();
   }
 
   @override
   Widget build(BuildContext context) {
+    ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context);
+    
+    if (_missionsController == null) {
+      _missionsController = serviceNotifier.missionsController;
+      _establishmentsController = serviceNotifier.establishmentsController;
+    }
+
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: GoopColors.red),
