@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:goop/config/app/authentication_controller.dart';
 import 'package:goop/config/routes.dart';
 import 'package:goop/config/widgets_router.dart';
+import 'package:goop/services/ServiceNotifier.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +21,9 @@ class MyApp extends StatelessWidget {
       providers: [
         Provider<AuthenticationController>(
           create: (_) => AuthenticationController(),
+        ),
+        Provider<ServiceNotifier>(
+          create: (_) => ServiceNotifier(),
         ),
       ],
       child: MaterialApp(

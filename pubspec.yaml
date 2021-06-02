@@ -11,7 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  shared_preferences: ^0.5.12+4
+  shared_preferences:
   uuid: ^2.2.2
   http: ^0.12.2
   rxdart: ^0.25.0
