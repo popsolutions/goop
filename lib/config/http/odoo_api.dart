@@ -198,7 +198,10 @@ class Odoo {
     _headers["Content-type"] = "application/json; charset=UTF-8";
     _headers["Cookie"] = prefs.getString(Constants.SESSION);
     print("------------------------------------------->>>>");
-    print("REQUEST: $url");
+    print("REQUEST: $url\n");
+    print("BODY:\n $body\n");
+    print("HEADERS:");
+    _headers.forEach((key, value) {print(key + ':' + value + '\n');});
     print("------------------------------------------->>>>");
     final response =
         await _client.post(Uri.parse(url), body: body, headers: _headers);
