@@ -5,6 +5,8 @@ import 'package:goop/models/mission_dto.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
 
+import '../../services/ServiceNotifier.dart';
+
 class GoopCard extends StatelessWidget {
   final MissionDto missionDto;
   final Color border;

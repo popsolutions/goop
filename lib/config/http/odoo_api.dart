@@ -200,8 +200,8 @@ class Odoo {
     print("------------------------------------------->>>>");
     print("REQUEST: $url\n");
     print("BODY:\n $body\n");
-    print("HEADERS:");
-    _headers.forEach((key, value) {print(key + ':' + value + '\n');});
+    print("HEADERS.:");
+    _headers.forEach((key, value) {print(key + ':' + (value ?? '') + '\n');});
     print("------------------------------------------->>>>");
     final response =
         await _client.post(Uri.parse(url), body: body, headers: _headers);

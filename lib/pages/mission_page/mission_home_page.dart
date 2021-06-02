@@ -108,6 +108,7 @@ class _MissionHomePageState extends State<MissionHomePage> {
                         latitude: establishment.latitude,
                         longitude: establishment.longitude,
                         id: establishment.id,
+                        listActivity: mission.listActivity
                       ),
                     );
                   },

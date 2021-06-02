@@ -1,3 +1,4 @@
+import 'package:goop/models/activity.dart';
 import 'package:goop/models/user_profile.dart';
 
 class MissionModel {
@@ -20,6 +21,8 @@ class MissionModel {
   String dateFinished;
   double price;
   String time;
+
+  List<Activity> listActivity = <Activity>[];
 
   MissionModel({
     this.id,

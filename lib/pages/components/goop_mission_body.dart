@@ -20,6 +20,8 @@ class _GoopMissionBodyState extends State<GoopMissionBody> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.missionDto.listActivity.length);
+
     final TextStyle theme = Theme.of(context).textTheme.headline2;
 
     return Column(
