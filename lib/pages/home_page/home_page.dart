@@ -10,7 +10,6 @@ import 'package:goop/services/ServiceNotifier.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context);
     serviceNotifier.init();
 
@@ -49,16 +48,6 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-
-      // Container(
-      //   height: double.infinity,
-      //   width: double.infinity,
-      //   child: Image.asset(
-      //     //TODO: DEVERÁ SER SUBSTITUÍDO PELO MAPA REAL
-      //     GoopImages.map,
-      //     fit: BoxFit.cover,
-      //   ),
-      // ),
     );
   }
 }
