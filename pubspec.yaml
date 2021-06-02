@@ -17,7 +17,7 @@ dependencies:
   rxdart:
   flutter_mobx:
   mobx:
-  # flutter_map:
+  flutter_map:
   cpf_cnpj_validator:
   email_validator: ^2.0.1
   mask_text_input_formatter: ^1.2.1
