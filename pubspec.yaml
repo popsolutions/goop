@@ -12,26 +12,25 @@ dependencies:
   flutter:
     sdk: flutter
   shared_preferences: ^0.5.12+4
-  uuid: ^2.2.2
-  http: ^0.12.2
-  rxdart: ^0.25.0
-  flutter_mobx: ^1.1.0+2
-  mobx: ^1.2.1+4
-  data_connection_checker:
-  cpf_cnpj_validator: ^1.0.5
-  email_validator: ^1.0.6
+  uuid:
+  http:
+  rxdart:
+  flutter_mobx:
+  mobx:
+  # flutter_map:
+  cpf_cnpj_validator:
+  email_validator: ^2.0.1
   mask_text_input_formatter: ^1.2.1
-  flutter_svg: ^0.19.3
-  image_picker: ^0.6.7+22
-  provider: ^4.3.3
-  latlng: ^0.0.2
-  flutter_map: ^0.12.0
+  flutter_svg:
+  image_picker:
+  provider:
+  latlng:
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  mobx_codegen: ^1.1.2
+  mobx_codegen:
   build_runner:
 
 flutter:
