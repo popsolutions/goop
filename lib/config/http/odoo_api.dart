@@ -188,19 +188,7 @@ class Odoo {
   }
 
   Future<OdooResponse> callRequest(String url, Map payload) async {
-    var body = json.encode(payload);
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    _headers["Content-type"] = "application/json; charset=UTF-8";
-    _headers["Cookie"] = prefs.getString("session");
-    print("------------------------------------------->>>");
-    print("REQUEST: $url");
-    print("------------------------------------------->>>");
-    final response =
-        await _client.post(Uri.parse(url), body: body, headers: _headers);
-    _updateCookies(response);
-    print("<<<<============================================");
-    print("RESPONSE: ${response.body}");
-    print("<<<<============================================");
+    final response = await callDbRequest(url, payload);
     return new OdooResponse(json.decode(response.body), response.statusCode);
   }
 
