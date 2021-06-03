@@ -4,6 +4,7 @@ import 'package:goop/models/activity.dart';
 import 'package:goop/models/establishment.dart';
 import 'package:goop/models/mission.dart';
 import 'package:goop/services/constants.dart';
+import 'package:goop/utils/ClassConstants.dart';
 
 class MissionService {
   final Odoo _odoo;
@@ -41,9 +42,9 @@ class MissionService {
   }
 
   void setMissionActivityList(List<MissionModel> listMissionModel) async {
-    await setMissionActivity(listMissionModel, Strings.photoLines, 'Photo');
-    await setMissionActivity(listMissionModel, Strings.popsQuizz, 'Quizz');
-    // await setMissionActivity(listMissionModel, Strings.price_comparison, 'Price_Comparison');
+    setMissionActivity(listMissionModel, Strings.photoLines, ActivityTypeConsts.Photo);
+    setMissionActivity(listMissionModel, Strings.popsQuizz, ActivityTypeConsts.Quizz);
+    setMissionActivity(listMissionModel, Strings.price_comparison, ActivityTypeConsts.Price_Comparison);
   }
 
   void setMissionActivity(List<MissionModel> listMissionModel, String model, String activityType) async {
@@ -58,12 +59,10 @@ class MissionService {
       List<Activity> listActivity = [];
 
       json.forEach((element) {
-        Activity activity = Activity.fromJson(element);
+        Activity activity = Activity.fromJson(element, activityType);
 
         if (activity != null) listActivity.add(activity);
       });
-
-      // final listActivity = json.map((e) =>  Activity.fromJson(e)).toList();
 
       for (var i = 0; i < listMissionModel.length; i++) {
         for (var j = 0; j < listActivity.length; j++) {
