@@ -90,7 +90,12 @@ class GoopDrawer extends StatelessWidget {
                         Flexible(
                           child: GoopButton(
                             text: 'Mapa',
-                            action: () {},
+                            action: () {
+                              Navigator.pushNamed(
+                                context,
+                                Routes.home,
+                              );
+                            },
                           ),
                         ),
                       ],

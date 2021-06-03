@@ -57,4 +57,9 @@ class Activity {
         last_update: valueOrNull(map['last_update']),
         activityType: activityType);
   }
+
+  bool isPhoto() => activityType == ActivityTypeConsts.Photo;
+  bool isQuizz() => activityType == ActivityTypeConsts.Quizz;
+  bool isPriceComparison() =>
+      activityType == ActivityTypeConsts.Price_Comparison;
 }
