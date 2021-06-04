@@ -1,4 +1,4 @@
-
+// ignore_for_file: non_constant_identifier_names
 class MeasurementModel {
   int id;
   int mission_Id;
@@ -36,7 +36,8 @@ class MeasurementModel {
   String displayName;
   String lastUpdate; //original name "__last_update"
 
-  MeasurementModel({this.id,
+  MeasurementModel({
+    this.id,
     this.mission_Id,
     this.name,
     this.partner_Id,
@@ -68,21 +69,22 @@ class MeasurementModel {
     this.writeDate,
     this.kanbanStateLabel,
     this.displayName,
-    this.lastUpdate});
+    this.lastUpdate,
+  });
 
   MeasurementModel.fromJson(Map<String, dynamic> json) {
-    void intListAdd(String fieldName, List<int> list){
+    void intListAdd(String fieldName, List<int> list) {
       json[fieldName].forEach((s) => list.add(s as int));
     }
 
-    String getArrJson(String fieldName, int index){
+    String getArrJson(String fieldName, int index) {
       if ((json[fieldName] is bool) || (json[fieldName] == null))
         return null;
       else
         return json[fieldName][index].toString();
     }
 
-    int getArrJsonInt(String fieldName, int index){
+    int getArrJsonInt(String fieldName, int index) {
       if ((json[fieldName] is bool) || (json[fieldName] == null))
         return null;
       else
@@ -92,7 +94,7 @@ class MeasurementModel {
     id = json['id'];
     mission_Id = getArrJsonInt('missions_id', 0);
     name = json['name'];
-    partner_Id =  getArrJsonInt('partner_id', 0);
+    partner_Id = getArrJsonInt('partner_id', 0);
     partner_Name = getArrJson('partner_id', 1);
 
     state = json['state'];
@@ -160,9 +162,6 @@ class MeasurementModel {
     data['display_name'] = this.displayName;
     data['__last_update'] = this.lastUpdate;
     return data;
-
-
-
   }
 }
 

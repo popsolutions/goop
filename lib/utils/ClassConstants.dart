@@ -1,5 +1,5 @@
 class ActivityTypeConsts {
-  static String Quizz = 'Quizz';
-  static String Photo = 'Photo';
-  static String Price_Comparison  = 'Price_Comparison';
+  static const String Quizz = 'Quizz';
+  static const String Photo = 'Photo';
+  static const String Price_Comparison  = 'Price_Comparison';
 }

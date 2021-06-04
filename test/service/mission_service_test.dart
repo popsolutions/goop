@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:goop/config/http/odoo_api.dart';
 import 'package:goop/models/AlternativeModel.dart';
@@ -18,12 +15,11 @@ import 'package:goop/services/mission/mission_service.dart';
 import 'package:goop/utils/utils.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:developer';
 
 void main() {
   // Odoo _odoo ;
   bool isInit = false;
-  MissionService missionService = new MissionService();
+  MissionService missionService = new MissionService(Odoo());
   MeasurementService measurementService = new MeasurementService();
   UserServiceImpl userServiceImpl = new UserServiceImpl(Odoo());
   AlternativeService alternativeService = new AlternativeService();
@@ -42,13 +38,14 @@ void main() {
     LoginDto loginDto = LoginDto('support@popsolutions.co', '1ND1C0p4c1f1c0');
 
     currentLoginResult = await login.login(loginDto);
-    currentUser = await userServiceImpl.getUserFromLoginResult(currentLoginResult);
+    currentUser =
+        await userServiceImpl.getUserFromLoginResult(currentLoginResult);
     isInit = true;
   }
 
   Future<List<MissionModel>> getMission() async {
-    await init();
-    MissionService missionService = new MissionService();
+    init();
+    MissionService missionService = new MissionService(Odoo());
     List<MissionModel> listMissionModel = await missionService.getMissions();
     return listMissionModel;
   }
@@ -65,19 +62,20 @@ void main() {
 
     missionModel.name = 'Missão 4';
 
-    await missionService.updateMissionModel(missionModel);
+    missionService.updateMissionModel(missionModel);
 
     print(missionModel.toString());
   });
 
   test('Measurement.getMeasurementModelById', () async {
-    await init();
-    MeasurementModel measurementModel = await measurementService.getMeasurementModelById(140);
+    init();
+    MeasurementModel measurementModel =
+        await measurementService.getMeasurementModelById(140);
     print(JSONToStringWrapQuotClear(measurementModel.toJson()));
   });
 
   test('Measurement.insert', () async {
-    await init();
+    init();
     MeasurementModel measurementModelInsert = MeasurementModel(
         id: null,
         mission_Id: 74,
@@ -111,10 +109,10 @@ void main() {
         writeDate: "2021-05-31 21:12:27",
         kanbanStateLabel: "Pending",
         displayName: "MEAS8-display name insert test",
-        lastUpdate: null
-    );
+        lastUpdate: null);
 
-    MeasurementModel measurementModel = await measurementService.insertAndGet(measurementModelInsert);
+    MeasurementModel measurementModel =
+        await measurementService.insertAndGet(measurementModelInsert);
 
     print(JSONToStringWrapQuotClear(measurementModel.toJson()));
 
@@ -122,12 +120,13 @@ void main() {
     print('INSERT OK!');
   });
 
-  test('AlternativeService.listAlternativeModelLoad', () async{
-    await init();
-    List<AlternativeModel> listAlternativeModel = await alternativeService.getAlternativeService();
+  test('AlternativeService.listAlternativeModelLoad', () async {
+    init();
+    List<AlternativeModel> listAlternativeModel =
+        await alternativeService.getAlternativeService();
     print('::listAlternativeModel');
-    listAlternativeModel.forEach((element) {print(element.toJson());});
-
+    listAlternativeModel.forEach((element) {
+      print(element.toJson());
+    });
   });
-
 }

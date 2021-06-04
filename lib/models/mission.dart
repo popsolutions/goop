@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:goop/models/activity.dart';
 import 'package:goop/models/user_profile.dart';

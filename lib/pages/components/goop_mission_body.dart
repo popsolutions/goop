@@ -4,7 +4,6 @@ import 'package:goop/config/routes.dart';
 import 'package:goop/models/mission_dto.dart';
 import 'package:goop/pages/components/goop_card.dart';
 import 'package:goop/services/ServiceNotifier.dart';
-import 'package:goop/utils/ClassConstants.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
 import 'package:provider/provider.dart';

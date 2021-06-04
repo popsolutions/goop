@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-
 class AlternativeModel {
   int id;
   String name;
@@ -10,14 +7,14 @@ class AlternativeModel {
     this.name,
   });
 
-
-  factory AlternativeModel.fromJson(Map<String, dynamic> json) => AlternativeModel(
-    id: json["id"],
-    name: json["name"],
-  );
+  factory AlternativeModel.fromJson(Map<String, dynamic> json) =>
+      AlternativeModel(
+        id: json["id"],
+        name: json["name"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-  };
+        "id": id,
+        "name": name,
+      };
 }
