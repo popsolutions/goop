@@ -84,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context);
+    serviceNotifier = Provider.of<ServiceNotifier>(context);
 
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
