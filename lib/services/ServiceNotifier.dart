@@ -1,3 +1,5 @@
+import 'package:goop/models/user.dart';
+
 import '../config/http/odoo_api.dart';
 import '../pages/mission_page/mission_controller.dart';
 import 'establishment/establishment_controller.dart';
@@ -5,7 +7,10 @@ import 'establishment/establishment_service.dart';
 import 'mission/mission_service.dart';
 
 class ServiceNotifier {
+  //ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context);
+
   bool initialization = false;
+  User currentUser;
 
   final missionsController = MissionController(MissionService(Odoo()));
 

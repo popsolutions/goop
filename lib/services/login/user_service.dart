@@ -1,4 +1,6 @@
+import 'package:goop/models/login_result.dart';
 import 'package:goop/models/update_user.dart';
+import 'package:goop/models/user.dart';
 import 'package:goop/models/user_profile.dart';
 
 import '../../config/http/odoo_api.dart';
@@ -51,6 +53,38 @@ class UserServiceImpl {
       updateProfileDto.toJson(),
     );
     print(response);
+  }
+
+  Future<User> getUserFromLoginResult(LoginResult loginResult) async {
+    final userProfile = await findProfile(loginResult.partnerId,);
+
+    return
+      User(
+        companyId: loginResult.companyId,
+        phone: userProfile.phone,
+        isAdmin: loginResult.isAdmin,
+        name: loginResult.name,
+        partnerDisplayName: loginResult.partnerDisplayName,
+        partnerId: loginResult.partnerId,
+        sessionId: loginResult.sessionId,
+        uid: loginResult.uid,
+        userCompanies: loginResult.userCompanies,
+        username: loginResult.username,
+        birthdate: userProfile.birthdate,
+        city: userProfile.city,
+        cnpjCpf: userProfile.cnpjCpf,
+        district: userProfile.district,
+        educationLevel: userProfile.educationLevel,
+        email: userProfile.email,
+        function: userProfile.function,
+        gender: userProfile.gender,
+        image: userProfile.image,
+        missionsCount: userProfile.missionsCount,
+        mobile: userProfile.mobile,
+        signupUrl: userProfile.signupUrl,
+        state: userProfile.state,
+        street: userProfile.street,
+      );
   }
 
   /*
