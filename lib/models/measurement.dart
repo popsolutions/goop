@@ -3,7 +3,7 @@ class MeasurementModel {
   int id;
   int mission_Id;
   String name;
-  int partner_Id;
+  int partner_Id; //vendor
   String partner_Name;
   String state;
   String dateStarted;

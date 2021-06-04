@@ -7,4 +7,6 @@ class Strings {
   static const String photoLines = 'pops.photo.lines';
   static const String popsQuizz = 'pops.quizz';
   static const String price_comparison = 'pops.price_comparison';
+  static const String popsAlternative = 'pops.alternative';
+
 }
