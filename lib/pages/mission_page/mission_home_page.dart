@@ -73,6 +73,7 @@ class _MissionHomePageState extends State<MissionHomePage> {
                 }
 
                 return ListView.separated(
+                  physics: BouncingScrollPhysics(),
                   itemCount: missions.length,
                   separatorBuilder: (_, index) => SizedBox(height: 10),
                   itemBuilder: (_, index) {
