@@ -91,9 +91,10 @@ class GoopDrawer extends StatelessWidget {
                           child: GoopButton(
                             text: 'Mapa',
                             action: () {
-                              Navigator.pushNamed(
+                              Navigator.pushNamedAndRemoveUntil(
                                 context,
                                 Routes.home,
+                                (route) => false,
                               );
                             },
                           ),
@@ -127,16 +128,20 @@ class GoopDrawer extends StatelessWidget {
                         title: 'Configurações',
                         img: GoopImages.settings,
                         action: () {
-                          Navigator.pushNamed(context, Routes.settings);
+                          Navigator.pushNamed(
+                            context,
+                            Routes.settings,
+                          );
                         },
                       ),
                       SizedBox(height: 20),
                       goopTile(
                         title: 'Sair',
                         img: GoopImages.quit,
-                        action: () => Navigator.popAndPushNamed(
+                        action: () => Navigator.pushNamedAndRemoveUntil(
                           context,
                           Routes.initial,
+                          (route) => false,
                         ),
                       ),
                     ],
