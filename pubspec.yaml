@@ -32,6 +32,14 @@ dev_dependencies:
     sdk: flutter
   mobx_codegen:
   build_runner:
+  flutter_native_splash: ^0.3.2
+
+flutter_native_splash:
+  color: '#DF0047'
+  image: 'assets/images/logo.png'
+  android: true
+  ios: true
+  web: true
 
 flutter:
   uses-material-design: true
