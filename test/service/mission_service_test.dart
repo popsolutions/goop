@@ -15,15 +15,15 @@ import 'package:goop/services/login/login_service.dart';
 import 'package:goop/services/login/user_service.dart';
 import 'package:goop/services/measurementService.dart';
 import 'package:goop/services/mission/mission_service.dart';
+import 'package:goop/utils/global.dart';
 import 'package:goop/utils/utils.dart';
 
-import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:developer';
 
 void main() {
-  // Odoo _odoo ;
+  Odoo _odoo ;
   bool isInit = false;
-  MissionService missionService = new MissionService();
+  MissionService missionService = new MissionService(Odoo());
   MeasurementService measurementService = new MeasurementService();
   UserServiceImpl userServiceImpl = new UserServiceImpl(Odoo());
   AlternativeService alternativeService = new AlternativeService();
@@ -31,57 +31,76 @@ void main() {
   LoginResult currentLoginResult;
   User currentUser;
 
-  void init() async {
-    if (isInit) return;
-
-    const String _key = Constants.SESSION;
-    const String _prefixedKey = 'flutter.' + _key;
-    SharedPreferences.setMockInitialValues(<String, dynamic>{_prefixedKey: ''});
-
+  void initLogin() async {
     LoginServiceImpl login = LoginServiceImpl(Odoo());
     LoginDto loginDto = LoginDto('support@popsolutions.co', '1ND1C0p4c1f1c0');
 
     currentLoginResult = await login.login(loginDto);
     currentUser = await userServiceImpl.getUserFromLoginResult(currentLoginResult);
+  }
+
+  void init() async {
+    if (isInit) return;
+
+    prefsGoop.init(true);
+
+    await initLogin();
+
     isInit = true;
   }
 
-  Future<List<MissionModel>> getMission() async {
+  setUp(() {
+    print('test Start');
+  });
+
+  setUpAll(() async {
     await init();
-    MissionService missionService = new MissionService();
+    print('Start all');
+  });
+
+  tearDown(() {
+    print('test end');
+  });
+
+  tearDownAll(() {
+    print('End All');
+  });
+
+  Future<List<MissionModel>> getMission() async {
+    MissionService missionService = new MissionService(Odoo());
     List<MissionModel> listMissionModel = await missionService.getMissions();
     return listMissionModel;
   }
 
-  test('missionService.getMissions', () async {
-    List<MissionModel> listMissionModel = await getMission();
-    print(listMissionModel.length.toString());
-  });
+  group('mission', () {
+    test('missionService.getMissions', () async {
+      List<MissionModel> listMissionModel = await getMission();
+      print(listMissionModel.length.toString());
+    });
 
-  test('mission.update', () async {
-    List<MissionModel> listMissionModel = await getMission();
-    MissionModel missionModel = listMissionModel[3];
-    print('::missionModel');
+    test('mission.update', () async {
+      List<MissionModel> listMissionModel = await getMission();
+      MissionModel missionModel = listMissionModel[3];
+      print('::missionModel');
 
-    missionModel.name = 'Missão 4';
+      missionModel.name = 'Missão 4';
 
-    await missionService.updateMissionModel(missionModel);
+      await missionService.updateMissionModel(missionModel);
 
-    print(missionModel.toString());
+      print(missionModel.toString());
+    });
   });
 
   test('Measurement.getMeasurementModelById', () async {
-    await init();
     MeasurementModel measurementModel = await measurementService.getMeasurementModelById(140);
     print(JSONToStringWrapQuotClear(measurementModel.toJson()));
   });
 
   test('Measurement.insert', () async {
-    await init();
     MeasurementModel measurementModelInsert = MeasurementModel(
         id: null,
         mission_Id: 74,
-        name: 'Teste Insert - vendor test-Pedro',
+        name: 'Teste Insert - vendor test-quizz',
         partner_Id: currentUser.partnerId,
         partner_Name: null,
         state: 'done',
@@ -111,8 +130,7 @@ void main() {
         writeDate: "2021-05-31 21:12:27",
         kanbanStateLabel: "Pending",
         displayName: "MEAS8-display name insert test",
-        lastUpdate: null
-    );
+        lastUpdate: null);
 
     MeasurementModel measurementModel = await measurementService.insertAndGet(measurementModelInsert);
 
@@ -122,12 +140,11 @@ void main() {
     print('INSERT OK!');
   });
 
-  test('AlternativeService.listAlternativeModelLoad', () async{
-    await init();
+  test('AlternativeService.listAlternativeModelLoad', () async {
     List<AlternativeModel> listAlternativeModel = await alternativeService.getAlternativeService();
     print('::listAlternativeModel');
-    listAlternativeModel.forEach((element) {print(element.toJson());});
-
+    listAlternativeModel.forEach((element) {
+      print(element.toJson());
+    });
   });
-
 }
