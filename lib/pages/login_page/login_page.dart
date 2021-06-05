@@ -8,6 +8,7 @@ import 'package:goop/pages/components/goop_back.dart';
 import 'package:goop/pages/components/goop_button.dart';
 import 'package:goop/pages/components/goop_text_form_field.dart';
 import 'package:goop/pages/login_page/login_controller.dart';
+import 'package:goop/services/ServiceNotifier.dart';
 import 'package:goop/services/login/login_service.dart';
 import 'package:goop/services/login/user_service.dart';
 import 'package:goop/services/login/login_facade_impl.dart';
@@ -23,6 +24,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  ServiceNotifier serviceNotifier;
   AuthenticationController _authenticationController;
   LoginController _loginController;
   ReactionDisposer _loginReaction;
@@ -68,6 +70,8 @@ class _LoginPageState extends State<LoginPage> {
 
   void _onSuccess() {
     final user = _loginController.loginRequest.value;
+    serviceNotifier.currentUser = user;
+
     _authenticationController.authenticate(user);
     Navigator.pushNamedAndRemoveUntil(
       context,
@@ -80,6 +84,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    serviceNotifier = Provider.of<ServiceNotifier>(context);
+
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
       child: Scaffold(

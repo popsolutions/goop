@@ -10,7 +10,7 @@ import 'package:goop/services/ServiceNotifier.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context);
+    final serviceNotifier = Provider.of<ServiceNotifier>(context);
     serviceNotifier.init();
 
     return Scaffold(

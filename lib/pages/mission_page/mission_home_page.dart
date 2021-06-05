@@ -30,7 +30,7 @@ class _MissionHomePageState extends State<MissionHomePage> {
   @override
   Widget build(BuildContext context) {
     ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context);
-    
+
     if (_missionsController == null) {
       _missionsController = serviceNotifier.missionsController;
       _establishmentsController = serviceNotifier.establishmentsController;
@@ -48,10 +48,6 @@ class _MissionHomePageState extends State<MissionHomePage> {
       drawer: GoopDrawer(),
       body: Column(
         children: [
-          SvgPicture.asset(
-            GoopImages.rocket,
-            width: MediaQuery.of(context).size.width * .9,
-          ),
           Expanded(
             child: Observer(
               builder: (_) {
@@ -77,38 +73,49 @@ class _MissionHomePageState extends State<MissionHomePage> {
                 }
 
                 return ListView.separated(
+                  physics: BouncingScrollPhysics(),
                   itemCount: missions.length,
                   separatorBuilder: (_, index) => SizedBox(height: 10),
                   itemBuilder: (_, index) {
                     final mission = missions[index];
                     final establishment = establishments[index];
 
-                    return GoopCard(
-                      missionDto: MissionDto(
-                        name: mission.name,
-                        subject: mission.subject,
-                        partnerId: mission.partnerId,
-                        establishmentId: mission.establishmentId,
-                        measurementCount: mission.measurementCount,
-                        createByUserId: mission.createByUserId,
-                        limit: mission.limit,
-                        priority: mission.priority,
-                        scores: mission.scores,
-                        reward: mission.reward,
-                        typeMission: mission.typeMission,
-                        instructions: mission.instructions,
-                        missionState: mission.missionState,
-                        address: mission.address,
-                        dateCreated: mission.dateCreated,
-                        dateFinished: mission.dateFinished,
-                        price: mission.price,
-                        time: mission.time,
-                        nameEstablishment: establishment.name,
-                        addressEstablishment: establishment.address,
-                        latitude: establishment.latitude,
-                        longitude: establishment.longitude,
-                        id: establishment.id,
-                      ),
+                    return Column(
+                      children: [
+                        if (index == 0)
+                          SvgPicture.asset(
+                            GoopImages.rocket,
+                            width: MediaQuery.of(context).size.width * .9,
+                          ),
+                        GoopCard(
+                          missionDto: MissionDto(
+                            name: mission.name,
+                            subject: mission.subject,
+                            partnerId: mission.partnerId,
+                            establishmentId: mission.establishmentId,
+                            measurementCount: mission.measurementCount,
+                            createByUserId: mission.createByUserId,
+                            limit: mission.limit,
+                            priority: mission.priority,
+                            scores: mission.scores,
+                            reward: mission.reward,
+                            typeMission: mission.typeMission,
+                            instructions: mission.instructions,
+                            missionState: mission.missionState,
+                            address: mission.address,
+                            dateCreated: mission.dateCreated,
+                            dateFinished: mission.dateFinished,
+                            price: mission.price,
+                            time: mission.time,
+                            nameEstablishment: establishment.name,
+                            addressEstablishment: establishment.address,
+                            latitude: establishment.latitude,
+                            longitude: establishment.longitude,
+                            id: establishment.id,
+                            listActivity: mission.listActivity,
+                          ),
+                        ),
+                      ],
                     );
                   },
                 );

@@ -21,15 +21,14 @@ class GoopCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return GestureDetector(
       onTap: !goToPage
           ? null
           : () {
               Navigator.pushNamed(
-                context, Routes.mission_about,
+                context,
+                Routes.mission_about,
                 arguments: missionDto,
-                //TODO: FAZER COM QUE PASSE O DTO PARA PROXIMA PAGINA
               );
             },
       child: Container(
@@ -63,6 +62,7 @@ class GoopCard extends StatelessWidget {
               child: Text(
                 missionDto.subject ?? '',
                 style: Theme.of(context).textTheme.headline1,
+                textAlign: TextAlign.center,
               ),
             ),
             Container(

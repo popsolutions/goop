@@ -1,3 +1,5 @@
+
+import 'package:goop/models/activity.dart';
 import 'package:goop/models/user_profile.dart';
 
 class MissionModel {
@@ -20,6 +22,8 @@ class MissionModel {
   String dateFinished;
   double price;
   String time;
+
+  List<Activity> listActivity = <Activity>[];
 
   MissionModel({
     this.id,
@@ -66,4 +70,52 @@ class MissionModel {
       scores: valueOrNull(map['scores']),
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+     if (id != null) 'id': id,
+     if (name != null) 'name': name,
+     if (subject != null) 'subject': subject,
+     if (partnerId != null) 'partnerId': partnerId,
+     if (establishmentId != null) 'establishmentId': establishmentId,
+     if (measurementCount != null) 'measurementCount': measurementCount,
+     if (createByUserId != null) 'createByUserId': createByUserId,
+     if (limit != null) 'limit': limit,
+     if (priority != null) 'priority': priority,
+     if (scores != null) 'scores': scores,
+     if (reward != null) 'reward': reward,
+     if (typeMission != null) 'typeMission': typeMission,
+     if (instructions != null) 'instructions': instructions,
+     if (missionState != null) 'missionState': missionState,
+     if (address != null) 'address': address,
+     if (dateCreated != null) 'dateCreated': dateCreated,
+     if (dateFinished != null) 'dateFinished': dateFinished,
+     if (price != null) 'price': price,
+     if (time != null) 'time': time,
+    };
+  }
+
+  toString([String separator = '\n']){
+    return
+    'id: ' + (id.toString() ?? '') + separator +
+    'name: ' + (name.toString() ?? '') + separator +
+    'subject: ' + (subject.toString() ?? '') + separator +
+    'partnerId: ' + (partnerId.toString() ?? '') + separator +
+    'establishmentId: ' + (establishmentId.toString() ?? '') + separator +
+    'measurementCount: ' + (measurementCount.toString() ?? '') + separator +
+    'createByUserId: ' + (createByUserId.toString() ?? '') + separator +
+    'limit: ' + (limit.toString() ?? '') + separator +
+    'priority: ' + (priority.toString() ?? '') + separator +
+    'scores: ' + (scores.toString() ?? '') + separator +
+    'reward: ' + (reward.toString() ?? '') + separator +
+    'typeMission: ' + (typeMission.toString() ?? '') + separator +
+    'instructions: ' + (instructions.toString() ?? '') + separator +
+    'missionState: ' + (missionState.toString() ?? '') + separator +
+    'address: ' + (address.toString() ?? '') + separator +
+    'dateCreated: ' + (dateCreated.toString() ?? '') + separator +
+    'dateFinished: ' + (dateFinished.toString() ?? '') + separator +
+    'price: ' + (price.toString() ?? '') + separator +
+    'time: ' + (time.toString() ?? '');
+  }
+
 }
