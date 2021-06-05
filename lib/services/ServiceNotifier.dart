@@ -18,7 +18,7 @@ class ServiceNotifier {
   User currentUser;
   List<AlternativeModel> listAlternativeModel = <AlternativeModel>[];
 
-  final missionsController = MissionController(MissionService());
+  final missionsController = MissionController(MissionService(Odoo()));
 
   final establishmentsController =
       EstablishmentController(EstablishmentService(Odoo()));
