@@ -76,7 +76,7 @@ class MissionService {
   }
 
   void updateMissionModel(MissionModel missionModel) async {
-    final response = await _odoo.write(
+    await _odoo.write(
       Strings.missions,
       [missionModel.id],
       missionModel.toJson(),

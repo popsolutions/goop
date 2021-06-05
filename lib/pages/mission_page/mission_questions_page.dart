@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:goop/models/mission_dto.dart';
 import 'package:goop/pages/components/goop_back.dart';
 import 'package:goop/pages/components/goop_button.dart';
 import 'package:goop/pages/components/goop_text_form_field.dart';
@@ -12,7 +11,7 @@ class MissionQuestionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextStyle theme = Theme.of(context).textTheme.headline2;
-    final MissionDto missionDto = ModalRoute.of(context).settings.arguments;
+    //final MissionDto missionDto = ModalRoute.of(context).settings.arguments;
     final provider = Provider.of<ServiceNotifier>(context);
     final currentActivity = provider.currentActivity;
 

@@ -1,6 +1,7 @@
 import 'package:goop/utils/ClassConstants.dart';
 import 'package:goop/utils/utils.dart';
 
+// ignore_for_file: non_constant_identifier_names
 class Activity {
   int id;
   int product_id;

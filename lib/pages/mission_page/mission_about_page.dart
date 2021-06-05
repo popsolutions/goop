@@ -50,14 +50,17 @@ class _MissionAboutPageState extends State<MissionAboutPage> {
         ),
       ),
       body: Center(
-        child: SingleChildScrollView(
-          child: Column(
+        child: Container(
+          width: MediaQuery.of(context).size.width * .9,
+          child: ListView(
+            physics: BouncingScrollPhysics(),
             children: [
               GoopMissionBody(missionDto: missionDto),
               situacional(
                 ifCompleted: Text(
                   '3 horas',
                   style: theme,
+                  textAlign: TextAlign.center,
                 ),
                 ifInProgress: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
