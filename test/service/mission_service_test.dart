@@ -8,9 +8,11 @@ import 'package:goop/models/AlternativeModel.dart';
 import 'package:goop/models/login_dto.dart';
 import 'package:goop/models/login_result.dart';
 import 'package:goop/models/measurement.dart';
+import 'package:goop/models/measurement_quizzlines.dart';
 import 'package:goop/models/mission.dart';
 import 'package:goop/models/user.dart';
 import 'package:goop/services/AlternativeService.dart';
+import 'package:goop/services/Measurement_quizzlinesService.dart';
 import 'package:goop/services/login/login_service.dart';
 import 'package:goop/services/login/user_service.dart';
 import 'package:goop/services/measurementService.dart';
@@ -27,6 +29,7 @@ void main() {
   MeasurementService measurementService = new MeasurementService();
   UserServiceImpl userServiceImpl = new UserServiceImpl(Odoo());
   AlternativeService alternativeService = new AlternativeService();
+  Measurement_quizzlinesService measurement_quizzlinesService = new Measurement_quizzlinesService();
 
   LoginResult currentLoginResult;
   User currentUser;
@@ -145,6 +148,41 @@ void main() {
     print('::listAlternativeModel');
     listAlternativeModel.forEach((element) {
       print(element.toJson());
+    });
+  });
+
+  group('Measurement_quizzlinesModel', ()
+  {
+    test('Measurement_quizzlinesModel.getMeasurement_quizzlinesModelModelById', () async {
+      print('::test Measurement_quizzlinesModel.getMeasurement_quizzlinesModelModelById');
+      int id = 12;
+      Measurement_quizzlinesModel measurement_quizzlinesModel = await measurement_quizzlinesService.getMeasurement_quizzlinesModelModelById(
+          id);
+      print('Measurement_quizzlinesModel id $id : ${measurement_quizzlinesModel.toJson()}');
+    });
+
+
+    test('Measurement_quizzlinesModel.insertAndGet', () async {
+      print('::test Measurement_quizzlinesModel.insertAndGet');
+      Measurement_quizzlinesModel measurement_quizzlinesModel = Measurement_quizzlinesModel(
+          name: "Nome-teste-insert",
+          quizz_id: 50,
+          alternative_id: 1,
+          measurement_id: 151,
+          create_uid: currentUser.uid,
+          write_uid: currentUser.uid
+      );
+
+      Measurement_quizzlinesModel measurement_quizzlinesModelInserted = await measurement_quizzlinesService.insertAndGet(
+          measurement_quizzlinesModel);
+
+      expect(measurement_quizzlinesModel.quizz_id, equals(measurement_quizzlinesModelInserted.quizz_id));
+      expect(measurement_quizzlinesModel.alternative_id, equals(measurement_quizzlinesModelInserted.alternative_id));
+      expect(measurement_quizzlinesModel.measurement_id, equals(measurement_quizzlinesModelInserted.measurement_id));
+      expect(measurement_quizzlinesModel.create_uid, equals(measurement_quizzlinesModelInserted.create_uid));
+      expect(measurement_quizzlinesModel.write_uid, equals(measurement_quizzlinesModelInserted.write_uid));
+
+      print('Measurement_quizzlinesModel id ${measurement_quizzlinesModelInserted.id} : ${measurement_quizzlinesModelInserted.toJson()}');
     });
   });
 }

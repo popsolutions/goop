@@ -1,4 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
+import 'package:goop/utils/utils.dart';
+
 class MeasurementModel {
   int id;
   int mission_Id;
@@ -91,6 +93,8 @@ class MeasurementModel {
         return json[fieldName][index];
     }
 
+    String GetStr(String key) => jsonGetStr(json, key);
+
     id = json['id'];
     mission_Id = getArrJsonInt('missions_id', 0);
     name = json['name'];
@@ -98,8 +102,8 @@ class MeasurementModel {
     partner_Name = getArrJson('partner_id', 1);
 
     state = json['state'];
-    dateStarted = json['date_started'];
-    dateFinished = json['date_finished'];
+    dateStarted = GetStr('date_started');
+    dateFinished = GetStr('date_finished');
     measurementLatitude = json['measurement_latitude'];
     measurementLongitude = json['measurement_longitude'];
 
@@ -109,10 +113,10 @@ class MeasurementModel {
     intListAdd('price_comparison_lines_ids', price_comparison_lines_ids);
 
     color = json['color'];
-    priority = json['priority'];
+    priority = GetStr('priority');
     sequence = json['sequence'];
     active = json['active'];
-    kanbanState = json['kanban_state'];
+    kanbanState = GetStr('kanban_state');
     legendPriority = json['legend_priority'];
     legendBlocked = json['legend_blocked'];
     legendDone = json['legend_done'];

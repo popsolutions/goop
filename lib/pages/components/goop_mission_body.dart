@@ -4,6 +4,7 @@ import 'package:goop/config/routes.dart';
 import 'package:goop/models/mission_dto.dart';
 import 'package:goop/pages/components/goop_card.dart';
 import 'package:goop/services/ServiceNotifier.dart';
+import 'package:goop/services/constants.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
 import 'package:provider/provider.dart';
@@ -72,13 +73,18 @@ class _GoopMissionBodyState extends State<GoopMissionBody> {
                     provider.currentActivity =
                         widget.missionDto.listActivity[index];
 
-                    // if(provider.currentActivity.isPhoto()) //TODO: TRATAR QUAL TELA SERÁ CHAMADA
-                    // if(provider.currentActivity.isPriceComparison())
-                    // if(provider.currentActivity.isQuizz())
+                    String route = '';
+
+                    if (provider.currentActivity.isPriceComparison())
+                      route = Routes.mission_question; //??-pedro- Pedro, pelo que eu entendi o conteúdo dos arquivos "MissionPriceComparisionPage.dart" e "MissionQuestionPage.dart" estão invertidos
+                    else if(provider.currentActivity.isQuizz())
+                      route = Routes.mission_price_comparison;
+                    else if(provider.currentActivity.isPhoto())
+                      route = '';  //??-pedro-Definiar a variável route para Fotografia//TODO: TRATAR QUAL TELA SERÁ CHAMADA
 
                     Navigator.pushNamed(
                       context,
-                      Routes.mission_question,
+                      route,
                       arguments: widget.missionDto,
                     );
                   },

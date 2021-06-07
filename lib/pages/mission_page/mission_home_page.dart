@@ -79,7 +79,7 @@ class _MissionHomePageState extends State<MissionHomePage> {
                   itemBuilder: (_, index) {
                     final mission = missions[index];
                     final establishment = establishments[index];
-
+                    serviceNotifier.setcurrentMissionModel(mission);
                     return Column(
                       children: [
                         if (index == 0)
@@ -87,7 +87,7 @@ class _MissionHomePageState extends State<MissionHomePage> {
                             GoopImages.rocket,
                             width: MediaQuery.of(context).size.width * .9,
                           ),
-                        GoopCard(
+                    GoopCard(
                           missionDto: MissionDto(
                             name: mission.name,
                             subject: mission.subject,

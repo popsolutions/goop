@@ -8,5 +8,7 @@ class Strings {
   static const String popsQuizz = 'pops.quizz';
   static const String price_comparison = 'pops.price_comparison';
   static const String popsAlternative = 'pops.alternative';
+  static const String measurement_quizzlines = 'pops.measurement.quizzlines'; // Response of quizz
+
 
 }
