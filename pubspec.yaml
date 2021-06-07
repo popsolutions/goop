@@ -25,6 +25,8 @@ dependencies:
   image_picker:
   provider:
   latlng:
+  camera:
+  camera_camera:
   cupertino_icons: ^1.0.2
 
 dev_dependencies:

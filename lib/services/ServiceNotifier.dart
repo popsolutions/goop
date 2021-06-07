@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:goop/models/AlternativeModel.dart';
 import 'package:goop/models/activity.dart';
-import 'package:goop/models/establishment.dart';
 import 'package:goop/models/measurement.dart';
 import 'package:goop/models/measurement_quizzlines.dart';
 import 'package:goop/models/mission.dart';
@@ -9,7 +8,6 @@ import 'package:goop/models/user.dart';
 import 'package:goop/services/AlternativeService.dart';
 import 'package:goop/services/GeoLocService.dart';
 import 'package:goop/services/Measurement_quizzlinesService.dart';
-import 'package:goop/utils/global.dart';
 import 'package:goop/utils/utils.dart';
 
 import '../config/http/odoo_api.dart';
