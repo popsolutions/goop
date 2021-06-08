@@ -18,7 +18,7 @@ import 'measurementService.dart';
 import 'mission/mission_service.dart';
 
 class ServiceNotifier {
-  //ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context);
+  // ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context);
   AlternativeService alternativeService = new AlternativeService();
   MeasurementService measurementService = new MeasurementService();
   GeoLocService geoLocService = new GeoLocService();
