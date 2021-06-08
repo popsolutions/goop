@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:camera_camera/camera_camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -31,6 +33,7 @@ class _SettingsPageState extends State<SettingsPage> {
   ReactionDisposer _reactionDisposer;
   final picker = ImagePicker();
   File archive;
+  String archive64;
 
   final cpfFormatter = MaskTextInputFormatter(
     mask: '000.000.000-00',
@@ -67,6 +70,11 @@ class _SettingsPageState extends State<SettingsPage> {
       _controller.phone = user.phone ?? '';
       _controller.email = user.email ?? '';
       _controller.imageProfile = user.image;
+      archive = File(
+          base64Decode(_controller.imageProfile.characters.toString())
+              .toString());
+      //archive = File.fromRawPath(a);
+      // archive64 = base64Encode(File(archive.path).readAsBytesSync());
     }
   }
 
@@ -119,6 +127,12 @@ class _SettingsPageState extends State<SettingsPage> {
         archive = File(file.path);
       });
     }
+  }
+
+  submit() {
+    archive64 = base64Encode(File(archive.path).readAsBytesSync());
+    _controller.imageProfile = archive64;
+    _controller.submit();
   }
 
   @override
@@ -314,8 +328,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       return Center(
                         child: GoopButton(
                           text: 'Salvar',
-                          action:
-                              _controller.canNext ? _controller.submit : null,
+                          action: _controller.canNext ? submit : null,
                         ),
                       );
                     },

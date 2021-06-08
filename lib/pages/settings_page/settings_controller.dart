@@ -14,7 +14,7 @@ abstract class _SettingsControllerBase with Store {
   set id(int newId) => _id = newId;
 
   @observable
-  String imageProfile = '';
+  var imageProfile = '';
 
   @observable
   String email = '';
