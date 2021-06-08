@@ -8,7 +8,7 @@ class User {
   final int companyId;
   final int partnerId;
   final bool userCompanies;
-  final String image;
+  String image;
   final String birthdate;
   final String function;
   final String cnpjCpf;

@@ -8,11 +8,13 @@ class SettingsController = _SettingsControllerBase with _$SettingsController;
 
 abstract class _SettingsControllerBase with Store {
   final UserServiceImpl _userService;
-
   _SettingsControllerBase(this._userService);
 
   int _id;
   set id(int newId) => _id = newId;
+
+  @observable
+  var imageProfile = '';
 
   @observable
   String email = '';
@@ -46,6 +48,7 @@ abstract class _SettingsControllerBase with Store {
             email: email,
             cnpjCpf: cpf,
             phone: phone,
+            image: imageProfile,
           ),
         )
         .asObservable();

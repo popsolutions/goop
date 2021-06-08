@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-
 //Class Measurement_quizzlinesModel is a Response to quizz into Measurement
 class Measurement_quizzlinesModel {
   int id;

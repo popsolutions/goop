@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 import 'package:uuid/uuid.dart';
 import 'odoo_response.dart';
 import 'odoo_version.dart';
-import 'package:goop/utils/SharedPreferencesGoop.dart';
 
 const SERVER_URL = 'https://dev.charismabi.com';
 
