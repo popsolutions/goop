@@ -253,12 +253,22 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ),
                         ),
                         SizedBox(height: 20),
-                        Text(
-                          '${user.name}',
-                          style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                            color: GoopColors.red,
+                        GestureDetector(
+                          onTap: () {
+                            // archive64 = base64Encode(
+                            //     File(GoopImages.map).readAsBytesSync());
+                            // final archive65 = base64Encode(
+                            //     File(archive.path).readAsBytesSync());
+                            // archive = File.fromRawPath(base64Decode(archive64));
+                            // print(archive64 == archive65);
+                          },
+                          child: Text(
+                            '${user.name}',
+                            style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                              color: GoopColors.red,
+                            ),
                           ),
                         ),
                       ],

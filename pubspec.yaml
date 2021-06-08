@@ -25,6 +25,7 @@ dependencies:
   flutter_svg:
   image_picker:
   provider:
+  geolocator:
   # latlng:
   camera:
   camera_camera:

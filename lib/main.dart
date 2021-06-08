@@ -9,7 +9,6 @@ import 'package:goop/utils/goop_colors.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
   runApp(MyApp());
   prefsGoop.init(false);
 }

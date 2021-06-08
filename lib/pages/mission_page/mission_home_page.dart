@@ -47,10 +47,11 @@ class _MissionHomePageState extends State<MissionHomePage> {
       ),
       drawer: GoopDrawer(),
       body: RefreshIndicator(
+        strokeWidth: 3,
         color: GoopColors.red,
         onRefresh: () async {
           await Future.delayed(Duration(seconds: 1));
-          await serviceNotifier.init();
+          await serviceNotifier.update();
         },
         child: Column(
           children: [
