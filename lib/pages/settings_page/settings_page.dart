@@ -70,11 +70,7 @@ class _SettingsPageState extends State<SettingsPage> {
       _controller.phone = user.phone ?? '';
       _controller.email = user.email ?? '';
       _controller.imageProfile = user.image;
-      archive = File(
-          base64Decode(_controller.imageProfile.characters.toString())
-              .toString());
-      //archive = File.fromRawPath(a);
-      // archive64 = base64Encode(File(archive.path).readAsBytesSync());
+      // archive = File.fromRawPath(base64Decode(_controller.imageProfile));
     }
   }
 
@@ -120,7 +116,7 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Future<void> getFileFromGallery() async {
-    final PickedFile file = await picker.getImage(source: ImageSource.gallery);
+    PickedFile file = await picker.getImage(source: ImageSource.gallery);
 
     if (file != null) {
       setState(() {
@@ -137,10 +133,10 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context).size.width;
     final authenticationController =
         Provider.of<AuthenticationController>(context);
     final user = authenticationController.currentUser;
+    final mediaQuery = MediaQuery.of(context).size.width;
 
     if (archive != null) {
       setState(() {
