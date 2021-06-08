@@ -18,6 +18,17 @@ String jsonGetStr(Map<String, dynamic> json, String key) {
   return json[key];
 }
 
+List<int> jsonGetListInt(Map<String, dynamic> json, String key) {
+
+  List<dynamic> listDynamic = json[key];
+  List<int> listInt = <int>[];
+
+  if (!listDynamic.isEmpty)
+    listInt = listDynamic;
+
+  return listInt;
+}
+
 String convertDateToStringFormat(DateTime date) {
   return DateFormat('dd/MM/yyyy').format(date);
 }
