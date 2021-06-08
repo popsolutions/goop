@@ -10,7 +10,12 @@ class MissionService {
   final Odoo _odoo;
   MissionService(this._odoo);
 
+  int LoadControl_getMissions = 0; // is complet if
+
+  bool getMissionsCompletLoad() => (LoadControl_getMissions >= 4);
+
   Future<List<MissionModel>> getMissions() async {
+    LoadControl_getMissions = 0;
     final response = await _odoo.searchRead(
       Strings.missions,
       [
@@ -39,6 +44,7 @@ class MissionService {
     final List json = response.getRecords();
     final mapa = json.map((e) => EstablishmentModel.fromJson(e)).toList();
     mission.address = mapa[0].address;
+    LoadControl_getMissions += 1;
   }
 
   void setMissionActivityList(List<MissionModel> listMissionModel) async {
@@ -47,7 +53,7 @@ class MissionService {
     setMissionActivity(listMissionModel, Strings.price_comparison, ActivityTypeConsts.Price_Comparison);
   }
 
-  void setMissionActivity(List<MissionModel> listMissionModel, String model, String activityType) async {
+  setMissionActivity(List<MissionModel> listMissionModel, String model, String activityType) async {
     try {
       final response = await _odoo.searchRead(
         model,
@@ -70,8 +76,9 @@ class MissionService {
             listMissionModel[i].listActivity.add(listActivity[j]);
         }
       }
+      LoadControl_getMissions += 1;
     } catch (e) {
-      print(e.toString());
+      throw e.toString();
     }
   }
 

@@ -72,6 +72,15 @@ void main() {
   Future<List<MissionModel>> getMission() async {
     MissionService missionService = new MissionService(Odoo());
     List<MissionModel> listMissionModel = await missionService.getMissions();
+
+    while (!missionService.getMissionsCompletLoad()){
+      await Future.delayed(Duration(milliseconds: 60));
+      print('Aguardando finalização de missionService.getMissions()');
+    }
+
+    await Future.delayed(Duration(milliseconds: 300));
+    print('missionService.getMissions() Finalizado');
+
     return listMissionModel;
   }
 
