@@ -46,83 +46,90 @@ class _MissionHomePageState extends State<MissionHomePage> {
         ),
       ),
       drawer: GoopDrawer(),
-      body: Column(
-        children: [
-          Expanded(
-            child: Observer(
-              builder: (_) {
-                final responseMissions = _missionsController.missionsRequest;
-                final responseEstablishments =
-                    _establishmentsController.establishmentsRequest;
+      body: RefreshIndicator(
+        color: GoopColors.red,
+        onRefresh: () async {
+          await Future.delayed(Duration(seconds: 1));
+          await serviceNotifier.init();
+        },
+        child: Column(
+          children: [
+            Expanded(
+              child: Observer(
+                builder: (_) {
+                  final responseMissions = _missionsController.missionsRequest;
+                  final responseEstablishments =
+                      _establishmentsController.establishmentsRequest;
 
-                if (responseMissions.status == FutureStatus.rejected ||
-                    responseEstablishments.status == FutureStatus.rejected) {
-                  return Center(child: Text('Deu erro'));
-                } else if (responseMissions.status == FutureStatus.pending ||
-                    responseEstablishments.status == FutureStatus.pending) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-
-                final missions = responseMissions.value;
-                final establishments = responseEstablishments.value;
-
-                if (missions.isEmpty) {
-                  return Center(child: Text('Está vazio'));
-                }
-
-                return ListView.separated(
-                  physics: BouncingScrollPhysics(),
-                  itemCount: missions.length,
-                  separatorBuilder: (_, index) => SizedBox(height: 10),
-                  itemBuilder: (_, index) {
-                    final mission = missions[index];
-                    final establishment = establishments[index];
-                    serviceNotifier.setcurrentMissionModel(mission);
-                    return Column(
-                      children: [
-                        if (index == 0)
-                          SvgPicture.asset(
-                            GoopImages.rocket,
-                            width: MediaQuery.of(context).size.width * .9,
-                          ),
-                    GoopCard(
-                          missionDto: MissionDto(
-                            name: mission.name,
-                            subject: mission.subject,
-                            partnerId: mission.partnerId,
-                            establishmentId: mission.establishmentId,
-                            measurementCount: mission.measurementCount,
-                            createByUserId: mission.createByUserId,
-                            limit: mission.limit,
-                            priority: mission.priority,
-                            scores: mission.scores,
-                            reward: mission.reward,
-                            typeMission: mission.typeMission,
-                            instructions: mission.instructions,
-                            missionState: mission.missionState,
-                            address: mission.address,
-                            dateCreated: mission.dateCreated,
-                            dateFinished: mission.dateFinished,
-                            price: mission.price,
-                            time: mission.time,
-                            nameEstablishment: establishment.name,
-                            addressEstablishment: establishment.address,
-                            latitude: establishment.latitude,
-                            longitude: establishment.longitude,
-                            id: establishment.id,
-                            listActivity: mission.listActivity,
-                          ),
-                        ),
-                      ],
+                  if (responseMissions.status == FutureStatus.rejected ||
+                      responseEstablishments.status == FutureStatus.rejected) {
+                    return Center(child: Text('Deu erro'));
+                  } else if (responseMissions.status == FutureStatus.pending ||
+                      responseEstablishments.status == FutureStatus.pending) {
+                    return Center(
+                      child: CircularProgressIndicator(),
                     );
-                  },
-                );
-              },
+                  }
+
+                  final missions = responseMissions.value;
+                  final establishments = responseEstablishments.value;
+
+                  if (missions.isEmpty) {
+                    return Center(child: Text('Está vazio'));
+                  }
+
+                  return ListView.separated(
+                    physics: BouncingScrollPhysics(),
+                    itemCount: missions.length,
+                    separatorBuilder: (_, index) => SizedBox(height: 10),
+                    itemBuilder: (_, index) {
+                      final mission = missions[index];
+                      final establishment = establishments[index];
+                      serviceNotifier.setcurrentMissionModel(mission);
+                      return Column(
+                        children: [
+                          if (index == 0)
+                            SvgPicture.asset(
+                              GoopImages.rocket,
+                              width: MediaQuery.of(context).size.width * .9,
+                            ),
+                          GoopCard(
+                            missionDto: MissionDto(
+                              name: mission.name,
+                              subject: mission.subject,
+                              partnerId: mission.partnerId,
+                              establishmentId: mission.establishmentId,
+                              measurementCount: mission.measurementCount,
+                              createByUserId: mission.createByUserId,
+                              limit: mission.limit,
+                              priority: mission.priority,
+                              scores: mission.scores,
+                              reward: mission.reward,
+                              typeMission: mission.typeMission,
+                              instructions: mission.instructions,
+                              missionState: mission.missionState,
+                              address: mission.address,
+                              dateCreated: mission.dateCreated,
+                              dateFinished: mission.dateFinished,
+                              price: mission.price,
+                              time: mission.time,
+                              nameEstablishment: establishment.name,
+                              addressEstablishment: establishment.address,
+                              latitude: establishment.latitude,
+                              longitude: establishment.longitude,
+                              id: establishment.id,
+                              listActivity: mission.listActivity,
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
