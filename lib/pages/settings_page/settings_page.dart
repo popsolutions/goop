@@ -32,8 +32,7 @@ class _SettingsPageState extends State<SettingsPage> {
   final _controller = SettingsController(UserServiceImpl(Odoo()));
   ReactionDisposer _reactionDisposer;
   final picker = ImagePicker();
-  File archive;
-  String archive64;
+  String archive;
 
   final cpfFormatter = MaskTextInputFormatter(
     mask: '000.000.000-00',
@@ -70,11 +69,7 @@ class _SettingsPageState extends State<SettingsPage> {
       _controller.phone = user.phone ?? '';
       _controller.email = user.email ?? '';
       _controller.imageProfile = user.image;
-      archive = File(
-          base64Decode(_controller.imageProfile.characters.toString())
-              .toString());
-      //archive = File.fromRawPath(a);
-      // archive64 = base64Encode(File(archive.path).readAsBytesSync());
+      archive = user.image;
     }
   }
 
@@ -114,24 +109,24 @@ class _SettingsPageState extends State<SettingsPage> {
 
     if (file != null) {
       setState(() {
-        archive = file;
+        archive = base64Encode(file.readAsBytesSync());
       });
     }
   }
 
   Future<void> getFileFromGallery() async {
     final PickedFile file = await picker.getImage(source: ImageSource.gallery);
+    File fileTmp = File(file.path);
 
     if (file != null) {
       setState(() {
-        archive = File(file.path);
+        archive = base64Encode(fileTmp.readAsBytesSync());
       });
     }
   }
 
   submit() {
-    archive64 = base64Encode(File(archive.path).readAsBytesSync());
-    _controller.imageProfile = archive64;
+    _controller.imageProfile = archive;
     _controller.submit();
   }
 
@@ -144,7 +139,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
     if (archive != null) {
       setState(() {
-        user.image = archive.path;
+        user.image = archive;
       });
     }
 
@@ -249,8 +244,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                 )
                               : ClipRRect(
                                   borderRadius: BorderRadius.circular(100),
-                                  child: Image.file(
-                                    archive,
+                                  child: Image.memory(
+                                    Base64Codec().decode(archive),
                                     fit: BoxFit.cover,
                                     width: 150,
                                     height: 150,
