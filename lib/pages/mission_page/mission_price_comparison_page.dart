@@ -12,17 +12,17 @@ class MissionPriceComparisionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context);
-
     final TextStyle theme = Theme.of(context).textTheme.headline2;
 
-    Future<void> selectQuestion(AlternativeModel selectedAlternativeModel) async{
+    Future<void> selectQuestion(
+        AlternativeModel selectedAlternativeModel) async {
       try {
-        await serviceNotifier.insert_Measurement_quizzlinesModel(selectedAlternativeModel);
-      }catch(err){
+        await serviceNotifier
+            .insert_Measurement_quizzlinesModel(selectedAlternativeModel);
+      } catch (err) {
         //??-pedro-verificar com pedro se já tem alguma maneira de exibir o erro em tela.
         print(err);
       }
-
     }
 
     return Scaffold(
@@ -49,9 +49,7 @@ class MissionPriceComparisionPage extends StatelessWidget {
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width * .7,
-                      child: Divider(
-                        color: Colors.deepPurple,
-                      ),
+                      child: Divider(color: Colors.deepPurple),
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width * .65,
@@ -62,22 +60,26 @@ class MissionPriceComparisionPage extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 30),
-
                     ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: serviceNotifier.listAlternativeModel.length,
-                        itemBuilder: (_, index) {
-                          AlternativeModel currentAlternativeModel = serviceNotifier.listAlternativeModel[index];
-                          return GestureDetector(
-                              onTap: () async {
-                                await selectQuestion(currentAlternativeModel);
-                              },
-                              child: Container(padding: EdgeInsets.only(top:10), child: Text(serviceNotifier.listAlternativeModel[index].name)));
-                        }),
-                    SizedBox(height: 30),
-                    GoopTextFormField(
-                      hintText: 'Resposta aqui',
+                      shrinkWrap: true,
+                      itemCount: serviceNotifier.listAlternativeModel.length,
+                      itemBuilder: (_, index) {
+                        AlternativeModel currentAlternativeModel =
+                            serviceNotifier.listAlternativeModel[index];
+                        return GestureDetector(
+                          onTap: () async {
+                            await selectQuestion(currentAlternativeModel);
+                          },
+                          child: Container(
+                            padding: EdgeInsets.only(top: 10),
+                            child: Text(serviceNotifier
+                                .listAlternativeModel[index].name),
+                          ),
+                        );
+                      },
                     ),
+                    SizedBox(height: 30),
+                    GoopTextFormField(hintText: 'Resposta aqui'),
                   ],
                 ),
                 Container(
