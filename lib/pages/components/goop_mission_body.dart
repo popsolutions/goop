@@ -50,7 +50,7 @@ class _GoopMissionBodyState extends State<GoopMissionBody> {
           child: ListView.builder(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
-            itemCount: widget.missionDto.listActivity.length,
+            itemCount: widget.missionDto.missionModel.listActivity.length,
             itemBuilder: (_, index) {
               return ListTile(
                 leading: Icon(
@@ -60,7 +60,7 @@ class _GoopMissionBodyState extends State<GoopMissionBody> {
                 ),
                 title: TextButton(
                   child: Text(
-                    widget.missionDto.listActivity[index].name,
+                    widget.missionDto.missionModel.listActivity[index].name,
                     style: TextStyle(
                       color: GoopColors.red,
                       //isSelected1 ? GoopColors.red : Colors.black,
@@ -69,7 +69,7 @@ class _GoopMissionBodyState extends State<GoopMissionBody> {
                   ),
                   onPressed: () {
                     provider.currentActivity =
-                        widget.missionDto.listActivity[index];
+                        widget.missionDto.missionModel.listActivity[index];
 
                     String route = '';
 

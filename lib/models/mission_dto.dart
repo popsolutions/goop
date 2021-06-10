@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'activity.dart';
+import 'mission.dart';
 
 class MissionDto {
   int id;
@@ -27,7 +28,7 @@ class MissionDto {
   String latitude;
   String longitude;
 
-  List<Activity> listActivity = <Activity>[];
+  MissionModel missionModel;
 
   MissionDto({
     this.id,
@@ -53,7 +54,7 @@ class MissionDto {
     this.addressEstablishment,
     this.latitude,
     this.longitude,
-    this.listActivity
+    this.missionModel
   });
 
   Map<String, dynamic> toMap() {

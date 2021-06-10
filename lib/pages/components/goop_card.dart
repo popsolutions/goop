@@ -4,6 +4,8 @@ import 'package:goop/config/routes.dart';
 import 'package:goop/models/mission_dto.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
+import 'package:goop/services/ServiceNotifier.dart';
+import 'package:provider/provider.dart';
 
 class GoopCard extends StatelessWidget {
   final MissionDto missionDto;
@@ -21,10 +23,13 @@ class GoopCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context);
+
     return GestureDetector(
       onTap: !goToPage
           ? null
-          : () {
+          : () async {
+              await serviceNotifier.setcurrentMissionModel(missionDto.missionModel);
               Navigator.pushNamed(
                 context,
                 Routes.mission_about,

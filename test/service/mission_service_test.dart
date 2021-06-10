@@ -68,7 +68,7 @@ void main() {
 
   Future<List<MissionModel>> getMission() async {
     MissionService missionService = new MissionService(Odoo());
-    List<MissionModel> listMissionModel = await missionService.getMissions();
+    List<MissionModel> listMissionModel = await missionService.getOpenMissions();
 
     while (!missionService.getMissionsCompletLoad()){
       await Future.delayed(Duration(milliseconds: 60));
@@ -98,6 +98,19 @@ void main() {
 
       print(missionModel.toString());
     });
+  });
+
+  group('mission_service', () {
+    test('MissionService.getListActivity', () async {
+      MissionService missionService = new MissionService(Odoo());
+      MissionModel missionModel = await missionService.getMissionById(74);
+      print(missionModel.toJson());
+
+      await missionService.setListActivity(missionModel);
+
+      print(missionModel.listActivity.length);
+    });
+
   });
 
   test('Measurement.getMeasurementModelById', () async {

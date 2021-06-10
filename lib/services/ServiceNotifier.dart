@@ -12,9 +12,12 @@ import 'package:goop/utils/utils.dart';
 
 import '../config/http/odoo_api.dart';
 import '../pages/mission_page/mission_controller.dart';
+import '../utils/goop_images.dart';
 import 'establishment/establishment_controller.dart';
 import 'establishment/establishment_service.dart';
 import 'measurementService.dart';
+import 'mission/mission_service.dart';
+import 'mission/mission_service.dart';
 import 'mission/mission_service.dart';
 
 class ServiceNotifier {
@@ -24,6 +27,7 @@ class ServiceNotifier {
   GeoLocService geoLocService = new GeoLocService();
   Measurement_quizzlinesService measurement_quizzlinesService =
       Measurement_quizzlinesService();
+  MissionService missionService = new MissionService(Odoo());
 
   bool initialization = false;
   Activity currentActivity;
@@ -121,10 +125,11 @@ class ServiceNotifier {
     print(measurement_quizzlinesModelInserted);
   }
 
-  setcurrentMissionModel(MissionModel missionModel) {
+  setcurrentMissionModel(MissionModel missionModel) async {
     //??-mateus
     //Se o usuário sair da tela de mensuração e retornar novamente, precisarei setar a mensuração em progresso.
 
+    await missionService.setListActivity(missionModel);
     currentMissionModel = missionModel;
     currentMeasurementModel = null;
   }
