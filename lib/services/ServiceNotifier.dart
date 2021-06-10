@@ -4,7 +4,9 @@ import 'package:goop/models/activity.dart';
 import 'package:goop/models/measurement.dart';
 import 'package:goop/models/measurement_quizzlines.dart';
 import 'package:goop/models/mission.dart';
+import 'package:goop/models/quizzLinesModel.dart';
 import 'package:goop/models/user.dart';
+import 'package:goop/services/ActivityService.dart';
 import 'package:goop/services/AlternativeService.dart';
 import 'package:goop/services/GeoLocService.dart';
 import 'package:goop/services/Measurement_quizzlinesService.dart';
@@ -25,9 +27,9 @@ class ServiceNotifier {
   AlternativeService alternativeService = new AlternativeService();
   MeasurementService measurementService = new MeasurementService();
   GeoLocService geoLocService = new GeoLocService();
-  Measurement_quizzlinesService measurement_quizzlinesService =
-      Measurement_quizzlinesService();
+  Measurement_quizzlinesService measurement_quizzlinesService = Measurement_quizzlinesService();
   MissionService missionService = new MissionService(Odoo());
+  ActivityService activityService = new ActivityService();
 
   bool initialization = false;
   Activity currentActivity;
@@ -40,8 +42,7 @@ class ServiceNotifier {
 
   final missionsController = MissionController(MissionService(Odoo()));
 
-  final establishmentsController =
-      EstablishmentController(EstablishmentService(Odoo()));
+  final establishmentsController = EstablishmentController(EstablishmentService(Odoo()));
 
   init() async {
     if (initialization == true) return;
@@ -99,29 +100,25 @@ class ServiceNotifier {
       // lastUpdate: null
     );
 
-    MeasurementModel measurementModelInserted =
-        await measurementService.insertAndGet(measurementModelInsert);
+    MeasurementModel measurementModelInserted = await measurementService.insertAndGet(measurementModelInsert);
     return measurementModelInserted;
   }
 
-  Future<void> insert_Measurement_quizzlinesModel(
-      AlternativeModel _selectedAlternativeModel) async {
+  Future<void> insert_Measurement_quizzlinesModel(QuizzLinesModel _selectedQuizzLinesModel) async {
     if (currentMeasurementModel == null) {
       currentMeasurementModel = await insert_MeasurementModel();
     }
 
-    Measurement_quizzlinesModel measurement_quizzlinesModel =
-        Measurement_quizzlinesModel(
-            name: "//??-marcos",
-            quizz_id: currentActivity.id,
-            alternative_id: _selectedAlternativeModel.id,
-            measurement_id: currentMeasurementModel.id,
-            create_uid: currentUser.uid,
-            write_uid: currentUser.uid);
+    Measurement_quizzlinesModel measurement_quizzlinesModel = Measurement_quizzlinesModel(
+        name: "//??-marcos",
+        quizz_id: currentActivity.id,
+        alternative_id: _selectedQuizzLinesModel.alternative_id,
+        measurement_id: currentMeasurementModel.id,
+        create_uid: currentUser.uid,
+        write_uid: currentUser.uid);
 
     Measurement_quizzlinesModel measurement_quizzlinesModelInserted =
-        await measurement_quizzlinesService
-            .insertAndGet(measurement_quizzlinesModel);
+        await measurement_quizzlinesService.insertAndGet(measurement_quizzlinesModel);
     print(measurement_quizzlinesModelInserted);
   }
 
@@ -132,5 +129,12 @@ class ServiceNotifier {
     await missionService.setListActivity(missionModel);
     currentMissionModel = missionModel;
     currentMeasurementModel = null;
+  }
+
+  setcurrentActivity(Activity activity) async {
+    currentActivity = activity;
+
+    if (activity.isQuizz())
+      await activityService.setQuizzLinesFromActivity(currentActivity);
   }
 }

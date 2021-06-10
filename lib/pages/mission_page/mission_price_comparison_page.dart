@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goop/models/AlternativeModel.dart';
+import 'package:goop/models/activity.dart';
+import 'package:goop/models/quizzLinesModel.dart';
 import 'package:goop/pages/components/goop_back.dart';
 import 'package:goop/pages/components/goop_button.dart';
 import 'package:goop/pages/components/goop_text_form_field.dart';
 import 'package:goop/services/ServiceNotifier.dart';
+import 'package:goop/utils/ClassConstants.dart';
 import 'package:goop/utils/goop_images.dart';
 import 'package:provider/provider.dart';
 
@@ -12,13 +15,14 @@ class MissionPriceComparisionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context);
+    Activity currentActivity = serviceNotifier.currentActivity;
+
     final TextStyle theme = Theme.of(context).textTheme.headline2;
 
     Future<void> selectQuestion(
-        AlternativeModel selectedAlternativeModel) async {
+        QuizzLinesModel quizzLinesModel) async {
       try {
-        await serviceNotifier
-            .insert_Measurement_quizzlinesModel(selectedAlternativeModel);
+        await serviceNotifier.insert_Measurement_quizzlinesModel(quizzLinesModel);
       } catch (err) {
         //??-pedro-verificar com pedro se já tem alguma maneira de exibir o erro em tela.
         print(err);
@@ -54,7 +58,7 @@ class MissionPriceComparisionPage extends StatelessWidget {
                     Container(
                       width: MediaQuery.of(context).size.width * .65,
                       child: Text(
-                        serviceNotifier.currentActivity.name,
+                        currentActivity.name,
                         style: theme,
                         textAlign: TextAlign.center,
                       ),
@@ -62,24 +66,22 @@ class MissionPriceComparisionPage extends StatelessWidget {
                     SizedBox(height: 30),
                     ListView.builder(
                       shrinkWrap: true,
-                      itemCount: serviceNotifier.listAlternativeModel.length,
+                      itemCount: currentActivity.listQuizzLinesModel.length,
                       itemBuilder: (_, index) {
-                        AlternativeModel currentAlternativeModel =
-                            serviceNotifier.listAlternativeModel[index];
+                        QuizzLinesModel quizzLinesModel = currentActivity.listQuizzLinesModel[index];
+
                         return GestureDetector(
                           onTap: () async {
-                            await selectQuestion(currentAlternativeModel);
+                            await selectQuestion(quizzLinesModel);
                           },
                           child: Container(
                             padding: EdgeInsets.only(top: 10),
-                            child: Text(serviceNotifier
-                                .listAlternativeModel[index].name),
+                            child: Text(quizzLinesModel.alternative_name),
                           ),
                         );
                       },
                     ),
-                    SizedBox(height: 30),
-                    GoopTextFormField(hintText: 'Resposta aqui'),
+                    SizedBox(height: 30)
                   ],
                 ),
                 Container(

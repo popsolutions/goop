@@ -67,9 +67,8 @@ class _GoopMissionBodyState extends State<GoopMissionBody> {
                       decoration: TextDecoration.underline,
                     ),
                   ),
-                  onPressed: () {
-                    provider.currentActivity =
-                        widget.missionDto.missionModel.listActivity[index];
+                  onPressed: () async {
+                    await provider.setcurrentActivity(widget.missionDto.missionModel.listActivity[index]);
 
                     String route = '';
 

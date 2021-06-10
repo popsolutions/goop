@@ -7,9 +7,11 @@ import 'package:goop/models/login_result.dart';
 import 'package:goop/models/measurement.dart';
 import 'package:goop/models/measurement_quizzlines.dart';
 import 'package:goop/models/mission.dart';
+import 'package:goop/models/quizzLinesModel.dart';
 import 'package:goop/models/user.dart';
 import 'package:goop/services/AlternativeService.dart';
 import 'package:goop/services/Measurement_quizzlinesService.dart';
+import 'package:goop/services/QuizzLinesModelService.dart';
 import 'package:goop/services/login/login_service.dart';
 import 'package:goop/services/login/user_service.dart';
 import 'package:goop/services/measurementService.dart';
@@ -26,6 +28,8 @@ void main() {
   AlternativeService alternativeService = new AlternativeService();
   Measurement_quizzlinesService measurement_quizzlinesService =
       new Measurement_quizzlinesService();
+
+  QuizzLinesModelService quizzLinesModelService = new QuizzLinesModelService();
 
   LoginResult currentLoginResult;
   User currentUser;
@@ -215,5 +219,12 @@ void main() {
       print(
           'Measurement_quizzlinesModel id ${measurement_quizzlinesModelInserted.id} : ${measurement_quizzlinesModelInserted.toJson()}');
     });
+  });
+
+  test('QuizzLinesModelService.getQuizzLinesModelFromQuizz', () async {
+    List<QuizzLinesModel> quizzLinesModel = await quizzLinesModelService.getQuizzLinesModelFromQuizz(45);
+
+    print(quizzLinesModel.length);
+
   });
 }
