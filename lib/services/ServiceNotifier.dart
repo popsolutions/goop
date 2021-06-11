@@ -15,12 +15,9 @@ import 'package:goop/utils/utils.dart';
 
 import '../config/http/odoo_api.dart';
 import '../pages/mission_page/mission_controller.dart';
-import '../utils/goop_images.dart';
 import 'establishment/establishment_controller.dart';
 import 'establishment/establishment_service.dart';
 import 'measurementService.dart';
-import 'mission/mission_service.dart';
-import 'mission/mission_service.dart';
 import 'mission/mission_service.dart';
 
 class ServiceNotifier extends ChangeNotifier{
@@ -43,7 +40,8 @@ class ServiceNotifier extends ChangeNotifier{
 
   final missionsController = MissionController(MissionService(Odoo()));
 
-  final establishmentsController = EstablishmentController(EstablishmentService(Odoo()));
+  final establishmentsController =
+      EstablishmentController(EstablishmentService(Odoo()));
 
   init() async {
     if (initialization == true) return;

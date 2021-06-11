@@ -1,9 +1,12 @@
+import 'dart:io';
+import 'package:camera_camera/camera_camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goop/config/routes.dart';
 import 'package:goop/models/activity.dart';
 import 'package:goop/models/mission_dto.dart';
 import 'package:goop/pages/components/goop_card.dart';
+import 'package:goop/pages/settings_page/preview_page.dart';
 import 'package:goop/services/ServiceNotifier.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
@@ -20,10 +23,18 @@ class GoopMissionBody extends StatefulWidget {
 class _GoopMissionBodyState extends State<GoopMissionBody> {
   @override
   Widget build(BuildContext context) {
-    //print(widget.missionDto.listActivity.length);
-
     final TextStyle theme = Theme.of(context).textTheme.headline2;
     final provider = Provider.of<ServiceNotifier>(context);
+
+    Future<void> showPreview(File file) async {
+      file = await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => PreviewPage(file),
+        ),
+      );
+      Navigator.pop(context);
+    }
 
     return Column(
       children: [
@@ -61,65 +72,40 @@ class _GoopMissionBodyState extends State<GoopMissionBody> {
                   (currentActivity.isChecked == true) ? Icons.star : Icons.star_border,
                   color: Colors.deepPurple,
                 ),
-                title: TextButton(
-                  child: Text(
-                    widget.missionDto.missionModel.listActivity[index].name,
-                    style: TextStyle(
-                      color: GoopColors.red,
-                      //isSelected1 ? GoopColors.red : Colors.black,
-                      decoration: TextDecoration.underline,
-                    ),
-                  ),
-                  onPressed: () async {
-                    await provider.setcurrentActivity(widget.missionDto.missionModel.listActivity[index]);
+                title: Text(
+                  widget.missionDto.missionModel.listActivity[index].name,
+                  style: TextStyle(color: GoopColors.darkBlue),
+                ),
+                onTap: () async {
+                  await provider.setcurrentActivity(
+                      widget.missionDto.missionModel.listActivity[index]);
 
-                    String route = '';
-
-                    if (provider.currentActivity.isPriceComparison())
-                      route = Routes
-                          .mission_question; //??-pedro- Pedro, pelo que eu entendi o conteúdo dos arquivos "MissionPriceComparisionPage.dart" e "MissionQuestionPage.dart" estão invertidos
-                    else if (provider.currentActivity.isQuizz())
-                      route = Routes.mission_price_comparison;
-                    else if (provider.currentActivity.isPhoto())
-                      route =
-                          ''; //??-pedro-Definiar a variável route para Fotografia//TODO: TRATAR QUAL TELA SERÁ CHAMADA
-
+                  if (provider.currentActivity.isQuizz()) {
                     Navigator.pushNamed(
                       context,
-                      route,
+                      Routes.mission_question,
                       arguments: widget.missionDto,
                     );
-                  },
-                ),
+                  } else if (provider.currentActivity.isPriceComparison()) {
+                    Navigator.pushNamed(
+                      context,
+                      Routes.mission_price_comparison,
+                      arguments: widget.missionDto,
+                    );
+                  } else if (provider.currentActivity.isPhoto()) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => CameraCamera(
+                          enableZoom: true,
+                          onFile: (file) async => await showPreview(file),
+                        ),
+                      ),
+                    );
+                  }
+                },
               );
             },
-          ),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width * .7,
-          child: ListTile(
-            onTap: () {},
-            leading: Icon(
-              // isSelected2 ? Icons.star : Icons.star_border,
-              Icons.star,
-              color: Colors.deepPurple,
-            ),
-            title: TextButton(
-              child: Text(
-                'Comparativo de preços',
-                style: TextStyle(
-                  decoration: TextDecoration.underline,
-                  color: GoopColors.red,
-                  //isSelected2 ? GoopColors.red : Colors.black,
-                ),
-              ),
-              onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  Routes.mission_price_comparison,
-                );
-              },
-            ),
           ),
         ),
         Text(
