@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 dynamic valueOrNull(dynamic value) {
@@ -19,12 +18,13 @@ String jsonGetStr(Map<String, dynamic> json, String key) {
 }
 
 List<int> jsonGetListInt(Map<String, dynamic> json, String key) {
-
   List<dynamic> listDynamic = json[key];
   List<int> listInt = <int>[];
 
   if (!listDynamic.isEmpty)
-    listDynamic.forEach((element) {listInt.add(element);});
+    listDynamic.forEach((element) {
+      listInt.add(element);
+    });
 
   return listInt;
 }

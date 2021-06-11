@@ -6,19 +6,14 @@ import 'package:goop/models/mission.dart';
 import 'package:goop/services/ActivityService.dart';
 import 'package:goop/services/constants.dart';
 import 'package:goop/services/establishment/establishment_service.dart';
-import 'package:goop/utils/ClassConstants.dart';
 
 import '../../models/activity.dart';
 import '../../models/mission.dart';
-import '../../models/mission.dart';
-import '../../models/mission.dart';
-import '../../utils/ClassConstants.dart';
 
 class MissionService {
   final Odoo _odoo;
   ActivityService activityService = new ActivityService();
   EstablishmentService establishmentService = new EstablishmentService(Odoo());
-
 
   MissionService(this._odoo);
 
@@ -64,19 +59,25 @@ class MissionService {
   }
 
   void setMissionEstablishment(MissionModel mission) async {
-    EstablishmentModel establishmentModel = await establishmentService.getEstablishmentModelById(mission.establishmentId);
+    EstablishmentModel establishmentModel = await establishmentService
+        .getEstablishmentModelById(mission.establishmentId);
     mission.address = establishmentModel.address;
     LoadControl_getMissions += 1;
   }
 
   Future<void> setListActivity(MissionModel missionModel) async {
-    missionModel.listActivity  = await getListActivity(missionModel);
+    missionModel.listActivity = await getListActivity(missionModel);
   }
 
   Future<List<Activity>> getListActivity(MissionModel missionModel) async {
-    List<Activity> listPhoto = await activityService.getListActivityModelFromMission(missionModel, Strings.photoLines, 'mission_id');
-    List<Activity> listQuizz = await activityService.getListActivityModelFromMission(missionModel, Strings.popsQuizz);
-    List<Activity> listPriceComparison = await activityService.getListActivityModelFromMission(missionModel, Strings.price_comparison);
+    List<Activity> listPhoto =
+        await activityService.getListActivityModelFromMission(
+            missionModel, Strings.photoLines, 'mission_id');
+    List<Activity> listQuizz = await activityService
+        .getListActivityModelFromMission(missionModel, Strings.popsQuizz);
+    List<Activity> listPriceComparison =
+        await activityService.getListActivityModelFromMission(
+            missionModel, Strings.price_comparison);
 
     return listPhoto + listQuizz + listPriceComparison;
   }

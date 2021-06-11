@@ -20,7 +20,6 @@ import 'package:goop/utils/global.dart';
 import 'package:goop/utils/utils.dart';
 
 void main() {
-  Odoo _odoo;
   bool isInit = false;
   MissionService missionService = new MissionService(Odoo());
   MeasurementService measurementService = new MeasurementService();
@@ -48,7 +47,7 @@ void main() {
 
     prefsGoop.init(true);
 
-    await initLogin();
+    initLogin();
 
     isInit = true;
   }
@@ -72,9 +71,10 @@ void main() {
 
   Future<List<MissionModel>> getMission() async {
     MissionService missionService = new MissionService(Odoo());
-    List<MissionModel> listMissionModel = await missionService.getOpenMissions();
+    List<MissionModel> listMissionModel =
+        await missionService.getOpenMissions();
 
-    while (!missionService.getMissionsCompletLoad()){
+    while (!missionService.getMissionsCompletLoad()) {
       await Future.delayed(Duration(milliseconds: 60));
       print('Aguardando finalização de missionService.getMissions()');
     }
@@ -98,7 +98,7 @@ void main() {
 
       missionModel.name = 'Missão 4';
 
-      await missionService.updateMissionModel(missionModel);
+      missionService.updateMissionModel(missionModel);
 
       print(missionModel.toString());
     });
@@ -114,7 +114,6 @@ void main() {
 
       print(missionModel.listActivity.length);
     });
-
   });
 
   test('Measurement.getMeasurementModelById', () async {
@@ -222,9 +221,9 @@ void main() {
   });
 
   test('QuizzLinesModelService.getQuizzLinesModelFromQuizz', () async {
-    List<QuizzLinesModel> quizzLinesModel = await quizzLinesModelService.getQuizzLinesModelFromQuizz(45);
+    List<QuizzLinesModel> quizzLinesModel =
+        await quizzLinesModelService.getQuizzLinesModelFromQuizz(45);
 
     print(quizzLinesModel.length);
-
   });
 }
