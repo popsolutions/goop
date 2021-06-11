@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:goop/models/AlternativeModel.dart';
 import 'package:goop/models/activity.dart';
 import 'package:goop/models/measurement.dart';
@@ -14,7 +13,6 @@ import 'package:goop/utils/utils.dart';
 
 import '../config/http/odoo_api.dart';
 import '../pages/mission_page/mission_controller.dart';
-import '../utils/goop_images.dart';
 import 'establishment/establishment_controller.dart';
 import 'establishment/establishment_service.dart';
 import 'measurementService.dart';
