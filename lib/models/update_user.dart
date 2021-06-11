@@ -3,12 +3,14 @@ class UpdateUser {
   final String email;
   final String phone;
   final String cnpjCpf;
-  
+  String image;
+
   UpdateUser({
     this.partnerId,
     this.email,
     this.phone,
     this.cnpjCpf,
+    this.image,
   });
 
   Map<String, dynamic> toJson() {
@@ -16,6 +18,7 @@ class UpdateUser {
       if (email != null) 'email': email,
       if (phone != null) 'phone': phone,
       if (cnpjCpf != null) 'cnpj_cpf': cnpjCpf,
+      if (cnpjCpf != null) 'image': image,
     };
   }
 }

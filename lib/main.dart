@@ -4,11 +4,13 @@ import 'package:goop/config/app/authentication_controller.dart';
 import 'package:goop/config/routes.dart';
 import 'package:goop/config/widgets_router.dart';
 import 'package:goop/services/ServiceNotifier.dart';
+import 'package:goop/utils/global.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:provider/provider.dart';
 
 void main() {
   runApp(MyApp());
+  prefsGoop.init(false);
 }
 
 class MyApp extends StatelessWidget {

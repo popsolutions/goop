@@ -27,7 +27,7 @@ class InitialPage extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 60),
             GoopButton(
               text: 'Login',
               action: () => Navigator.pushNamed(
@@ -42,17 +42,16 @@ class InitialPage extends StatelessWidget {
               borderColor: GoopColors.red,
               action: () => Navigator.pushNamed(context, Routes.register),
             ),
-            GoopButton(
-              text: 'Entrar com Facebook',
-              buttonColor: GoopColors.blue,
-              action: () {},
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 40),
-              width: 100,
-              child: SvgPicture.asset(GoopImages.charisma),
-            ),
           ],
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        elevation: 0,
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: Container(
+          padding: EdgeInsets.only(bottom: 10),
+          height: 35,
+          child: SvgPicture.asset(GoopImages.charisma),
         ),
       ),
     );

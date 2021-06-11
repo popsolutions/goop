@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:goop/utils/global.dart';
 import 'package:http/http.dart' as http;
 import 'package:uuid/uuid.dart';
 import 'odoo_response.dart';
 import 'odoo_version.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 const SERVER_URL = 'https://dev.charismabi.com';
 
@@ -29,9 +29,8 @@ class Odoo {
   }
 
   initOdoo() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    if (preferences.getString("UserPrefs") != null) {
-      var jsonPrefs = jsonDecode(preferences.getString("UserPrefs"));
+    if (prefsGoop.getString("UserPrefs") != null) {
+      var jsonPrefs = jsonDecode(prefsGoop.getString("UserPrefs"));
       _serverURL = jsonPrefs['url'];
       authenticate(
           jsonPrefs['username'], jsonPrefs['password'], jsonPrefs['db']);
@@ -45,9 +44,8 @@ class Odoo {
 
   Future<OdooResponse> destroy() async {
     var url = createPath("/web/session/destroy");
-    SharedPreferences prefs = await SharedPreferences.getInstance();
     final res = await callRequest(url, createPayload({}));
-    prefs.remove("session");
+    prefsGoop.remove("session");
     return res;
   }
 
@@ -193,10 +191,9 @@ class Odoo {
   }
 
   Future<http.Response> callDbRequest(String url, Map payload) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
     var body = json.encode(payload);
     _headers["Content-type"] = "application/json; charset=UTF-8";
-    _headers["Cookie"] = prefs.getString(Constants.SESSION);
+    _headers["Cookie"] = prefsGoop.getString(Constants.SESSION);
     print("------------------------------------------->>>>");
     print("REQUEST: $url\n");
     print("BODY:\n $body\n");
@@ -213,11 +210,10 @@ class Odoo {
   }
 
   _updateCookies(http.Response response) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
     String rawCookie = response.headers['set-cookie'];
     if (rawCookie != null) {
       _headers['Cookie'] = rawCookie;
-      prefs.setString(Constants.SESSION, rawCookie);
+      prefsGoop.setString(Constants.SESSION, rawCookie);
     }
   }
 

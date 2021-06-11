@@ -1,3 +1,4 @@
+import 'package:goop/models/quizzLinesModel.dart';
 import 'package:goop/utils/ClassConstants.dart';
 import 'package:goop/utils/utils.dart';
 
@@ -12,6 +13,8 @@ class Activity {
   String display_name;
   String last_update; // original name "__last_update"
   String activityType; //ActivityTypeConsts
+
+  List<QuizzLinesModel> listQuizzLinesModel = <QuizzLinesModel>[];
 
   Activity(
       {this.id,

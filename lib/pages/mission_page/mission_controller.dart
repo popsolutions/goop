@@ -18,6 +18,6 @@ abstract class _MissionControllerBase with Store {
 
   @action
   void load() {
-    _missionsRequest = _missionService.getMissions().asObservable();
+    _missionsRequest = _missionService.getOpenMissions().asObservable();
   }
 }
