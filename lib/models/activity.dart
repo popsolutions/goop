@@ -1,3 +1,5 @@
+import 'package:goop/models/measurement.dart';
+import 'package:goop/models/measurementQuizzlines.dart';
 import 'package:goop/models/quizzLinesModel.dart';
 import 'package:goop/utils/ClassConstants.dart';
 import 'package:goop/utils/utils.dart';
@@ -13,8 +15,10 @@ class Activity {
   String display_name;
   String last_update; // original name "__last_update"
   String activityType; //ActivityTypeConsts
+  bool isChecked = false;
 
   List<QuizzLinesModel> listQuizzLinesModel = <QuizzLinesModel>[];
+  MeasurementQuizzlinesModel measurementQuizzlinesModel;
 
   Activity(
       {this.id,

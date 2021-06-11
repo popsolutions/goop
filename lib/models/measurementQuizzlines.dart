@@ -1,16 +1,18 @@
 //Class Measurement_quizzlinesModel is a Response to quizz into Measurement
-class Measurement_quizzlinesModel {
+class MeasurementQuizzlinesModel {
   int id;
   String name;
   int quizz_id;
+  String quizz_name;
   int alternative_id;
+  String alternative_name;
   int measurement_id;
   int create_uid;
   DateTime create_date;
   int write_uid;
   String display_name;
 
-  Measurement_quizzlinesModel(
+  MeasurementQuizzlinesModel(
       {this.id,
       this.name,
       this.quizz_id,
@@ -21,11 +23,13 @@ class Measurement_quizzlinesModel {
       this.write_uid,
       this.display_name});
 
-  Measurement_quizzlinesModel.fromJson(Map<String, dynamic> json) {
+  MeasurementQuizzlinesModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     quizz_id = json['quizz_id'][0];
+    quizz_name = json['quizz_id'][1];
     alternative_id = json['alternative_id'][0];
+    alternative_name = json['alternative_id'][1];
     measurement_id = json['measurement_id'][0];
     create_uid = json['create_uid'][0];
     create_date = DateTime.parse(json['create_date']);

@@ -5,12 +5,12 @@ import 'package:goop/models/AlternativeModel.dart';
 import 'package:goop/models/login_dto.dart';
 import 'package:goop/models/login_result.dart';
 import 'package:goop/models/measurement.dart';
-import 'package:goop/models/measurement_quizzlines.dart';
+import 'package:goop/models/measurementQuizzlines.dart';
 import 'package:goop/models/mission.dart';
 import 'package:goop/models/quizzLinesModel.dart';
 import 'package:goop/models/user.dart';
 import 'package:goop/services/AlternativeService.dart';
-import 'package:goop/services/Measurement_quizzlinesService.dart';
+import 'package:goop/services/MeasurementQuizzlinesService.dart';
 import 'package:goop/services/QuizzLinesModelService.dart';
 import 'package:goop/services/login/login_service.dart';
 import 'package:goop/services/login/user_service.dart';
@@ -26,8 +26,7 @@ void main() {
   MeasurementService measurementService = new MeasurementService();
   UserServiceImpl userServiceImpl = new UserServiceImpl(Odoo());
   AlternativeService alternativeService = new AlternativeService();
-  Measurement_quizzlinesService measurement_quizzlinesService =
-      new Measurement_quizzlinesService();
+  MeasurementQuizzlinesService measurementQuizzlinesService = new MeasurementQuizzlinesService();
 
   QuizzLinesModelService quizzLinesModelService = new QuizzLinesModelService();
 
@@ -40,7 +39,7 @@ void main() {
 
     currentLoginResult = await login.login(loginDto);
     currentUser =
-        await userServiceImpl.getUserFromLoginResult(currentLoginResult);
+    await userServiceImpl.getUserFromLoginResult(currentLoginResult);
   }
 
   void init() async {
@@ -74,7 +73,7 @@ void main() {
     MissionService missionService = new MissionService(Odoo());
     List<MissionModel> listMissionModel = await missionService.getOpenMissions();
 
-    while (!missionService.getMissionsCompletLoad()){
+    while (!missionService.getMissionsCompletLoad()) {
       await Future.delayed(Duration(milliseconds: 60));
       print('Aguardando finalização de missionService.getMissions()');
     }
@@ -107,19 +106,18 @@ void main() {
   group('mission_service', () {
     test('MissionService.getListActivity', () async {
       MissionService missionService = new MissionService(Odoo());
-      MissionModel missionModel = await missionService.getMissionById(74);
+      MissionModel missionModel = await missionService.getMissionById(79);
       print(missionModel.toJson());
 
-      await missionService.setListActivity(missionModel);
+      await missionService.setListActivity(missionModel, currentUser);
 
       print(missionModel.listActivity.length);
     });
-
   });
 
   test('Measurement.getMeasurementModelById', () async {
     MeasurementModel measurementModel =
-        await measurementService.getMeasurementModelById(140);
+    await measurementService.getMeasurementModelById(140);
     print(JSONToStringWrapQuotClear(measurementModel.toJson()));
   });
 
@@ -160,7 +158,7 @@ void main() {
         lastUpdate: null);
 
     MeasurementModel measurementModel =
-        await measurementService.insertAndGet(measurementModelInsert);
+    await measurementService.insertAndGet(measurementModelInsert);
 
     print(JSONToStringWrapQuotClear(measurementModel.toJson()));
 
@@ -170,7 +168,7 @@ void main() {
 
   test('AlternativeService.listAlternativeModelLoad', () async {
     List<AlternativeModel> listAlternativeModel =
-        await alternativeService.getAlternativeService();
+    await alternativeService.getAlternativeService();
     print('::listAlternativeModel');
     listAlternativeModel.forEach((element) {
       print(element.toJson());
@@ -179,31 +177,31 @@ void main() {
 
   group('Measurement_quizzlinesModel', () {
     test('Measurement_quizzlinesModel.getMeasurement_quizzlinesModelModelById',
-        () async {
-      print(
-          '::test Measurement_quizzlinesModel.getMeasurement_quizzlinesModelModelById');
-      int id = 12;
-      Measurement_quizzlinesModel measurement_quizzlinesModel =
-          await measurement_quizzlinesService
+            () async {
+          print(
+              '::test Measurement_quizzlinesModel.getMeasurement_quizzlinesModelModelById');
+          int id = 12;
+          MeasurementQuizzlinesModel measurement_quizzlinesModel =
+          await measurementQuizzlinesService
               .getMeasurement_quizzlinesModelModelById(id);
-      print(
-          'Measurement_quizzlinesModel id $id : ${measurement_quizzlinesModel.toJson()}');
-    });
+          print(
+              'Measurement_quizzlinesModel id $id : ${measurement_quizzlinesModel.toJson()}');
+        });
 
     test('Measurement_quizzlinesModel.insertAndGet', () async {
       print('::test Measurement_quizzlinesModel.insertAndGet');
-      Measurement_quizzlinesModel measurement_quizzlinesModel =
-          Measurement_quizzlinesModel(
-              name: "Nome-teste-insert",
-              quizz_id: 50,
-              alternative_id: 1,
-              measurement_id: 151,
-              create_uid: currentUser.uid,
-              write_uid: currentUser.uid);
+      MeasurementQuizzlinesModel measurement_quizzlinesModel =
+      MeasurementQuizzlinesModel(
+          name: "Nome-teste-insert",
+          quizz_id: 50,
+          alternative_id: 1,
+          measurement_id: 151,
+          create_uid: currentUser.uid,
+          write_uid: currentUser.uid);
 
-      Measurement_quizzlinesModel measurement_quizzlinesModelInserted =
-          await measurement_quizzlinesService
-              .insertAndGet(measurement_quizzlinesModel);
+      MeasurementQuizzlinesModel measurement_quizzlinesModelInserted =
+      await measurementQuizzlinesService
+          .insertAndGet(measurement_quizzlinesModel);
 
       expect(measurement_quizzlinesModel.quizz_id,
           equals(measurement_quizzlinesModelInserted.quizz_id));
@@ -225,6 +223,16 @@ void main() {
     List<QuizzLinesModel> quizzLinesModel = await quizzLinesModelService.getQuizzLinesModelFromQuizz(45);
 
     print(quizzLinesModel.length);
-
   });
+
+  test('MeasurementService.getMeasurementModelFromMissionIdAndPartner_id', () async {
+    MeasurementModel measurementModel = await measurementService.getMeasurementModelFromMissionIdAndPartner_id(79, 3);
+    print(measurementModel.toJson());
+  });
+
+  test('MeasurementQuizzLinesService.getMeasurement_quizzlinesModelModelById', () async {
+    MeasurementQuizzlinesModel listMeasurementQuizzlinesModel = await measurementQuizzlinesService.getMeasurementQuizzLinesFromMeasurementIdAndQuizLinesId(191, 56);
+    print(listMeasurementQuizzlinesModel.toJson());
+  });
+
 }

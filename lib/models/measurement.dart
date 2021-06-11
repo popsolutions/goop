@@ -1,4 +1,5 @@
 // ignore_for_file: non_constant_identifier_names
+import 'package:goop/models/measurementQuizzlines.dart';
 import 'package:goop/utils/utils.dart';
 
 class MeasurementModel {
@@ -37,6 +38,8 @@ class MeasurementModel {
   String kanbanStateLabel;
   String displayName;
   String lastUpdate; //original name "__last_update"
+
+  List<MeasurementQuizzlinesModel> listMeasurementQuizzlinesModel;
 
   MeasurementModel({
     this.id,

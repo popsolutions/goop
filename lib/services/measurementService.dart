@@ -1,11 +1,17 @@
 import 'package:goop/config/http/odoo_api.dart';
+import 'package:goop/models/activity.dart';
 import 'package:goop/models/measurement.dart';
+import 'package:goop/models/measurementQuizzlines.dart';
+import 'package:goop/models/mission.dart';
+import 'package:goop/models/quizzLinesModel.dart';
+import 'package:goop/services/MeasurementQuizzlinesService.dart';
 
 import 'constants.dart';
 
 class MeasurementService {
   final Odoo _odoo = Odoo();
 
+  MeasurementQuizzlinesService measurementQuizzlinesService = new MeasurementQuizzlinesService();
 
   Future<MeasurementModel> getMeasurementModelById(int id) async {
     final response = await _odoo.searchRead(
@@ -20,6 +26,31 @@ class MeasurementService {
     if (json.length == 0) return null;
 
     return MeasurementModel.fromJson(json[0]);
+  }
+
+  Future<MeasurementModel> getMeasurementModelFromMissionAndPartner_id(MissionModel missionModel, int partner_id) async {
+    return await getMeasurementModelFromMissionIdAndPartner_id(missionModel.id, partner_id);
+  }
+
+  Future<MeasurementModel> getMeasurementModelFromMissionIdAndPartner_id(int missionId, int partner_id) async {
+    final response = await _odoo.searchRead(
+      Strings.meassurement,
+      [
+        ["missions_id", "in", [missionId]],
+        ["partner_id", "in", [partner_id]]
+      ],
+      [],
+    );
+
+    final List json = response.getRecords();
+    if (json.length == 0) return null;
+
+    return MeasurementModel.fromJson(json[0]);
+  }
+
+  Future<MeasurementQuizzlinesModel> getMeasurementQuizzLinesFromMeasurementAndActivity(MeasurementModel measurementModel, Activity activity) async {
+    MeasurementQuizzlinesModel measurementQuizzlinesModel = await measurementQuizzlinesService.getMeasurementQuizzLinesFromMeasurementAndActivity(measurementModel, activity);
+    return measurementQuizzlinesModel;
   }
 
   Future<MeasurementModel> insertAndGet(MeasurementModel measurementModel) async {

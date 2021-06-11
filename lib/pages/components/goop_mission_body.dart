@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goop/config/routes.dart';
+import 'package:goop/models/activity.dart';
 import 'package:goop/models/mission_dto.dart';
 import 'package:goop/pages/components/goop_card.dart';
 import 'package:goop/services/ServiceNotifier.dart';
@@ -52,10 +53,12 @@ class _GoopMissionBodyState extends State<GoopMissionBody> {
             physics: NeverScrollableScrollPhysics(),
             itemCount: widget.missionDto.missionModel.listActivity.length,
             itemBuilder: (_, index) {
+
+              Activity currentActivity = widget.missionDto.missionModel.listActivity[index];
+
               return ListTile(
                 leading: Icon(
-                  //isSelected1 ? Icons.star : Icons.star_border,
-                  Icons.star,
+                  (currentActivity.isChecked == true) ? Icons.star : Icons.star_border,
                   color: Colors.deepPurple,
                 ),
                 title: TextButton(

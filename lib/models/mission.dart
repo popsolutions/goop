@@ -1,5 +1,6 @@
 
 import 'package:goop/models/activity.dart';
+import 'package:goop/models/measurement.dart';
 import 'package:goop/models/user_profile.dart';
 
 class MissionModel {
@@ -24,6 +25,7 @@ class MissionModel {
   String time;
 
   List<Activity> listActivity = <Activity>[];
+  MeasurementModel measurementModel;
 
   MissionModel({
     this.id,

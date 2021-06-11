@@ -1,4 +1,7 @@
+import 'package:goop/models/measurement.dart';
 import 'package:goop/models/quizzLinesModel.dart';
+import 'package:goop/models/user.dart';
+import 'package:goop/services/measurementService.dart';
 
 import '../config/http/odoo_api.dart';
 import '../models/activity.dart';
@@ -11,6 +14,7 @@ class ActivityService{
   Odoo _odoo = new Odoo();
 
   QuizzLinesModelService quizzLinesModelService = new QuizzLinesModelService();
+  MeasurementService measurementService = new MeasurementService();
 
   Future<List<Activity>> getListActivityModelFromMission(MissionModel missionModel, String model, [String fieldMissionName = 'missions_id']) async {
     final response = await _odoo.searchRead(
@@ -38,5 +42,10 @@ class ActivityService{
 
   Future<List<QuizzLinesModel>> getQuizzLinesFromActivity(Activity activity) async {
     return quizzLinesModelService.getQuizzLinesModelFromQuizz(activity.id);
+  }
+
+  Future<void> setMeasurementQuizzlinesModel(Activity activity, MeasurementModel measurementModel, User user) async {
+    activity.measurementQuizzlinesModel = await measurementService.getMeasurementQuizzLinesFromMeasurementAndActivity(measurementModel, activity);
+    activity.isChecked = (activity.measurementQuizzlinesModel != null);
   }
 }
