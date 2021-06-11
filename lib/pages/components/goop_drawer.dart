@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:goop/config/app/authentication_controller.dart';
 import 'package:goop/config/routes.dart';
 import 'package:goop/pages/components/goop_button.dart';
+import 'package:goop/services/ServiceNotifier.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
 import 'package:provider/provider.dart';
@@ -10,8 +11,8 @@ import 'package:provider/provider.dart';
 class GoopDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final authenticationController =
-        Provider.of<AuthenticationController>(context);
+    ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context, listen: false);
+    AuthenticationController authenticationController = serviceNotifier.authenticationController;
     final user = authenticationController.currentUser;
 
     ListTile goopTile({String title, img, action}) {

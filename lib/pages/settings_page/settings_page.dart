@@ -12,6 +12,7 @@ import 'package:goop/pages/components/goop_button.dart';
 import 'package:goop/pages/components/goop_text_form_field.dart';
 import 'package:goop/pages/settings_page/preview_page.dart';
 import 'package:goop/pages/settings_page/settings_controller.dart';
+import 'package:goop/services/ServiceNotifier.dart';
 import 'package:goop/services/login/user_service.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
@@ -56,11 +57,8 @@ class _SettingsPageState extends State<SettingsPage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (authenticationController == null) {
-      authenticationController = Provider.of<AuthenticationController>(
-        context,
-        listen: false,
-      );
-
+      ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context, listen: false);
+      AuthenticationController authenticationController = serviceNotifier.authenticationController;
       final user = authenticationController.currentUser;
 
       _controller.id = user.partnerId;
@@ -132,8 +130,9 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size.width;
-    final authenticationController =
-        Provider.of<AuthenticationController>(context);
+
+    ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context, listen: false);
+    AuthenticationController authenticationController = serviceNotifier.authenticationController;
     final user = authenticationController.currentUser;
 
     if (archive != null) {

@@ -45,8 +45,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void didChangeDependencies() {
-    _authenticationController =
-        Provider.of<AuthenticationController>(context, listen: false);
+    ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context, listen: false);
+    _authenticationController = serviceNotifier.authenticationController;
     super.didChangeDependencies();
   }
 

@@ -23,7 +23,7 @@ import 'mission/mission_service.dart';
 import 'mission/mission_service.dart';
 import 'mission/mission_service.dart';
 
-class ServiceNotifier{
+class ServiceNotifier extends ChangeNotifier{
   // ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context);
   AlternativeService alternativeService = new AlternativeService();
   MeasurementService measurementService = new MeasurementService();
@@ -79,6 +79,8 @@ class ServiceNotifier{
         await measurement_quizzlinesService.insertAndGet(measurement_quizzlinesModel);
 
     await activityService.setMeasurementQuizzlinesModel(currentActivity,  currentMissionModel.measurementModel, currentUser);
+
+    notifyListeners();
     print(measurement_quizzlinesModelInserted);
   }
 
