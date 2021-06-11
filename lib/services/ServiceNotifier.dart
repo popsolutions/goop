@@ -19,15 +19,14 @@ import 'establishment/establishment_controller.dart';
 import 'establishment/establishment_service.dart';
 import 'measurementService.dart';
 import 'mission/mission_service.dart';
-import 'mission/mission_service.dart';
-import 'mission/mission_service.dart';
 
 class ServiceNotifier {
   // ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context);
   AlternativeService alternativeService = new AlternativeService();
   MeasurementService measurementService = new MeasurementService();
   GeoLocService geoLocService = new GeoLocService();
-  Measurement_quizzlinesService measurement_quizzlinesService = Measurement_quizzlinesService();
+  Measurement_quizzlinesService measurement_quizzlinesService =
+      Measurement_quizzlinesService();
   MissionService missionService = new MissionService(Odoo());
   ActivityService activityService = new ActivityService();
 
@@ -42,7 +41,8 @@ class ServiceNotifier {
 
   final missionsController = MissionController(MissionService(Odoo()));
 
-  final establishmentsController = EstablishmentController(EstablishmentService(Odoo()));
+  final establishmentsController =
+      EstablishmentController(EstablishmentService(Odoo()));
 
   init() async {
     if (initialization == true) return;
@@ -100,25 +100,29 @@ class ServiceNotifier {
       // lastUpdate: null
     );
 
-    MeasurementModel measurementModelInserted = await measurementService.insertAndGet(measurementModelInsert);
+    MeasurementModel measurementModelInserted =
+        await measurementService.insertAndGet(measurementModelInsert);
     return measurementModelInserted;
   }
 
-  Future<void> insert_Measurement_quizzlinesModel(QuizzLinesModel _selectedQuizzLinesModel) async {
+  Future<void> insert_Measurement_quizzlinesModel(
+      QuizzLinesModel _selectedQuizzLinesModel) async {
     if (currentMeasurementModel == null) {
       currentMeasurementModel = await insert_MeasurementModel();
     }
 
-    Measurement_quizzlinesModel measurement_quizzlinesModel = Measurement_quizzlinesModel(
-        name: "//??-marcos",
-        quizz_id: currentActivity.id,
-        alternative_id: _selectedQuizzLinesModel.alternative_id,
-        measurement_id: currentMeasurementModel.id,
-        create_uid: currentUser.uid,
-        write_uid: currentUser.uid);
+    Measurement_quizzlinesModel measurement_quizzlinesModel =
+        Measurement_quizzlinesModel(
+            name: "//??-marcos",
+            quizz_id: currentActivity.id,
+            alternative_id: _selectedQuizzLinesModel.alternative_id,
+            measurement_id: currentMeasurementModel.id,
+            create_uid: currentUser.uid,
+            write_uid: currentUser.uid);
 
     Measurement_quizzlinesModel measurement_quizzlinesModelInserted =
-        await measurement_quizzlinesService.insertAndGet(measurement_quizzlinesModel);
+        await measurement_quizzlinesService
+            .insertAndGet(measurement_quizzlinesModel);
     print(measurement_quizzlinesModelInserted);
   }
 
