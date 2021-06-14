@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:camera_camera/camera_camera.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,9 @@ class _GoopMissionBodyState extends State<GoopMissionBody> {
           builder: (_) => PreviewPage(file),
         ),
       );
+
+      await provider.insert_Measurement_photolines(base64Encode(file.readAsBytesSync()));
+
       Navigator.pop(context);
     }
 

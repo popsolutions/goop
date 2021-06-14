@@ -1,5 +1,9 @@
 //Class Measurement_quizzlinesModel is a Response to quizz into Measurement
+import 'package:goop/services/constants.dart';
+
 class MeasurementQuizzlinesModel {
+  String modelName = Strings.measurement_quizzLines;
+
   int id;
   String name;
   int quizz_id;

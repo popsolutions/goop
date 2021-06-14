@@ -9,8 +9,8 @@ class MeasurementModel {
   int partner_Id; //vendor
   String partner_Name;
   String state;
-  String dateStarted;
-  String dateFinished;
+  DateTime dateStarted;
+  DateTime dateFinished;
   double measurementLatitude;
   double measurementLongitude;
 
@@ -105,8 +105,8 @@ class MeasurementModel {
     partner_Name = getArrJson('partner_id', 1);
 
     state = json['state'];
-    dateStarted = GetStr('date_started');
-    dateFinished = GetStr('date_finished');
+    dateStarted = DateTime.parse(json['date_started']);
+    dateFinished = DateTime.parse(json['date_started']);
     measurementLatitude = json['measurement_latitude'];
     measurementLongitude = json['measurement_longitude'];
 
@@ -145,7 +145,7 @@ class MeasurementModel {
     data['partner_id'] = this.partner_Id;
 
     data['state'] = this.state;
-    data['date_started'] = this.dateStarted;
+    data['date_started'] = DateToSql(this.dateStarted);
     data['date_finished'] = this.dateFinished;
     data['measurement_latitude'] = this.measurementLatitude;
     data['measurement_longitude'] = this.measurementLongitude;

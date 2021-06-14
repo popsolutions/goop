@@ -3,6 +3,7 @@ import 'package:goop/config/app/authentication_controller.dart';
 import 'package:goop/models/AlternativeModel.dart';
 import 'package:goop/models/activity.dart';
 import 'package:goop/models/measurement.dart';
+import 'package:goop/models/measurementPhotoLines.dart';
 import 'package:goop/models/measurementQuizzlines.dart';
 import 'package:goop/models/mission.dart';
 import 'package:goop/models/quizzLinesModel.dart';
@@ -10,6 +11,7 @@ import 'package:goop/models/user.dart';
 import 'package:goop/services/ActivityService.dart';
 import 'package:goop/services/AlternativeService.dart';
 import 'package:goop/services/GeoLocService.dart';
+import 'package:goop/services/MeasurementPhotoLinesService.dart';
 import 'package:goop/services/MeasurementQuizzlinesService.dart';
 import 'package:goop/utils/utils.dart';
 
@@ -26,6 +28,7 @@ class ServiceNotifier extends ChangeNotifier{
   MeasurementService measurementService = new MeasurementService();
   GeoLocService geoLocService = new GeoLocService();
   MeasurementQuizzlinesService measurement_quizzlinesService = MeasurementQuizzlinesService();
+  MeasurementPhotoLinesService measurementPhotoLinesService = MeasurementPhotoLinesService();
   MissionService missionService = new MissionService(Odoo());
   ActivityService activityService = new ActivityService();
   AuthenticationController authenticationController = new AuthenticationController();
@@ -73,14 +76,33 @@ class ServiceNotifier extends ChangeNotifier{
         create_uid: currentUser.uid,
         write_uid: currentUser.uid);
 
-    MeasurementQuizzlinesModel measurement_quizzlinesModelInserted =
-        await measurement_quizzlinesService.insertAndGet(measurement_quizzlinesModel);
+    await measurement_quizzlinesService.insert(measurement_quizzlinesModel);
 
     await activityService.setMeasurementQuizzlinesModel(currentActivity,  currentMissionModel.measurementModel, currentUser);
 
     notifyListeners();
-    print(measurement_quizzlinesModelInserted);
   }
+
+  Future<void> insert_Measurement_photolines(String photoBase64) async {
+    if (currentMissionModel.measurementModel == null) {
+      await missionService.createMeasurementModel(currentMissionModel, currentUser, geoLocService);
+    }
+
+    MeasurementPhotoLinesModel measurementPhotoLinesModel = MeasurementPhotoLinesModel(
+        name: "//??-marcos",
+        measurement_id: currentMissionModel.measurementModel.id,
+        photo_id: currentActivity.id,
+        photo: photoBase64,
+        create_uid: currentUser.uid,
+        write_uid: currentUser.uid);
+
+    await measurementPhotoLinesService.insert(measurementPhotoLinesModel);
+
+    await activityService.setMeasurementPhotoLinesModel(currentActivity,  currentMissionModel.measurementModel, currentUser);
+
+    notifyListeners();
+  }
+
 
   setcurrentMissionModel(MissionModel missionModel) async {
     //??-mateus

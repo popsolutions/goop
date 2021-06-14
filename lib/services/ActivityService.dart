@@ -64,5 +64,11 @@ class ActivityService{
     activity.measurementQuizzlinesModel = await measurementService.getMeasurementQuizzLinesFromMeasurementAndActivity(measurementModel, activity);
     activity.isChecked = (activity.measurementQuizzlinesModel != null);
   }
+
+  Future<void> setMeasurementPhotoLinesModel(Activity activity, MeasurementModel measurementModel, User user) async {
+    activity.measurementPhotoLinesModel = await measurementService.getMeasurementPhotoLinesFromMeasurementAndActivity(measurementModel, activity);
+    activity.isChecked = (activity.measurementPhotoLinesModel != null);
+  }
+
 }
 

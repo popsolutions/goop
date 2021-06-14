@@ -33,6 +33,10 @@ String convertDateToStringFormat(DateTime date) {
   return DateFormat('dd/MM/yyyy').format(date);
 }
 
+String DateToSql(DateTime date) {
+  return DateFormat('yyyy-MM-dd').format(date);
+}
+
 String convertTimeToStringFormat(DateTime date) {
 //Return examples => "00:01", "09:01", "19:59", "23:59"
   return DateFormat('H:mm').format(date);
@@ -40,4 +44,8 @@ String convertTimeToStringFormat(DateTime date) {
 
 String convertDateTimeToStringFormat(DateTime date) {
   return '${convertDateToStringFormat(date)} ${convertTimeToStringFormat(date)}';
+}
+
+void ToDevelop(String s){
+  print(':: To Develop: $s');
 }

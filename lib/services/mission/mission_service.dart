@@ -94,12 +94,16 @@ class MissionService {
     if (missionModel.measurementModel != null) {
       
       for (var activity in missionModel.listActivity) {
-        if (activity.isQuizz()) {
+        if (activity.isQuizz() == true) {
           await activityService.setMeasurementQuizzlinesModel(activity, missionModel.measurementModel, user);
+        } else if (activity.isPhoto() == true) {
+          await activityService.setMeasurementPhotoLinesModel(activity, missionModel.measurementModel, user);
+        } else if (activity.isPriceComparison() == true) {
+          // await activityService.setMeasurementPhotoLinesModel(activity, missionModel.measurementModel, user);
+          ToDevelop('updateListActivityChecked - activity.isPriceComparison');
         }
       }
     }
-    // missionModel.
   }
 
   void updateMissionModel(MissionModel missionModel) async {
@@ -131,7 +135,7 @@ class MissionService {
         partner_Id: currentUser.partnerId,
         partner_Name: null,
         state: 'done',
-        dateStarted: convertDateTimeToStringFormat(DateTime.now()),
+        dateStarted: DateTime.now(),
         // dateFinished: "2021-05-02",
         measurementLatitude: geoLocService.latitude,
         measurementLongitude: geoLocService.longitude,

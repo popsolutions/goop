@@ -9,7 +9,8 @@ class Strings {
   static const String popsQuizzLines = 'pops.quizz.lines';
   static const String price_comparison = 'pops.price_comparison';
   static const String popsAlternative = 'pops.alternative';
-  static const String measurement_quizzlines = 'pops.measurement.quizzlines'; // Response of quizz
+  static const String measurement_quizzLines = 'pops.measurement.quizzlines'; // Response of quizz
+  static const String measurement_photoLine = 'pops.measurement.photolines'; // Response of photo
 
 
 }

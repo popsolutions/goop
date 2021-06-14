@@ -1,9 +1,11 @@
 import 'package:goop/config/http/odoo_api.dart';
 import 'package:goop/models/activity.dart';
 import 'package:goop/models/measurement.dart';
+import 'package:goop/models/measurementPhotoLines.dart';
 import 'package:goop/models/measurementQuizzlines.dart';
 import 'package:goop/models/mission.dart';
 import 'package:goop/models/quizzLinesModel.dart';
+import 'package:goop/services/MeasurementPhotoLinesService.dart';
 import 'package:goop/services/MeasurementQuizzlinesService.dart';
 
 import 'constants.dart';
@@ -12,6 +14,7 @@ class MeasurementService {
   final Odoo _odoo = Odoo();
 
   MeasurementQuizzlinesService measurementQuizzlinesService = new MeasurementQuizzlinesService();
+  MeasurementPhotoLinesService measurementPhotoLinesService = new MeasurementPhotoLinesService();
 
   Future<MeasurementModel> getMeasurementModelById(int id) async {
     final response = await _odoo.searchRead(
@@ -51,6 +54,11 @@ class MeasurementService {
   Future<MeasurementQuizzlinesModel> getMeasurementQuizzLinesFromMeasurementAndActivity(MeasurementModel measurementModel, Activity activity) async {
     MeasurementQuizzlinesModel measurementQuizzlinesModel = await measurementQuizzlinesService.getMeasurementQuizzLinesFromMeasurementAndActivity(measurementModel, activity);
     return measurementQuizzlinesModel;
+  }
+
+  Future<MeasurementPhotoLinesModel> getMeasurementPhotoLinesFromMeasurementAndActivity(MeasurementModel measurementModel, Activity activity) async {
+    MeasurementPhotoLinesModel measurementPhotoLinesModel = await measurementPhotoLinesService.getMeasurementPhotoLinesFromMeasurementAndActivity(measurementModel, activity);
+    return measurementPhotoLinesModel;
   }
 
   Future<MeasurementModel> insertAndGet(MeasurementModel measurementModel) async {
