@@ -44,8 +44,10 @@ class Activity {
     }
 
     if (activityType == ActivityTypeConsts.Price_Comparison) {
-      product_id = map['product_id'][0];
-      name = map['product_id'][1];
+      if (!(map['product_id'] is bool)) {
+        product_id = map['product_id'][0];
+        name = map['product_id'][1];
+      }
     } else {
       name = map['name'];
     }
