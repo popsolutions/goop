@@ -2,7 +2,6 @@ import 'package:goop/config/http/odoo_api.dart';
 import 'package:goop/models/activity.dart';
 import 'package:goop/models/measurement.dart';
 import 'package:goop/models/measurementQuizzlines.dart';
-import 'package:goop/models/quizzLinesModel.dart';
 
 import 'constants.dart';
 
@@ -15,7 +14,7 @@ class MeasurementQuizzlinesService{
 
   Future<MeasurementQuizzlinesModel> getMeasurementQuizzLinesFromMeasurementIdAndQuizLinesId(int MeasurementId, int quizLinesId) async {
     final response = await _odoo.searchRead(
-      Strings.measurement_quizzlines,
+      Strings.measurement_quizzLines,
       [
         ["measurement_id", "in", [MeasurementId]],
         ["quizz_id", "in", [quizLinesId]]
@@ -33,7 +32,7 @@ class MeasurementQuizzlinesService{
 
   Future<MeasurementQuizzlinesModel> getMeasurement_quizzlinesModelModelById(int id) async {
     final response = await _odoo.searchRead(
-      Strings.measurement_quizzlines,
+      Strings.measurement_quizzLines,
       [
         ['id', '=', id]
       ],
@@ -59,7 +58,7 @@ class MeasurementQuizzlinesService{
 
 
   Future<int> insert(MeasurementQuizzlinesModel measurement_quizzlinesModel) async {
-    final response = await _odoo.create(Strings.measurement_quizzlines, measurement_quizzlinesModel.toJson());
+    final response = await _odoo.create(Strings.measurement_quizzLines, measurement_quizzlinesModel.toJson());
 
     if (response.getStatusCode() == 200){
       return response.getResult(); //return id of Measurement_quizzlinesModel
