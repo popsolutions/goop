@@ -80,9 +80,9 @@ class MissionService {
   }
 
   Future<List<Activity>> getListActivity(MissionModel missionModel) async {
-    List<Activity> listPhoto = await activityService.getListActivityModelFromMission(missionModel, Strings.photoLines, 'mission_id');
-    List<Activity> listQuizz = await activityService.getListActivityModelFromMission(missionModel, Strings.popsQuizz);
-    List<Activity> listPriceComparison = await activityService.getListActivityModelFromMission(missionModel, Strings.price_comparison);
+    List<Activity> listPhoto = await activityService.getListPhotoFromMission(missionModel);
+    List<Activity> listQuizz = await activityService.getListQuizzFromMission(missionModel);
+    List<Activity> listPriceComparison = await activityService.getListPriceComparisonFromMission(missionModel);
 
     return listPhoto + listQuizz + listPriceComparison;
   }

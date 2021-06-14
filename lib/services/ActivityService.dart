@@ -16,7 +16,11 @@ class ActivityService{
   QuizzLinesModelService quizzLinesModelService = new QuizzLinesModelService();
   MeasurementService measurementService = new MeasurementService();
 
-  Future<List<Activity>> getListActivityModelFromMission(MissionModel missionModel, String model, [String fieldMissionName = 'missions_id']) async {
+  Future<List<Activity>> getListActivityModelFromMission(MissionModel missionModel, String model) async {
+    String fieldMissionName = 'missions_id';
+
+    if (model == Strings.photoLines) fieldMissionName = 'mission_id';
+
     final response = await _odoo.searchRead(
       model,
       [
@@ -36,6 +40,18 @@ class ActivityService{
     return listActivity;
   }
 
+  Future<List<Activity>> getListPhotoFromMission(MissionModel missionModel) async {
+    return await getListActivityModelFromMission(missionModel, Strings.photoLines);
+  }
+
+  Future<List<Activity>> getListQuizzFromMission(MissionModel missionModel) async {
+    return await getListActivityModelFromMission(missionModel, Strings.popsQuizz);
+  }
+
+  Future<List<Activity>> getListPriceComparisonFromMission(MissionModel missionModel) async {
+    return await getListActivityModelFromMission(missionModel, Strings.price_comparison);
+  }
+
   Future<List<QuizzLinesModel>> setQuizzLinesFromActivity(Activity activity) async {
     activity.listQuizzLinesModel = await getQuizzLinesFromActivity(activity);
   }
@@ -49,3 +65,4 @@ class ActivityService{
     activity.isChecked = (activity.measurementQuizzlinesModel != null);
   }
 }
+
