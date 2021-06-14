@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:goop/config/app/authentication_controller.dart';
@@ -11,8 +13,10 @@ import 'package:provider/provider.dart';
 class GoopDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context, listen: false);
-    AuthenticationController authenticationController = serviceNotifier.authenticationController;
+    ServiceNotifier serviceNotifier =
+        Provider.of<ServiceNotifier>(context, listen: false);
+    AuthenticationController authenticationController =
+        serviceNotifier.authenticationController;
     final user = authenticationController.currentUser;
 
     ListTile goopTile({String title, img, action}) {
@@ -43,9 +47,21 @@ class GoopDrawer extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SvgPicture.asset(
-                        GoopImages.avatar,
-                        height: 150,
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: user.image == null
+                            ? Image.asset(
+                                GoopImages.empty_profile,
+                                fit: BoxFit.cover,
+                                width: 150,
+                                height: 150,
+                              )
+                            : Image.memory(
+                                Base64Codec().decode(user.image),
+                                fit: BoxFit.cover,
+                                width: 150,
+                                height: 150,
+                              ),
                       ),
                       SizedBox(height: 10),
                       Text(
