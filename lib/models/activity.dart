@@ -1,4 +1,3 @@
-import 'package:goop/models/measurement.dart';
 import 'package:goop/models/measurementQuizzlines.dart';
 import 'package:goop/models/quizzLinesModel.dart';
 import 'package:goop/utils/ClassConstants.dart';

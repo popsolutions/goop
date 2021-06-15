@@ -10,13 +10,14 @@ import '../utils/ClassConstants.dart';
 import 'QuizzLinesModelService.dart';
 import 'constants.dart';
 
-class ActivityService{
-  Odoo _odoo = new Odoo();
+class ActivityService {
+  Odoo _odoo = Odoo();
 
-  QuizzLinesModelService quizzLinesModelService = new QuizzLinesModelService();
-  MeasurementService measurementService = new MeasurementService();
+  QuizzLinesModelService quizzLinesModelService = QuizzLinesModelService();
+  MeasurementService measurementService = MeasurementService();
 
-  Future<List<Activity>> getListActivityModelFromMission(MissionModel missionModel, String model) async {
+  Future<List<Activity>> getListActivityModelFromMission(
+      MissionModel missionModel, String model) async {
     String fieldMissionName = 'missions_id';
 
     if (model == Strings.photoLines) fieldMissionName = 'mission_id';
@@ -24,7 +25,11 @@ class ActivityService{
     final response = await _odoo.searchRead(
       model,
       [
-        [fieldMissionName, 'in', [missionModel.id]]
+        [
+          fieldMissionName,
+          'in',
+          [missionModel.id]
+        ]
       ],
       [],
     );
@@ -34,41 +39,61 @@ class ActivityService{
 
     if (model == Strings.photoLines) activityType = ActivityTypeConsts.Photo;
     if (model == Strings.popsQuizz) activityType = ActivityTypeConsts.Quizz;
-    if (model == Strings.price_comparison) activityType = ActivityTypeConsts.Price_Comparison;
+    if (model == Strings.price_comparison)
+      activityType = ActivityTypeConsts.Price_Comparison;
 
-    List<Activity> listActivity = json.map((e) => Activity.fromJson(e, activityType)).toList();
+    List<Activity> listActivity =
+        json.map((e) => Activity.fromJson(e, activityType)).toList();
     return listActivity;
   }
 
-  Future<List<Activity>> getListPhotoFromMission(MissionModel missionModel) async {
-    return await getListActivityModelFromMission(missionModel, Strings.photoLines);
+  Future<List<Activity>> getListPhotoFromMission(
+      MissionModel missionModel) async {
+    return await getListActivityModelFromMission(
+        missionModel, Strings.photoLines);
   }
 
-  Future<List<Activity>> getListQuizzFromMission(MissionModel missionModel) async {
-    return await getListActivityModelFromMission(missionModel, Strings.popsQuizz);
+  Future<List<Activity>> getListQuizzFromMission(
+      MissionModel missionModel) async {
+    return await getListActivityModelFromMission(
+        missionModel, Strings.popsQuizz);
   }
 
-  Future<List<Activity>> getListPriceComparisonFromMission(MissionModel missionModel) async {
-    return await getListActivityModelFromMission(missionModel, Strings.price_comparison);
+  Future<List<Activity>> getListPriceComparisonFromMission(
+      MissionModel missionModel) async {
+    return await getListActivityModelFromMission(
+        missionModel, Strings.price_comparison);
   }
 
-  Future<List<QuizzLinesModel>> setQuizzLinesFromActivity(Activity activity) async {
+  Future setQuizzLinesFromActivity(
+      Activity activity) async {
     activity.listQuizzLinesModel = await getQuizzLinesFromActivity(activity);
   }
 
-  Future<List<QuizzLinesModel>> getQuizzLinesFromActivity(Activity activity) async {
+  Future<List<QuizzLinesModel>> getQuizzLinesFromActivity(
+      Activity activity) async {
     return quizzLinesModelService.getQuizzLinesModelFromQuizz(activity.id);
   }
 
-  Future<void> setMeasurementQuizzlinesModel(Activity activity, MeasurementModel measurementModel, User user) async {
-    activity.measurementQuizzlinesModel = await measurementService.getMeasurementQuizzLinesFromMeasurementAndActivity(measurementModel, activity);
+  Future<void> setMeasurementQuizzlinesModel(
+    Activity activity,
+    MeasurementModel measurementModel,
+    User user,
+  ) async {
+    activity.measurementQuizzlinesModel = await measurementService
+        .getMeasurementQuizzLinesFromMeasurementAndActivity(
+            measurementModel, activity);
     activity.isChecked = (activity.measurementQuizzlinesModel != null);
   }
 
-  Future<void> setMeasurementPhotoLinesModel(Activity activity, MeasurementModel measurementModel, User user) async {
-    activity.measurementPhotoLinesModel = await measurementService.getMeasurementPhotoLinesFromMeasurementAndActivity(measurementModel, activity);
+  Future<void> setMeasurementPhotoLinesModel(
+    Activity activity,
+    MeasurementModel measurementModel,
+    User user,
+  ) async {
+    activity.measurementPhotoLinesModel = await measurementService
+        .getMeasurementPhotoLinesFromMeasurementAndActivity(
+            measurementModel, activity);
     activity.isChecked = (activity.measurementPhotoLinesModel != null);
   }
-
 }
-

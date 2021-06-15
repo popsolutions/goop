@@ -50,7 +50,6 @@ class _MissionHomePageState extends State<MissionHomePage> {
         strokeWidth: 3,
         color: GoopColors.red,
         onRefresh: () async {
-          await Future.delayed(Duration(seconds: 1));
           await serviceNotifier.update();
         },
         child: Column(

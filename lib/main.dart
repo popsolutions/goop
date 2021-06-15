@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:goop/config/app/authentication_controller.dart';
 import 'package:goop/config/routes.dart';
 import 'package:goop/config/widgets_router.dart';
 import 'package:goop/services/ServiceNotifier.dart';
