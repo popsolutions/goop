@@ -3,6 +3,8 @@ import 'package:goop/models/quizzLinesModel.dart';
 import 'package:goop/utils/ClassConstants.dart';
 import 'package:goop/utils/utils.dart';
 
+import 'measurementPhotoLines.dart';
+
 // ignore_for_file: non_constant_identifier_names
 class Activity {
   int id;
@@ -18,6 +20,7 @@ class Activity {
 
   List<QuizzLinesModel> listQuizzLinesModel = <QuizzLinesModel>[];
   MeasurementQuizzlinesModel measurementQuizzlinesModel;
+  MeasurementPhotoLinesModel measurementPhotoLinesModel;
 
   Activity(
       {this.id,

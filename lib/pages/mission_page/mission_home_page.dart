@@ -67,7 +67,10 @@ class _MissionHomePageState extends State<MissionHomePage> {
                   } else if (responseMissions.status == FutureStatus.pending ||
                       responseEstablishments.status == FutureStatus.pending) {
                     return Center(
-                      child: CircularProgressIndicator(),
+                      child: CircularProgressIndicator(
+                        strokeWidth: 3,
+                        color: GoopColors.red,
+                      ),
                     );
                   }
 
