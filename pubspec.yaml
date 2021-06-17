@@ -22,6 +22,7 @@ dependencies:
   cpf_cnpj_validator:
   email_validator: ^2.0.1
   flutter_image_compress: ^1.0.0
+  lazy_loading_list: ^1.0.1
   mask_text_input_formatter: ^1.2.1
   flutter_svg:
   image_picker:

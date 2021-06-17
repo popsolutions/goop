@@ -57,8 +57,10 @@ class _SettingsPageState extends State<SettingsPage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (authenticationController == null) {
-      ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context, listen: false);
-      AuthenticationController authenticationController = serviceNotifier.authenticationController;
+      ServiceNotifier serviceNotifier =
+          Provider.of<ServiceNotifier>(context, listen: false);
+      AuthenticationController authenticationController =
+          serviceNotifier.authenticationController;
       final user = authenticationController.currentUser;
 
       _controller.id = user.partnerId;
@@ -109,6 +111,8 @@ class _SettingsPageState extends State<SettingsPage> {
         archive = base64Encode(file.readAsBytesSync());
       });
     }
+
+    Navigator.pop(context);
   }
 
   Future<void> getFileFromGallery() async {
@@ -131,8 +135,10 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size.width;
 
-    ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context, listen: false);
-    AuthenticationController authenticationController = serviceNotifier.authenticationController;
+    ServiceNotifier serviceNotifier =
+        Provider.of<ServiceNotifier>(context, listen: false);
+    AuthenticationController authenticationController =
+        serviceNotifier.authenticationController;
     final user = authenticationController.currentUser;
 
     if (archive != null) {

@@ -9,7 +9,6 @@ import 'package:goop/pages/components/goop_back.dart';
 import 'package:goop/pages/components/goop_button.dart';
 import 'package:goop/pages/components/goop_text_form_field.dart';
 import 'package:goop/services/ServiceNotifier.dart';
-import 'package:goop/utils/ClassConstants.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
 import 'package:image_picker/image_picker.dart';
@@ -17,16 +16,17 @@ import 'package:provider/provider.dart';
 
 class MissionPriceComparisionPage extends StatefulWidget {
   @override
-  _MissionPriceComparisionPageState createState() => _MissionPriceComparisionPageState();
+  _MissionPriceComparisionPageState createState() =>
+      _MissionPriceComparisionPageState();
 }
 
-class _MissionPriceComparisionPageState extends State<MissionPriceComparisionPage> {
+class _MissionPriceComparisionPageState
+    extends State<MissionPriceComparisionPage> {
   ServiceNotifier serviceNotifier;
   @override
   String archive;
   double price = 0;
   final picker = ImagePicker();
-
 
   Future<void> showPreview(File file) async {
     file = await Navigator.push(
@@ -39,6 +39,7 @@ class _MissionPriceComparisionPageState extends State<MissionPriceComparisionPag
         archive = base64Encode(file.readAsBytesSync());
       });
     }
+    Navigator.pop(context);
   }
 
   Future<void> getFileFromGallery() async {
@@ -53,10 +54,9 @@ class _MissionPriceComparisionPageState extends State<MissionPriceComparisionPag
   }
 
   Future<void> salvar(BuildContext context) async {
-    await serviceNotifier.insert_Measurement_PriceComparisonLinesModel(price, archive);
-    print('x');
+    await serviceNotifier.insert_Measurement_PriceComparisonLinesModel(
+        price, archive);
   }
-
 
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size.width;
@@ -66,10 +66,9 @@ class _MissionPriceComparisionPageState extends State<MissionPriceComparisionPag
     serviceNotifier = Provider.of<ServiceNotifier>(context);
     Activity currentActivity = serviceNotifier.currentActivity;
 
-    if ((currentActivity.measurementPriceComparisonLinesModel != null) && (archive == null))
+    if ((currentActivity.measurementPriceComparisonLinesModel != null) &&
+        (archive == null))
       archive = currentActivity.measurementPriceComparisonLinesModel.photo;
-
-
 
     return Scaffold(
       appBar: AppBar(
@@ -81,38 +80,44 @@ class _MissionPriceComparisionPageState extends State<MissionPriceComparisionPag
         ),
       ),
       body: Center(
-        child: Container(
-          width: MediaQuery.of(context).size.width * .8,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Column(
-                children: [
-                  Text(
-                    'PRODUTOS',
-                    style: theme,
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * .7,
-                    child: Divider(color: Colors.deepPurple),
-                  ),
-                  Text(
-                    currentActivity.name,
-                    style: theme,
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 30),
-                  Text(
-                    'Preço',
-                    style: Theme.of(context).textTheme.headline1,
-                  ),
-                  SizedBox(height: 30),
-                  GoopTextFormField(hintText: 'R\$ 100',
-                  onChanged: (value){
-                    price = (value == '') ? 0 : double.parse(value.replaceAll(',', '.'));
-                    print(price);
-                  },),
-                  GestureDetector(
+        child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Container(
+            width: MediaQuery.of(context).size.width * .8,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Column(
+                  children: [
+                    Text(
+                      'PRODUTOS',
+                      style: theme,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * .7,
+                      child: Divider(color: Colors.deepPurple),
+                    ),
+                    Text(
+                      currentActivity.name,
+                      style: theme,
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 30),
+                    Text(
+                      'Preço',
+                      style: Theme.of(context).textTheme.headline1,
+                    ),
+                    SizedBox(height: 30),
+                    GoopTextFormField(
+                      hintText: 'R\$ 100',
+                      onChanged: (value) {
+                        price = (value == '')
+                            ? 0
+                            : double.parse(value.replaceAll(',', '.'));
+                        print(price);
+                      },
+                    ),
+                    GestureDetector(
                       onTap: () {
                         showModalBottomSheet(
                           shape: RoundedRectangleBorder(
@@ -170,8 +175,8 @@ class _MissionPriceComparisionPageState extends State<MissionPriceComparisionPag
                                       primary: GoopColors.redSplash,
                                       onPrimary: Colors.white,
                                     ),
-                                    onPressed: () {
-                                      getFileFromGallery();
+                                    onPressed: () async {
+                                      await getFileFromGallery();
                                       Navigator.pop(context);
                                     },
                                   ),
@@ -180,41 +185,42 @@ class _MissionPriceComparisionPageState extends State<MissionPriceComparisionPag
                                 Container(
                                   padding: EdgeInsets.only(bottom: 10),
                                   height: 30,
-                                  child:
-                                  SvgPicture.asset(GoopImages.charisma),
+                                  child: SvgPicture.asset(GoopImages.charisma),
                                 ),
                               ],
                             );
                           },
                         );
-                      }
-                    ,
-                    child:
-                  (archive == null)
-                      ? Image.asset(
-                    GoopImages.empty_profile,
-                    fit: BoxFit.cover,
-                    width: 150,
-                    height: 150,
-                  )
-                      : Image.memory(
-                    Base64Codec().decode(archive),
-                    fit: BoxFit.cover,
-                    width: 150,
-                    height: 150,
-                  )
-                  ),
-                ],
-              ),
-              Container(
-                child: GoopButton(
-                  text: 'Salvar',
-                  action: () async {
-                    await salvar(context);
-                  },
+                      },
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: (archive == null)
+                            ? Image.asset(
+                                GoopImages.empty_profile,
+                                fit: BoxFit.cover,
+                                width: 150,
+                                height: 150,
+                              )
+                            : Image.memory(
+                                Base64Codec().decode(archive),
+                                fit: BoxFit.cover,
+                                width: 150,
+                                height: 150,
+                              ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
+                Container(
+                  child: GoopButton(
+                    text: 'Salvar',
+                    action: () async {
+                      await salvar(context);
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
