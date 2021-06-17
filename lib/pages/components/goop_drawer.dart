@@ -94,7 +94,7 @@ class GoopDrawer extends StatelessWidget {
                         child: GoopButton(
                           text: 'Missões',
                           action: () {
-                            Navigator.pushNamed(
+                            Navigator.popAndPushNamed(
                               context,
                               Routes.mission_home,
                             );
@@ -123,7 +123,7 @@ class GoopDrawer extends StatelessWidget {
                       title: 'Carteira',
                       img: GoopImages.wallet_red,
                       action: () {
-                        Navigator.pushNamed(
+                        Navigator.popAndPushNamed(
                           context,
                           Routes.wallet,
                         );
@@ -143,7 +143,7 @@ class GoopDrawer extends StatelessWidget {
                       title: 'Configurações',
                       img: GoopImages.settings,
                       action: () {
-                        Navigator.pushNamed(
+                        Navigator.popAndPushNamed(
                           context,
                           Routes.settings,
                         );

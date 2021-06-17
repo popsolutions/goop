@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:camera_camera/camera_camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goop/config/routes.dart';
 import 'package:goop/models/activity.dart';
@@ -35,7 +36,8 @@ class _GoopMissionBodyState extends State<GoopMissionBody> {
         ),
       );
 
-      await provider.insert_Measurement_photolines(base64Encode(file.readAsBytesSync()));
+      await provider
+          .insert_Measurement_photolines(base64Encode(file.readAsBytesSync()));
 
       Navigator.pop(context);
     }
@@ -68,12 +70,14 @@ class _GoopMissionBodyState extends State<GoopMissionBody> {
             physics: NeverScrollableScrollPhysics(),
             itemCount: widget.missionDto.missionModel.listActivity.length,
             itemBuilder: (_, index) {
-
-              Activity currentActivity = widget.missionDto.missionModel.listActivity[index];
+              Activity currentActivity =
+                  widget.missionDto.missionModel.listActivity[index];
 
               return ListTile(
                 leading: Icon(
-                  (currentActivity.isChecked == true) ? Icons.star : Icons.star_border,
+                  (currentActivity.isChecked == true)
+                      ? Icons.star
+                      : Icons.star_border,
                   color: Colors.deepPurple,
                 ),
                 title: Text(
