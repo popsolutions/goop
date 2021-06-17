@@ -96,4 +96,10 @@ class ActivityService {
             measurementModel, activity);
     activity.isChecked = (activity.measurementPhotoLinesModel != null);
   }
+
+  Future<void> setMeasurementPriceComparisonLinesModel(Activity activity, MeasurementModel measurementModel, User user,) async {
+    activity.measurementPriceComparisonLinesModel = await measurementService.getmeasurementPriceComparisonLinesModelFromMeasurementAndActivity(measurementModel, activity);
+    activity.isChecked = (activity.measurementPriceComparisonLinesModel != null);
+  }
+
 }

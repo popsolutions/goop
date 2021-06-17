@@ -2,11 +2,13 @@ import 'package:goop/config/http/odoo_api.dart';
 import 'package:goop/models/activity.dart';
 import 'package:goop/models/measurement.dart';
 import 'package:goop/models/measurementPhotoLines.dart';
+import 'package:goop/models/measurementPriceComparisonLines.dart';
 import 'package:goop/models/measurementQuizzlines.dart';
 import 'package:goop/models/mission.dart';
 import 'package:goop/models/quizzLinesModel.dart';
 import 'package:goop/services/MeasurementPhotoLinesService.dart';
 import 'package:goop/services/MeasurementQuizzlinesService.dart';
+import 'package:goop/services/measurementPriceComparisonLinesService.dart';
 
 import 'constants.dart';
 
@@ -15,6 +17,7 @@ class MeasurementService {
 
   MeasurementQuizzlinesService measurementQuizzlinesService = new MeasurementQuizzlinesService();
   MeasurementPhotoLinesService measurementPhotoLinesService = new MeasurementPhotoLinesService();
+  MeasurementPriceComparisonLinesService measurementPriceComparisonLinesService = new MeasurementPriceComparisonLinesService();
 
   Future<MeasurementModel> getMeasurementModelById(int id) async {
     final response = await _odoo.searchRead(
@@ -59,6 +62,11 @@ class MeasurementService {
   Future<MeasurementPhotoLinesModel> getMeasurementPhotoLinesFromMeasurementAndActivity(MeasurementModel measurementModel, Activity activity) async {
     MeasurementPhotoLinesModel measurementPhotoLinesModel = await measurementPhotoLinesService.getMeasurementPhotoLinesFromMeasurementAndActivity(measurementModel, activity);
     return measurementPhotoLinesModel;
+  }
+
+  Future<MeasurementPriceComparisonLinesModel> getmeasurementPriceComparisonLinesModelFromMeasurementAndActivity(MeasurementModel measurementModel, Activity activity) async {
+    MeasurementPriceComparisonLinesModel measurementPriceComparisonLinesModel = await measurementPriceComparisonLinesService.getMeasurementPriceComparisonLinesModelFromMeasurementAndActivity(measurementModel, activity);
+    return measurementPriceComparisonLinesModel;
   }
 
   Future<MeasurementModel> insertAndGet(MeasurementModel measurementModel) async {

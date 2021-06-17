@@ -4,6 +4,7 @@ import 'package:goop/models/AlternativeModel.dart';
 import 'package:goop/models/activity.dart';
 import 'package:goop/models/measurement.dart';
 import 'package:goop/models/measurementPhotoLines.dart';
+import 'package:goop/models/measurementPriceComparisonLines.dart';
 import 'package:goop/models/measurementQuizzlines.dart';
 import 'package:goop/models/mission.dart';
 import 'package:goop/models/quizzLinesModel.dart';
@@ -19,6 +20,7 @@ import '../config/http/odoo_api.dart';
 import '../pages/mission_page/mission_controller.dart';
 import 'establishment/establishment_controller.dart';
 import 'establishment/establishment_service.dart';
+import 'measurementPriceComparisonLinesService.dart';
 import 'measurementService.dart';
 import 'mission/mission_service.dart';
 
@@ -32,6 +34,7 @@ class ServiceNotifier extends ChangeNotifier{
   MissionService missionService = new MissionService(Odoo());
   ActivityService activityService = new ActivityService();
   AuthenticationController authenticationController = new AuthenticationController();
+  MeasurementPriceComparisonLinesService measurementPriceComparisonLinesService = new MeasurementPriceComparisonLinesService();
 
   bool initialization = false;
   Activity currentActivity;
@@ -102,6 +105,27 @@ class ServiceNotifier extends ChangeNotifier{
 
     notifyListeners();
   }
+
+  Future<void> insert_Measurement_PriceComparisonLinesModel(double price, String photoBase64) async {
+    if (currentMissionModel.measurementModel == null) {
+      await missionService.createMeasurementModel(currentMissionModel, currentUser, geoLocService);
+    }
+
+    MeasurementPriceComparisonLinesModel measurementPriceComparisonLinesModel = MeasurementPriceComparisonLinesModel(
+        display_name: "//??-marcos",
+        measurement_id: currentMissionModel.measurementModel.id,
+        product_id: currentActivity.product_id,
+        price: price,
+        photo: photoBase64,
+        create_uid: currentUser.uid,
+        write_uid: currentUser.uid);
+
+    await measurementPriceComparisonLinesService.insert(measurementPriceComparisonLinesModel);
+    await activityService.setMeasurementPriceComparisonLinesModel(currentActivity,  currentMissionModel.measurementModel, currentUser);
+
+    notifyListeners();
+  }
+
 
 
   setcurrentMissionModel(MissionModel missionModel) async {

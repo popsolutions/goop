@@ -1,3 +1,4 @@
+import 'package:goop/models/measurementPriceComparisonLines.dart';
 import 'package:goop/models/measurementQuizzlines.dart';
 import 'package:goop/models/quizzLinesModel.dart';
 import 'package:goop/utils/ClassConstants.dart';
@@ -21,6 +22,7 @@ class Activity {
   List<QuizzLinesModel> listQuizzLinesModel = <QuizzLinesModel>[];
   MeasurementQuizzlinesModel measurementQuizzlinesModel;
   MeasurementPhotoLinesModel measurementPhotoLinesModel;
+  MeasurementPriceComparisonLinesModel measurementPriceComparisonLinesModel;
 
   Activity(
       {this.id,
@@ -72,6 +74,6 @@ class Activity {
 
   bool isPhoto() => activityType == ActivityTypeConsts.Photo;
   bool isQuizz() => activityType == ActivityTypeConsts.Quizz;
-  bool isPriceComparison() =>
-      activityType == ActivityTypeConsts.Price_Comparison;
+  bool isPriceComparison() => activityType == ActivityTypeConsts.Price_Comparison;
+
 }

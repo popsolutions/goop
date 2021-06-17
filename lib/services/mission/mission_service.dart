@@ -99,8 +99,7 @@ class MissionService {
         } else if (activity.isPhoto() == true) {
           await activityService.setMeasurementPhotoLinesModel(activity, missionModel.measurementModel, user);
         } else if (activity.isPriceComparison() == true) {
-          // await activityService.setMeasurementPhotoLinesModel(activity, missionModel.measurementModel, user);
-          ToDevelop('updateListActivityChecked - activity.isPriceComparison');
+          await activityService.setMeasurementPriceComparisonLinesModel(activity, missionModel.measurementModel, user);
         }
       }
     }
