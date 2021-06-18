@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goop/config/routes.dart';
+import 'package:goop/models/mission.dart';
 import 'package:goop/models/mission_dto.dart';
 import 'package:goop/pages/components/goop_button.dart';
 import 'package:goop/pages/components/goop_mission_body.dart';
+import 'package:goop/services/ServiceNotifier.dart';
+import 'package:provider/provider.dart';
 import '../components/goop_back.dart';
 import 'package:goop/utils/goop_images.dart';
 
@@ -35,6 +38,8 @@ class _MissionAboutPageState extends State<MissionAboutPage> {
   Widget build(BuildContext context) {
     final TextStyle theme = Theme.of(context).textTheme.headline2;
     final MissionDto missionDto = ModalRoute.of(context).settings.arguments;
+    MissionModel currentMissionModel = missionDto.missionModel;
+    ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -105,12 +110,16 @@ class _MissionAboutPageState extends State<MissionAboutPage> {
               SizedBox(height: 20),
               situacional(
                 ifCompleted: Container(
-                  margin: EdgeInsets.only(bottom: 30),
-                  child: GoopButton(
-                    text: 'Iniciar',
-                    action: () {},
-                  ),
-                ),
+                    margin: EdgeInsets.only(bottom: 30),
+                    child: (currentMissionModel.inProgress == false)
+                        ? GoopButton(
+                            text: 'Iniciar',
+                            action: () async {
+                              await serviceNotifier.createMeasurementModelIfNotExists();
+                              serviceNotifier.notifyListeners();
+                            },
+                          )
+                        : null),
                 ifInProgress: Container(),
                 ifClosed: Container(
                   margin: EdgeInsets.only(bottom: 30),

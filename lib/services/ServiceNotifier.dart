@@ -69,9 +69,7 @@ class ServiceNotifier extends ChangeNotifier{
   }
 
   Future<void> insert_Measurement_quizzlinesModel(QuizzLinesModel _selectedQuizzLinesModel) async {
-    if (currentMissionModel.measurementModel == null) {
-      await missionService.createMeasurementModel(currentMissionModel, currentUser, geoLocService);
-    }
+    await createMeasurementModelIfNotExists();
 
     MeasurementQuizzlinesModel measurement_quizzlinesModel = MeasurementQuizzlinesModel(
         name: "//??-marcos",
@@ -88,10 +86,14 @@ class ServiceNotifier extends ChangeNotifier{
     notifyListeners();
   }
 
-  Future<void> insert_Measurement_photolines(String photoBase64) async {
+  Future<void> createMeasurementModelIfNotExists() async {
     if (currentMissionModel.measurementModel == null) {
       await missionService.createMeasurementModel(currentMissionModel, currentUser, geoLocService);
     }
+  }
+
+  Future<void> insert_Measurement_photolines(String photoBase64) async {
+    await createMeasurementModelIfNotExists();
 
     MeasurementPhotoLinesModel measurementPhotoLinesModel = MeasurementPhotoLinesModel(
         name: "//??-marcos",
@@ -109,9 +111,7 @@ class ServiceNotifier extends ChangeNotifier{
   }
 
   Future<void> insert_Measurement_PriceComparisonLinesModel(double price, String photoBase64) async {
-    if (currentMissionModel.measurementModel == null) {
-      await missionService.createMeasurementModel(currentMissionModel, currentUser, geoLocService);
-    }
+    await createMeasurementModelIfNotExists();
 
     MeasurementPriceComparisonLinesModel measurementPriceComparisonLinesModel = MeasurementPriceComparisonLinesModel(
         display_name: "//??-marcos",
