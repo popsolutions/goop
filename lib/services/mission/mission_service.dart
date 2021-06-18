@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:goop/config/http/odoo_api.dart';
 import 'package:goop/models/activity.dart';
 import 'package:goop/models/establishment.dart';
@@ -11,6 +12,7 @@ import 'package:goop/services/constants.dart';
 import 'package:goop/services/establishment/establishment_service.dart';
 import 'package:goop/services/measurementService.dart';
 import 'package:goop/utils/ClassConstants.dart';
+import 'package:goop/utils/global.dart';
 import 'package:goop/utils/utils.dart';
 
 import '../../models/activity.dart';
@@ -65,6 +67,8 @@ class MissionService {
       setMissionEstablishment(listMission[i]);
     }
 
+    setMeasurementModelToListMissionModel(listMission);
+
     return listMission;
   }
 
@@ -111,6 +115,14 @@ class MissionService {
       [missionModel.id],
       missionModel.toJson(),
     );
+  }
+
+  void setMeasurementModelToListMissionModel(List<MissionModel> listMissionModel) async {
+    for (MissionModel missionModel in listMissionModel){
+      missionModel.measurementModel = await getMeasurementModel(missionModel, globalcurrentUser.partnerId);
+    }
+
+    globalServiceNotifier.notifyListeners();
   }
 
   Future<MeasurementModel> getMeasurementModel(MissionModel missionModel, int partner_id) async {

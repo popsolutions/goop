@@ -45,8 +45,8 @@ void main() {
     LoginDto loginDto = LoginDto('support@popsolutions.co', '1ND1C0p4c1f1c0');
 
     currentLoginResult = await login.login(loginDto);
-    currentUser =
-    await userServiceImpl.getUserFromLoginResult(currentLoginResult);
+    currentUser = await userServiceImpl.getUserFromLoginResult(currentLoginResult);
+    globalcurrentUser = currentUser;
   }
 
   void init() async {

@@ -14,6 +14,7 @@ import 'package:goop/services/AlternativeService.dart';
 import 'package:goop/services/GeoLocService.dart';
 import 'package:goop/services/MeasurementPhotoLinesService.dart';
 import 'package:goop/services/MeasurementQuizzlinesService.dart';
+import 'package:goop/utils/global.dart';
 import 'package:goop/utils/utils.dart';
 
 import '../config/http/odoo_api.dart';
@@ -52,6 +53,7 @@ class ServiceNotifier extends ChangeNotifier{
   init() async {
     if (initialization == true) return;
     update();
+    globalServiceNotifier = this;
     initialization = true;
   }
 
@@ -142,5 +144,10 @@ class ServiceNotifier extends ChangeNotifier{
 
     if (activity.isQuizz())
       await activityService.setQuizzLinesFromActivity(currentActivity);
+  }
+
+  setCurrentUser(User user){
+    currentUser = user;
+    globalcurrentUser = currentUser;
   }
 }

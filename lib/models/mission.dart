@@ -23,9 +23,10 @@ class MissionModel {
   String dateFinished;
   double price;
   String time;
+  bool inProgress = false;
 
   List<Activity> listActivity = <Activity>[];
-  MeasurementModel measurementModel;
+  MeasurementModel _measurementModel;
 
   MissionModel({
     this.id,
@@ -120,4 +121,10 @@ class MissionModel {
     'time: ' + (time.toString() ?? '');
   }
 
+  void set measurementModel(MeasurementModel measurementModel) {
+    this._measurementModel = measurementModel;
+    inProgress =  this._measurementModel != null;
+  }
+
+  MeasurementModel get measurementModel => this._measurementModel;
 }

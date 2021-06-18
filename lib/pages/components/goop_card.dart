@@ -40,7 +40,7 @@ class GoopCard extends StatelessWidget {
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          border: Border.all(color: border),
+          border: Border.all(color: (missionDto.missionModel.inProgress == true) ? Colors.red : border),
         ),
         padding: EdgeInsets.all(20),
         width: MediaQuery.of(context).size.width * .9,

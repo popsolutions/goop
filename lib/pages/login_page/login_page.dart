@@ -70,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void _onSuccess() {
     final user = _loginController.loginRequest.value;
-    serviceNotifier.currentUser = user;
+    serviceNotifier.setCurrentUser(user);
 
     _authenticationController.authenticate(user);
     Navigator.pushNamedAndRemoveUntil(
