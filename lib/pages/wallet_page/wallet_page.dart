@@ -21,9 +21,7 @@ class WalletPage extends StatelessWidget {
         leading: GoopBack(),
         title: Container(
           height: 40,
-          child: SvgPicture.asset(
-            GoopImages.wallet_logo,
-          ),
+          child: SvgPicture.asset(GoopImages.wallet_logo),
         ),
       ),
       body: SingleChildScrollView(

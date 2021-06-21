@@ -6,7 +6,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:goop/config/routes.dart';
 import 'package:goop/models/activity.dart';
 import 'package:goop/models/mission_dto.dart';
-import 'package:goop/pages/components/goop_card.dart';
 import 'package:goop/pages/settings_page/preview_page.dart';
 import 'package:goop/services/ServiceNotifier.dart';
 import 'package:goop/utils/goop_colors.dart';
@@ -26,6 +25,7 @@ class _GoopMissionBodyState extends State<GoopMissionBody> {
   Widget build(BuildContext context) {
     final TextStyle theme = Theme.of(context).textTheme.headline2;
     final provider = Provider.of<ServiceNotifier>(context);
+    bool isClickable = widget.missionDto.missionModel.inProgress ? true : false;
 
     Future<void> showPreview(File file) async {
       file = await Navigator.push(
@@ -100,42 +100,25 @@ class _GoopMissionBodyState extends State<GoopMissionBody> {
                   widget.missionDto.missionModel.listActivity[index];
 
               return ListTile(
+                enabled: isClickable,
+                focusColor: Colors.grey[400],
                 leading: Icon(
                   (currentActivity.isChecked == true)
                       ? Icons.star
                       : Icons.star_border,
-                  color: Colors.deepPurple,
+                  color: isClickable ? Colors.deepPurple : Colors.grey[400],
                 ),
                 title: Text(
                   widget.missionDto.missionModel.listActivity[index].name,
                   style: TextStyle(
-                    color: currentActivity.isChecked
-                        ? GoopColors.red
-                        : GoopColors.darkBlue,
+                    color: isClickable
+                        ? currentActivity.isChecked
+                            ? GoopColors.red
+                            : GoopColors.darkBlue
+                        : Colors.grey[400],
                   ),
                 ),
                 onTap: () async {
-                  if (!provider.currentMissionModel.inProgress) {
-                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        behavior: SnackBarBehavior.floating,
-                        duration: Duration(seconds: 2),
-                        shape: StadiumBorder(),
-                        backgroundColor: GoopColors.neutralGreen,
-                        content: Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                            'A Atividade não está iniciada 😉',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                    );
-                    return;
-                  }
-
                   await provider.setcurrentActivity(
                       widget.missionDto.missionModel.listActivity[index]);
 
