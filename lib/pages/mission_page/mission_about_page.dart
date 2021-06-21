@@ -18,9 +18,9 @@ class MissionAboutPage extends StatefulWidget {
 }
 
 enum MissionStatus {
-  Completed,
+  Ordered,
   InProgress,
-  Closed,
+  Completed,
 }
 
 class _MissionAboutPageState extends State<MissionAboutPage> {
@@ -30,14 +30,14 @@ class _MissionAboutPageState extends State<MissionAboutPage> {
 
   String timeToCompletMission = '';
 
-  void setTimeToCompletMission(){
+  void setTimeToCompletMission() {
     setState(() {
       try {
         if (currentMissionModel.inProgress == false)
-          timeToCompletMission = '2 Horas e 30 Minutos';
+          timeToCompletMission = '3 horas';
         else
           timeToCompletMission = currentMissionModel.getTimeToCompletMission();
-      } catch(e){
+      } catch (e) {
         timeToCompletMission = '';
       }
     });
@@ -56,20 +56,18 @@ class _MissionAboutPageState extends State<MissionAboutPage> {
     });
   }
 
-
   @override
   void dispose() {
     _isRunning = false;
-
   }
 
-  situacional({ifCompleted, ifInProgress, ifClosed}) {
+  situacional({ifCompleted, ifInProgress, ifOrdered}) {
     if (status == MissionStatus.Completed) {
       return ifCompleted;
     } else if (status == MissionStatus.InProgress) {
       return ifInProgress;
     } else {
-      return ifClosed;
+      return ifOrdered;
     }
   }
 
@@ -115,12 +113,12 @@ class _MissionAboutPageState extends State<MissionAboutPage> {
                     ),
                     SizedBox(width: 20),
                     Text(
-                      '2:08:00',
+                      timeToCompletMission,
                       style: theme,
                     ),
                   ],
                 ),
-                ifClosed: Text(
+                ifOrdered: Text(
                   'Tempo Esgotado',
                   style: theme,
                 ),
@@ -144,7 +142,7 @@ class _MissionAboutPageState extends State<MissionAboutPage> {
                   ],
                 ),
                 ifInProgress: Container(),
-                ifClosed: Container(),
+                ifOrdered: Container(),
               ),
               SizedBox(height: 20),
               situacional(
@@ -161,7 +159,7 @@ class _MissionAboutPageState extends State<MissionAboutPage> {
                           )
                         : null),
                 ifInProgress: Container(),
-                ifClosed: Container(
+                ifOrdered: Container(
                   margin: EdgeInsets.only(bottom: 30),
                   child: GoopButton(
                     text: 'Enviar',

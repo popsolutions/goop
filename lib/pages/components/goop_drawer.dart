@@ -117,35 +117,35 @@ class GoopDrawer extends StatelessWidget {
                 ),
                 Column(
                   children: [
-                    goopTile(
-                      title: 'Carteira',
-                      img: GoopImages.wallet_red,
-                      action: () {
-                        Navigator.popAndPushNamed(
-                          context,
-                          Routes.wallet,
-                        );
-                      },
-                    ),
+                    // goopTile(
+                    //   title: 'Carteira',
+                    //   img: GoopImages.wallet_red,
+                    //   action: () {
+                    //     Navigator.popAndPushNamed(
+                    //       context,
+                    //       Routes.wallet,
+                    //     );
+                    //   },
+                    // ),
+                    // goopTile(
+                    //   title: 'Minha Conta',
+                    //   img: GoopImages.account,
+                    //   action: () {},
+                    // ),
                     goopTile(
                       title: 'Minha Conta',
                       img: GoopImages.account,
-                      action: () {},
-                    ),
-                    goopTile(
-                      title: 'FAQ',
-                      img: GoopImages.faq,
-                      action: () {},
-                    ),
-                    goopTile(
-                      title: 'Configurações',
-                      img: GoopImages.settings,
                       action: () {
                         Navigator.popAndPushNamed(
                           context,
                           Routes.settings,
                         );
                       },
+                    ),
+                    goopTile(
+                      title: 'FAQ',
+                      img: GoopImages.faq,
+                      action: () {},
                     ),
                     goopTile(
                       title: 'Sair',
