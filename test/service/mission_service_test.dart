@@ -162,10 +162,10 @@ void main() {
         legendDoing: "In Progress",
         create_Uid: currentUser.uid,
         create_Uname: null,
-        createDate: "2021-05-31 21:10:12",
+        // createDate: "2021-05-31 21:10:12",
         write_Uid: currentUser.uid,
         write_Uname: null,
-        writeDate: "2021-05-31 21:12:27",
+        // writeDate: "2021-05-31 21:12:27",
         kanbanStateLabel: "Pending",
         displayName: "MEAS8-display name insert test",
         lastUpdate: null);
