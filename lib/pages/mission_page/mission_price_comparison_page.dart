@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:goop/pages/components/libComponents.dart';
 import 'package:goop/pages/settings_page/preview_page.dart';
 import 'package:camera_camera/camera_camera.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import 'package:goop/pages/components/goop_text_form_field.dart';
 import 'package:goop/services/ServiceNotifier.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
+import 'package:goop/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -57,7 +59,10 @@ class _MissionPriceComparisionPageState
   Future<void> salvar(BuildContext context) async {
     await serviceNotifier.insert_Measurement_PriceComparisonLinesModel(
         price, archive);
+    Navigator.pop(context);
   }
+
+  bool editing() => !serviceNotifier.currentActivity.isChecked;
 
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size.width;
@@ -68,8 +73,13 @@ class _MissionPriceComparisionPageState
     Activity currentActivity = serviceNotifier.currentActivity;
 
     if ((currentActivity.measurementPriceComparisonLinesModel != null) &&
-        (archive == null))
-      archive = currentActivity.measurementPriceComparisonLinesModel.photo;
+        (archive == null)) {
+      setState(() {
+        archive = currentActivity.measurementPriceComparisonLinesModel.photo;
+        price = currentActivity.measurementPriceComparisonLinesModel.price;
+
+      });
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -110,8 +120,11 @@ class _MissionPriceComparisionPageState
                     ),
                     SizedBox(height: 30),
                     GoopTextFormField(
-                      hintText: 'R\$ 100',
+                      // hintText: 'R\$ 0',
+                      initialValue: (price == 0) ? '' : 'R\$ ' + doubleToStringValue(price),
+                      enable: editing(),
                       onChanged: (value) {
+
                         price = (value == '')
                             ? 0
                             : double.parse(value.replaceAll(',', '.'));
@@ -120,6 +133,8 @@ class _MissionPriceComparisionPageState
                     ),
                     GestureDetector(
                       onTap: () {
+                        if (!editing()) return null;
+
                         showModalBottomSheet(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
@@ -212,14 +227,16 @@ class _MissionPriceComparisionPageState
                     ),
                   ],
                 ),
-                Container(
-                  child: GoopButton(
-                    text: 'Salvar',
-                    action: () async {
-                      await salvar(context);
-                    },
-                  ),
-                ),
+                (serviceNotifier.currentActivity.isChecked)
+                    ? paddingZ()
+                    : Container(
+                        child: GoopButton(
+                          text: 'Salvar',
+                          action: () async {
+                            await salvar(context);
+                          },
+                        ),
+                      ),
               ],
             ),
           ),

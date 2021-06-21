@@ -5,6 +5,7 @@ import 'package:goop/pages/login_page/login_page.dart';
 import 'package:goop/pages/mission_page/mission_about_page.dart';
 import 'package:goop/pages/mission_page/mission_completed_page.dart';
 import 'package:goop/pages/mission_page/mission_home_page.dart';
+import 'package:goop/pages/mission_page/mission_photo_page.dart';
 import 'package:goop/pages/mission_page/mission_price_comparison_page.dart';
 import 'package:goop/pages/mission_page/mission_questions_page.dart';
 import 'package:goop/pages/recover_password_page/recover_password_page.dart';
@@ -27,6 +28,7 @@ class WidgetsRouter {
     Routes.mission_completed: (_) => MissionCompletedPage(),
     Routes.mission_home: (_) => MissionHomePage(),
     Routes.mission_about: (_) => MissionAboutPage(),
+    Routes.mission_photo_page: (_) => Mission_photo_page(),
     Routes.mission_price_comparison: (_) => MissionPriceComparisionPage(),
     Routes.mission_question: (_) => MissionQuestionPage(),
     Routes.wallet: (_) => WalletPage(),

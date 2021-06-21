@@ -9,6 +9,7 @@ class GoopTextFormField extends StatelessWidget {
   final AutovalidateMode autovalidateMode;
   final String initialValue;
   final List<TextInputFormatter> inputFormatters;
+  final bool enable;
 
   const GoopTextFormField({
     Key key,
@@ -19,6 +20,7 @@ class GoopTextFormField extends StatelessWidget {
     this.autovalidateMode = AutovalidateMode.onUserInteraction,
     this.initialValue,
     this.inputFormatters,
+    this.enable = true
   }) : super(key: key);
 
   @override
@@ -36,6 +38,7 @@ class GoopTextFormField extends StatelessWidget {
         decoration: InputDecoration(
           hintText: hintText,
         ),
+        enabled: enable,
       ),
     );
   }

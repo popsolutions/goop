@@ -142,10 +142,10 @@ class MissionService {
       MeasurementModel measurementModelInsert = MeasurementModel(
         id: null,
         mission_Id: missionModel.id,
-        name: '//??-marcos-',
+        name: missionModel.name,
         partner_Id: currentUser.partnerId,
         partner_Name: null,
-        state: 'done',
+        state: 'doing',
         dateStarted: DateTime.now(),
         // dateFinished: "2021-05-02",
         measurementLatitude: geoLocService.latitude,
@@ -161,7 +161,7 @@ class MissionService {
         kanbanState: "draft",
         // legendPriority: false,
         legendBlocked: "Ready",
-        legendDone: "Done",
+        legendDone: "Doing",
         legendNormal: "Pending",
         legendDoing: "In Progress",
         create_Uid: currentUser.uid,
@@ -171,7 +171,7 @@ class MissionService {
         write_Uname: null,
         // writeDate: "2021-05-31 21:12:27",
         kanbanStateLabel: "Pending",
-        displayName: "'//??-marcos'",
+        displayName: "",
         // lastUpdate: null
       );
 

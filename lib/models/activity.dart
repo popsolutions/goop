@@ -76,4 +76,15 @@ class Activity {
   bool isQuizz() => activityType == ActivityTypeConsts.Quizz;
   bool isPriceComparison() => activityType == ActivityTypeConsts.Price_Comparison;
 
+  int listQuizzLinesModelIndexSelected() {
+    if (measurementQuizzlinesModel != null) {
+      for (int i = 0; i < listQuizzLinesModel.length; ++i) {
+        if (listQuizzLinesModel[i].alternative_id == measurementQuizzlinesModel.alternative_id) {
+          return i;
+        }
+      }
+    }
+
+    return null;
+  }
 }

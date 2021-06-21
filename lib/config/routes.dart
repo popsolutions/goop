@@ -11,6 +11,7 @@ class Routes {
   static const String mission_home = '/mission_home';
   static const String mission_about = '/mission_about';
   static const String mission_price_comparison = '/price_comparison';
+  static const String mission_photo_page = '/mission_photo_page';
   static const String mission_question = '/mission_question';
   static const String wallet = '/wallet';
 }

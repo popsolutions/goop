@@ -85,6 +85,28 @@ class _GoopMissionBodyState extends State<GoopMissionBody> {
                   style: TextStyle(color: GoopColors.darkBlue),
                 ),
                 onTap: () async {
+
+                  if (!provider.currentMissionModel.inProgress){
+                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        behavior: SnackBarBehavior.floating,
+                        duration: Duration(seconds: 2),
+                        shape: StadiumBorder(),
+                        backgroundColor: GoopColors.neutralGreen,
+                        content: Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            'A Atividade não está iniciada 😉',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    );
+                    return;
+                  }
+
                   await provider.setcurrentActivity(
                       widget.missionDto.missionModel.listActivity[index]);
 
@@ -101,15 +123,25 @@ class _GoopMissionBodyState extends State<GoopMissionBody> {
                       arguments: widget.missionDto,
                     );
                   } else if (provider.currentActivity.isPhoto()) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => CameraCamera(
-                          enableZoom: true,
-                          onFile: (file) async => await showPreview(file),
+                    if (provider.currentActivity.isChecked){
+                      Navigator.pushNamed(
+                          context,
+                          Routes.mission_photo_page,
+                          arguments: widget.missionDto
+                      );
+
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) =>
+                              CameraCamera(
+                                enableZoom: true,
+                                onFile: (file) async => await showPreview(file),
+                              ),
                         ),
-                      ),
-                    );
+                      );
+                    }
                   }
                 },
               );

@@ -49,3 +49,5 @@ String convertDateTimeToStringFormat(DateTime date) {
 void ToDevelop(String s){
   print(':: To Develop: $s');
 }
+
+String doubleToStringValue(double value) => value.toStringAsFixed(2).replaceAll('.', ',');
