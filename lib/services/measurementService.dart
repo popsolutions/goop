@@ -5,7 +5,6 @@ import 'package:goop/models/measurementPhotoLines.dart';
 import 'package:goop/models/measurementPriceComparisonLines.dart';
 import 'package:goop/models/measurementQuizzlines.dart';
 import 'package:goop/models/mission.dart';
-import 'package:goop/models/quizzLinesModel.dart';
 import 'package:goop/services/MeasurementPhotoLinesService.dart';
 import 'package:goop/services/MeasurementQuizzlinesService.dart';
 import 'package:goop/services/measurementPriceComparisonLinesService.dart';

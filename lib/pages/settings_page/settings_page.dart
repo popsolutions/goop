@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:camera_camera/camera_camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goop/config/app/authentication_controller.dart';

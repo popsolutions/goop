@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:camera_camera/camera_camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goop/config/routes.dart';
 import 'package:goop/models/activity.dart';
@@ -85,8 +84,7 @@ class _GoopMissionBodyState extends State<GoopMissionBody> {
                   style: TextStyle(color: GoopColors.darkBlue),
                 ),
                 onTap: () async {
-
-                  if (!provider.currentMissionModel.inProgress){
+                  if (!provider.currentMissionModel.inProgress) {
                     ScaffoldMessenger.of(context).hideCurrentSnackBar();
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
@@ -123,22 +121,17 @@ class _GoopMissionBodyState extends State<GoopMissionBody> {
                       arguments: widget.missionDto,
                     );
                   } else if (provider.currentActivity.isPhoto()) {
-                    if (provider.currentActivity.isChecked){
-                      Navigator.pushNamed(
-                          context,
-                          Routes.mission_photo_page,
-                          arguments: widget.missionDto
-                      );
-
+                    if (provider.currentActivity.isChecked) {
+                      Navigator.pushNamed(context, Routes.mission_photo_page,
+                          arguments: widget.missionDto);
                     } else {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) =>
-                              CameraCamera(
-                                enableZoom: true,
-                                onFile: (file) async => await showPreview(file),
-                              ),
+                          builder: (_) => CameraCamera(
+                            enableZoom: true,
+                            onFile: (file) async => await showPreview(file),
+                          ),
                         ),
                       );
                     }

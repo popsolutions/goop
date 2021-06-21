@@ -24,18 +24,22 @@ import 'package:goop/utils/global.dart';
 import 'package:goop/utils/utils.dart';
 
 void main() {
-  Odoo _odoo;
   bool isInit = false;
-  String imageEmotionBase64 = 'iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAApgAAAKYB3X3/OAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAANCSURBVEiJtZZPbBtFFMZ/M7ubXdtdb1xSFyeilBapySVU8h8OoFaooFSqiihIVIpQBKci6KEg9Q6H9kovIHoCIVQJJCKE1ENFjnAgcaSGC6rEnxBwA04Tx43t2FnvDAfjkNibxgHxnWb2e/u992bee7tCa00YFsffekFY+nUzFtjW0LrvjRXrCDIAaPLlW0nHL0SsZtVoaF98mLrx3pdhOqLtYPHChahZcYYO7KvPFxvRl5XPp1sN3adWiD1ZAqD6XYK1b/dvE5IWryTt2udLFedwc1+9kLp+vbbpoDh+6TklxBeAi9TL0taeWpdmZzQDry0AcO+jQ12RyohqqoYoo8RDwJrU+qXkjWtfi8Xxt58BdQuwQs9qC/afLwCw8tnQbqYAPsgxE1S6F3EAIXux2oQFKm0ihMsOF71dHYx+f3NND68ghCu1YIoePPQN1pGRABkJ6Bus96CutRZMydTl+TvuiRW1m3n0eDl0vRPcEysqdXn+jsQPsrHMquGeXEaY4Yk4wxWcY5V/9scqOMOVUFthatyTy8QyqwZ+kDURKoMWxNKr2EeqVKcTNOajqKoBgOE28U4tdQl5p5bwCw7BWquaZSzAPlwjlithJtp3pTImSqQRrb2Z8PHGigD4RZuNX6JYj6wj7O4TFLbCO/Mn/m8R+h6rYSUb3ekokRY6f/YukArN979jcW+V/S8g0eT/N3VN3kTqWbQ428m9/8k0P/1aIhF36PccEl6EhOcAUCrXKZXXWS3XKd2vc/TRBG9O5ELC17MmWubD2nKhUKZa26Ba2+D3P+4/MNCFwg59oWVeYhkzgN/JDR8deKBoD7Y+ljEjGZ0sosXVTvbc6RHirr2reNy1OXd6pJsQ+gqjk8VWFYmHrwBzW/n+uMPFiRwHB2I7ih8ciHFxIkd/3Omk5tCDV1t+2nNu5sxxpDFNx+huNhVT3/zMDz8usXC3ddaHBj1GHj/As08fwTS7Kt1HBTmyN29vdwAw+/wbwLVOJ3uAD1wi/dUH7Qei66PfyuRj4Ik9is+hglfbkbfR3cnZm7chlUWLdwmprtCohX4HUtlOcQjLYCu+fzGJH2QRKvP3UNz8bWk1qMxjGTOMThZ3kvgLI5AzFfo379UAAAAASUVORK5CYII=';
+  String imageEmotionBase64 =
+      'iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAApgAAAKYB3X3/OAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAANCSURBVEiJtZZPbBtFFMZ/M7ubXdtdb1xSFyeilBapySVU8h8OoFaooFSqiihIVIpQBKci6KEg9Q6H9kovIHoCIVQJJCKE1ENFjnAgcaSGC6rEnxBwA04Tx43t2FnvDAfjkNibxgHxnWb2e/u992bee7tCa00YFsffekFY+nUzFtjW0LrvjRXrCDIAaPLlW0nHL0SsZtVoaF98mLrx3pdhOqLtYPHChahZcYYO7KvPFxvRl5XPp1sN3adWiD1ZAqD6XYK1b/dvE5IWryTt2udLFedwc1+9kLp+vbbpoDh+6TklxBeAi9TL0taeWpdmZzQDry0AcO+jQ12RyohqqoYoo8RDwJrU+qXkjWtfi8Xxt58BdQuwQs9qC/afLwCw8tnQbqYAPsgxE1S6F3EAIXux2oQFKm0ihMsOF71dHYx+f3NND68ghCu1YIoePPQN1pGRABkJ6Bus96CutRZMydTl+TvuiRW1m3n0eDl0vRPcEysqdXn+jsQPsrHMquGeXEaY4Yk4wxWcY5V/9scqOMOVUFthatyTy8QyqwZ+kDURKoMWxNKr2EeqVKcTNOajqKoBgOE28U4tdQl5p5bwCw7BWquaZSzAPlwjlithJtp3pTImSqQRrb2Z8PHGigD4RZuNX6JYj6wj7O4TFLbCO/Mn/m8R+h6rYSUb3ekokRY6f/YukArN979jcW+V/S8g0eT/N3VN3kTqWbQ428m9/8k0P/1aIhF36PccEl6EhOcAUCrXKZXXWS3XKd2vc/TRBG9O5ELC17MmWubD2nKhUKZa26Ba2+D3P+4/MNCFwg59oWVeYhkzgN/JDR8deKBoD7Y+ljEjGZ0sosXVTvbc6RHirr2reNy1OXd6pJsQ+gqjk8VWFYmHrwBzW/n+uMPFiRwHB2I7ih8ciHFxIkd/3Omk5tCDV1t+2nNu5sxxpDFNx+huNhVT3/zMDz8usXC3ddaHBj1GHj/As08fwTS7Kt1HBTmyN29vdwAw+/wbwLVOJ3uAD1wi/dUH7Qei66PfyuRj4Ik9is+hglfbkbfR3cnZm7chlUWLdwmprtCohX4HUtlOcQjLYCu+fzGJH2QRKvP3UNz8bWk1qMxjGTOMThZ3kvgLI5AzFfo379UAAAAASUVORK5CYII=';
   MissionService missionService = new MissionService(Odoo());
   MeasurementService measurementService = new MeasurementService();
   UserServiceImpl userServiceImpl = new UserServiceImpl(Odoo());
   AlternativeService alternativeService = new AlternativeService();
-  MeasurementQuizzlinesService measurementQuizzlinesService = new MeasurementQuizzlinesService();
+  MeasurementQuizzlinesService measurementQuizzlinesService =
+      new MeasurementQuizzlinesService();
 
   QuizzLinesModelService quizzLinesModelService = new QuizzLinesModelService();
-  MeasurementPhotoLinesService measurementPhotoLinesService = new MeasurementPhotoLinesService();
-  MeasurementPriceComparisonLinesService measurementPriceComparisonLinesService = new MeasurementPriceComparisonLinesService();
+  MeasurementPhotoLinesService measurementPhotoLinesService =
+      new MeasurementPhotoLinesService();
+  MeasurementPriceComparisonLinesService
+      measurementPriceComparisonLinesService =
+      new MeasurementPriceComparisonLinesService();
 
   LoginResult currentLoginResult;
   User currentUser;
@@ -45,7 +49,8 @@ void main() {
     LoginDto loginDto = LoginDto('support@popsolutions.co', '1ND1C0p4c1f1c0');
 
     currentLoginResult = await login.login(loginDto);
-    currentUser = await userServiceImpl.getUserFromLoginResult(currentLoginResult);
+    currentUser =
+        await userServiceImpl.getUserFromLoginResult(currentLoginResult);
     globalcurrentUser = currentUser;
   }
 
@@ -78,7 +83,8 @@ void main() {
 
   Future<List<MissionModel>> getMission() async {
     MissionService missionService = new MissionService(Odoo());
-    List<MissionModel> listMissionModel = await missionService.getOpenMissions();
+    List<MissionModel> listMissionModel =
+        await missionService.getOpenMissions();
 
     while (!missionService.getMissionsCompletLoad()) {
       await Future.delayed(Duration(milliseconds: 60));
@@ -124,7 +130,7 @@ void main() {
 
   test('Measurement.getMeasurementModelById', () async {
     MeasurementModel measurementModel =
-    await measurementService.getMeasurementModelById(219);
+        await measurementService.getMeasurementModelById(219);
     print(JSONToStringWrapQuotClear(measurementModel.toJson()));
   });
 
@@ -165,7 +171,7 @@ void main() {
         lastUpdate: null);
 
     MeasurementModel measurementModel =
-    await measurementService.insertAndGet(measurementModelInsert);
+        await measurementService.insertAndGet(measurementModelInsert);
 
     print(JSONToStringWrapQuotClear(measurementModel.toJson()));
 
@@ -175,7 +181,7 @@ void main() {
 
   test('AlternativeService.listAlternativeModelLoad', () async {
     List<AlternativeModel> listAlternativeModel =
-    await alternativeService.getAlternativeService();
+        await alternativeService.getAlternativeService();
     print('::listAlternativeModel');
     listAlternativeModel.forEach((element) {
       print(element.toJson());
@@ -184,31 +190,31 @@ void main() {
 
   group('Measurement_quizzlinesModel', () {
     test('Measurement_quizzlinesModel.getMeasurement_quizzlinesModelModelById',
-            () async {
-          print(
-              '::test Measurement_quizzlinesModel.getMeasurement_quizzlinesModelModelById');
-          int id = 12;
-          MeasurementQuizzlinesModel measurement_quizzlinesModel =
+        () async {
+      print(
+          '::test Measurement_quizzlinesModel.getMeasurement_quizzlinesModelModelById');
+      int id = 12;
+      MeasurementQuizzlinesModel measurement_quizzlinesModel =
           await measurementQuizzlinesService
               .getMeasurement_quizzlinesModelModelById(id);
-          print(
-              'Measurement_quizzlinesModel id $id : ${measurement_quizzlinesModel.toJson()}');
-        });
+      print(
+          'Measurement_quizzlinesModel id $id : ${measurement_quizzlinesModel.toJson()}');
+    });
 
     test('Measurement_quizzlinesModel.insertAndGet', () async {
       print('::test Measurement_quizzlinesModel.insertAndGet');
       MeasurementQuizzlinesModel measurement_quizzlinesModel =
-      MeasurementQuizzlinesModel(
-          name: "Nome-teste-insert",
-          quizz_id: 50,
-          alternative_id: 1,
-          measurement_id: 151,
-          create_uid: currentUser.uid,
-          write_uid: currentUser.uid);
+          MeasurementQuizzlinesModel(
+              name: "Nome-teste-insert",
+              quizz_id: 50,
+              alternative_id: 1,
+              measurement_id: 151,
+              create_uid: currentUser.uid,
+              write_uid: currentUser.uid);
 
       MeasurementQuizzlinesModel measurement_quizzlinesModelInserted =
-      await measurementQuizzlinesService
-          .insertAndGet(measurement_quizzlinesModel);
+          await measurementQuizzlinesService
+              .insertAndGet(measurement_quizzlinesModel);
 
       expect(measurement_quizzlinesModel.quizz_id,
           equals(measurement_quizzlinesModelInserted.quizz_id));
@@ -227,47 +233,63 @@ void main() {
   });
 
   test('QuizzLinesModelService.getQuizzLinesModelFromQuizz', () async {
-    List<QuizzLinesModel> quizzLinesModel = await quizzLinesModelService.getQuizzLinesModelFromQuizz(45);
+    List<QuizzLinesModel> quizzLinesModel =
+        await quizzLinesModelService.getQuizzLinesModelFromQuizz(45);
 
     print(quizzLinesModel.length);
   });
 
-  test('MeasurementService.getMeasurementModelFromMissionIdAndPartner_id', () async {
-    MeasurementModel measurementModel = await measurementService.getMeasurementModelFromMissionIdAndPartner_id(79, 3);
+  test('MeasurementService.getMeasurementModelFromMissionIdAndPartner_id',
+      () async {
+    MeasurementModel measurementModel = await measurementService
+        .getMeasurementModelFromMissionIdAndPartner_id(79, 3);
     print(measurementModel.toJson());
   });
 
-  test('MeasurementQuizzLinesService.getMeasurement_quizzlinesModelModelById', () async {
-    MeasurementQuizzlinesModel listMeasurementQuizzlinesModel = await measurementQuizzlinesService.getMeasurementQuizzLinesFromMeasurementIdAndQuizLinesId(191, 56);
+  test('MeasurementQuizzLinesService.getMeasurement_quizzlinesModelModelById',
+      () async {
+    MeasurementQuizzlinesModel listMeasurementQuizzlinesModel =
+        await measurementQuizzlinesService
+            .getMeasurementQuizzLinesFromMeasurementIdAndQuizLinesId(191, 56);
     print(listMeasurementQuizzlinesModel.toJson());
   });
 
   test('MeasurementPhotoLinesService.insertAndGet', () async {
-    MeasurementPhotoLinesModel measurementPhotoLinesModel = MeasurementPhotoLinesModel(
-        measurement_id:214,
-        name: 'Teste Flutter',
-        photo: imageEmotionBase64,
-        photo_id: 101,
-        create_uid: currentUser.uid,
-        write_uid: currentUser.uid
-    );
+    MeasurementPhotoLinesModel measurementPhotoLinesModel =
+        MeasurementPhotoLinesModel(
+            measurement_id: 214,
+            name: 'Teste Flutter',
+            photo: imageEmotionBase64,
+            photo_id: 101,
+            create_uid: currentUser.uid,
+            write_uid: currentUser.uid);
 
-    MeasurementPhotoLinesModel measurementPhotoLinesModelInserted = await measurementPhotoLinesService.insertAndGet(measurementPhotoLinesModel);
+    MeasurementPhotoLinesModel measurementPhotoLinesModelInserted =
+        await measurementPhotoLinesService
+            .insertAndGet(measurementPhotoLinesModel);
     print(measurementPhotoLinesModelInserted.toJson());
   });
 
-  test('MeasurementPhotoLinesService.getMeasurementPhotoLinesModelModelById', () async {
-    MeasurementPhotoLinesModel measurementPhotoLinesModel = await measurementPhotoLinesService.getMeasurementPhotoLinesModelById(53);
+  test('MeasurementPhotoLinesService.getMeasurementPhotoLinesModelModelById',
+      () async {
+    MeasurementPhotoLinesModel measurementPhotoLinesModel =
+        await measurementPhotoLinesService
+            .getMeasurementPhotoLinesModelById(53);
     print(measurementPhotoLinesModel.toJson());
   });
 
-  test('MeasurementPriceComparisonLinesService.getMeasurementPriceComparisonLinesModel', () async {
-    MeasurementPriceComparisonLinesModel measurementPriceComparisonLinesModel = await measurementPriceComparisonLinesService.getMeasurementPriceComparisonLinesModel(104);
+  test(
+      'MeasurementPriceComparisonLinesService.getMeasurementPriceComparisonLinesModel',
+      () async {
+    MeasurementPriceComparisonLinesModel measurementPriceComparisonLinesModel =
+        await measurementPriceComparisonLinesService
+            .getMeasurementPriceComparisonLinesModel(104);
     print(measurementPriceComparisonLinesModel.toJson());
   });
 
   test('MeasurementPriceComparisonLinesService.insertAndGet', () async {
-    MeasurementPriceComparisonLinesModel measurementPriceComparisonLinesModel = MeasurementPriceComparisonLinesModel(
+    MeasurementPriceComparisonLinesModel measurementPriceComparisonLinesModel =
+        MeasurementPriceComparisonLinesModel(
       measurement_id: 224,
       product_id: 4,
       price: 777,
@@ -279,8 +301,10 @@ void main() {
       // display_name:,
     );
 
-    MeasurementPriceComparisonLinesModel measurementPriceComparisonLinesModelInserted = await measurementPriceComparisonLinesService.insertAndGet(measurementPriceComparisonLinesModel);
+    MeasurementPriceComparisonLinesModel
+        measurementPriceComparisonLinesModelInserted =
+        await measurementPriceComparisonLinesService
+            .insertAndGet(measurementPriceComparisonLinesModel);
     print(measurementPriceComparisonLinesModelInserted.toJson());
   });
-
 }
