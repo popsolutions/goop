@@ -17,15 +17,9 @@ class MissionAboutPage extends StatefulWidget {
   _MissionAboutPageState createState() => _MissionAboutPageState();
 }
 
-enum MissionStatus {
-  Completed,
-  InProgress,
-  Closed,
-}
-
 class _MissionAboutPageState extends State<MissionAboutPage> {
   MissionModel currentMissionModel;
-  var status = MissionStatus.Completed; //ALTERAR PARA MUDAR TELA
+
   bool _isRunning = true;
 
   String timeToCompletMission = '';
@@ -34,7 +28,7 @@ class _MissionAboutPageState extends State<MissionAboutPage> {
     setState(() {
       try {
         if (currentMissionModel.inProgress == false)
-          timeToCompletMission = '2 Horas e 30 Minutos';
+          timeToCompletMission = '3 Horas';
         else
           timeToCompletMission = currentMissionModel.getTimeToCompletMission();
       } catch(e){
@@ -64,9 +58,10 @@ class _MissionAboutPageState extends State<MissionAboutPage> {
   }
 
   situacional({ifCompleted, ifInProgress, ifClosed}) {
-    if (status == MissionStatus.Completed) {
+    print(currentMissionModel.status);
+    if (currentMissionModel.status == MissionStatus.Ordered) {
       return ifCompleted;
-    } else if (status == MissionStatus.InProgress) {
+    } else if (currentMissionModel.status == MissionStatus.InProgress) {
       return ifInProgress;
     } else {
       return ifClosed;
@@ -85,9 +80,9 @@ class _MissionAboutPageState extends State<MissionAboutPage> {
         automaticallyImplyLeading: false,
         leading: GoopBack(),
         title: Container(
-          height: status == MissionStatus.Completed ? 40 : 60,
+          height: currentMissionModel.status == MissionStatus.Ordered ? 40 : 60,
           child: SvgPicture.asset(
-            status == MissionStatus.Completed
+            currentMissionModel.status == MissionStatus.Ordered
                 ? GoopImages.mission_about
                 : GoopImages.mission_in_progress,
           ),
@@ -115,7 +110,7 @@ class _MissionAboutPageState extends State<MissionAboutPage> {
                     ),
                     SizedBox(width: 20),
                     Text(
-                      '2:08:00',
+                      timeToCompletMission,
                       style: theme,
                     ),
                   ],

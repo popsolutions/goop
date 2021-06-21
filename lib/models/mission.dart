@@ -24,6 +24,8 @@ class MissionModel {
   double price;
   String time;
   bool inProgress = false;
+  MissionStatus _status = MissionStatus.Ordered;
+
 
   List<Activity> listActivity = <Activity>[];
   MeasurementModel _measurementModel;
@@ -123,7 +125,17 @@ class MissionModel {
 
   void set measurementModel(MeasurementModel measurementModel) {
     this._measurementModel = measurementModel;
-    inProgress =  this._measurementModel != null;
+
+    if (this._measurementModel == null){
+      this.status = MissionStatus.Ordered;
+    } else {
+      if ((_measurementModel.state == 'draft') || (_measurementModel.state == 'ordered'))
+        this.status = MissionStatus.Ordered;
+      else if (_measurementModel.state == 'doing')
+        this.status = MissionStatus.InProgress;
+      else
+        this.status = MissionStatus.InProgress;
+    }
   }
 
   MeasurementModel get measurementModel => this._measurementModel;
@@ -134,4 +146,17 @@ class MissionModel {
     else
       return '';
   }
+
+  MissionStatus get status => _status;
+
+  set status(MissionStatus value) {
+    _status = value;
+    inProgress = _status == MissionStatus.InProgress;
+  }
+}
+
+enum MissionStatus {
+  Ordered,
+  InProgress,
+  Closed,
 }
