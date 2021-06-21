@@ -38,7 +38,7 @@ class GoopDrawer extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: [
             Container(
-              height: 250,
+              height: 300,
               child: DrawerHeader(
                 decoration: BoxDecoration(color: GoopColors.red),
                 child: Center(
