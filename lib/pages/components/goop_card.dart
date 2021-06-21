@@ -24,12 +24,14 @@ class GoopCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context);
+    final inProgress = missionDto.missionModel.inProgress;
 
     return GestureDetector(
       onTap: !goToPage
           ? null
           : () async {
-              await serviceNotifier.setcurrentMissionModel(missionDto.missionModel);
+              await serviceNotifier
+                  .setcurrentMissionModel(missionDto.missionModel);
               Navigator.pushNamed(
                 context,
                 Routes.mission_about,
@@ -40,7 +42,11 @@ class GoopCard extends StatelessWidget {
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          border: Border.all(color: (missionDto.missionModel.inProgress == true) ? Colors.red : border),
+          color: inProgress ? Color(0XFFFDEEF2) : Colors.white,
+          border: Border.all(
+            width: inProgress ? 3 : 1,
+            color: (inProgress == true) ? GoopColors.red : border,
+          ),
         ),
         padding: EdgeInsets.all(20),
         width: MediaQuery.of(context).size.width * .9,
