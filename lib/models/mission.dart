@@ -127,4 +127,11 @@ class MissionModel {
   }
 
   MeasurementModel get measurementModel => this._measurementModel;
+
+  String getTimeToCompletMission(){
+    if (_measurementModel != null)
+      return  _measurementModel.getTimeToCompletMission();
+    else
+      return '';
+  }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goop/config/routes.dart';
@@ -22,7 +24,44 @@ enum MissionStatus {
 }
 
 class _MissionAboutPageState extends State<MissionAboutPage> {
+  MissionModel currentMissionModel;
   var status = MissionStatus.Completed; //ALTERAR PARA MUDAR TELA
+  bool _isRunning = true;
+
+  String timeToCompletMission = '';
+
+  void setTimeToCompletMission(){
+    setState(() {
+      try {
+        if (currentMissionModel.inProgress == false)
+          timeToCompletMission = '2 Horas e 30 Minutos';
+        else
+          timeToCompletMission = currentMissionModel.getTimeToCompletMission();
+      } catch(e){
+        timeToCompletMission = '';
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    Timer.periodic(Duration(seconds: 1), (Timer timer) {
+      if (!_isRunning) {
+        timer.cancel();
+        return;
+      }
+      setTimeToCompletMission();
+    });
+  }
+
+
+  @override
+  void dispose() {
+    _isRunning = false;
+
+  }
 
   situacional({ifCompleted, ifInProgress, ifClosed}) {
     if (status == MissionStatus.Completed) {
@@ -38,7 +77,7 @@ class _MissionAboutPageState extends State<MissionAboutPage> {
   Widget build(BuildContext context) {
     final TextStyle theme = Theme.of(context).textTheme.headline2;
     final MissionDto missionDto = ModalRoute.of(context).settings.arguments;
-    MissionModel currentMissionModel = missionDto.missionModel;
+    currentMissionModel = missionDto.missionModel;
     ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context);
 
     return Scaffold(
@@ -63,7 +102,7 @@ class _MissionAboutPageState extends State<MissionAboutPage> {
               GoopMissionBody(missionDto: missionDto),
               situacional(
                 ifCompleted: Text(
-                  '3 horas',
+                  timeToCompletMission,
                   style: theme,
                   textAlign: TextAlign.center,
                 ),
