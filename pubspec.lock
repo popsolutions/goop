@@ -162,13 +162,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.7.0"
-  code_field:
-    dependency: "direct main"
-    description:
-      name: code_field
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.22.0"
   collection:
     dependency: transitive
     description:
@@ -513,6 +506,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  otp_text_field:
+    dependency: "direct main"
+    description:
+      name: otp_text_field
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.1"
   package_config:
     dependency: transitive
     description:

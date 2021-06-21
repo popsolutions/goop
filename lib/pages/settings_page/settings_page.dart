@@ -107,11 +107,6 @@ class _SettingsPageState extends State<SettingsPage> {
     );
 
     if (file != null) {
-      // file = await FlutterImageCompress.compressAndGetFile(
-      //   file.path,
-      //   file.path,
-      //   quality: 88,
-      // );
       setState(() {
         archive = base64Encode(file.readAsBytesSync());
       });
