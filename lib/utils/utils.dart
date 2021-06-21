@@ -38,7 +38,7 @@ String DateToSql(DateTime date) {
 }
 
 String DateTimeToSql(DateTime date) {
-  return DateFormat('yyyy-MM-dd HH:mm:ss').format(date);
+  return (date == null) ? null : DateFormat('yyyy-MM-dd HH:mm:ss').format(date);
 }
 
 String convertTimeToStringFormat(DateTime date) {
