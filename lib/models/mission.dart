@@ -1,4 +1,3 @@
-
 import 'package:goop/models/activity.dart';
 import 'package:goop/models/measurement.dart';
 import 'package:goop/models/user_profile.dart';
@@ -24,6 +23,7 @@ class MissionModel {
   double price;
   String time;
   bool inProgress = false;
+  MissionStatus _status = MissionStatus.Ordered;
 
   List<Activity> listActivity = <Activity>[];
   MeasurementModel _measurementModel;
@@ -76,62 +76,122 @@ class MissionModel {
 
   Map<String, dynamic> toJson() {
     return {
-     if (id != null) 'id': id,
-     if (name != null) 'name': name,
-     if (subject != null) 'subject': subject,
-     if (partnerId != null) 'partnerId': partnerId,
-     if (establishmentId != null) 'establishmentId': establishmentId,
-     if (measurementCount != null) 'measurementCount': measurementCount,
-     if (createByUserId != null) 'createByUserId': createByUserId,
-     if (limit != null) 'limit': limit,
-     if (priority != null) 'priority': priority,
-     if (scores != null) 'scores': scores,
-     if (reward != null) 'reward': reward,
-     if (typeMission != null) 'typeMission': typeMission,
-     if (instructions != null) 'instructions': instructions,
-     if (missionState != null) 'missionState': missionState,
-     if (address != null) 'address': address,
-     if (dateCreated != null) 'dateCreated': dateCreated,
-     if (dateFinished != null) 'dateFinished': dateFinished,
-     if (price != null) 'price': price,
-     if (time != null) 'time': time,
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (subject != null) 'subject': subject,
+      if (partnerId != null) 'partnerId': partnerId,
+      if (establishmentId != null) 'establishmentId': establishmentId,
+      if (measurementCount != null) 'measurementCount': measurementCount,
+      if (createByUserId != null) 'createByUserId': createByUserId,
+      if (limit != null) 'limit': limit,
+      if (priority != null) 'priority': priority,
+      if (scores != null) 'scores': scores,
+      if (reward != null) 'reward': reward,
+      if (typeMission != null) 'typeMission': typeMission,
+      if (instructions != null) 'instructions': instructions,
+      if (missionState != null) 'missionState': missionState,
+      if (address != null) 'address': address,
+      if (dateCreated != null) 'dateCreated': dateCreated,
+      if (dateFinished != null) 'dateFinished': dateFinished,
+      if (price != null) 'price': price,
+      if (time != null) 'time': time,
     };
   }
 
-  toString([String separator = '\n']){
-    return
-    'id: ' + (id.toString() ?? '') + separator +
-    'name: ' + (name.toString() ?? '') + separator +
-    'subject: ' + (subject.toString() ?? '') + separator +
-    'partnerId: ' + (partnerId.toString() ?? '') + separator +
-    'establishmentId: ' + (establishmentId.toString() ?? '') + separator +
-    'measurementCount: ' + (measurementCount.toString() ?? '') + separator +
-    'createByUserId: ' + (createByUserId.toString() ?? '') + separator +
-    'limit: ' + (limit.toString() ?? '') + separator +
-    'priority: ' + (priority.toString() ?? '') + separator +
-    'scores: ' + (scores.toString() ?? '') + separator +
-    'reward: ' + (reward.toString() ?? '') + separator +
-    'typeMission: ' + (typeMission.toString() ?? '') + separator +
-    'instructions: ' + (instructions.toString() ?? '') + separator +
-    'missionState: ' + (missionState.toString() ?? '') + separator +
-    'address: ' + (address.toString() ?? '') + separator +
-    'dateCreated: ' + (dateCreated.toString() ?? '') + separator +
-    'dateFinished: ' + (dateFinished.toString() ?? '') + separator +
-    'price: ' + (price.toString() ?? '') + separator +
-    'time: ' + (time.toString() ?? '');
+  toString([String separator = '\n']) {
+    return 'id: ' +
+        (id.toString() ?? '') +
+        separator +
+        'name: ' +
+        (name.toString() ?? '') +
+        separator +
+        'subject: ' +
+        (subject.toString() ?? '') +
+        separator +
+        'partnerId: ' +
+        (partnerId.toString() ?? '') +
+        separator +
+        'establishmentId: ' +
+        (establishmentId.toString() ?? '') +
+        separator +
+        'measurementCount: ' +
+        (measurementCount.toString() ?? '') +
+        separator +
+        'createByUserId: ' +
+        (createByUserId.toString() ?? '') +
+        separator +
+        'limit: ' +
+        (limit.toString() ?? '') +
+        separator +
+        'priority: ' +
+        (priority.toString() ?? '') +
+        separator +
+        'scores: ' +
+        (scores.toString() ?? '') +
+        separator +
+        'reward: ' +
+        (reward.toString() ?? '') +
+        separator +
+        'typeMission: ' +
+        (typeMission.toString() ?? '') +
+        separator +
+        'instructions: ' +
+        (instructions.toString() ?? '') +
+        separator +
+        'missionState: ' +
+        (missionState.toString() ?? '') +
+        separator +
+        'address: ' +
+        (address.toString() ?? '') +
+        separator +
+        'dateCreated: ' +
+        (dateCreated.toString() ?? '') +
+        separator +
+        'dateFinished: ' +
+        (dateFinished.toString() ?? '') +
+        separator +
+        'price: ' +
+        (price.toString() ?? '') +
+        separator +
+        'time: ' +
+        (time.toString() ?? '');
   }
 
   void set measurementModel(MeasurementModel measurementModel) {
     this._measurementModel = measurementModel;
-    inProgress =  this._measurementModel != null;
+
+    if (this._measurementModel == null) {
+      this.status = MissionStatus.Ordered;
+    } else {
+      if ((_measurementModel.state == 'draft') ||
+          (_measurementModel.state == 'ordered'))
+        this.status = MissionStatus.Ordered;
+      else if (_measurementModel.state == 'doing')
+        this.status = MissionStatus.InProgress;
+      else
+        this.status = MissionStatus.Closed;
+    }
   }
 
   MeasurementModel get measurementModel => this._measurementModel;
 
-  String getTimeToCompletMission(){
+  String getTimeToCompletMission() {
     if (_measurementModel != null)
-      return  _measurementModel.getTimeToCompletMission();
+      return _measurementModel.getTimeToCompletMission();
     else
       return '';
   }
+
+  MissionStatus get status => _status;
+
+  set status(MissionStatus value) {
+    _status = value;
+    inProgress = _status == MissionStatus.InProgress;
+  }
+}
+
+enum MissionStatus {
+  Ordered,
+  InProgress,
+  Closed,
 }
