@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'activity.dart';
 import 'mission.dart';
 
 class MissionDto {
@@ -30,32 +29,31 @@ class MissionDto {
 
   MissionModel missionModel;
 
-  MissionDto({
-    this.id,
-    this.name,
-    this.subject,
-    this.partnerId,
-    this.establishmentId,
-    this.measurementCount,
-    this.createByUserId,
-    this.limit,
-    this.priority,
-    this.scores,
-    this.reward,
-    this.typeMission,
-    this.instructions,
-    this.missionState,
-    this.address,
-    this.dateCreated,
-    this.dateFinished,
-    this.price,
-    this.time,
-    this.nameEstablishment,
-    this.addressEstablishment,
-    this.latitude,
-    this.longitude,
-    this.missionModel
-  });
+  MissionDto(
+      {this.id,
+      this.name,
+      this.subject,
+      this.partnerId,
+      this.establishmentId,
+      this.measurementCount,
+      this.createByUserId,
+      this.limit,
+      this.priority,
+      this.scores,
+      this.reward,
+      this.typeMission,
+      this.instructions,
+      this.missionState,
+      this.address,
+      this.dateCreated,
+      this.dateFinished,
+      this.price,
+      this.time,
+      this.nameEstablishment,
+      this.addressEstablishment,
+      this.latitude,
+      this.longitude,
+      this.missionModel});
 
   Map<String, dynamic> toMap() {
     return {

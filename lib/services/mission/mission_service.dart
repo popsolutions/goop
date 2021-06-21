@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:goop/config/http/odoo_api.dart';
 import 'package:goop/models/activity.dart';
 import 'package:goop/models/establishment.dart';
@@ -11,15 +10,10 @@ import 'package:goop/services/GeoLocService.dart';
 import 'package:goop/services/constants.dart';
 import 'package:goop/services/establishment/establishment_service.dart';
 import 'package:goop/services/measurementService.dart';
-import 'package:goop/utils/ClassConstants.dart';
 import 'package:goop/utils/global.dart';
-import 'package:goop/utils/utils.dart';
 
 import '../../models/activity.dart';
 import '../../models/mission.dart';
-import '../../models/mission.dart';
-import '../../models/mission.dart';
-import '../../utils/ClassConstants.dart';
 
 class MissionService {
   final Odoo _odoo;
@@ -73,37 +67,45 @@ class MissionService {
   }
 
   void setMissionEstablishment(MissionModel mission) async {
-    EstablishmentModel establishmentModel = await establishmentService.getEstablishmentModelById(mission.establishmentId);
+    EstablishmentModel establishmentModel = await establishmentService
+        .getEstablishmentModelById(mission.establishmentId);
     mission.address = establishmentModel.address;
     LoadControl_getMissions += 1;
   }
 
   Future<void> setListActivity(MissionModel missionModel, User user) async {
-    missionModel.listActivity  = await getListActivity(missionModel);
+    missionModel.listActivity = await getListActivity(missionModel);
     await updateListActivityChecked(missionModel, user);
   }
 
   Future<List<Activity>> getListActivity(MissionModel missionModel) async {
-    List<Activity> listPhoto = await activityService.getListPhotoFromMission(missionModel);
-    List<Activity> listQuizz = await activityService.getListQuizzFromMission(missionModel);
-    List<Activity> listPriceComparison = await activityService.getListPriceComparisonFromMission(missionModel);
+    List<Activity> listPhoto =
+        await activityService.getListPhotoFromMission(missionModel);
+    List<Activity> listQuizz =
+        await activityService.getListQuizzFromMission(missionModel);
+    List<Activity> listPriceComparison =
+        await activityService.getListPriceComparisonFromMission(missionModel);
 
     return listPhoto + listQuizz + listPriceComparison;
   }
 
-  Future<void> updateListActivityChecked(MissionModel missionModel, User user) async {
+  Future<void> updateListActivityChecked(
+      MissionModel missionModel, User user) async {
     if (missionModel.measurementModel == null)
-      missionModel.measurementModel = await getMeasurementModel(missionModel, user.partnerId);
+      missionModel.measurementModel =
+          await getMeasurementModel(missionModel, user.partnerId);
 
     if (missionModel.measurementModel != null) {
-      
       for (var activity in missionModel.listActivity) {
         if (activity.isQuizz() == true) {
-          await activityService.setMeasurementQuizzlinesModel(activity, missionModel.measurementModel, user);
+          await activityService.setMeasurementQuizzlinesModel(
+              activity, missionModel.measurementModel, user);
         } else if (activity.isPhoto() == true) {
-          await activityService.setMeasurementPhotoLinesModel(activity, missionModel.measurementModel, user);
+          await activityService.setMeasurementPhotoLinesModel(
+              activity, missionModel.measurementModel, user);
         } else if (activity.isPriceComparison() == true) {
-          await activityService.setMeasurementPriceComparisonLinesModel(activity, missionModel.measurementModel, user);
+          await activityService.setMeasurementPriceComparisonLinesModel(
+              activity, missionModel.measurementModel, user);
         }
       }
     }
@@ -117,26 +119,31 @@ class MissionService {
     );
   }
 
-  void setMeasurementModelToListMissionModel(List<MissionModel> listMissionModel) async {
-    for (MissionModel missionModel in listMissionModel){
-      missionModel.measurementModel = await getMeasurementModel(missionModel, globalcurrentUser.partnerId);
+  void setMeasurementModelToListMissionModel(
+      List<MissionModel> listMissionModel) async {
+    for (MissionModel missionModel in listMissionModel) {
+      missionModel.measurementModel =
+          await getMeasurementModel(missionModel, globalcurrentUser.partnerId);
     }
 
     globalServiceNotifier.notifyListeners();
   }
 
-  Future<MeasurementModel> getMeasurementModel(MissionModel missionModel, int partner_id) async {
-    MeasurementModel measurementModel = await measurementService.getMeasurementModelFromMissionAndPartner_id(missionModel, partner_id);
+  Future<MeasurementModel> getMeasurementModel(
+      MissionModel missionModel, int partner_id) async {
+    MeasurementModel measurementModel = await measurementService
+        .getMeasurementModelFromMissionAndPartner_id(missionModel, partner_id);
     return measurementModel;
   }
 
-  Future<void> createMeasurementModel(MissionModel missionModel, User currentUser, GeoLocService geoLocService) async {
+  Future<void> createMeasurementModel(MissionModel missionModel,
+      User currentUser, GeoLocService geoLocService) async {
+    MeasurementModel measurementModelExistent =
+        await getMeasurementModel(missionModel, currentUser.partnerId);
 
-    MeasurementModel measurementModelExistent = await getMeasurementModel(missionModel, currentUser.partnerId);
-
-    if (measurementModelExistent != null){
+    if (measurementModelExistent != null) {
       missionModel.measurementModel = measurementModelExistent;
-    }else {
+    } else {
       geoLocService.update();
 
       MeasurementModel measurementModelInsert = MeasurementModel(
@@ -175,7 +182,8 @@ class MissionService {
         // lastUpdate: null
       );
 
-      MeasurementModel measurementModelInserted = await measurementService.insertAndGet(measurementModelInsert);
+      MeasurementModel measurementModelInserted =
+          await measurementService.insertAndGet(measurementModelInsert);
 
       missionModel.measurementModel = measurementModelInserted;
     }

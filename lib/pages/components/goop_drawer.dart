@@ -21,9 +21,8 @@ class GoopDrawer extends StatelessWidget {
 
     ListTile goopTile({String title, img, action}) {
       return ListTile(
-        dense: true,
         contentPadding: EdgeInsets.all(20),
-        leading: SvgPicture.asset(img, height: 25),
+        leading: SvgPicture.asset(img, height: 20),
         title: Text(title),
         onTap: action,
       );
@@ -39,9 +38,8 @@ class GoopDrawer extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: [
             Container(
-              height: MediaQuery.of(context).size.height * .4,
+              height: 250,
               child: DrawerHeader(
-                padding: EdgeInsets.all(0),
                 decoration: BoxDecoration(color: GoopColors.red),
                 child: Center(
                   child: Column(
@@ -63,7 +61,7 @@ class GoopDrawer extends StatelessWidget {
                                 height: 150,
                               ),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 5),
                       Text(
                         user.name,
                         style: TextStyle(
@@ -101,7 +99,7 @@ class GoopDrawer extends StatelessWidget {
                           },
                         ),
                       ),
-                      SizedBox(width: 20),
+                      SizedBox(width: 5),
                       Flexible(
                         child: GoopButton(
                           text: 'Mapa',
@@ -149,7 +147,6 @@ class GoopDrawer extends StatelessWidget {
                         );
                       },
                     ),
-                    SizedBox(height: 20),
                     goopTile(
                       title: 'Sair',
                       img: GoopImages.quit,

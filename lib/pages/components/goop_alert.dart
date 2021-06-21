@@ -23,7 +23,7 @@ class GoopAlert extends StatelessWidget {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          title != null ? title : Container(),
+          title != null ? title : Container(height: 0),
           GestureDetector(
             onTap: () => Navigator.pop(context),
             child: Stack(

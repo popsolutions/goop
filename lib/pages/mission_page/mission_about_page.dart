@@ -154,7 +154,8 @@ class _MissionAboutPageState extends State<MissionAboutPage> {
                         ? GoopButton(
                             text: 'Iniciar',
                             action: () async {
-                              await serviceNotifier.createMeasurementModelIfNotExists();
+                              await serviceNotifier
+                                  .createMeasurementModelIfNotExists();
                               serviceNotifier.notifyListeners();
                             },
                           )
