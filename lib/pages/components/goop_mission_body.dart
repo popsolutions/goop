@@ -48,11 +48,38 @@ class _GoopMissionBodyState extends State<GoopMissionBody> {
           GoopImages.rocket,
           width: MediaQuery.of(context).size.width * .6,
         ),
-        GoopCard(
-          goToPage: false,
-          missionDto: widget.missionDto,
-          border: Colors.transparent,
-          showPrinceAndTime: false,
+        Column(
+          children: [
+            Text(
+              widget.missionDto.name ?? '',
+              style: Theme.of(context).textTheme.headline3,
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 5),
+            Text(
+              widget.missionDto.address ?? '',
+              style: Theme.of(context).textTheme.headline1,
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 5),
+            Container(
+              width: MediaQuery.of(context).size.width * .7,
+              child: Divider(color: Colors.black),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * .75,
+              child: Text(
+                widget.missionDto.subject ?? '',
+                style: Theme.of(context).textTheme.headline1,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * .7,
+              child: Divider(color: Colors.black),
+            ),
+            SizedBox(height: 20),
+          ],
         ),
         Text(
           'Como executar a missão:',
@@ -81,7 +108,11 @@ class _GoopMissionBodyState extends State<GoopMissionBody> {
                 ),
                 title: Text(
                   widget.missionDto.missionModel.listActivity[index].name,
-                  style: TextStyle(color: GoopColors.darkBlue),
+                  style: TextStyle(
+                    color: currentActivity.isChecked
+                        ? GoopColors.red
+                        : GoopColors.darkBlue,
+                  ),
                 ),
                 onTap: () async {
                   if (!provider.currentMissionModel.inProgress) {

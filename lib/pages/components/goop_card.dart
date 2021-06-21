@@ -44,7 +44,7 @@ class GoopCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(30),
           color: inProgress ? Color(0XFFFDEEF2) : Colors.white,
           border: Border.all(
-            width: inProgress ? 3 : 1,
+            width: inProgress ? 2 : 1,
             color: (inProgress == true) ? GoopColors.red : border,
           ),
         ),
