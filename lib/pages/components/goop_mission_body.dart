@@ -136,8 +136,11 @@ class _GoopMissionBodyState extends State<GoopMissionBody> {
                     );
                   } else if (provider.currentActivity.isPhoto()) {
                     if (provider.currentActivity.isChecked) {
-                      Navigator.pushNamed(context, Routes.mission_photo_page,
-                          arguments: widget.missionDto);
+                      Navigator.pushNamed(
+                        context,
+                        Routes.mission_photo_page,
+                        arguments: widget.missionDto,
+                      );
                     } else {
                       Navigator.push(
                         context,
