@@ -1,4 +1,5 @@
 import 'package:goop/models/activity.dart';
+import 'package:goop/models/establishment.dart';
 import 'package:goop/models/measurement.dart';
 import 'package:goop/models/user_profile.dart';
 
@@ -27,6 +28,7 @@ class MissionModel {
 
   List<Activity> listActivity = <Activity>[];
   MeasurementModel _measurementModel;
+  EstablishmentModel establishmentModel;
 
   MissionModel({
     this.id,

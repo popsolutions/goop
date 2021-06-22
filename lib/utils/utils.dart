@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-dynamic valueOrNull(dynamic value) {
-  return value is! bool ? value : null;
-}
+// dynamic valueOrNull(dynamic value) {
+//   return value is! bool ? value : null;
+// }
 
 // ignore: non_constant_identifier_names
 String JSONToStringWrapQuotClear(dynamic JSON) {
@@ -16,6 +16,12 @@ String jsonGetStr(Map<String, dynamic> json, String key) {
   if (json[key] is bool) return null;
 
   return json[key];
+}
+
+double jsonGetdouble(Map<String, dynamic> json, String key) {
+  if (json[key] is bool) return null;
+
+  return double.parse(json[key]);
 }
 
 List<int> jsonGetListInt(Map<String, dynamic> json, String key) {

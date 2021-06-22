@@ -1,13 +1,14 @@
 import 'package:goop/models/user_profile.dart';
+import 'package:goop/utils/utils.dart';
 
 class EstablishmentModel {
   int id;
   String name;
   String address;
-  String latitude;
+  double latitude;
   String zipCode;
   String state;
-  String longitude;
+  double longitude;
 
   EstablishmentModel({
     this.id,
@@ -24,8 +25,8 @@ class EstablishmentModel {
       name: valueOrNull(map['name']),
       address: valueOrNull(map['address']),
       zipCode: valueOrNull(map['zip_code']),
-      latitude: valueOrNull(map['latitude']),
-      longitude: valueOrNull(map['longitude']),
+      latitude: jsonGetdouble(map, 'latitude'),
+      longitude: jsonGetdouble(map, 'longitude'),
     );
   }
 }
