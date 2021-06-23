@@ -17,37 +17,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Future<Position> _determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      return Future.error('Location services are disabled.');
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied');
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
-    }
-
-    return await Geolocator.getCurrentPosition();
-  }
-
-  Future<LatLng> getLocation() async {
-    Position userLocation = await _determinePosition();
-    LatLng latng = LatLng(userLocation.latitude, userLocation.longitude);
-    return latng;
-  }
-
   @override
   Widget build(BuildContext context) {
     final serviceNotifier = Provider.of<ServiceNotifier>(context);
@@ -73,7 +42,8 @@ class _HomePageState extends State<HomePage> {
                 return FlutterMap(
                   options: MapOptions(
                     // center: LatLng(53, -0.09),
-                    interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
+                    interactiveFlags:
+                        InteractiveFlag.pinchZoom | InteractiveFlag.drag,
                     center: LatLng(-23.553583043580996, -46.65204460659839),
                     zoom: 13.0,
                   ),
