@@ -2,6 +2,7 @@ import 'package:goop/models/activity.dart';
 import 'package:goop/models/establishment.dart';
 import 'package:goop/models/measurement.dart';
 import 'package:goop/models/user_profile.dart';
+import 'package:goop/utils/utils.dart';
 
 class MissionModel {
   int id;
@@ -25,6 +26,7 @@ class MissionModel {
   String time;
   bool inProgress = false;
   MissionStatus _status = MissionStatus.Ordered;
+  String timeToCompletMission = '';
 
   List<Activity> listActivity = <Activity>[];
   MeasurementModel _measurementModel;
@@ -189,6 +191,10 @@ class MissionModel {
   set status(MissionStatus value) {
     _status = value;
     inProgress = _status == MissionStatus.InProgress;
+  }
+
+  void settimeToCompletMission(){
+    timeToCompletMission = getTimeToCompletMission();
   }
 }
 

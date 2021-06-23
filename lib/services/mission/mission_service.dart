@@ -58,10 +58,10 @@ class MissionService {
     final List json = response.getRecords();
     final listMission = json.map((e) => MissionModel.fromJson(e)).toList();
     for (var i = 0; i < listMission.length; i++) {
-      setMissionEstablishment(listMission[i]);
+      await setMissionEstablishment(listMission[i]);
     }
 
-    setMeasurementModelToListMissionModel(listMission);
+    await setMeasurementModelToListMissionModel(listMission);
 
     return listMission;
   }
@@ -69,7 +69,8 @@ class MissionService {
   void setMissionEstablishment(MissionModel mission) async {
     EstablishmentModel establishmentModel = await establishmentService
         .getEstablishmentModelById(mission.establishmentId);
-    mission.address = establishmentModel.address;
+    mission.address = establishmentModel.address;//??-mateus//t.t.
+    mission.establishmentModel = establishmentModel;
     LoadControl_getMissions += 1;
   }
 
@@ -126,7 +127,7 @@ class MissionService {
           await getMeasurementModel(missionModel, globalcurrentUser.partnerId);
     }
 
-    globalServiceNotifier.notifyListeners();
+    // globalServiceNotifier.notifyListeners();
   }
 
   Future<MeasurementModel> getMeasurementModel(

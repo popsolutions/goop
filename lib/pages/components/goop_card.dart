@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:goop/config/routes.dart';
+import 'package:goop/models/mission.dart';
 import 'package:goop/models/mission_dto.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
@@ -8,14 +9,14 @@ import 'package:goop/services/ServiceNotifier.dart';
 import 'package:provider/provider.dart';
 
 class GoopCard extends StatelessWidget {
-  final MissionDto missionDto;
+  final MissionModel currentMissionModel;
   final Color border;
   final bool showPrinceAndTime;
   final bool goToPage;
 
   const GoopCard({
     Key key,
-    @required this.missionDto,
+    @required this.currentMissionModel,
     this.border = GoopColors.grey,
     this.showPrinceAndTime = true,
     this.goToPage = true,
@@ -24,18 +25,18 @@ class GoopCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context);
-    final inProgress = missionDto.missionModel.inProgress;
+    final inProgress = currentMissionModel.inProgress;
 
     return GestureDetector(
       onTap: !goToPage
           ? null
           : () async {
               await serviceNotifier
-                  .setcurrentMissionModel(missionDto.missionModel);
+                  .setcurrentMissionModel(currentMissionModel);
               Navigator.pushNamed(
                 context,
                 Routes.mission_about,
-                arguments: missionDto,
+                arguments: currentMissionModel,
               );
             },
       child: Container(
@@ -53,13 +54,13 @@ class GoopCard extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              missionDto.name ?? '',
+              currentMissionModel.name ?? '',
               style: Theme.of(context).textTheme.headline3,
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 5),
             Text(
-              missionDto.address ?? '',
+              currentMissionModel.address ?? '',
               style: Theme.of(context).textTheme.headline1,
               textAlign: TextAlign.center,
             ),
@@ -71,7 +72,7 @@ class GoopCard extends StatelessWidget {
             Container(
               width: MediaQuery.of(context).size.width * .75,
               child: Text(
-                missionDto.subject ?? '',
+                currentMissionModel.subject ?? '',
                 style: Theme.of(context).textTheme.headline1,
                 textAlign: TextAlign.center,
               ),
@@ -94,7 +95,7 @@ class GoopCard extends StatelessWidget {
                         width: 20,
                       ),
                       title: Text(
-                        'R\$ ${missionDto.reward.toStringAsFixed(2) ?? 0.00}',
+                        'R\$ ${currentMissionModel.reward.toStringAsFixed(2) ?? 0.00}',
                         style: Theme.of(context).textTheme.headline1,
                       ),
                     ),
@@ -109,7 +110,7 @@ class GoopCard extends StatelessWidget {
                         width: 20,
                       ),
                       title: Text(
-                        missionDto.time ?? '',
+                        currentMissionModel.time ?? '',
                         style: Theme.of(context).textTheme.headline1,
                       ),
                     ),

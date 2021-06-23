@@ -48,23 +48,19 @@ class ServiceNotifier extends ChangeNotifier {
   List<AlternativeModel> listAlternativeModel = <AlternativeModel>[];
   List<MissionModel> listMissionModel = <MissionModel>[];
 
-  final missionsController = MissionController(MissionService(Odoo()));
-
   final establishmentsController =
       EstablishmentController(EstablishmentService(Odoo()));
 
-  init() async {
+  Future<void> init() async {
     if (initialization == true) return;
-    update();
+    await update();
     globalServiceNotifier = this;
     initialization = true;
   }
 
-  update() {
-    listAlternativeModelLoad();
-    missionsController.load();
-    establishmentsController.load();
-    listMissionModel = missionsController.missionsRequest.value;
+  update() async {
+    await listAlternativeModelLoad();
+    listMissionModel = await missionService.getOpenMissions();
   }
 
   void listAlternativeModelLoad() async {

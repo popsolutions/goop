@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goop/config/routes.dart';
 import 'package:goop/models/activity.dart';
+import 'package:goop/models/mission.dart';
 import 'package:goop/models/mission_dto.dart';
 import 'package:goop/pages/settings_page/preview_page.dart';
 import 'package:goop/services/ServiceNotifier.dart';
@@ -13,8 +14,8 @@ import 'package:goop/utils/goop_images.dart';
 import 'package:provider/provider.dart';
 
 class GoopMissionBody extends StatefulWidget {
-  final MissionDto missionDto;
-  GoopMissionBody({@required this.missionDto});
+  final MissionModel currentMissionModel_;
+  GoopMissionBody({@required this.currentMissionModel_});
 
   @override
   _GoopMissionBodyState createState() => _GoopMissionBodyState();
@@ -25,7 +26,10 @@ class _GoopMissionBodyState extends State<GoopMissionBody> {
   Widget build(BuildContext context) {
     final TextStyle theme = Theme.of(context).textTheme.headline2;
     final provider = Provider.of<ServiceNotifier>(context);
-    bool isClickable = widget.missionDto.missionModel.inProgress ? true : false;
+
+    MissionModel currentMissionModel = widget.currentMissionModel_;
+
+    bool isClickable = currentMissionModel.inProgress ? true : false;
 
     Future<void> showPreview(File file) async {
       file = await Navigator.push(
@@ -51,13 +55,13 @@ class _GoopMissionBodyState extends State<GoopMissionBody> {
         Column(
           children: [
             Text(
-              widget.missionDto.name ?? '',
+              currentMissionModel.name ?? '',
               style: Theme.of(context).textTheme.headline3,
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 5),
             Text(
-              widget.missionDto.address ?? '',
+              currentMissionModel.address ?? '',
               style: Theme.of(context).textTheme.headline1,
               textAlign: TextAlign.center,
             ),
@@ -69,7 +73,7 @@ class _GoopMissionBodyState extends State<GoopMissionBody> {
             Container(
               width: MediaQuery.of(context).size.width * .75,
               child: Text(
-                widget.missionDto.subject ?? '',
+                currentMissionModel.subject ?? '',
                 style: Theme.of(context).textTheme.headline1,
                 textAlign: TextAlign.center,
               ),
@@ -94,10 +98,10 @@ class _GoopMissionBodyState extends State<GoopMissionBody> {
           child: ListView.builder(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
-            itemCount: widget.missionDto.missionModel.listActivity.length,
+            itemCount: currentMissionModel.listActivity.length,
             itemBuilder: (_, index) {
               Activity currentActivity =
-                  widget.missionDto.missionModel.listActivity[index];
+                  currentMissionModel.listActivity[index];
 
               return ListTile(
                 enabled: isClickable,
@@ -109,7 +113,7 @@ class _GoopMissionBodyState extends State<GoopMissionBody> {
                   color: isClickable ? Colors.deepPurple : Colors.grey[400],
                 ),
                 title: Text(
-                  widget.missionDto.missionModel.listActivity[index].name,
+                  currentMissionModel.listActivity[index].name,
                   style: TextStyle(
                     color: isClickable
                         ? currentActivity.isChecked
@@ -120,26 +124,26 @@ class _GoopMissionBodyState extends State<GoopMissionBody> {
                 ),
                 onTap: () async {
                   await provider.setcurrentActivity(
-                      widget.missionDto.missionModel.listActivity[index]);
+                      currentMissionModel.listActivity[index]);
 
                   if (provider.currentActivity.isQuizz()) {
                     Navigator.pushNamed(
                       context,
                       Routes.mission_question,
-                      arguments: widget.missionDto,
+                      arguments: currentMissionModel,
                     );
                   } else if (provider.currentActivity.isPriceComparison()) {
                     Navigator.pushNamed(
                       context,
                       Routes.mission_price_comparison,
-                      arguments: widget.missionDto,
+                      arguments: currentMissionModel,
                     );
                   } else if (provider.currentActivity.isPhoto()) {
                     if (provider.currentActivity.isChecked) {
                       Navigator.pushNamed(
                         context,
                         Routes.mission_photo_page,
-                        arguments: widget.missionDto,
+                        arguments: currentMissionModel,
                       );
                     } else {
                       Navigator.push(

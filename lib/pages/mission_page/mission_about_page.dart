@@ -19,22 +19,13 @@ class MissionAboutPage extends StatefulWidget {
 
 class _MissionAboutPageState extends State<MissionAboutPage> {
   MissionModel currentMissionModel;
+  ServiceNotifier serviceNotifier;
 
   bool _isRunning = true;
 
-  String timeToCompletMission = '';
-
   void setTimeToCompletMission() {
-    setState(() {
-      try {
-        if (currentMissionModel.inProgress == false)
-          timeToCompletMission = '3 Horas';
-        else
-          timeToCompletMission = currentMissionModel.getTimeToCompletMission();
-      } catch (e) {
-        timeToCompletMission = '';
-      }
-    });
+    currentMissionModel.settimeToCompletMission();
+    serviceNotifier.notifyListeners();
   }
 
   @override
@@ -69,9 +60,8 @@ class _MissionAboutPageState extends State<MissionAboutPage> {
   @override
   Widget build(BuildContext context) {
     final TextStyle theme = Theme.of(context).textTheme.headline2;
-    final MissionDto missionDto = ModalRoute.of(context).settings.arguments;
-    currentMissionModel = missionDto.missionModel;
-    ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context);
+    currentMissionModel = ModalRoute.of(context).settings.arguments;//t.
+    serviceNotifier = Provider.of<ServiceNotifier>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
@@ -92,32 +82,34 @@ class _MissionAboutPageState extends State<MissionAboutPage> {
           child: ListView(
             physics: BouncingScrollPhysics(),
             children: [
-              GoopMissionBody(missionDto: missionDto),
-              situacional(
-                ifCompleted: Text(
-                  timeToCompletMission,
-                  style: theme,
-                  textAlign: TextAlign.center,
-                ),
-                ifInProgress: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      GoopImages.clock,
-                      height: 60,
-                    ),
-                    SizedBox(width: 20),
-                    Text(
-                      timeToCompletMission,
-                      style: Theme.of(context).textTheme.headline5,
-                    ),
-                  ],
-                ),
-                ifOrdered: Text(
-                  'Tempo Esgotado',
-                  style: theme,
-                ),
-              ),
+              GoopMissionBody(currentMissionModel_: currentMissionModel),
+              Consumer<ServiceNotifier>(builder: (BuildContext context, ServiceNotifier value, Widget child) {
+                return situacional(
+                  ifCompleted: Text(
+                    currentMissionModel.timeToCompletMission,
+                    style: theme,
+                    textAlign: TextAlign.center,
+                  ),
+                  ifInProgress: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        GoopImages.clock,
+                        height: 60,
+                      ),
+                      SizedBox(width: 20),
+                      Text(
+                        currentMissionModel.timeToCompletMission,
+                        style: Theme.of(context).textTheme.headline5,
+                      ),
+                    ],
+                  ),
+                  ifOrdered: Text(
+                    'Tempo Esgotado',
+                    style: theme,
+                  ),
+                );
+              }),
               SizedBox(height: 10),
               situacional(
                 ifCompleted: Column(
@@ -131,7 +123,7 @@ class _MissionAboutPageState extends State<MissionAboutPage> {
                       child: Divider(color: Colors.deepPurple),
                     ),
                     Text(
-                      'R\$ ${missionDto.reward.toStringAsFixed(2) ?? ''}',
+                      'R\$ ${currentMissionModel.reward.toStringAsFixed(2) ?? ''}',
                       style: theme,
                     ),
                   ],

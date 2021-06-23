@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:goop/models/mission.dart';
 import 'package:goop/models/mission_dto.dart';
 import 'package:goop/pages/components/goop_card.dart';
 import 'package:goop/pages/components/goop_drawer.dart';
@@ -19,9 +20,6 @@ class MissionHomePage extends StatefulWidget {
 }
 
 class _MissionHomePageState extends State<MissionHomePage> {
-  MissionController _missionsController;
-  EstablishmentController _establishmentsController;
-
   @override
   void initState() {
     super.initState();
@@ -30,11 +28,7 @@ class _MissionHomePageState extends State<MissionHomePage> {
   @override
   Widget build(BuildContext context) {
     ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context);
-
-    if (_missionsController == null) {
-      _missionsController = serviceNotifier.missionsController;
-      _establishmentsController = serviceNotifier.establishmentsController;
-    }
+    List<MissionModel> listMissionModel = serviceNotifier.listMissionModel;
 
     return Scaffold(
       appBar: AppBar(
@@ -55,39 +49,12 @@ class _MissionHomePageState extends State<MissionHomePage> {
         child: Column(
           children: [
             Expanded(
-              child: Observer(
-                builder: (_) {
-                  final responseMissions = _missionsController.missionsRequest;
-                  final responseEstablishments =
-                      _establishmentsController.establishmentsRequest;
-
-                  if (responseMissions.status == FutureStatus.rejected ||
-                      responseEstablishments.status == FutureStatus.rejected) {
-                    return Center(child: Text('Deu erro'));
-                  } else if (responseMissions.status == FutureStatus.pending ||
-                      responseEstablishments.status == FutureStatus.pending) {
-                    return Center(
-                      child: CircularProgressIndicator(
-                        strokeWidth: 3,
-                        // color: GoopColors.red,
-                      ),
-                    );
-                  }
-
-                  final missions = responseMissions.value;
-                  final establishments = responseEstablishments.value;
-
-                  if (missions.isEmpty) {
-                    return Center(child: Text('Está vazio'));
-                  }
-
-                  return ListView.separated(
+              child:  ListView.separated(
                     physics: BouncingScrollPhysics(),
-                    itemCount: missions.length,
+                    itemCount: listMissionModel.length,
                     separatorBuilder: (_, index) => SizedBox(height: 10),
                     itemBuilder: (_, index) {
-                      final mission = missions[index];
-                      final establishment = establishments[index];
+                      final currentMissionModel = listMissionModel[index];
 
                       return Column(
                         children: [
@@ -97,40 +64,13 @@ class _MissionHomePageState extends State<MissionHomePage> {
                               width: MediaQuery.of(context).size.width * .9,
                             ),
                           GoopCard(
-                            missionDto: MissionDto(
-                              name: mission.name,
-                              subject: mission.subject,
-                              partnerId: mission.partnerId,
-                              establishmentId: mission.establishmentId,
-                              measurementCount: mission.measurementCount,
-                              createByUserId: mission.createByUserId,
-                              limit: mission.limit,
-                              priority: mission.priority,
-                              scores: mission.scores,
-                              reward: mission.reward,
-                              typeMission: mission.typeMission,
-                              instructions: mission.instructions,
-                              missionState: mission.missionState,
-                              address: mission.address,
-                              dateCreated: mission.dateCreated,
-                              dateFinished: mission.dateFinished,
-                              price: mission.price,
-                              time: mission.time,
-                              nameEstablishment: establishment.name,
-                              addressEstablishment: establishment.address,
-                              latitude: establishment.latitude.toString(),
-                              longitude: establishment.longitude.toString(),
-                              id: establishment.id,
-                              missionModel: mission,
-                            ),
+                           currentMissionModel: currentMissionModel
                           ),
                         ],
                       );
                     },
-                  );
-                },
+                  )
               ),
-            ),
           ],
         ),
       ),
