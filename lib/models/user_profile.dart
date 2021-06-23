@@ -1,3 +1,5 @@
+import 'package:goop/utils/utils.dart';
+
 class UserProfile {
   String name;
   String image;
@@ -53,8 +55,4 @@ class UserProfile {
     state = valueOrNull(json['state']);
     signupUrl = valueOrNull(json['signup_url']);
   }
-}
-
-dynamic valueOrNull(dynamic value) {
-  return value is! bool ? value : null;
 }
