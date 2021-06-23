@@ -38,6 +38,7 @@ class HomePage extends StatelessWidget {
                 return FlutterMap(
                   options: MapOptions(
                     // center: LatLng(53, -0.09),
+                    interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
                     center: LatLng(-23.553583043580996, -46.65204460659839),
                     zoom: 13.0,
                   ),
