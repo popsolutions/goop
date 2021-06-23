@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:goop/models/mission.dart';
 import 'package:goop/pages/components/goop_drawer.dart';
-import 'package:goop/pages/components/libComponents.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -16,10 +16,33 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  LatLng userLocation;
+
+  LatLng _getCurrentLocation() {
+    Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.best,
+      forceAndroidLocationManager: true,
+    ).then((Position position) {
+      setState(() {
+        userLocation = LatLng(position.latitude, position.longitude);
+      });
+    }).catchError((e) {
+      print(e);
+    });
+
+    return userLocation;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getCurrentLocation();
+  }
+
   @override
   Widget build(BuildContext context) {
     final serviceNotifier = Provider.of<ServiceNotifier>(context);
-    final controller = MapController();
+    // final controller = MapController();
 
     return Scaffold(
       appBar: AppBar(
@@ -40,9 +63,10 @@ class _HomePageState extends State<HomePage> {
 
           if (snapshot.connectionState == ConnectionState.done) {
             return FlutterMap(
-              mapController: controller,
+              // mapController: controller,
               options: MapOptions(
-                center: LatLng(-23.553583043580996, -46.65204460659839),
+                // center: LatLng(-23.553583043580996, -46.65204460659839),
+                center: userLocation,
                 interactiveFlags:
                     InteractiveFlag.pinchZoom | InteractiveFlag.drag,
                 zoom: 13.0,
@@ -61,20 +85,31 @@ class _HomePageState extends State<HomePage> {
                         width: 40,
                         height: 80.0,
                         point: LatLng(
-                            missionModel.establishmentModel.latitude ?? 0,
-                            missionModel.establishmentModel.longitude ?? 0),
+                          missionModel.establishmentModel.latitude ?? 0,
+                          missionModel.establishmentModel.longitude ?? 0,
+                        ),
                         builder: (ctx) => Container(
                           child: SvgPicture.asset(GoopImages.local),
                         ),
-                      )
+                      ),
+                    Marker(
+                      width: 100,
+                      height: 100,
+                      point: userLocation,
+                      builder: (ctx) => Container(
+                        child: SvgPicture.asset(GoopImages.local),
+                      ),
+                    ),
                   ],
                 ),
               ],
             );
           } else {
-            return CircularProgressIndicator(
-              strokeWidth: 3,
-              color: GoopColors.red,
+            return Center(
+              child: CircularProgressIndicator(
+                strokeWidth: 3,
+                color: GoopColors.red,
+              ),
             );
           }
         },
