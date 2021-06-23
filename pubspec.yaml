@@ -18,6 +18,9 @@ dependencies:
   flutter_mobx:
   mobx:
   flutter_map:
+  user_location:
+  git:
+    url: https://github.com/igaurab/user_location_plugin.git
   latlong2:
   cpf_cnpj_validator:
   email_validator: ^2.0.1

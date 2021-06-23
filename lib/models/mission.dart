@@ -161,7 +161,7 @@ class MissionModel {
         (time.toString() ?? '');
   }
 
-  void set measurementModel(MeasurementModel measurementModel) {
+  set measurementModel(MeasurementModel measurementModel) {
     this._measurementModel = measurementModel;
 
     if (this._measurementModel == null) {
@@ -193,7 +193,7 @@ class MissionModel {
     inProgress = _status == MissionStatus.InProgress;
   }
 
-  void settimeToCompletMission(){
+  void settimeToCompletMission() {
     timeToCompletMission = getTimeToCompletMission();
   }
 }

@@ -1,4 +1,3 @@
-import 'package:goop/models/user_profile.dart';
 import 'package:goop/utils/utils.dart';
 
 class EstablishmentModel {
