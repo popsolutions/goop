@@ -72,11 +72,9 @@ class _HomePageState extends State<HomePage> {
               if (snapshot.connectionState == ConnectionState.done) {
                 return FlutterMap(
                   options: MapOptions(
-                    plugins: [],
-                    interactiveFlags:
-                        InteractiveFlag.pinchZoom | InteractiveFlag.drag,
-                    // center: LatLng(-23.553583043580996, -46.65204460659839),
-                    // center: LatLng(userLocation), //TODO:
+                    // center: LatLng(53, -0.09),
+                    interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
+                    center: LatLng(-23.553583043580996, -46.65204460659839),
                     zoom: 13.0,
                   ),
                   layers: [
