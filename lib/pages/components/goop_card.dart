@@ -25,18 +25,17 @@ class GoopCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context);
+    ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context, listen: false);
     final inProgress = currentMissionModel.inProgress;
 
     return GestureDetector(
       onTap: !goToPage
           ? null
           : () async {
-              showProgressDialog(context, 'Aguarde');
-              await Future.delayed(Duration(seconds: 3));
-              await serviceNotifier
-                  .setcurrentMissionModel(currentMissionModel);
-              Navigator.pop(context);
+              await dialogProcess(() async {await serviceNotifier
+                  .setcurrentMissionModel(currentMissionModel);}
+                  , context);
+
               Navigator.pushNamed(
                 context,
                 Routes.mission_about,

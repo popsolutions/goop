@@ -19,7 +19,7 @@ class _Mission_photo_pageState extends State<Mission_photo_page> {
 
   Widget build(BuildContext context) {
     final TextStyle theme = Theme.of(context).textTheme.headline2;
-    serviceNotifier = Provider.of<ServiceNotifier>(context);
+    serviceNotifier = Provider.of<ServiceNotifier>(context, listen: false);
     Activity currentActivity = serviceNotifier.currentActivity;
 
     if ((currentActivity.measurementPhotoLinesModel != null) && (archive == null)) {

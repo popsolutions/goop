@@ -8,6 +8,7 @@ import 'package:goop/models/mission_dto.dart';
 import 'package:goop/pages/components/goop_button.dart';
 import 'package:goop/pages/components/goop_mission_body.dart';
 import 'package:goop/services/ServiceNotifier.dart';
+import 'package:goop/utils/utils.dart';
 import 'package:provider/provider.dart';
 import '../components/goop_back.dart';
 import 'package:goop/utils/goop_images.dart';
@@ -139,8 +140,7 @@ class _MissionAboutPageState extends State<MissionAboutPage> {
                         ? GoopButton(
                             text: 'Iniciar',
                             action: () async {
-                              await serviceNotifier
-                                  .createMeasurementModelIfNotExists();
+                              await dialogProcess(() async {await serviceNotifier.createMeasurementModelIfNotExists();}, context);
                               serviceNotifier.notifyListeners();
                             },
                           )

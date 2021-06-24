@@ -11,6 +11,7 @@ import 'package:goop/pages/settings_page/preview_page.dart';
 import 'package:goop/services/ServiceNotifier.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
+import 'package:goop/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 class GoopMissionBody extends StatefulWidget {
@@ -25,7 +26,7 @@ class _GoopMissionBodyState extends State<GoopMissionBody> {
   @override
   Widget build(BuildContext context) {
     final TextStyle theme = Theme.of(context).textTheme.headline2;
-    final provider = Provider.of<ServiceNotifier>(context);
+    final provider = Provider.of<ServiceNotifier>(context, listen: false);
 
     MissionModel currentMissionModel = widget.currentMissionModel_;
 
@@ -123,8 +124,9 @@ class _GoopMissionBodyState extends State<GoopMissionBody> {
                   ),
                 ),
                 onTap: () async {
-                  await provider.setcurrentActivity(
-                      currentMissionModel.listActivity[index]);
+                  await dialogProcess(() async {
+                    await provider.setcurrentActivity(currentMissionModel.listActivity[index]);
+                  }, context);
 
                   if (provider.currentActivity.isQuizz()) {
                     Navigator.pushNamed(

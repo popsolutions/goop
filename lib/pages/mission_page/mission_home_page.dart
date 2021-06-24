@@ -27,7 +27,7 @@ class _MissionHomePageState extends State<MissionHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context);
+    ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context, listen: false);
     List<MissionModel> listMissionModel = serviceNotifier.listMissionModel;
 
     return Scaffold(

@@ -25,7 +25,7 @@ class _MissionQuestionPageState extends State<MissionQuestionPage> {
   }
   @override
   Widget build(BuildContext context) {
-    ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context);
+    ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context, listen: false);
     QuizzLinesModel quizzLinesModel;
     Activity currentActivity = serviceNotifier.currentActivity;
     final TextStyle theme = Theme.of(context).textTheme.headline2;

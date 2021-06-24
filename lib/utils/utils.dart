@@ -108,7 +108,7 @@ showProgressDialog(BuildContext context, [String caption = 'Aguarde por favor...
   AlertDialog alert=AlertDialog(
     content: new Row(
       children: [
-        CircularProgressIndicator(backgroundColor: GoopColors.red),
+        CircularProgressIndicator(backgroundColor: GoopColors.red,  valueColor:AlwaysStoppedAnimation<Color>(GoopColors.neutralGreen)),
         Container(margin: EdgeInsets.only(left: 3),child:
         Text(caption,
           style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal, color: Colors.brown),)
@@ -121,4 +121,13 @@ showProgressDialog(BuildContext context, [String caption = 'Aguarde por favor...
       return alert;
     },
   );
+}
+
+Future<void>dialogProcess(Function function, BuildContext context, [String caption = 'Aguarde por favor...']) async {
+  showProgressDialog(context);
+  try {
+    await function();
+  }finally{
+    Navigator.pop(context);
+  }
 }

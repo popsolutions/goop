@@ -71,7 +71,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final serviceNotifier = Provider.of<ServiceNotifier>(context);
+    final serviceNotifier = Provider.of<ServiceNotifier>(context, listen: false);
     // final controller = MapController();
 
     return Scaffold(
@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
       body: FutureBuilder(
         future: serviceNotifier.init(),
         builder: (context, snapshot) {
-          final _serviceNotifier = Provider.of<ServiceNotifier>(context);
+          final _serviceNotifier = Provider.of<ServiceNotifier>(context, listen: false);
 
           if (snapshot.connectionState == ConnectionState.done) {
             return FlutterMap(

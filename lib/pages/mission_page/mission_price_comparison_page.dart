@@ -69,7 +69,7 @@ class _MissionPriceComparisionPageState
 
     final TextStyle theme = Theme.of(context).textTheme.headline2;
     //final MissionDto missionDto = ModalRoute.of(context).settings.arguments;
-    serviceNotifier = Provider.of<ServiceNotifier>(context);
+    serviceNotifier = Provider.of<ServiceNotifier>(context, listen: false);
     Activity currentActivity = serviceNotifier.currentActivity;
 
     if ((currentActivity.measurementPriceComparisonLinesModel != null) &&
