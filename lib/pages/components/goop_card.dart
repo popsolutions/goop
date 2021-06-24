@@ -6,6 +6,7 @@ import 'package:goop/models/mission_dto.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
 import 'package:goop/services/ServiceNotifier.dart';
+import 'package:goop/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 class GoopCard extends StatelessWidget {
@@ -31,8 +32,11 @@ class GoopCard extends StatelessWidget {
       onTap: !goToPage
           ? null
           : () async {
+              showProgressDialog(context, 'Aguarde');
+              await Future.delayed(Duration(seconds: 3));
               await serviceNotifier
                   .setcurrentMissionModel(currentMissionModel);
+              Navigator.pop(context);
               Navigator.pushNamed(
                 context,
                 Routes.mission_about,
