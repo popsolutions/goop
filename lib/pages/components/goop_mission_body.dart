@@ -7,6 +7,7 @@ import 'package:goop/config/routes.dart';
 import 'package:goop/models/activity.dart';
 import 'package:goop/models/mission.dart';
 import 'package:goop/models/mission_dto.dart';
+import 'package:goop/pages/components/StateGoop.dart';
 import 'package:goop/pages/settings_page/preview_page.dart';
 import 'package:goop/services/ServiceNotifier.dart';
 import 'package:goop/utils/goop_colors.dart';
@@ -22,15 +23,12 @@ class GoopMissionBody extends StatefulWidget {
   _GoopMissionBodyState createState() => _GoopMissionBodyState();
 }
 
-class _GoopMissionBodyState extends State<GoopMissionBody> {
+class _GoopMissionBodyState extends StateGoop<GoopMissionBody> {
   @override
   Widget build(BuildContext context) {
     final TextStyle theme = Theme.of(context).textTheme.headline2;
-    final provider = Provider.of<ServiceNotifier>(context, listen: false);
 
     MissionModel currentMissionModel = widget.currentMissionModel_;
-
-    bool isClickable = currentMissionModel.inProgress ? true : false;
 
     Future<void> showPreview(File file) async {
       file = await Navigator.push(
@@ -40,8 +38,9 @@ class _GoopMissionBodyState extends State<GoopMissionBody> {
         ),
       );
 
-      await provider
-          .insert_Measurement_photolines(base64Encode(file.readAsBytesSync()));
+      await dialogProcess(() async {
+        await serviceNotifier.insert_Measurement_photolines(base64Encode(file.readAsBytesSync()));
+      });
 
       Navigator.pop(context);
     }
@@ -94,76 +93,79 @@ class _GoopMissionBodyState extends State<GoopMissionBody> {
           width: MediaQuery.of(context).size.width * .7,
           child: Divider(color: Colors.deepPurple),
         ),
-        Container(
-          width: MediaQuery.of(context).size.width * .7,
-          child: ListView.builder(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: currentMissionModel.listActivity.length,
-            itemBuilder: (_, index) {
-              Activity currentActivity =
-                  currentMissionModel.listActivity[index];
+        Consumer<ServiceNotifier>(builder: (BuildContext context, ServiceNotifier value, Widget child) {
 
-              return ListTile(
-                enabled: isClickable,
-                focusColor: Colors.grey[400],
-                leading: Icon(
-                  (currentActivity.isChecked == true)
-                      ? Icons.star
-                      : Icons.star_border,
-                  color: isClickable ? Colors.deepPurple : Colors.grey[400],
-                ),
-                title: Text(
-                  currentMissionModel.listActivity[index].name,
-                  style: TextStyle(
-                    color: isClickable
-                        ? currentActivity.isChecked
-                            ? GoopColors.red
-                            : GoopColors.darkBlue
-                        : Colors.grey[400],
+          return Container(
+            width: MediaQuery.of(context).size.width * .7,
+            child: ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: currentMissionModel.listActivity.length,
+              itemBuilder: (_, index) {
+                Activity currentActivity =
+                    currentMissionModel.listActivity[index];
+
+                return ListTile(
+                  enabled: currentMissionModel.inProgress,
+                  focusColor: Colors.grey[400],
+                  leading: Icon(
+                    (currentActivity.isChecked == true)
+                        ? Icons.star
+                        : Icons.star_border,
+                    color: currentMissionModel.inProgress ? Colors.deepPurple : Colors.grey[400],
                   ),
-                ),
-                onTap: () async {
-                  await dialogProcess(() async {
-                    await provider.setcurrentActivity(currentMissionModel.listActivity[index]);
-                  }, context);
+                  title: Text(
+                    currentMissionModel.listActivity[index].name,
+                    style: TextStyle(
+                      color: currentMissionModel.inProgress
+                          ? currentActivity.isChecked
+                              ? GoopColors.red
+                              : GoopColors.darkBlue
+                          : Colors.grey[400],
+                    ),
+                  ),
+                  onTap: () async {
+                    await dialogProcess(() async {
+                      await serviceNotifier.setcurrentActivity(currentMissionModel.listActivity[index]);
+                    });
 
-                  if (provider.currentActivity.isQuizz()) {
-                    Navigator.pushNamed(
-                      context,
-                      Routes.mission_question,
-                      arguments: currentMissionModel,
-                    );
-                  } else if (provider.currentActivity.isPriceComparison()) {
-                    Navigator.pushNamed(
-                      context,
-                      Routes.mission_price_comparison,
-                      arguments: currentMissionModel,
-                    );
-                  } else if (provider.currentActivity.isPhoto()) {
-                    if (provider.currentActivity.isChecked) {
+                    if (serviceNotifier.currentActivity.isQuizz()) {
                       Navigator.pushNamed(
                         context,
-                        Routes.mission_photo_page,
+                        Routes.mission_question,
                         arguments: currentMissionModel,
                       );
-                    } else {
-                      Navigator.push(
+                    } else if (serviceNotifier.currentActivity.isPriceComparison()) {
+                      Navigator.pushNamed(
                         context,
-                        MaterialPageRoute(
-                          builder: (_) => CameraCamera(
-                            enableZoom: true,
-                            onFile: (file) async => await showPreview(file),
-                          ),
-                        ),
+                        Routes.mission_price_comparison,
+                        arguments: currentMissionModel,
                       );
+                    } else if (serviceNotifier.currentActivity.isPhoto()) {
+                      if (serviceNotifier.currentActivity.isChecked) {
+                        Navigator.pushNamed(
+                          context,
+                          Routes.mission_photo_page,
+                          arguments: currentMissionModel,
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => CameraCamera(
+                              enableZoom: true,
+                              onFile: (file) async => await showPreview(file),
+                            ),
+                          ),
+                        );
+                      }
                     }
-                  }
-                },
-              );
-            },
-          ),
-        ),
+                  },
+                );
+              },
+            ),
+          );
+  }),
         Text(
           'Prazo para cumprir a missão:',
           style: theme,

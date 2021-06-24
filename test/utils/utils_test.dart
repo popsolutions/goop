@@ -103,7 +103,7 @@ main() {
       DateTime d1 = DateTime.parse(value1);
       DateTime d2 = DateTime.parse(value2);
 
-      print(value1 + ' - ' + value2 + ': ' + difDateStr(d1, d2));
+      print(value1 + ' - ' + value2 + ': ' + difDateSecondsStr(d1, d2));
     }
 
     pDif('2021-06-21 12:00:00.000', '2021-06-21 15:27:59.000');

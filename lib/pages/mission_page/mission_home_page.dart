@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:goop/models/mission.dart';
 import 'package:goop/models/mission_dto.dart';
+import 'package:goop/pages/components/StateGoop.dart';
 import 'package:goop/pages/components/goop_card.dart';
 import 'package:goop/pages/components/goop_drawer.dart';
 import 'package:goop/services/ServiceNotifier.dart';
@@ -19,15 +20,16 @@ class MissionHomePage extends StatefulWidget {
   _MissionHomePageState createState() => _MissionHomePageState();
 }
 
-class _MissionHomePageState extends State<MissionHomePage> {
+class _MissionHomePageState extends StateGoop<MissionHomePage> {
+
   @override
   void initState() {
     super.initState();
+    listenServiceNotifier = true;
   }
 
   @override
   Widget build(BuildContext context) {
-    ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context, listen: false);
     List<MissionModel> listMissionModel = serviceNotifier.listMissionModel;
 
     return Scaffold(
@@ -45,6 +47,7 @@ class _MissionHomePageState extends State<MissionHomePage> {
         color: GoopColors.red,
         onRefresh: () async {
           await serviceNotifier.update();
+          serviceNotifier.notifyListeners();
         },
         child: Column(
           children: [

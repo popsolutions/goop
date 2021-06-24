@@ -9,7 +9,9 @@ import 'package:goop/services/ServiceNotifier.dart';
 import 'package:goop/utils/utils.dart';
 import 'package:provider/provider.dart';
 
-class GoopCard extends StatelessWidget {
+import 'StateGoop.dart';
+
+class GoopCard extends StatefulWidget {
   final MissionModel currentMissionModel;
   final Color border;
   final bool showPrinceAndTime;
@@ -24,22 +26,26 @@ class GoopCard extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _GoopCardState createState() => _GoopCardState();
+}
+
+class _GoopCardState extends StateGoop<GoopCard> {
+  @override
   Widget build(BuildContext context) {
-    ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context, listen: false);
-    final inProgress = currentMissionModel.inProgress;
+    final inProgress = widget.currentMissionModel.inProgress;
 
     return GestureDetector(
-      onTap: !goToPage
+      onTap: !widget.goToPage
           ? null
           : () async {
-              await dialogProcess(() async {await serviceNotifier
-                  .setcurrentMissionModel(currentMissionModel);}
-                  , context);
+              await dialogProcess(() async {
+                await serviceNotifier.setcurrentMissionModel(widget.currentMissionModel);
+              });
 
               Navigator.pushNamed(
                 context,
                 Routes.mission_about,
-                arguments: currentMissionModel,
+                arguments: widget.currentMissionModel,
               );
             },
       child: Container(
@@ -49,7 +55,7 @@ class GoopCard extends StatelessWidget {
           color: inProgress ? Color(0XFFFDEEF2) : Colors.white,
           border: Border.all(
             width: inProgress ? 2 : 1,
-            color: (inProgress == true) ? GoopColors.red : border,
+            color: (inProgress == true) ? GoopColors.red : widget.border,
           ),
         ),
         padding: EdgeInsets.all(20),
@@ -57,13 +63,13 @@ class GoopCard extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              currentMissionModel.name ?? '',
+              widget.currentMissionModel.name ?? '',
               style: Theme.of(context).textTheme.headline3,
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 5),
             Text(
-              currentMissionModel.address ?? '',
+              widget.currentMissionModel.address ?? '',
               style: Theme.of(context).textTheme.headline1,
               textAlign: TextAlign.center,
             ),
@@ -75,7 +81,7 @@ class GoopCard extends StatelessWidget {
             Container(
               width: MediaQuery.of(context).size.width * .75,
               child: Text(
-                currentMissionModel.subject ?? '',
+                widget.currentMissionModel.subject ?? '',
                 style: Theme.of(context).textTheme.headline1,
                 textAlign: TextAlign.center,
               ),
@@ -84,7 +90,7 @@ class GoopCard extends StatelessWidget {
               width: MediaQuery.of(context).size.width * .7,
               child: Divider(color: Colors.black),
             ),
-            if (showPrinceAndTime)
+            if (widget.showPrinceAndTime)
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -98,7 +104,7 @@ class GoopCard extends StatelessWidget {
                         width: 20,
                       ),
                       title: Text(
-                        'R\$ ${currentMissionModel.reward.toStringAsFixed(2) ?? 0.00}',
+                        'R\$ ${widget.currentMissionModel.reward.toStringAsFixed(2) ?? 0.00}',
                         style: Theme.of(context).textTheme.headline1,
                       ),
                     ),
@@ -113,7 +119,7 @@ class GoopCard extends StatelessWidget {
                         width: 20,
                       ),
                       title: Text(
-                        currentMissionModel.time ?? '',
+                        widget.currentMissionModel.time ?? '',
                         style: Theme.of(context).textTheme.headline1,
                       ),
                     ),

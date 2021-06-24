@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:goop/config/routes.dart';
 import 'package:goop/models/mission.dart';
 import 'package:goop/models/mission_dto.dart';
+import 'package:goop/pages/components/StateGoop.dart';
 import 'package:goop/pages/components/goop_button.dart';
 import 'package:goop/pages/components/goop_mission_body.dart';
 import 'package:goop/services/ServiceNotifier.dart';
@@ -18,9 +19,8 @@ class MissionAboutPage extends StatefulWidget {
   _MissionAboutPageState createState() => _MissionAboutPageState();
 }
 
-class _MissionAboutPageState extends State<MissionAboutPage> {
+class _MissionAboutPageState extends StateGoop<MissionAboutPage> {
   MissionModel currentMissionModel;
-  ServiceNotifier serviceNotifier;
 
   bool _isRunning = true;
 
@@ -62,7 +62,6 @@ class _MissionAboutPageState extends State<MissionAboutPage> {
   Widget build(BuildContext context) {
     final TextStyle theme = Theme.of(context).textTheme.headline2;
     currentMissionModel = ModalRoute.of(context).settings.arguments;//t.
-    serviceNotifier = Provider.of<ServiceNotifier>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
@@ -133,32 +132,35 @@ class _MissionAboutPageState extends State<MissionAboutPage> {
                 ifOrdered: Container(),
               ),
               SizedBox(height: 20),
-              situacional(
-                ifCompleted: Container(
+              Consumer<ServiceNotifier>(builder: (BuildContext context, ServiceNotifier value, Widget child) {
+                return situacional(
+                  ifCompleted: Container(
+                      margin: EdgeInsets.only(bottom: 30),
+                      child: (currentMissionModel.inProgress == false)
+                          ? GoopButton(
+                              text: 'Iniciar',
+                              showCircularProgress: true,
+                              action: () async {
+                                await serviceNotifier.createMeasurementModelIfNotExists();
+                                serviceNotifier.notifyListeners();
+                              },
+                            )
+                          : null),
+                  ifInProgress: Container(),
+                  ifOrdered: Container(
                     margin: EdgeInsets.only(bottom: 30),
-                    child: (currentMissionModel.inProgress == false)
-                        ? GoopButton(
-                            text: 'Iniciar',
-                            action: () async {
-                              await dialogProcess(() async {await serviceNotifier.createMeasurementModelIfNotExists();}, context);
-                              serviceNotifier.notifyListeners();
-                            },
-                          )
-                        : null),
-                ifInProgress: Container(),
-                ifOrdered: Container(
-                  margin: EdgeInsets.only(bottom: 30),
-                  child: GoopButton(
-                    text: 'Enviar',
-                    action: () {
-                      Navigator.pushNamed(
-                        context,
-                        Routes.mission_completed,
-                      );
-                    },
+                    child: GoopButton(
+                      text: 'Enviar',
+                      action: () {
+                        Navigator.pushNamed(
+                          context,
+                          Routes.mission_completed,
+                        );
+                      },
+                    ),
                   ),
-                ),
-              ),
+                );
+              }),
             ],
           ),
         ),

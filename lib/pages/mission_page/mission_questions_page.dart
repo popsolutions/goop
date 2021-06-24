@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goop/models/activity.dart';
 import 'package:goop/models/quizzLinesModel.dart';
+import 'package:goop/pages/components/StateGoop.dart';
 import 'package:goop/pages/components/goop_back.dart';
 import 'package:goop/pages/components/goop_button.dart';
-import 'package:goop/pages/components/libComponents.dart';
 import 'package:goop/services/ServiceNotifier.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
@@ -15,7 +15,7 @@ class MissionQuestionPage extends StatefulWidget {
   _MissionQuestionPageState createState() => _MissionQuestionPageState();
 }
 
-class _MissionQuestionPageState extends State<MissionQuestionPage> {
+class _MissionQuestionPageState extends StateGoop<MissionQuestionPage> {
   int value;
 
   @override
@@ -25,7 +25,6 @@ class _MissionQuestionPageState extends State<MissionQuestionPage> {
   }
   @override
   Widget build(BuildContext context) {
-    ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context, listen: false);
     QuizzLinesModel quizzLinesModel;
     Activity currentActivity = serviceNotifier.currentActivity;
     final TextStyle theme = Theme.of(context).textTheme.headline2;
@@ -34,13 +33,8 @@ class _MissionQuestionPageState extends State<MissionQuestionPage> {
       value = currentActivity.listQuizzLinesModelIndexSelected();
 
     Future<void> selectQuestion(QuizzLinesModel quizzLinesModel) async {
-      try {
         await serviceNotifier
             .insert_Measurement_quizzlinesModel(quizzLinesModel);
-      } catch (err) {
-        //??-pedro-verificar com pedro se já tem alguma maneira de exibir o erro em tela.
-        print(err);
-      }
     }
 
     return Scaffold(
@@ -109,42 +103,16 @@ class _MissionQuestionPageState extends State<MissionQuestionPage> {
                     : Container(
                         child: GoopButton(
                           text: 'Salvar',
+                          isLoading: serviceNotifier.isLoading,
+
                           action: () async {
                             if (value == null) {
-                              ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  behavior: SnackBarBehavior.floating,
-                                  shape: StadiumBorder(),
-                                  backgroundColor: GoopColors.red,
-                                  content: Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text(
-                                      'Selecione uma alternativa!',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                ),
-                              );
+                              showSnackBar('Selecione uma alternativa!', GoopColors.red);
                             } else {
-                              await selectQuestion(currentActivity.listQuizzLinesModel[value]);
-                              ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  behavior: SnackBarBehavior.floating,
-                                  shape: StadiumBorder(),
-                                  backgroundColor: GoopColors.neutralGreen,
-                                  content: Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text(
-                                      'Pergunta Registrada! 😉',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                ),
-                              );
+                              await dialogProcess(() async {
+                                await selectQuestion(currentActivity.listQuizzLinesModel[value]);
+                              });
+                              showSnackBar( 'Pergunta Registrada! 😉', GoopColors.red);
                               Navigator.pop(context);
                             }
                           },

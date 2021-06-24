@@ -174,6 +174,6 @@ class MeasurementModel {
   }
 
   String getTimeToCompletMission() {
-    return difDateStr(DateTime.now(), dateEnd);
+    return difDateSecondsStr(DateTime.now(), dateEnd);
   }
 }

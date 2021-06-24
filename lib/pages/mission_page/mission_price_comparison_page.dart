@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
-import 'package:goop/pages/components/libComponents.dart';
+import 'package:goop/pages/components/StateGoop.dart';
+import 'package:goop/pages/components/goop_libComponents.dart';
 import 'package:goop/pages/settings_page/preview_page.dart';
 import 'package:camera_camera/camera_camera.dart';
 import 'package:flutter/material.dart';
@@ -24,48 +26,22 @@ class MissionPriceComparisionPage extends StatefulWidget {
 }
 
 class _MissionPriceComparisionPageState
-    extends State<MissionPriceComparisionPage> {
+    extends StateGoop<MissionPriceComparisionPage> {
   ServiceNotifier serviceNotifier;
   @override
   String archive;
-  double price = 0;
-  final picker = ImagePicker();
+  final _priceController = TextEditingController();
+  double price() => CurrencyStringtoDouble(_priceController.text);
 
-  Future<void> showPreview(File file) async {
-    file = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (_) => PreviewPage(file)),
-    );
-
-    if (file != null) {
-      setState(() {
-        archive = base64Encode(file.readAsBytesSync());
-      });
-    }
-    Navigator.pop(context);
-  }
-
-  Future<void> getFileFromGallery() async {
-    final PickedFile file = await picker.getImage(source: ImageSource.gallery);
-    File fileTmp = File(file.path);
-
-    if (file != null) {
-      setState(() {
-        archive = base64Encode(fileTmp.readAsBytesSync());
-      });
-    }
-  }
-
-  Future<void> salvar(BuildContext context) async {
+  Future<void> save(BuildContext context) async {
     await serviceNotifier.insert_Measurement_PriceComparisonLinesModel(
-        price, archive);
+        price(), archive);
     Navigator.pop(context);
   }
 
   bool editing() => !serviceNotifier.currentActivity.isChecked;
 
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context).size.width;
 
     final TextStyle theme = Theme.of(context).textTheme.headline2;
     //final MissionDto missionDto = ModalRoute.of(context).settings.arguments;
@@ -76,7 +52,7 @@ class _MissionPriceComparisionPageState
         (archive == null)) {
       setState(() {
         archive = currentActivity.measurementPriceComparisonLinesModel.photo;
-        price = currentActivity.measurementPriceComparisonLinesModel.price;
+        _priceController.text = currentActivity.measurementPriceComparisonLinesModel.price.toString();
 
       });
     }
@@ -119,94 +95,26 @@ class _MissionPriceComparisionPageState
                       style: Theme.of(context).textTheme.headline1,
                     ),
                     SizedBox(height: 30),
-                    GoopTextFormField(
-                      // hintText: 'R\$ 0',
-                      initialValue: (price == 0) ? '' : 'R\$ ' + doubleToStringValue(price),
-                      enable: editing(),
-                      onChanged: (value) {
 
-                        price = (value == '')
-                            ? 0
-                            : double.parse(value.replaceAll(',', '.'));
-                        print(price);
-                      },
+                    goop_LibComponents.getInputTextFormField('',
+                        _priceController, keyboardType: TextInputType.number,
+                        readOnly: currentActivity.isChecked,
+                        inputFormatters: [FilteringTextInputFormatter.digitsOnly, CurrencyInputFormatter()],
+                        autoFocus: false,
+                        textAlign: TextAlign.center,
+                        border: false,
                     ),
+                    paddingT(20),
                     GestureDetector(
-                      onTap: () {
+                      onTap: () async {
                         if (!editing()) return null;
 
-                        showModalBottomSheet(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(20),
-                              topLeft: Radius.circular(20),
-                            ),
-                          ),
-                          isScrollControlled: true,
-                          context: context,
-                          builder: (_) {
-                            return Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.only(
-                                    top: 20,
-                                    bottom: 10,
-                                  ),
-                                  height: 3,
-                                  width: 60,
-                                  color: Colors.grey,
-                                ),
-                                Container(
-                                  width: mediaQuery * .5,
-                                  child: ElevatedButton.icon(
-                                    icon: Icon(Icons.camera_alt),
-                                    label: Text('Tire uma foto'),
-                                    style: ElevatedButton.styleFrom(
-                                      primary: GoopColors.redSplash,
-                                      onPrimary: Colors.white,
-                                    ),
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (_) => CameraCamera(
-                                            enableZoom: true,
-                                            onFile: (file) async {
-                                              await showPreview(file);
-                                              Navigator.pop(context);
-                                            },
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                                Container(
-                                  width: mediaQuery * .5,
-                                  child: ElevatedButton.icon(
-                                    icon: Icon(Icons.attach_file_outlined),
-                                    label: Text('Escolha um arquivo'),
-                                    style: ElevatedButton.styleFrom(
-                                      primary: GoopColors.redSplash,
-                                      onPrimary: Colors.white,
-                                    ),
-                                    onPressed: () async {
-                                      await getFileFromGallery();
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                ),
-                                SizedBox(height: 10),
-                                Container(
-                                  padding: EdgeInsets.only(bottom: 10),
-                                  height: 30,
-                                  child: SvgPicture.asset(GoopImages.charisma),
-                                ),
-                              ],
-                            );
-                          },
-                        );
+                        String fileBase64 =  await getPhotoBase64();
+
+                        if (fileBase64 != null)
+                          archive = fileBase64;
+
+                        setState(() {});
                       },
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(100),
@@ -232,8 +140,9 @@ class _MissionPriceComparisionPageState
                     : Container(
                         child: GoopButton(
                           text: 'Salvar',
+                          showCircularProgress: true,
                           action: () async {
-                            await salvar(context);
+                            await save(context);
                           },
                         ),
                       ),

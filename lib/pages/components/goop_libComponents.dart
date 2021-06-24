@@ -13,7 +13,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter_svg/svg.dart';
 
 
-class LibComponents {
+class goop_LibComponents {
 
   static Widget paddingZ() {
     return Padding(padding: EdgeInsets.only(top: 0));
@@ -45,7 +45,7 @@ class LibComponents {
   static Future<void> dialogProcess(BuildContext context, Function function, [String caption = 'Aguarde por favor...']) async {
     showProgressDialog(context);
     try {
-      // await delayedSeconds(1);
+      await delayedSeconds(1);
       try {
         await function();
       } catch(e){
@@ -183,7 +183,7 @@ class LibComponents {
           labelText: _label,
           suffixIcon: IconButton(
             onPressed: () => _controller.clear(),
-            icon: Icon(Icons.clear),
+            icon: Icon(Icons.clear, color: GoopColors.red),
           )),
       style: textStyle,
       controller: _controller,

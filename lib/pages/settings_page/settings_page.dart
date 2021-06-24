@@ -1,16 +1,14 @@
 import 'dart:convert';
-import 'dart:io';
-import 'package:camera_camera/camera_camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goop/config/app/authentication_controller.dart';
 import 'package:goop/config/http/odoo_api.dart';
+import 'package:goop/pages/components/StateGoop.dart';
 import 'package:goop/pages/components/goop_alert.dart';
 import 'package:goop/pages/components/goop_back.dart';
 import 'package:goop/pages/components/goop_button.dart';
 import 'package:goop/pages/components/goop_text_form_field.dart';
-import 'package:goop/pages/settings_page/preview_page.dart';
 import 'package:goop/pages/settings_page/settings_controller.dart';
 import 'package:goop/services/ServiceNotifier.dart';
 import 'package:goop/services/login/user_service.dart';
@@ -27,7 +25,7 @@ class SettingsPage extends StatefulWidget {
   _SettingsPageState createState() => _SettingsPageState();
 }
 
-class _SettingsPageState extends State<SettingsPage> {
+class _SettingsPageState extends StateGoop<SettingsPage> {
   AuthenticationController authenticationController;
   final _controller = SettingsController(UserServiceImpl(Odoo()));
   ReactionDisposer _reactionDisposer;
@@ -100,31 +98,6 @@ class _SettingsPageState extends State<SettingsPage> {
     print('Deu erro');
   }
 
-  Future<void> showPreview(File file) async {
-    file = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (_) => PreviewPage(file)),
-    );
-
-    if (file != null) {
-      setState(() {
-        archive = base64Encode(file.readAsBytesSync());
-      });
-    }
-    Navigator.pop(context);
-  }
-
-  Future<void> getFileFromGallery() async {
-    final PickedFile file = await picker.getImage(source: ImageSource.gallery);
-    File fileTmp = File(file.path);
-
-    if (file != null) {
-      setState(() {
-        archive = base64Encode(fileTmp.readAsBytesSync());
-      });
-    }
-  }
-
   submit() {
     setState(() {
       _controller.imageProfile = archive;
@@ -134,10 +107,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context).size.width;
 
-    ServiceNotifier serviceNotifier =
-        Provider.of<ServiceNotifier>(context, listen: false);
     AuthenticationController authenticationController =
         serviceNotifier.authenticationController;
     final user = authenticationController.currentUser;
@@ -167,80 +137,13 @@ class _SettingsPageState extends State<SettingsPage> {
                     child: Column(
                       children: [
                         GestureDetector(
-                          onTap: () {
-                            showModalBottomSheet(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(20),
-                                  topLeft: Radius.circular(20),
-                                ),
-                              ),
-                              isScrollControlled: true,
-                              context: context,
-                              builder: (_) {
-                                return Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                        top: 20,
-                                        bottom: 10,
-                                      ),
-                                      height: 3,
-                                      width: 60,
-                                      color: Colors.grey,
-                                    ),
-                                    Container(
-                                      width: mediaQuery * .5,
-                                      child: ElevatedButton.icon(
-                                        icon: Icon(Icons.camera_alt),
-                                        label: Text('Tire uma foto'),
-                                        style: ElevatedButton.styleFrom(
-                                          primary: GoopColors.redSplash,
-                                          onPrimary: Colors.white,
-                                        ),
-                                        onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (_) => CameraCamera(
-                                                enableZoom: true,
-                                                onFile: (file) async {
-                                                  await showPreview(file);
-                                                  Navigator.pop(context);
-                                                },
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                    Container(
-                                      width: mediaQuery * .5,
-                                      child: ElevatedButton.icon(
-                                        icon: Icon(Icons.attach_file_outlined),
-                                        label: Text('Escolha um arquivo'),
-                                        style: ElevatedButton.styleFrom(
-                                          primary: GoopColors.redSplash,
-                                          onPrimary: Colors.white,
-                                        ),
-                                        onPressed: () {
-                                          getFileFromGallery();
-                                          Navigator.pop(context);
-                                        },
-                                      ),
-                                    ),
-                                    SizedBox(height: 10),
-                                    Container(
-                                      padding: EdgeInsets.only(bottom: 10),
-                                      height: 30,
-                                      child:
-                                          SvgPicture.asset(GoopImages.charisma),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
+                          onTap: () async {
+                            String fileBase64 = await getPhotoBase64();
+
+                            if (fileBase64 != null)
+                              archive = fileBase64;
+
+                            setState_();
                           },
                           child: archive == null
                               ? SvgPicture.asset(

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:intl/intl.dart';
 
@@ -63,7 +64,19 @@ void ToDevelop(String s){
 
 String doubleToStringValue(double value) => value.toStringAsFixed(2).replaceAll('.', ',');
 
-String difDateStr(DateTime dateFrom, DateTime dateTo){
+double formatCurrencyDouble(double value) {
+  value = (value == null) ? 0 : value;
+  var vlDecimal = value.toStringAsFixed(2);
+  return double.parse(vlDecimal);
+}
+
+double CurrencyStringtoDouble(String value) {
+  String vlCurrency = value.replaceAll("R\$", '').replaceAll(' ', '').replaceAll('.', '').replaceAll(',', '.');
+
+  return formatCurrencyDouble(double.parse(vlCurrency.trim()));
+}
+
+String difDateSecondsStr(DateTime dateFrom, DateTime dateTo){
   int seconds = dateTo.difference(dateFrom).inSeconds;
   int minutes = 0;
   int hours = 0;
@@ -104,30 +117,27 @@ String difDateStr(DateTime dateFrom, DateTime dateTo){
 
 }
 
-showProgressDialog(BuildContext context, [String caption = 'Aguarde por favor...']){
-  AlertDialog alert=AlertDialog(
-    content: new Row(
-      children: [
-        CircularProgressIndicator(backgroundColor: GoopColors.red,  valueColor:AlwaysStoppedAnimation<Color>(GoopColors.neutralGreen)),
-        Container(margin: EdgeInsets.only(left: 3),child:
-        Text(caption,
-          style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal, color: Colors.brown),)
-        ),
-      ],),
-  );
-  showDialog(barrierDismissible: false,
-    context:context,
-    builder:(BuildContext context){
-      return alert;
-    },
-  );
-}
+Future<void> delayedSeconds(int _seconds) async => await Future.delayed(Duration(seconds: _seconds));
 
-Future<void>dialogProcess(Function function, BuildContext context, [String caption = 'Aguarde por favor...']) async {
-  showProgressDialog(context);
-  try {
-    await function();
-  }finally{
-    Navigator.pop(context);
+
+class CurrencyInputFormatter extends TextInputFormatter {
+
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+
+    if(newValue.selection.baseOffset == 0){
+      print(true);
+      return newValue;
+    }
+
+    double value = double.parse(newValue.text);
+
+    final formatter = NumberFormat.simpleCurrency(locale: "pt_Br");
+
+    String newText = formatter.format(value/100);
+
+    return newValue.copyWith(
+        text: newText,
+        selection: new TextSelection.collapsed(offset: newText.length));
   }
 }
+

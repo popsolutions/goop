@@ -44,6 +44,7 @@ class ServiceNotifier extends ChangeNotifier {
   Activity currentActivity;
   User currentUser;
   MissionModel currentMissionModel = new MissionModel();
+  bool isLoading = false;
 
   List<AlternativeModel> listAlternativeModel = <AlternativeModel>[];
   List<MissionModel> listMissionModel = <MissionModel>[];
