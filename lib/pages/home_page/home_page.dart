@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:goop/config/routes.dart';
 import 'package:goop/models/mission.dart';
 import 'package:goop/pages/components/goop_drawer.dart';
 import 'package:goop/utils/goop_colors.dart';
@@ -17,20 +18,49 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   LatLng userLocation;
+  bool _serviceEnabled;
 
-  LatLng _getCurrentLocation() {
+  Future _getCurrentLocation() async {
+    _serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!_serviceEnabled) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Sem acesso a localização!"),
+            content:
+                const Text('Para continuar a usar o app habilite seu GPS.'),
+            actions: [
+              TextButton(
+                child: Text('Ok'),
+                onPressed: () {
+                  Geolocator.openLocationSettings().then((value) {
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      Routes.home,
+                      (route) => false,
+                    );
+                  });
+                },
+              )
+            ],
+          );
+        },
+      );
+    }
     Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.best,
       forceAndroidLocationManager: true,
     ).then((Position position) {
       setState(() {
-        userLocation = LatLng(position.latitude, position.longitude);
+        userLocation = LatLng(
+          position.latitude,
+          position.longitude,
+        );
       });
     }).catchError((e) {
       print(e);
     });
-
-    return userLocation;
   }
 
   @override
