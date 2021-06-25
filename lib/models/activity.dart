@@ -53,7 +53,7 @@ class Activity {
         name = map['product_id'][1];
       }
     } else {
-      name = map['name'];
+      name = jsonGetStr(map, 'name');
     }
 
     if (!(map[mission_idField] is bool)) mission_id = map[mission_idField][0];

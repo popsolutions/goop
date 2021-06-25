@@ -15,7 +15,7 @@ String JSONToStringWrapQuotClear(dynamic JSON) {
 }
 
 String jsonGetStr(Map<String, dynamic> json, String key) {
-  if (json[key] is bool) return null;
+  if (json[key] is bool) return '';
 
   return json[key];
 }
@@ -140,4 +140,6 @@ class CurrencyInputFormatter extends TextInputFormatter {
         selection: new TextSelection.collapsed(offset: newText.length));
   }
 }
+
+printL(String value) => print(value);
 

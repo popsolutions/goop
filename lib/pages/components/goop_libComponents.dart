@@ -45,14 +45,15 @@ class goop_LibComponents {
   static Future<void> dialogProcess(BuildContext context, Function function, [String caption = 'Aguarde por favor...']) async {
     showProgressDialog(context);
     try {
-      await delayedSeconds(1);
+      // await delayedSeconds(1);
       try {
         await function();
-      } catch(e){
-        showMessage(context, 'Ops', e.toString());
+      } finally {
+        Navigator.pop(context);
       }
-    } finally {
-      Navigator.pop(context);
+    } catch (e) {
+      showMessage(context, 'Ops', e.toString());
+      throw '';
     }
   }
 
