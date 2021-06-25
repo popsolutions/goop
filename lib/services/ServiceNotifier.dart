@@ -6,6 +6,7 @@ import 'package:goop/models/measurementPhotoLines.dart';
 import 'package:goop/models/measurementPriceComparisonLines.dart';
 import 'package:goop/models/measurementQuizzlines.dart';
 import 'package:goop/models/mission.dart';
+import 'package:goop/models/models.dart';
 import 'package:goop/models/quizzLinesModel.dart';
 import 'package:goop/models/user.dart';
 import 'package:goop/services/ActivityService.dart';
@@ -14,6 +15,7 @@ import 'package:goop/services/GeoLocService.dart';
 import 'package:goop/services/MeasurementPhotoLinesService.dart';
 import 'package:goop/services/MeasurementQuizzlinesService.dart';
 import 'package:goop/utils/global.dart';
+import 'package:goop/utils/goop_images.dart';
 
 import '../config/http/odoo_api.dart';
 import '../pages/mission_page/mission_controller.dart';
@@ -44,10 +46,14 @@ class ServiceNotifier extends ChangeNotifier {
   Activity currentActivity;
   User currentUser;
   MissionModel currentMissionModel = new MissionModel();
+  MissionModelEstablishment currentMissionModelEstablishment;
   bool isLoading = false;
 
   List<AlternativeModel> listAlternativeModel = <AlternativeModel>[];
   List<MissionModel> listMissionModel = <MissionModel>[];
+  List<MissionModelEstablishment> listMissionModelEstablishment = <MissionModelEstablishment>[];
+
+  bool viewByEstablishment = false;
 
   final establishmentsController =
       EstablishmentController(EstablishmentService(Odoo()));
@@ -62,6 +68,7 @@ class ServiceNotifier extends ChangeNotifier {
   update() async {
     await listAlternativeModelLoad();
     listMissionModel = await missionService.getOpenMissions();
+    listMissionModelEstablishment = await missionService.getListMissionModelEstablishment(listMissionModel);
   }
 
   void listAlternativeModelLoad() async {
@@ -159,4 +166,7 @@ class ServiceNotifier extends ChangeNotifier {
     currentUser = user;
     globalcurrentUser = currentUser;
   }
+
+  List<MissionModel> getlistMissionModelDistinct = <MissionModel>[];
+
 }

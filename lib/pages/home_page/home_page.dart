@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:goop/config/routes.dart';
 import 'package:goop/models/mission.dart';
+import 'package:goop/models/models.dart';
 import 'package:goop/pages/components/goop_drawer.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
@@ -34,6 +35,7 @@ class _HomePageState extends State<HomePage> {
               TextButton(
                 child: Text('Ok'),
                 onPressed: () {
+
                   Geolocator.openLocationSettings().then((value) {
                     Navigator.pushNamedAndRemoveUntil(
                       context,
@@ -95,8 +97,8 @@ class _HomePageState extends State<HomePage> {
             return FlutterMap(
               // mapController: controller,
               options: MapOptions(
-                // center: LatLng(-23.553583043580996, -46.65204460659839),
-                center: userLocation,
+                center: LatLng(-23.553583043580996, -46.65204460659839),
+                // center: userLocation,
                 interactiveFlags:
                     InteractiveFlag.pinchZoom | InteractiveFlag.drag,
                 zoom: 13.0,
@@ -109,27 +111,32 @@ class _HomePageState extends State<HomePage> {
                 ),
                 MarkerLayerOptions(
                   markers: [
-                    for (MissionModel missionModel
-                        in _serviceNotifier.listMissionModel)
+                    for (MissionModelEstablishment missionModelEstablishment in _serviceNotifier.listMissionModelEstablishment)
                       Marker(
                         width: 40,
                         height: 80.0,
                         point: LatLng(
-                          missionModel.establishmentModel.latitude ?? 0,
-                          missionModel.establishmentModel.longitude ?? 0,
+                          missionModelEstablishment.establishmentModel.latitude ?? 0,
+                          missionModelEstablishment.establishmentModel.longitude ?? 0,
                         ),
-                        builder: (ctx) => Container(
-                          child: SvgPicture.asset(GoopImages.local),
+                        builder: (ctx) => GestureDetector(
+                          onTap: () {
+                            // if (missionModelEstablishment.listMissionModel.length == 0){
+                              _serviceNotifier.viewByEstablishment = true;
+                              _serviceNotifier.currentMissionModelEstablishment = missionModelEstablishment;
+
+                              Navigator.popAndPushNamed(
+                                context,
+                                Routes.mission_home,
+                              );
+                            // }
+
+                          },
+                          child: Container(
+                            child: SvgPicture.asset(GoopImages.local),
+                          ),
                         ),
                       ),
-                    Marker(
-                      width: 100,
-                      height: 100,
-                      point: userLocation,
-                      builder: (ctx) => Container(
-                        child: SvgPicture.asset(GoopImages.local),
-                      ),
-                    ),
                   ],
                 ),
               ],

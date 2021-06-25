@@ -4,13 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:goop/config/app/authentication_controller.dart';
 import 'package:goop/config/routes.dart';
+import 'package:goop/pages/components/StateGoop.dart';
 import 'package:goop/pages/components/goop_button.dart';
 import 'package:goop/services/ServiceNotifier.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
 import 'package:provider/provider.dart';
 
-class GoopDrawer extends StatelessWidget {
+class GoopDrawer extends StatefulWidget {
+  @override
+  _GoopDrawerState createState() => _GoopDrawerState();
+}
+
+class _GoopDrawerState extends StateGoop<GoopDrawer> {
   @override
   Widget build(BuildContext context) {
     ServiceNotifier serviceNotifier =
@@ -92,6 +98,7 @@ class GoopDrawer extends StatelessWidget {
                         child: GoopButton(
                           text: 'Missões',
                           action: () {
+                            serviceNotifier.viewByEstablishment = false;
                             Navigator.popAndPushNamed(
                               context,
                               Routes.mission_home,

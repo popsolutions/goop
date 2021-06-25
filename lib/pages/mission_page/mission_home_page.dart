@@ -21,6 +21,7 @@ class MissionHomePage extends StatefulWidget {
 }
 
 class _MissionHomePageState extends StateGoop<MissionHomePage> {
+  List<MissionModel> listMissionModel;
 
   @override
   void initState() {
@@ -30,7 +31,11 @@ class _MissionHomePageState extends StateGoop<MissionHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    List<MissionModel> listMissionModel = serviceNotifier.listMissionModel;
+
+    if (serviceNotifier.viewByEstablishment == true)
+      listMissionModel = serviceNotifier.currentMissionModelEstablishment.listMissionModel;
+    else
+      listMissionModel = serviceNotifier.listMissionModel;
 
     return Scaffold(
       appBar: AppBar(

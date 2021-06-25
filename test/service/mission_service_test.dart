@@ -10,6 +10,7 @@ import 'package:goop/models/measurementPhotoLines.dart';
 import 'package:goop/models/measurementPriceComparisonLines.dart';
 import 'package:goop/models/measurementQuizzlines.dart';
 import 'package:goop/models/mission.dart';
+import 'package:goop/models/models.dart';
 import 'package:goop/models/quizzLinesModel.dart';
 import 'package:goop/models/user.dart';
 import 'package:goop/services/AlternativeService.dart';
@@ -322,4 +323,14 @@ void main() {
             .insertAndGet(measurementPriceComparisonLinesModel);
     print(measurementPriceComparisonLinesModelInserted.toJson());
   });
+
+  test('MissionService.getListMissionModelEstablishment', () async {
+    await serviceNotifier.update();
+
+    List<MissionModelEstablishment> ListMissionModelEstablishment = await missionService.getListMissionModelEstablishment(serviceNotifier.listMissionModel);
+    ListMissionModelEstablishment[0].listMissionModel[0].name += '-x';
+    print(ListMissionModelEstablishment[0].listMissionModel[0].name);
+    print(serviceNotifier.listMissionModel[0].name);
+  });
+
 }

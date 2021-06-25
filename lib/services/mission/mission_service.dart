@@ -4,6 +4,7 @@ import 'package:goop/models/activity.dart';
 import 'package:goop/models/establishment.dart';
 import 'package:goop/models/measurement.dart';
 import 'package:goop/models/mission.dart';
+import 'package:goop/models/models.dart';
 import 'package:goop/models/user.dart';
 import 'package:goop/services/ActivityService.dart';
 import 'package:goop/services/GeoLocService.dart';
@@ -188,5 +189,25 @@ class MissionService {
 
       missionModel.measurementModel = measurementModelInserted;
     }
+  }
+
+  Future<List<MissionModelEstablishment>> getListMissionModelEstablishment(List<MissionModel> listMissionModel) async {
+    List<MissionModelEstablishment> listMissionModelEstablishment = <MissionModelEstablishment>[];
+
+    for (MissionModel missionModel in listMissionModel) {
+      MissionModelEstablishment missionModelEstablishment =
+      listMissionModelEstablishment.firstWhere((element) => element.establishmentModel.id == missionModel.establishmentModel.id, orElse: () => null);
+
+      if (missionModelEstablishment == null) {
+        missionModelEstablishment = MissionModelEstablishment();
+        missionModelEstablishment.establishmentModel = missionModel.establishmentModel;
+        listMissionModelEstablishment.add(missionModelEstablishment);
+      }
+
+      missionModelEstablishment.listMissionModel.add(missionModel);
+    }
+
+    return listMissionModelEstablishment;
+
   }
 }
