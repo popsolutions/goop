@@ -33,14 +33,9 @@ class _HomePageState extends State<HomePage> {
             actions: [
               TextButton(
                 child: Text('Ok'),
-                onPressed: () {
-                  Geolocator.openLocationSettings().then((value) {
-                    Navigator.pushNamedAndRemoveUntil(
-                      context,
-                      Routes.home,
-                      (route) => false,
-                    );
-                  });
+                onPressed: () async {
+                  await Geolocator.openLocationSettings();
+                  setState(() {});
                 },
               )
             ],
