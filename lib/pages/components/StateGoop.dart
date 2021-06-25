@@ -1,10 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:goop/services/ServiceNotifier.dart';
 import 'package:goop/pages/components/goop_libComponents.dart';
-import 'package:goop/utils/goop_colors.dart';
 import 'package:provider/provider.dart';
 
 abstract class StateGoop<T extends StatefulWidget> extends State<T> {
@@ -12,10 +9,10 @@ abstract class StateGoop<T extends StatefulWidget> extends State<T> {
   ServiceNotifier serviceNotifier;
   double mediaQuery;
 
-
   @override
   void didChangeDependencies() {
-    serviceNotifier = Provider.of<ServiceNotifier>(context, listen: listenServiceNotifier);
+    serviceNotifier =
+        Provider.of<ServiceNotifier>(context, listen: listenServiceNotifier);
     mediaQuery = MediaQuery.of(context).size.width;
   }
 
@@ -23,7 +20,8 @@ abstract class StateGoop<T extends StatefulWidget> extends State<T> {
     goop_LibComponents.showProgressDialog(context, caption);
   }
 
-  Future<void> dialogProcess(Function function, [String caption = 'Aguarde por favor...']) async {
+  Future<void> dialogProcess(Function function,
+      [String caption = 'Aguarde por favor...']) async {
     await goop_LibComponents.dialogProcess(context, function, caption);
   }
 
@@ -36,12 +34,11 @@ abstract class StateGoop<T extends StatefulWidget> extends State<T> {
   }
 
   Padding paddingZ() => Padding(padding: EdgeInsets.only(top: 0));
-  Padding paddingT(double _top) =>  Padding(padding: EdgeInsets.only(top: _top));
+  Padding paddingT(double _top) => Padding(padding: EdgeInsets.only(top: _top));
 
   Future<String> getPhotoBase64() async {
     return await goop_LibComponents.getPhotoBase64(context, mediaQuery);
   }
 
   setState_() => setState(() {});
-
 }

@@ -15,10 +15,7 @@ import 'package:goop/services/GeoLocService.dart';
 import 'package:goop/services/MeasurementPhotoLinesService.dart';
 import 'package:goop/services/MeasurementQuizzlinesService.dart';
 import 'package:goop/utils/global.dart';
-import 'package:goop/utils/goop_images.dart';
-
 import '../config/http/odoo_api.dart';
-import '../pages/mission_page/mission_controller.dart';
 import 'establishment/establishment_controller.dart';
 import 'establishment/establishment_service.dart';
 import 'measurementPriceComparisonLinesService.dart';
@@ -51,7 +48,8 @@ class ServiceNotifier extends ChangeNotifier {
 
   List<AlternativeModel> listAlternativeModel = <AlternativeModel>[];
   List<MissionModel> listMissionModel = <MissionModel>[];
-  List<MissionModelEstablishment> listMissionModelEstablishment = <MissionModelEstablishment>[];
+  List<MissionModelEstablishment> listMissionModelEstablishment =
+      <MissionModelEstablishment>[];
 
   bool viewByEstablishment = false;
 
@@ -68,7 +66,8 @@ class ServiceNotifier extends ChangeNotifier {
   update() async {
     await listAlternativeModelLoad();
     listMissionModel = await missionService.getOpenMissions();
-    listMissionModelEstablishment = await missionService.getListMissionModelEstablishment(listMissionModel);
+    listMissionModelEstablishment =
+        await missionService.getListMissionModelEstablishment(listMissionModel);
   }
 
   void listAlternativeModelLoad() async {
@@ -168,5 +167,4 @@ class ServiceNotifier extends ChangeNotifier {
   }
 
   List<MissionModel> getlistMissionModelDistinct = <MissionModel>[];
-
 }

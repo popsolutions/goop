@@ -4,8 +4,6 @@ import 'package:goop/services/ServiceNotifier.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:provider/provider.dart';
 
-import 'goop_libComponents.dart';
-
 class GoopButton extends StatefulWidget {
   final String text;
   final Function action;
@@ -15,16 +13,16 @@ class GoopButton extends StatefulWidget {
   final bool isLoading;
   final bool showCircularProgress;
 
-  const GoopButton({
-    Key key,
-    @required this.text,
-    this.action,
-    this.buttonColor = GoopColors.red,
-    this.textColor = GoopColors.neutralGrey,
-    this.borderColor = Colors.transparent,
-    this.isLoading = false,
-    this.showCircularProgress = false
-  }) : super(key: key);
+  const GoopButton(
+      {Key key,
+      @required this.text,
+      this.action,
+      this.buttonColor = GoopColors.red,
+      this.textColor = GoopColors.neutralGrey,
+      this.borderColor = Colors.transparent,
+      this.isLoading = false,
+      this.showCircularProgress = false})
+      : super(key: key);
 
   @override
   _GoopButtonState createState() => _GoopButtonState();
@@ -40,7 +38,8 @@ class _GoopButtonState extends StateGoop<GoopButton> {
       child: Container(
         margin: EdgeInsets.only(top: 15),
         width: MediaQuery.of(context).size.width * .6,
-        child: Consumer<ServiceNotifier>(builder: (BuildContext context, ServiceNotifier value, Widget child) {
+        child: Consumer<ServiceNotifier>(builder:
+            (BuildContext context, ServiceNotifier value, Widget child) {
           return ElevatedButton(
             style: ElevatedButton.styleFrom(
               padding: EdgeInsets.all(15),
@@ -51,18 +50,18 @@ class _GoopButtonState extends StateGoop<GoopButton> {
               ),
             ),
             child: widget.isLoading
-              ? CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation(Colors.white),
-                )
-              : Text(
-                  widget.text,
-                  style: TextStyle(
-                    color: widget.textColor,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                ? CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation(Colors.white),
+                  )
+                : Text(
+                    widget.text,
+                    style: TextStyle(
+                      color: widget.textColor,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-          onPressed: () async {
+            onPressed: () async {
               if (widget.showCircularProgress == true) {
                 await dialogProcess(() async {
                   await widget.action();
@@ -70,8 +69,7 @@ class _GoopButtonState extends StateGoop<GoopButton> {
               } else {
                 widget.action();
               }
-            }
-            ,
+            },
           );
         }),
       ),

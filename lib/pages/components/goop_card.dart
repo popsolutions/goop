@@ -2,12 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:goop/config/routes.dart';
 import 'package:goop/models/mission.dart';
-import 'package:goop/models/mission_dto.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
-import 'package:goop/services/ServiceNotifier.dart';
-import 'package:goop/utils/utils.dart';
-import 'package:provider/provider.dart';
 
 import 'StateGoop.dart';
 
@@ -39,7 +35,8 @@ class _GoopCardState extends StateGoop<GoopCard> {
           ? null
           : () async {
               await dialogProcess(() async {
-                await serviceNotifier.setcurrentMissionModel(widget.currentMissionModel);
+                await serviceNotifier
+                    .setcurrentMissionModel(widget.currentMissionModel);
               });
 
               Navigator.pushNamed(

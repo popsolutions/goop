@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:goop/utils/utils.dart';
 
@@ -32,14 +29,18 @@ main() {
       DateTime d1 = DateTime.parse(value1);
       DateTime d2 = DateTime.parse(value2);
 
-      print(d1.toString() + ' - ' + d2.toString() + ' : ' + d2
-          .difference(d1)
-          .inHours
-          .toString() + ' - Horas');
-      print(d1.toString() + ' - ' + d2.toString() + ' : ' + d2
-          .difference(d1)
-          .inSeconds
-          .toString() + ' - Segundos');
+      print(d1.toString() +
+          ' - ' +
+          d2.toString() +
+          ' : ' +
+          d2.difference(d1).inHours.toString() +
+          ' - Horas');
+      print(d1.toString() +
+          ' - ' +
+          d2.toString() +
+          ' : ' +
+          d2.difference(d1).inSeconds.toString() +
+          ' - Segundos');
       print('');
     }
 
@@ -67,9 +68,7 @@ main() {
         }
       }
 
-      int seconds = d2
-          .difference(d1)
-          .inSeconds;
+      int seconds = d2.difference(d1).inSeconds;
       int minutes = 0;
       int hours = 0;
       int days = 0;
@@ -113,4 +112,3 @@ main() {
     pDif('2021-06-21 12:00:00.000', '2021-06-21 11:00:00.000');
   });
 }
-

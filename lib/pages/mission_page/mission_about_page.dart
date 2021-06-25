@@ -1,15 +1,12 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goop/config/routes.dart';
 import 'package:goop/models/mission.dart';
-import 'package:goop/models/mission_dto.dart';
 import 'package:goop/pages/components/StateGoop.dart';
 import 'package:goop/pages/components/goop_button.dart';
 import 'package:goop/pages/components/goop_mission_body.dart';
 import 'package:goop/services/ServiceNotifier.dart';
-import 'package:goop/utils/utils.dart';
 import 'package:provider/provider.dart';
 import '../components/goop_back.dart';
 import 'package:goop/utils/goop_images.dart';
@@ -44,6 +41,7 @@ class _MissionAboutPageState extends StateGoop<MissionAboutPage> {
 
   @override
   void dispose() {
+    super.dispose();
     _isRunning = false;
   }
 
@@ -61,15 +59,17 @@ class _MissionAboutPageState extends StateGoop<MissionAboutPage> {
   @override
   Widget build(BuildContext context) {
     final TextStyle theme = Theme.of(context).textTheme.headline2;
-    currentMissionModel = ModalRoute.of(context).settings.arguments;//t.
+    currentMissionModel = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 80,
         automaticallyImplyLeading: false,
+        centerTitle: true,
         leading: GoopBack(),
         title: Container(
-          height: currentMissionModel.status == MissionStatus.Ordered ? 40 : 60,
-          child: SvgPicture.asset(
+          height: currentMissionModel.status == MissionStatus.Closed ? 40 : 60,
+          child: Image.asset(
             currentMissionModel.status == MissionStatus.Ordered
                 ? GoopImages.mission_about
                 : GoopImages.mission_in_progress,
@@ -83,7 +83,8 @@ class _MissionAboutPageState extends StateGoop<MissionAboutPage> {
             physics: BouncingScrollPhysics(),
             children: [
               GoopMissionBody(currentMissionModel_: currentMissionModel),
-              Consumer<ServiceNotifier>(builder: (BuildContext context, ServiceNotifier value, Widget child) {
+              Consumer<ServiceNotifier>(builder:
+                  (BuildContext context, ServiceNotifier value, Widget child) {
                 return situacional(
                   ifCompleted: Text(
                     currentMissionModel.timeToCompletMission,
@@ -132,7 +133,8 @@ class _MissionAboutPageState extends StateGoop<MissionAboutPage> {
                 ifOrdered: Container(),
               ),
               SizedBox(height: 20),
-              Consumer<ServiceNotifier>(builder: (BuildContext context, ServiceNotifier value, Widget child) {
+              Consumer<ServiceNotifier>(builder:
+                  (BuildContext context, ServiceNotifier value, Widget child) {
                 return situacional(
                   ifCompleted: Container(
                       margin: EdgeInsets.only(bottom: 30),
@@ -141,7 +143,8 @@ class _MissionAboutPageState extends StateGoop<MissionAboutPage> {
                               text: 'Iniciar',
                               showCircularProgress: true,
                               action: () async {
-                                await serviceNotifier.createMeasurementModelIfNotExists();
+                                await serviceNotifier
+                                    .createMeasurementModelIfNotExists();
                                 serviceNotifier.notifyListeners();
                               },
                             )
