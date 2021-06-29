@@ -22,34 +22,36 @@ class _MissionPriceComparisionPageState
     extends StateGoop<MissionPriceComparisionPage> {
   ServiceNotifier serviceNotifier;
   @override
-  String archive;
+  StringClass archive = StringClass();
   final _priceController = TextEditingController();
   double price() => CurrencyStringtoDouble(_priceController.text);
+  bool editing() => !serviceNotifier.currentActivity.isChecked;
+
+  Activity currentActivity;
 
   Future<void> save(BuildContext context) async {
+    throwIfDoubleIsZero(price(), 'Informe o preço');
+    throwIf(archive.isNullOrEmpty(), 'Retire uma fotografia');
+
     await serviceNotifier.insert_Measurement_PriceComparisonLinesModel(
-        price(), archive);
+        price(), archive.str);
     Navigator.pop(context);
   }
 
-  bool editing() => !serviceNotifier.currentActivity.isChecked;
+  @override
+  void didChangeDependencies() {
+    if (didChangeDependenciesLoad) return;
+    super.didChangeDependencies();
+
+    currentActivity = serviceNotifier.currentActivity;
+
+    if (currentActivity.measurementPriceComparisonLinesModel != null)  {
+        archive.str = currentActivity.measurementPriceComparisonLinesModel.photo;
+        _priceController.text = currentActivity.measurementPriceComparisonLinesModel.price.toString();
+    }
+  }
 
   Widget build(BuildContext context) {
-    final TextStyle theme = Theme.of(context).textTheme.headline2;
-    //final MissionDto missionDto = ModalRoute.of(context).settings.arguments;
-    serviceNotifier = Provider.of<ServiceNotifier>(context, listen: false);
-    Activity currentActivity = serviceNotifier.currentActivity;
-
-    if ((currentActivity.measurementPriceComparisonLinesModel != null) &&
-        (archive == null)) {
-      setState(() {
-        archive = currentActivity.measurementPriceComparisonLinesModel.photo;
-        _priceController.text = currentActivity
-            .measurementPriceComparisonLinesModel.price
-            .toString();
-      });
-    }
-
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -102,17 +104,7 @@ class _MissionPriceComparisionPageState
                       border: false,
                     ),
                     paddingT(20),
-                    circularImageBase64(archive, onTap: () async {
-                          if (!editing()) return null;
-
-                          String fileBase64 =  await getPhotoBase64();
-
-                          if (fileBase64 != null)
-                            archive = fileBase64;
-
-                          setState(() {});
-                    })
-
+                    imagePhotoBase64(archive, editing: editing()),
                   ],
                 ),
                 (serviceNotifier.currentActivity.isChecked)

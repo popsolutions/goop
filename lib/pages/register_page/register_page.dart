@@ -38,11 +38,7 @@ class _RegisterPageState extends StateGoop<RegisterPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              circularImageBase64(userProfile.image, onTap: () async {
-                String fileBase64 = await getPhotoBase64();
-                if (fileBase64 != null) userProfile.image = fileBase64;
-                setState_();
-              }),
+              imagePhotoBase64(userProfile.imageClass),
               GoopFormRegister(userProfile),
               RadioListTile(
                 activeColor: GoopColors.green,

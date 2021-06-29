@@ -72,6 +72,9 @@ double formatCurrencyDouble(double value) {
 }
 
 double CurrencyStringtoDouble(String value) {
+  if ((value??'') == '')
+    value = '0';
+
   String vlCurrency = value
       .replaceAll("R\$", '')
       .replaceAll(' ', '')
@@ -144,3 +147,11 @@ class CurrencyInputFormatter extends TextInputFormatter {
 }
 
 printL(String value) => print(value);
+
+class StringClass{
+  String str;
+
+  StringClass([this.str = null]);
+
+  bool isNullOrEmpty() => (str ?? '') == '';
+}

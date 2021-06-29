@@ -80,7 +80,7 @@ class UserServiceImpl {
         email: userProfile.email,
         function: userProfile.function,
         gender: userProfile.gender,
-        image: userProfile.image,
+        image: userProfile.imageClass.str,
         missionsCount: userProfile.missionsCount,
         mobile: userProfile.mobile,
         signupUrl: userProfile.signupUrl,
