@@ -5,10 +5,8 @@ import 'package:goop/models/quizzLinesModel.dart';
 import 'package:goop/pages/components/StateGoop.dart';
 import 'package:goop/pages/components/goop_back.dart';
 import 'package:goop/pages/components/goop_button.dart';
-import 'package:goop/services/ServiceNotifier.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
-import 'package:provider/provider.dart';
 
 class MissionQuestionPage extends StatefulWidget {
   @override
@@ -19,22 +17,15 @@ class _MissionQuestionPageState extends StateGoop<MissionQuestionPage> {
   int value;
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-  @override
   Widget build(BuildContext context) {
-    QuizzLinesModel quizzLinesModel;
     Activity currentActivity = serviceNotifier.currentActivity;
     final TextStyle theme = Theme.of(context).textTheme.headline2;
 
-    if ((value == null) && (currentActivity.isChecked ==  true))
+    if ((value == null) && (currentActivity.isChecked == true))
       value = currentActivity.listQuizzLinesModelIndexSelected();
 
     Future<void> selectQuestion(QuizzLinesModel quizzLinesModel) async {
-        await serviceNotifier
-            .insert_Measurement_quizzlinesModel(quizzLinesModel);
+      await serviceNotifier.insert_Measurement_quizzlinesModel(quizzLinesModel);
     }
 
     return Scaffold(
@@ -85,8 +76,7 @@ class _MissionQuestionPageState extends StateGoop<MissionQuestionPage> {
                           value: index,
                           groupValue: value,
                           onChanged: (int ind) {
-                            if (currentActivity.isChecked)
-                              return;
+                            if (currentActivity.isChecked) return;
 
                             setState(() {
                               value = ind;
@@ -104,15 +94,17 @@ class _MissionQuestionPageState extends StateGoop<MissionQuestionPage> {
                         child: GoopButton(
                           text: 'Salvar',
                           isLoading: serviceNotifier.isLoading,
-
                           action: () async {
                             if (value == null) {
-                              showSnackBar('Selecione uma alternativa!', GoopColors.red);
+                              showSnackBar(
+                                  'Selecione uma alternativa!', GoopColors.red);
                             } else {
                               await dialogProcess(() async {
-                                await selectQuestion(currentActivity.listQuizzLinesModel[value]);
+                                await selectQuestion(
+                                    currentActivity.listQuizzLinesModel[value]);
                               });
-                              showSnackBar( 'Pergunta Registrada! 😉', GoopColors.red);
+                              showSnackBar(
+                                  'Pergunta Registrada! 😉', GoopColors.red);
                               Navigator.pop(context);
                             }
                           },

@@ -6,13 +6,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:goop/config/routes.dart';
 import 'package:goop/models/activity.dart';
 import 'package:goop/models/mission.dart';
-import 'package:goop/models/mission_dto.dart';
 import 'package:goop/pages/components/StateGoop.dart';
 import 'package:goop/pages/settings_page/preview_page.dart';
 import 'package:goop/services/ServiceNotifier.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
-import 'package:goop/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 class GoopMissionBody extends StatefulWidget {
@@ -39,7 +37,8 @@ class _GoopMissionBodyState extends StateGoop<GoopMissionBody> {
       );
 
       await dialogProcess(() async {
-        await serviceNotifier.insert_Measurement_photolines(base64Encode(file.readAsBytesSync()));
+        await serviceNotifier.insert_Measurement_photolines(
+            base64Encode(file.readAsBytesSync()));
       });
 
       Navigator.pop(context);
@@ -93,8 +92,8 @@ class _GoopMissionBodyState extends StateGoop<GoopMissionBody> {
           width: MediaQuery.of(context).size.width * .7,
           child: Divider(color: Colors.deepPurple),
         ),
-        Consumer<ServiceNotifier>(builder: (BuildContext context, ServiceNotifier value, Widget child) {
-
+        Consumer<ServiceNotifier>(builder:
+            (BuildContext context, ServiceNotifier value, Widget child) {
           return Container(
             width: MediaQuery.of(context).size.width * .7,
             child: ListView.builder(
@@ -112,7 +111,9 @@ class _GoopMissionBodyState extends StateGoop<GoopMissionBody> {
                     (currentActivity.isChecked == true)
                         ? Icons.star
                         : Icons.star_border,
-                    color: currentMissionModel.inProgress ? Colors.deepPurple : Colors.grey[400],
+                    color: currentMissionModel.inProgress
+                        ? Colors.deepPurple
+                        : Colors.grey[400],
                   ),
                   title: Text(
                     currentMissionModel.listActivity[index].name,
@@ -126,7 +127,8 @@ class _GoopMissionBodyState extends StateGoop<GoopMissionBody> {
                   ),
                   onTap: () async {
                     await dialogProcess(() async {
-                      await serviceNotifier.setcurrentActivity(currentMissionModel.listActivity[index]);
+                      await serviceNotifier.setcurrentActivity(
+                          currentMissionModel.listActivity[index]);
                     });
 
                     if (serviceNotifier.currentActivity.isQuizz()) {
@@ -135,7 +137,8 @@ class _GoopMissionBodyState extends StateGoop<GoopMissionBody> {
                         Routes.mission_question,
                         arguments: currentMissionModel,
                       );
-                    } else if (serviceNotifier.currentActivity.isPriceComparison()) {
+                    } else if (serviceNotifier.currentActivity
+                        .isPriceComparison()) {
                       Navigator.pushNamed(
                         context,
                         Routes.mission_price_comparison,
@@ -165,7 +168,7 @@ class _GoopMissionBodyState extends StateGoop<GoopMissionBody> {
               },
             ),
           );
-  }),
+        }),
         Text(
           'Prazo para cumprir a missão:',
           style: theme,

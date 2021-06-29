@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:goop/config/routes.dart';
-import 'package:goop/models/mission.dart';
 import 'package:goop/models/models.dart';
 import 'package:goop/pages/components/goop_drawer.dart';
 import 'package:goop/utils/goop_colors.dart';
@@ -34,15 +33,9 @@ class _HomePageState extends State<HomePage> {
             actions: [
               TextButton(
                 child: Text('Ok'),
-                onPressed: () {
-
-                  Geolocator.openLocationSettings().then((value) {
-                    Navigator.pushNamedAndRemoveUntil(
-                      context,
-                      Routes.home,
-                      (route) => false,
-                    );
-                  });
+                onPressed: () async {
+                  await Geolocator.openLocationSettings();
+                  setState(() {});
                 },
               )
             ],
@@ -50,6 +43,7 @@ class _HomePageState extends State<HomePage> {
         },
       );
     }
+
     Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.best,
       forceAndroidLocationManager: true,
@@ -73,8 +67,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final serviceNotifier = Provider.of<ServiceNotifier>(context, listen: false);
-    // final controller = MapController();
+    final serviceNotifier =
+        Provider.of<ServiceNotifier>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
@@ -91,7 +85,8 @@ class _HomePageState extends State<HomePage> {
       body: FutureBuilder(
         future: serviceNotifier.init(),
         builder: (context, snapshot) {
-          final _serviceNotifier = Provider.of<ServiceNotifier>(context, listen: false);
+          final _serviceNotifier =
+              Provider.of<ServiceNotifier>(context, listen: false);
 
           if (snapshot.connectionState == ConnectionState.done) {
             return FlutterMap(
@@ -111,26 +106,31 @@ class _HomePageState extends State<HomePage> {
                 ),
                 MarkerLayerOptions(
                   markers: [
-                    for (MissionModelEstablishment missionModelEstablishment in _serviceNotifier.listMissionModelEstablishment)
+                    for (MissionModelEstablishment missionModelEstablishment
+                        in _serviceNotifier.listMissionModelEstablishment)
                       Marker(
                         width: 40,
                         height: 80.0,
                         point: LatLng(
-                          missionModelEstablishment.establishmentModel.latitude ?? 0,
-                          missionModelEstablishment.establishmentModel.longitude ?? 0,
+                          missionModelEstablishment
+                                  .establishmentModel.latitude ??
+                              0,
+                          missionModelEstablishment
+                                  .establishmentModel.longitude ??
+                              0,
                         ),
                         builder: (ctx) => GestureDetector(
                           onTap: () {
                             // if (missionModelEstablishment.listMissionModel.length == 0){
-                              _serviceNotifier.viewByEstablishment = true;
-                              _serviceNotifier.currentMissionModelEstablishment = missionModelEstablishment;
+                            _serviceNotifier.viewByEstablishment = true;
+                            _serviceNotifier.currentMissionModelEstablishment =
+                                missionModelEstablishment;
 
-                              Navigator.popAndPushNamed(
-                                context,
-                                Routes.mission_home,
-                              );
+                            Navigator.popAndPushNamed(
+                              context,
+                              Routes.mission_home,
+                            );
                             // }
-
                           },
                           child: Container(
                             child: SvgPicture.asset(GoopImages.local),

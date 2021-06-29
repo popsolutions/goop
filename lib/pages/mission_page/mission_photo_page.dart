@@ -7,6 +7,7 @@ import 'package:goop/services/ServiceNotifier.dart';
 import 'package:goop/utils/goop_images.dart';
 import 'package:provider/provider.dart';
 
+// ignore: camel_case_types
 class Mission_photo_page extends StatefulWidget {
   @override
   _Mission_photo_pageState createState() => _Mission_photo_pageState();
@@ -22,7 +23,8 @@ class _Mission_photo_pageState extends State<Mission_photo_page> {
     serviceNotifier = Provider.of<ServiceNotifier>(context, listen: false);
     Activity currentActivity = serviceNotifier.currentActivity;
 
-    if ((currentActivity.measurementPhotoLinesModel != null) && (archive == null)) {
+    if ((currentActivity.measurementPhotoLinesModel != null) &&
+        (archive == null)) {
       setState(() {
         archive = currentActivity.measurementPhotoLinesModel.photo;
       });

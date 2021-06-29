@@ -1,7 +1,6 @@
 import 'package:goop/models/activity.dart';
 import 'package:goop/models/establishment.dart';
 import 'package:goop/models/measurement.dart';
-import 'package:goop/models/user_profile.dart';
 import 'package:goop/utils/utils.dart';
 
 class MissionModel {

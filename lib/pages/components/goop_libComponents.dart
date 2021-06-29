@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:camera_camera/camera_camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,13 +7,10 @@ import 'package:flutter/services.dart';
 import 'package:goop/pages/settings_page/preview_page.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
-import 'package:goop/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_svg/svg.dart';
 
-
 class goop_LibComponents {
-
   static Widget paddingZ() {
     return Padding(padding: EdgeInsets.only(top: 0));
   }
@@ -23,18 +19,28 @@ class goop_LibComponents {
     return Padding(padding: EdgeInsets.only(top: _top));
   }
 
-  static showProgressDialog(BuildContext context, [String caption = 'Aguarde por favor...']) {
+  static showProgressDialog(BuildContext context,
+      [String caption = 'Aguarde por favor...']) {
     AlertDialog alert = AlertDialog(
       content: new Row(
         children: [
-          CircularProgressIndicator(backgroundColor: GoopColors.red, valueColor: AlwaysStoppedAnimation<Color>(Colors.white)),
-          Container(margin: EdgeInsets.only(left: 3), child:
-          Text(caption,
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal, color: Colors.brown),)
-          ),
-        ],),
+          CircularProgressIndicator(
+              backgroundColor: GoopColors.red,
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.white)),
+          Container(
+              margin: EdgeInsets.only(left: 3),
+              child: Text(
+                caption,
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.brown),
+              )),
+        ],
+      ),
     );
-    showDialog(barrierDismissible: false,
+    showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
         return alert;
@@ -42,7 +48,8 @@ class goop_LibComponents {
     );
   }
 
-  static Future<void> dialogProcess(BuildContext context, Function function, [String caption = 'Aguarde por favor...']) async {
+  static Future<void> dialogProcess(BuildContext context, Function function,
+      [String caption = 'Aguarde por favor...']) async {
     showProgressDialog(context);
     try {
       // await delayedSeconds(1);
@@ -82,7 +89,7 @@ class goop_LibComponents {
               ),
             ),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
@@ -122,7 +129,7 @@ class goop_LibComponents {
               ),
             ),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
@@ -141,7 +148,9 @@ class goop_LibComponents {
     }
   }
 
-  static showSnackBar(BuildContext context, String _text, Color _backgroundColor, [int _milliseconds = 2000]) {
+  static showSnackBar(
+      BuildContext context, String _text, Color _backgroundColor,
+      [int _milliseconds = 2000]) {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -161,7 +170,8 @@ class goop_LibComponents {
     );
   }
 
-  static Widget getInputTextFormField(String _label, TextEditingController _controller,
+  static Widget getInputTextFormField(
+      String _label, TextEditingController _controller,
       {int maxLength,
       bool required = true,
       bool readOnly = false,
@@ -172,15 +182,17 @@ class goop_LibComponents {
       Function onTap,
       bool border = false,
       Color borderColor = Colors.teal,
-      TextAlign textAlign = TextAlign.start
-      }) {
+      TextAlign textAlign = TextAlign.start}) {
     return TextFormField(
       autofocus: autoFocus,
       readOnly: readOnly,
       keyboardType: keyboardType,
       inputFormatters: inputFormatters,
       decoration: InputDecoration(
-          border: (border) ? new OutlineInputBorder(borderSide: new BorderSide(color: borderColor)) : null,
+          border: (border)
+              ? new OutlineInputBorder(
+                  borderSide: new BorderSide(color: borderColor))
+              : null,
           labelText: _label,
           suffixIcon: IconButton(
             onPressed: () => _controller.clear(),
@@ -193,7 +205,8 @@ class goop_LibComponents {
       onTap: onTap,
       onFieldSubmitted: (v) {},
       validator: (value) {
-        if ((required) && (value.isEmpty)) return "Campo obrigatório, por favor informe o valor solicitado.";
+        if ((required) && (value.isEmpty))
+          return "Campo obrigatório, por favor informe o valor solicitado.";
         return null;
       },
     );
@@ -218,19 +231,18 @@ class goop_LibComponents {
     final picker = ImagePicker();
     String fileBase64;
 
-
     final PickedFile file = await picker.getImage(source: ImageSource.gallery);
     File fileTmp = File(file.path);
 
     if (file != null) {
-      fileBase64= base64Encode(fileTmp.readAsBytesSync());
+      fileBase64 = base64Encode(fileTmp.readAsBytesSync());
     }
 
     return fileBase64;
   }
 
-  static Future<String> getPhotoBase64(BuildContext context, double mediaQuery) async {
-
+  static Future<String> getPhotoBase64(
+      BuildContext context, double mediaQuery) async {
     String fileBase64;
 
     await showModalBottomSheet(
@@ -268,14 +280,13 @@ class goop_LibComponents {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) =>
-                          CameraCamera(
-                            enableZoom: true,
-                            onFile: (file) async {
-                              fileBase64 = await showPreview(context, file);
-                              Navigator.pop(context);
-                            },
-                          ),
+                      builder: (_) => CameraCamera(
+                        enableZoom: true,
+                        onFile: (file) async {
+                          fileBase64 = await showPreview(context, file);
+                          Navigator.pop(context);
+                        },
+                      ),
                     ),
                   );
                 },
@@ -333,4 +344,3 @@ class goop_LibComponents {
 
   }
 
-}
