@@ -148,10 +148,10 @@ class CurrencyInputFormatter extends TextInputFormatter {
 
 printL(String value) => print(value);
 
-class StringClass{
-  String str;
+class ImageGoop{
+  String imageBase64;
 
-  StringClass([this.str = null]);
+  ImageGoop([this.imageBase64 = null]);
 
-  bool isNullOrEmpty() => (str ?? '') == '';
+  bool isNullOrEmpty() => (imageBase64 ?? '') == '';
 }

@@ -3,7 +3,7 @@ import 'package:goop/utils/utils.dart';
 class UserProfile {
   String name;
   // String image;
-  StringClass imageClass = StringClass();
+  ImageGoop imageClass = ImageGoop();
   String phone;
   String birthdate;
   String function;
@@ -47,7 +47,7 @@ class UserProfile {
   UserProfile.fromJson(Map<String, dynamic> json) {
     name = valueOrNull(json['name']);
     phone = valueOrNull(json['phone']);
-    imageClass.str = valueOrNull(json['image']);
+    imageClass.imageBase64 = valueOrNull(json['image']);
     birthdate = valueOrNull(json['birthdate']);
     function = valueOrNull(json['function']);
     cnpjCpf = valueOrNull(json['cnpj_cpf']);
@@ -68,7 +68,7 @@ class UserProfile {
   Map<String, dynamic> toJson() => {
     "login": this.login,
     "name": this.name,
-    "image": this.imageClass.str,
+    "image": this.imageClass.imageBase64,
     "phone": this.phone,
     "birthdate": this.birthdate,
     "function": this.function,

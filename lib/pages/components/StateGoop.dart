@@ -53,9 +53,9 @@ abstract class StateGoop<T extends StatefulWidget> extends State<T> {
     return await goop_LibComponents.getPhotoBase64(context, mediaQuery);
   }
 
-  Widget imagePhotoBase64(StringClass imageBase64, {Function onTap, String defaultImage = GoopImages.avatar, bool editing = true}) {
+  Widget imagePhotoBase64(ImageGoop imageBase64, {Function onTap, String defaultImage = GoopImages.avatar, bool editing = true}) {
     return goop_LibComponents.imagePhotoBase64(
-        imageBase64.str,
+        imageBase64.imageBase64,
         (onTap != null)
             ? onTap
             : () async {
@@ -64,7 +64,7 @@ abstract class StateGoop<T extends StatefulWidget> extends State<T> {
                 String fileBase64 = await getPhotoBase64();
 
                 if (fileBase64 != null)
-                  imageBase64.str = fileBase64;
+                  imageBase64.imageBase64 = fileBase64;
 
                 setState_();
               });

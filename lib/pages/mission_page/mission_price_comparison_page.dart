@@ -22,7 +22,7 @@ class _MissionPriceComparisionPageState
     extends StateGoop<MissionPriceComparisionPage> {
   ServiceNotifier serviceNotifier;
   @override
-  StringClass archive = StringClass();
+  ImageGoop archive = ImageGoop();
   final _priceController = TextEditingController();
   double price() => CurrencyStringtoDouble(_priceController.text);
   bool editing() => !serviceNotifier.currentActivity.isChecked;
@@ -34,7 +34,7 @@ class _MissionPriceComparisionPageState
     throwIf(archive.isNullOrEmpty(), 'Retire uma fotografia');
 
     await serviceNotifier.insert_Measurement_PriceComparisonLinesModel(
-        price(), archive.str);
+        price(), archive.imageBase64);
     Navigator.pop(context);
   }
 
@@ -46,7 +46,7 @@ class _MissionPriceComparisionPageState
     currentActivity = serviceNotifier.currentActivity;
 
     if (currentActivity.measurementPriceComparisonLinesModel != null)  {
-        archive.str = currentActivity.measurementPriceComparisonLinesModel.photo;
+        archive.imageBase64 = currentActivity.measurementPriceComparisonLinesModel.photo;
         _priceController.text = currentActivity.measurementPriceComparisonLinesModel.price.toString();
     }
   }

@@ -14,6 +14,7 @@ import 'package:goop/services/ServiceNotifier.dart';
 import 'package:goop/services/login/user_service.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
+import 'package:goop/utils/utils.dart';
 import 'package:goop/utils/validators.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -30,7 +31,7 @@ class _SettingsPageState extends StateGoop<SettingsPage> {
   final _controller = SettingsController(UserServiceImpl(Odoo()));
   ReactionDisposer _reactionDisposer;
   final picker = ImagePicker();
-  String archive;
+  ImageGoop archive = ImageGoop();
 
   final cpfFormatter = MaskTextInputFormatter(
     mask: '000.000.000-00',
@@ -66,7 +67,7 @@ class _SettingsPageState extends StateGoop<SettingsPage> {
       _controller.phone = user.phone ?? '';
       _controller.email = user.email ?? '';
       _controller.imageProfile = user.image;
-      archive = user.image;
+      archive.imageBase64 = user.image;
     }
   }
 
@@ -100,7 +101,7 @@ class _SettingsPageState extends StateGoop<SettingsPage> {
 
   submit() {
     setState(() {
-      _controller.imageProfile = archive;
+      _controller.imageProfile = archive.imageBase64;
     });
     _controller.submit();
   }
@@ -112,9 +113,9 @@ class _SettingsPageState extends StateGoop<SettingsPage> {
         serviceNotifier.authenticationController;
     final user = authenticationController.currentUser;
 
-    if (archive != null) {
+    if (!archive.isNullOrEmpty()) {
       setState(() {
-        user.image = archive;
+        user.image = archive.imageBase64;
       });
     }
 
@@ -136,30 +137,7 @@ class _SettingsPageState extends StateGoop<SettingsPage> {
                   Center(
                     child: Column(
                       children: [
-                        GestureDetector(
-                          onTap: () async {
-                            String fileBase64 = await getPhotoBase64();
-
-                            if (fileBase64 != null)
-                              archive = fileBase64;
-
-                            setState_();
-                          },
-                          child: archive == null
-                              ? SvgPicture.asset(
-                                  GoopImages.avatar,
-                                  height: 150,
-                                )
-                              : ClipRRect(
-                                  borderRadius: BorderRadius.circular(100),
-                                  child: Image.memory(
-                                    Base64Codec().decode(archive),
-                                    fit: BoxFit.cover,
-                                    width: 150,
-                                    height: 150,
-                                  ),
-                                ),
-                        ),
+                        imagePhotoBase64(archive),
                         SizedBox(height: 20),
                         Text(
                           '${user.name}',
