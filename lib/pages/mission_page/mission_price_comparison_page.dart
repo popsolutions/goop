@@ -105,34 +105,17 @@ class _MissionPriceComparisionPageState
                         border: false,
                     ),
                     paddingT(20),
-                    GestureDetector(
-                      onTap: () async {
-                        if (!editing()) return null;
+                    circularImageBase64(archive, onTap: () async {
+                          if (!editing()) return null;
 
-                        String fileBase64 =  await getPhotoBase64();
+                          String fileBase64 =  await getPhotoBase64();
 
-                        if (fileBase64 != null)
-                          archive = fileBase64;
+                          if (fileBase64 != null)
+                            archive = fileBase64;
 
-                        setState(() {});
-                      },
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: (archive == null)
-                            ? Image.asset(
-                                GoopImages.empty_profile,
-                                fit: BoxFit.cover,
-                                width: 150,
-                                height: 150,
-                              )
-                            : Image.memory(
-                                Base64Codec().decode(archive),
-                                fit: BoxFit.cover,
-                                width: 150,
-                                height: 150,
-                              ),
-                      ),
-                    ),
+                          setState(() {});
+                    })
+
                   ],
                 ),
                 (serviceNotifier.currentActivity.isChecked)

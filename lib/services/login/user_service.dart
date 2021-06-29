@@ -1,3 +1,4 @@
+import 'package:goop/models/login_dto.dart';
 import 'package:goop/models/login_result.dart';
 import 'package:goop/models/update_user.dart';
 import 'package:goop/models/user.dart';
@@ -6,6 +7,7 @@ import 'package:goop/models/user_profile.dart';
 import '../../config/http/odoo_api.dart';
 import '../../models/basic_user_dto.dart';
 import '../constants.dart';
+import 'login_service.dart';
 
 class UserServiceImpl {
   final Odoo _odoo;
@@ -86,6 +88,26 @@ class UserServiceImpl {
         street: userProfile.street,
       );
   }
+
+  Future<int> createUser(UserProfile userProfile) async {
+
+    LoginServiceImpl login = LoginServiceImpl(Odoo());
+    LoginDto loginDto = LoginDto('support@popsolutions.co', '1ND1C0p4c1f1c0');
+
+    LoginResult currentLoginResult = await login.login(loginDto);
+    print('x');
+
+
+    final response = await _odoo.create(Strings.resUsers, userProfile.toJson());
+
+    if (response.getStatusCode() == 200){
+      return response.getResult(); //return id of Measurement_quizzlinesModel
+    } else {
+      throw 'MeasurementModel quizz lines Insert fail';
+    }
+  }
+
+
 
   /*
 

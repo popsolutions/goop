@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:goop/services/ServiceNotifier.dart';
 import 'package:goop/pages/components/goop_libComponents.dart';
 import 'package:goop/utils/goop_colors.dart';
+import 'package:goop/utils/goop_images.dart';
 import 'package:provider/provider.dart';
 
 abstract class StateGoop<T extends StatefulWidget> extends State<T> {
@@ -28,7 +29,7 @@ abstract class StateGoop<T extends StatefulWidget> extends State<T> {
   }
 
   showMessage(String title, String message) async {
-    goop_LibComponents.showMessage(context, title, message);
+    await goop_LibComponents.showMessage(context, title, message);
   }
 
   showSnackBar(String _text, Color _backgroundColor) {
@@ -40,6 +41,10 @@ abstract class StateGoop<T extends StatefulWidget> extends State<T> {
 
   Future<String> getPhotoBase64() async {
     return await goop_LibComponents.getPhotoBase64(context, mediaQuery);
+  }
+
+  Widget circularImageBase64(String imageBase64, {Function onTap, String defaultImage = GoopImages.avatar}) {
+    return goop_LibComponents.circularImageBase64(imageBase64, onTap);
   }
 
   setState_() => setState(() {});

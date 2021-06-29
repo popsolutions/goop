@@ -16,7 +16,10 @@ class UserProfile {
   String city;
   String district;
   String state;
+  String zip;
   String signupUrl;
+  String password;
+  String login;
 
   UserProfile({
     this.name,
@@ -34,7 +37,10 @@ class UserProfile {
     this.city,
     this.district,
     this.state,
+    this.zip,
     this.signupUrl,
+    this.password,
+    this.login
   });
 
   UserProfile.fromJson(Map<String, dynamic> json) {
@@ -53,6 +59,32 @@ class UserProfile {
     city = valueOrNull(json['city']);
     district = valueOrNull(json['district']);
     state = valueOrNull(json['state']);
+    zip = valueOrNull(json['zip']);
     signupUrl = valueOrNull(json['signup_url']);
+    login = valueOrNull(json['login']);
   }
+
+  Map<String, dynamic> toJson() => {
+    "login": this.login,
+    "name": this.name,
+    "image": this.image,
+    "phone": this.phone,
+    "birthdate": this.birthdate,
+    "function": this.function,
+    "cnpjCpf": this.cnpjCpf,
+    "educationLevel": this.educationLevel,
+    "gender": this.gender,
+    "missionsCount": this.missionsCount,
+    "mobile": this.mobile,
+    "email": this.email,
+    "street": this.street,
+    "city": this.city,
+    "district": this.district,
+    "state": this.state,
+    "zip": this.zip,
+    "signupUrl": this.signupUrl,
+    "password": this.password
+  };
+
 }
+

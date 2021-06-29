@@ -187,7 +187,12 @@ class Odoo {
 
   Future<OdooResponse> callRequest(String url, Map payload) async {
     final response = await callDbRequest(url, payload);
-    return new OdooResponse(json.decode(response.body), response.statusCode);
+    OdooResponse odooResponse = new OdooResponse(json.decode(response.body), response.statusCode);
+
+    if (odooResponse.hasError())
+      throw odooResponse.getErrorMessage();
+
+    return odooResponse;
   }
 
   Future<http.Response> callDbRequest(String url, Map payload) async {

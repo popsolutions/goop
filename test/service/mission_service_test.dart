@@ -13,6 +13,7 @@ import 'package:goop/models/mission.dart';
 import 'package:goop/models/models.dart';
 import 'package:goop/models/quizzLinesModel.dart';
 import 'package:goop/models/user.dart';
+import 'package:goop/models/user_profile.dart';
 import 'package:goop/services/AlternativeService.dart';
 import 'package:goop/services/MeasurementPhotoLinesService.dart';
 import 'package:goop/services/MeasurementQuizzlinesService.dart';
@@ -332,5 +333,27 @@ void main() {
     print(ListMissionModelEstablishment[0].listMissionModel[0].name);
     print(serviceNotifier.listMissionModel[0].name);
   });
+
+  test('user_service.createUser', () async {
+    UserProfile userProfile = UserProfile(
+      login: 'teste@popsolutions.co',
+      name: 'Teste',
+      phone: '(83) 9 8684-1882',
+      // birthdate: 'als',
+      // function: 'als',
+      cnpjCpf: '30152510826',
+      // gender: 'als',
+      // mobile: 'als',
+      email: 'teste@popsolutions.co',
+      // street: 'als',
+      city: 'São Paulo',
+      // district: 'als',
+      password: '123');
+
+    int id = await userServiceImpl.createUser(userProfile);
+    print('id:$id');
+  });
+
+
 
 }

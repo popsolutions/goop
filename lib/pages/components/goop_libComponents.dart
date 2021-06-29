@@ -309,4 +309,28 @@ class goop_LibComponents {
 
     return fileBase64;
   }
+
+  static Widget circularImageBase64(String imageBase64, Function _onTap) {
+    return
+    GestureDetector(
+      onTap: () async {
+        await _onTap();
+      },
+      child: ClipRRect(
+          borderRadius: BorderRadius.circular(100),
+          child: (imageBase64 == null)
+              ? SvgPicture.asset(
+            GoopImages.avatar,
+            height: 150,
+          )
+              : Image.memory(
+            Base64Codec().decode(imageBase64),
+            fit: BoxFit.cover,
+            width: 150,
+            height: 150,
+          )),
+    );
+
+  }
+
 }

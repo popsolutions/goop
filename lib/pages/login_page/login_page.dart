@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:goop/config/app/authentication_controller.dart';
 import 'package:goop/config/http/odoo_api.dart';
 import 'package:goop/config/routes.dart';
+import 'package:goop/pages/components/StateGoop.dart';
 import 'package:goop/pages/components/goop_back.dart';
 import 'package:goop/pages/components/goop_button.dart';
 import 'package:goop/pages/components/goop_text_form_field.dart';
@@ -23,7 +24,7 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends StateGoop<LoginPage> {
   ServiceNotifier serviceNotifier;
   AuthenticationController _authenticationController;
   LoginController _loginController;
@@ -80,7 +81,9 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void _onError() {}
+  void _onError() {
+    showMessage('Opss', 'Usuário ou senha inválidos');
+  }
 
   @override
   Widget build(BuildContext context) {
