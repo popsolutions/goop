@@ -60,8 +60,8 @@ class ServiceNotifier extends ChangeNotifier {
 
   Future<void> init([BuildContext context = null]) async {
     if (initialization == true) return;
-    await update(context);
     globalServiceNotifier = this;
+    await update(context);
     initialization = true;
   }
 
@@ -70,7 +70,7 @@ class ServiceNotifier extends ChangeNotifier {
     listMissionModel = await missionService.getOpenMissions();
     listMissionModelEstablishment =
         await missionService.getListMissionModelEstablishment(listMissionModel);
-    await globalGeoLocService.update();
+    await globalGeoLocService.update(context);
   }
 
   void listAlternativeModelLoad() async {
