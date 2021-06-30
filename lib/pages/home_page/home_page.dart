@@ -23,10 +23,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends StateGoop<HomePage> {
-  bool _serviceEnabled;
+  LatLng userLocation;
   var locationMap;
   var missionLocation;
-
 
   @override
   void initState() {
@@ -45,7 +44,7 @@ class _HomePageState extends StateGoop<HomePage> {
   @override
   Widget build(BuildContext context) {
     final serviceNotifier =
-    Provider.of<ServiceNotifier>(context, listen: false);
+        Provider.of<ServiceNotifier>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
@@ -65,7 +64,8 @@ class _HomePageState extends StateGoop<HomePage> {
           if (snapshot.connectionState == ConnectionState.done) {
             return Consumer<ServiceNotifier>(builder:
                 (BuildContext context, ServiceNotifier value, Widget child) {
-                  ServiceNotifier _serviceNotifier = Provider.of<ServiceNotifier>(context, listen: false);
+              ServiceNotifier _serviceNotifier =
+                  Provider.of<ServiceNotifier>(context, listen: false);
 
               if (_serviceNotifier.geoLocationOk == false)
                 return geoLocationError();
@@ -74,40 +74,48 @@ class _HomePageState extends StateGoop<HomePage> {
                   // mapController: controller,
                   options: MapOptions(
                     center: missionLocation == null
-                    ? userLocation
-                    : LatLng(missionLocation[0], missionLocation[1]),
-                    interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
+                        ? userLocation
+                        : LatLng(missionLocation[0], missionLocation[1]),
+                    interactiveFlags:
+                        InteractiveFlag.pinchZoom | InteractiveFlag.drag,
                     zoom: 13.0,
                   ),
                   layers: [
                     TileLayerOptions(
-                      urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                      urlTemplate:
+                          "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                       subdomains: ['a', 'b', 'c'],
                     ),
                     MarkerLayerOptions(
                       markers: [
-                        for (MissionModelEstablishment missionModelEstablishment in _serviceNotifier.listMissionModelEstablishment)
+                        for (MissionModelEstablishment missionModelEstablishment
+                            in _serviceNotifier.listMissionModelEstablishment)
                           Marker(
                             width: 40,
                             height: 80.0,
                             point: LatLng(
-                              missionModelEstablishment.establishmentModel.latitude ?? 0,
-                              missionModelEstablishment.establishmentModel.longitude ?? 0,
+                              missionModelEstablishment
+                                      .establishmentModel.latitude ??
+                                  0,
+                              missionModelEstablishment
+                                      .establishmentModel.longitude ??
+                                  0,
                             ),
-                            builder: (ctx) =>
-                                GestureDetector(
-                                  onTap: () {
-                                    // if (missionModelEstablishment.listMissionModel.length == 0){
-                                    _serviceNotifier.viewByEstablishment = true;
-                                    _serviceNotifier.currentMissionModelEstablishment = missionModelEstablishment;
+                            builder: (ctx) => GestureDetector(
+                              onTap: () {
+                                // if (missionModelEstablishment.listMissionModel.length == 0){
+                                _serviceNotifier.viewByEstablishment = true;
+                                _serviceNotifier
+                                        .currentMissionModelEstablishment =
+                                    missionModelEstablishment;
 
-                                    navigatorPopAndPushNamed(Routes.mission_home);
-                                    // }
-                                  },
-                                  child: Container(
-                                    child: SvgPicture.asset(GoopImages.local),
-                                  ),
-                                ),
+                                navigatorPopAndPushNamed(Routes.mission_home);
+                                // }
+                              },
+                              child: Container(
+                                child: SvgPicture.asset(GoopImages.local),
+                              ),
+                            ),
                           ),
                       ],
                     ),
@@ -125,16 +133,15 @@ class _HomePageState extends StateGoop<HomePage> {
         },
       ),
     );
-
   }
 
-  Widget geoLocationError(){
+  Widget geoLocationError() {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('Falha ao obter localização do GPS. Verifique se seu GPS está ativo e se o Goop tem permissão para acessar o GPS'),
-
+          Text(
+              'Falha ao obter localização do GPS. Verifique se seu GPS está ativo e se o Goop tem permissão para acessar o GPS'),
           GoopButton(
             text: 'Abrir configurações do GPS',
             showCircularProgress: true,
@@ -142,9 +149,6 @@ class _HomePageState extends StateGoop<HomePage> {
               Geolocator.openLocationSettings();
             },
           ),
-
-
-
           GoopButton(
             text: 'Tentar novamente',
             showCircularProgress: true,
@@ -153,10 +157,7 @@ class _HomePageState extends StateGoop<HomePage> {
               setState_();
             },
           ),
-
-
           paddingT(20),
-
           GoopButton(
             text: 'Fechar Goop',
             showCircularProgress: true,
@@ -164,11 +165,8 @@ class _HomePageState extends StateGoop<HomePage> {
               exit(0);
             },
           ),
-
         ],
       ),
-
     );
-
   }
 }
