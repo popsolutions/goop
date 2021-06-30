@@ -39,8 +39,7 @@ class _GoopCardState extends StateGoop<GoopCard> {
                     .setcurrentMissionModel(widget.currentMissionModel);
               });
 
-              Navigator.pushNamed(
-                context,
+              navigatorPushNamed(
                 Routes.mission_about,
                 arguments: widget.currentMissionModel,
               );

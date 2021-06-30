@@ -50,13 +50,13 @@ class goop_LibComponents {
 
   static Future<void> dialogProcess(BuildContext context, Function function,
       [String caption = 'Aguarde por favor...']) async {
-    showProgressDialog(context);
+    showProgressDialog(context, caption);
     try {
       // await delayedSeconds(1);
       try {
         await function();
       } finally {
-        Navigator.pop(context);
+        goop_LibComponents.navigatorPop(context);
       }
     } catch (e) {
       showMessage(context, 'Opss', e.toString());
@@ -91,7 +91,7 @@ class goop_LibComponents {
             actions: <Widget>[
               TextButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  navigatorPop(context);
                 },
                 child: Text(
                   "Ok",
@@ -131,7 +131,7 @@ class goop_LibComponents {
             actions: <Widget>[
               TextButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  navigatorPop(context);
                 },
                 child: Text(
                   "Ok",
@@ -150,23 +150,27 @@ class goop_LibComponents {
 
   static showSnackBar(BuildContext context, String _text, Color _backgroundColor,
       [int _milliseconds = 2000]) {
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        behavior: SnackBarBehavior.floating,
-        shape: StadiumBorder(),
-        duration: Duration(milliseconds: _milliseconds),
-        backgroundColor: _backgroundColor,
-        content: Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text(
-            _text,
-            textAlign: TextAlign.center,
-            style: TextStyle(fontWeight: FontWeight.bold),
+    try {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          behavior: SnackBarBehavior.floating,
+          shape: StadiumBorder(),
+          duration: Duration(milliseconds: _milliseconds),
+          backgroundColor: _backgroundColor,
+          content: Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text(
+              _text,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
           ),
         ),
-      ),
-    );
+      );
+    }catch(e){
+      print(e.toString());
+    }
   }
 
   static Widget getInputTextFormField(String _label, TextEditingController _controller,
@@ -221,7 +225,7 @@ class goop_LibComponents {
       fileBase64 = base64Encode(file.readAsBytesSync());
     }
 
-    Navigator.pop(context);
+    navigatorPop(context);
     return fileBase64;
   }
 
@@ -282,7 +286,7 @@ class goop_LibComponents {
                             enableZoom: true,
                             onFile: (file) async {
                               fileBase64 = await showPreview(context, file);
-                              Navigator.pop(context);
+                              navigatorPop(context);
                             },
                           ),
                     ),
@@ -301,7 +305,7 @@ class goop_LibComponents {
                 ),
                 onPressed: () async {
                   fileBase64 = await getFileFromGallery();
-                  Navigator.pop(context);
+                  navigatorPop(context);
                 },
               ),
             ),
@@ -340,4 +344,41 @@ class goop_LibComponents {
             )),
       );
   }
+
+  static navigatorPop(BuildContext context){
+    Navigator.pop(context);
+  }
+
+  static navigatorPopAndPushNamed(BuildContext context, String route){
+    Navigator.popAndPushNamed(
+        context,
+        route,
+    );
+  }
+
+  static navigatorPushNamed(BuildContext context, String route, {Object arguments}){
+    Navigator.pushNamed(
+      context,
+      route,
+      arguments: arguments
+    );
+  }
+
+  static pushNamedAndRemoveUntil(BuildContext context, String route, RoutePredicate predicate, {Object arguments}){
+    Navigator.pushNamed(
+        context,
+        route,
+        arguments: arguments
+    );
+  }
+
+  static pushReplacementNamed(BuildContext context, String route){
+    Navigator.pushReplacementNamed(
+      context,
+      route
+    );
+  }
+
+
+
 }

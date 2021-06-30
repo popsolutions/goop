@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:goop/pages/components/goop_libComponents.dart';
 
 class PreviewPage extends StatelessWidget {
   final File file;
@@ -54,7 +55,7 @@ class PreviewPage extends StatelessWidget {
                                 size: 30,
                               ),
                               onPressed: () {
-                                Navigator.pop(context);
+                                goop_LibComponents.navigatorPop(context);
                               },
                             ),
                           ),

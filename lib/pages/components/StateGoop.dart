@@ -78,4 +78,34 @@ abstract class StateGoop<T extends StatefulWidget> extends State<T> {
 
   throwIfDoubleIsZero(double value, String message) => throwIf(value == 0, message);
 
+  navigatorPop(){
+    goop_LibComponents.navigatorPop(context);
+  }
+
+  navigatorPopAndPushNamed(String route){
+    goop_LibComponents.navigatorPopAndPushNamed(
+      context,
+      route,
+    );
+  }
+
+  pushNamedAndRemoveUntil(String route, RoutePredicate predicate, {Object arguments}) {
+    goop_LibComponents.pushNamedAndRemoveUntil(
+        context,
+        route,
+        predicate,
+        arguments: arguments
+    );
+  }
+
+  navigatorPushNamed(String route, {Object arguments}){
+    goop_LibComponents.navigatorPushNamed(context, route, arguments: arguments);
+  }
+
+  pushReplacementNamed(String route){
+    goop_LibComponents.pushReplacementNamed(
+        context,
+        route
+    );
+  }
 }

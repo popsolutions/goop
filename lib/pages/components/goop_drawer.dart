@@ -6,6 +6,7 @@ import 'package:goop/config/app/authentication_controller.dart';
 import 'package:goop/config/routes.dart';
 import 'package:goop/pages/components/StateGoop.dart';
 import 'package:goop/pages/components/goop_button.dart';
+import 'package:goop/pages/components/goop_libComponents.dart';
 import 'package:goop/services/ServiceNotifier.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
@@ -99,8 +100,7 @@ class _GoopDrawerState extends StateGoop<GoopDrawer> {
                           text: 'Missões',
                           action: () {
                             serviceNotifier.viewByEstablishment = false;
-                            Navigator.popAndPushNamed(
-                              context,
+                            navigatorPopAndPushNamed(
                               Routes.mission_home,
                             );
                           },
@@ -111,7 +111,7 @@ class _GoopDrawerState extends StateGoop<GoopDrawer> {
                         child: GoopButton(
                           text: 'Mapa',
                           action: () {
-                            Navigator.pushNamedAndRemoveUntil(
+                            goop_LibComponents.pushNamedAndRemoveUntil(
                               context,
                               Routes.home,
                               (route) => false,
@@ -143,8 +143,7 @@ class _GoopDrawerState extends StateGoop<GoopDrawer> {
                       title: 'Minha Conta',
                       img: GoopImages.account,
                       action: () {
-                        Navigator.popAndPushNamed(
-                          context,
+                        navigatorPopAndPushNamed(
                           Routes.settings,
                         );
                       },
@@ -157,7 +156,7 @@ class _GoopDrawerState extends StateGoop<GoopDrawer> {
                     goopTile(
                       title: 'Sair',
                       img: GoopImages.quit,
-                      action: () => Navigator.pushNamedAndRemoveUntil(
+                      action: () => goop_LibComponents.pushNamedAndRemoveUntil(
                         context,
                         Routes.initial,
                         (route) => false,

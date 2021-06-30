@@ -147,8 +147,8 @@ class MeasurementModel {
     data['partner_id'] = this.partner_Id;
 
     data['state'] = this.state;
-    data['date_started'] = DateTimeToSql(this.dateStarted);
-    data['date_finished'] = this.dateFinished;
+    data['date_started'] = DateToSql(this.dateStarted);
+    data['date_finished'] = DateToSql(this.dateFinished);
     data['measurement_latitude'] = this.measurementLatitude;
     data['measurement_longitude'] = this.measurementLongitude;
 
@@ -164,12 +164,12 @@ class MeasurementModel {
     data['legend_doing'] = this.legendDoing;
 
     data['create_uid'] = this.create_Uid;
-    data['create_date'] = DateTimeToSql(this.createDate);
+    // data['create_date'] = DateTimeToSql(this.createDate);
     data['write_uid'] = this.write_Uid;
-    data['write_date'] = DateTimeToSql(this.writeDate);
+    // data['write_date'] = DateTimeToSql(this.writeDate);
     data['kanban_state_label'] = this.kanbanStateLabel;
     data['display_name'] = this.displayName;
-    data['__last_update'] = this.lastUpdate;
+    // data['__last_update'] = this.lastUpdate;
     return data;
   }
 

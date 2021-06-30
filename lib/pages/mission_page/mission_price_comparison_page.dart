@@ -35,7 +35,7 @@ class _MissionPriceComparisionPageState
 
     await serviceNotifier.insert_Measurement_PriceComparisonLinesModel(
         price(), archive.imageBase64);
-    Navigator.pop(context);
+    goop_LibComponents.navigatorPop(context);
   }
 
   @override

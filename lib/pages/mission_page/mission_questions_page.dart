@@ -103,9 +103,9 @@ class _MissionQuestionPageState extends StateGoop<MissionQuestionPage> {
                                 await selectQuestion(
                                     currentActivity.listQuizzLinesModel[value]);
                               });
+                              navigatorPop();
                               showSnackBar(
                                   'Pergunta Registrada! 😉', GoopColors.red);
-                              Navigator.pop(context);
                             }
                           },
                         ),

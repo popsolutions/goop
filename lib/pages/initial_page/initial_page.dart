@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goop/config/routes.dart';
 import 'package:goop/pages/components/goop_button.dart';
+import 'package:goop/pages/components/goop_libComponents.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
 
@@ -30,7 +31,7 @@ class InitialPage extends StatelessWidget {
             SizedBox(height: 60),
             GoopButton(
               text: 'Login',
-              action: () => Navigator.pushNamed(
+              action: () => goop_LibComponents.navigatorPushNamed(
                 context,
                 Routes.login,
               ),
@@ -40,7 +41,7 @@ class InitialPage extends StatelessWidget {
               buttonColor: Colors.white,
               textColor: GoopColors.red,
               borderColor: GoopColors.red,
-              action: () => Navigator.pushNamed(context, Routes.register),
+              action: () => goop_LibComponents.navigatorPushNamed(context, Routes.register),
             ),
           ],
         ),

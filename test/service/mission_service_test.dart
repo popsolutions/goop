@@ -1,3 +1,4 @@
+import 'package:async/async.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:goop/config/http/odoo_api.dart';
 import 'package:goop/models/AlternativeModel.dart';
@@ -196,7 +197,48 @@ void main() {
     print('INSERT OK!');
   });
 
+  test('Measurement.update', () async {
+    MissionModel missionModel = await missionService.getMissionById(81);
+
+    // MeasurementModel measurementModel = await measurementService.getMeasurementModelById(331);
+    MeasurementModel measurementModel = missionModel.measurementModel;
+    measurementModel.measurementLatitude = 4;
+    measurementModel.measurementLongitude = 5;
+
+    await measurementService.update(measurementModel);
+
+    print('x');
+  });
+
+  test('Measurement.delete', () async {
+    MeasurementModel measurementModel = await measurementService.getMeasurementModelById(331);
+    await measurementService.delete(measurementModel);
+    print('x');
+  });
+
+  test('Measurement.deleteAllmeasurementModel', () async {
+    print('start');
+
+    MissionService missionService = new MissionService(Odoo());
+    List<MissionModel> listMissionModel = await missionService.getOpenMissions();
+    // missionService.setMeasurementModelToListMissionModel(listMissionModel);
+    int amoutDel = 0;
+
+    for (MissionModel missionModel in listMissionModel){
+      if (missionModel.measurementModel != null) {
+        print('deletada Mensuração para missão: ' + missionModel.name + '(' + missionModel.id.toString() + ')');
+        await measurementService.delete(missionModel.measurementModel);
+        amoutDel += 1;
+      }
+    }
+
+    print('Qtde deletadas: ' + amoutDel.toString());
+  });
+
+
   test('AlternativeService.listAlternativeModelLoad', () async {
+    //flutter test test/counter_test.dart
+
     List<AlternativeModel> listAlternativeModel =
         await alternativeService.getAlternativeService();
     print('::listAlternativeModel');
@@ -354,6 +396,64 @@ void main() {
     print('id:$id');
   });
 
+//   test("CancelableOperation with future", () async {
+//
+//     Future<void> tst() async {
+//       print('x');
+//           }
+//
+//     var cancellableOperation = CancelableOperation.fromFuture(
+//       tst,
+//       onCancel: () => {print('onCancel')},
+//     );
+//
+// // cancellableOperation.cancel();  // uncomment this to test cancellation
+//
+//     cancellableOperation.value.then((value) => {
+//       print('then: $value'),
+//     });
+//     cancellableOperation.value.whenComplete(() => {
+//       print('onDone'),
+//     });
+//   });
 
 
+  test("CancelableCompleter is cancelled", () async {
+
+    CancelableCompleter completer = CancelableCompleter(onCancel: () {
+      print('onCancel');
+    });
+
+    // completer.operation.cancel();  // uncomment this to test cancellation
+
+    completer.complete(Future.value('future result'));
+    // completer.complete((){
+    //   print('x');
+    // });
+    print('isCanceled: ${completer.isCanceled}');
+    print('isCompleted: ${completer.isCompleted}');
+    completer.operation.value.then((value) => {
+      print('then: $value'),
+    });
+    completer.operation.value.whenComplete(() => {
+      print('onDone'),
+    });
+  });
+
+  test("CancelableOperation with future - original", () async {
+
+    var cancellableOperation = CancelableOperation.fromFuture(
+      Future.value('future result'),
+      onCancel: () => {print('onCancel')},
+    );
+
+// cancellableOperation.cancel();  // uncomment this to test cancellation
+
+    cancellableOperation.value.then((value) => {
+      print('then: $value'),
+    });
+    cancellableOperation.value.whenComplete(() => {
+      print('onDone'),
+    });
+  });
 }

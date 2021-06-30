@@ -15,6 +15,7 @@ import 'package:goop/services/GeoLocService.dart';
 import 'package:goop/services/MeasurementPhotoLinesService.dart';
 import 'package:goop/services/MeasurementQuizzlinesService.dart';
 import 'package:goop/utils/global.dart';
+import 'package:goop/utils/utils.dart';
 import '../config/http/odoo_api.dart';
 import 'establishment/establishment_controller.dart';
 import 'establishment/establishment_service.dart';
@@ -24,9 +25,10 @@ import 'mission/mission_service.dart';
 
 class ServiceNotifier extends ChangeNotifier {
   // ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context);
+
+  bool _geoLocationOk = false;
   AlternativeService alternativeService = new AlternativeService();
   MeasurementService measurementService = new MeasurementService();
-  GeoLocService geoLocService = new GeoLocService();
   MeasurementQuizzlinesService measurement_quizzlinesService =
       MeasurementQuizzlinesService();
   MeasurementPhotoLinesService measurementPhotoLinesService =
@@ -56,18 +58,19 @@ class ServiceNotifier extends ChangeNotifier {
   final establishmentsController =
       EstablishmentController(EstablishmentService(Odoo()));
 
-  Future<void> init() async {
+  Future<void> init([BuildContext context = null]) async {
     if (initialization == true) return;
-    await update();
+    await update(context);
     globalServiceNotifier = this;
     initialization = true;
   }
 
-  update() async {
+  update([BuildContext context = null]) async {
     await listAlternativeModelLoad();
     listMissionModel = await missionService.getOpenMissions();
     listMissionModelEstablishment =
         await missionService.getListMissionModelEstablishment(listMissionModel);
+    await globalGeoLocService.update();
   }
 
   void listAlternativeModelLoad() async {
@@ -76,7 +79,7 @@ class ServiceNotifier extends ChangeNotifier {
 
   Future<void> insert_Measurement_quizzlinesModel(
       QuizzLinesModel _selectedQuizzLinesModel) async {
-    await createMeasurementModelIfNotExists();
+    await createOrUpdateGeoLocMeasurementModel();
 
     MeasurementQuizzlinesModel measurement_quizzlinesModel =
         MeasurementQuizzlinesModel(
@@ -95,15 +98,18 @@ class ServiceNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> createMeasurementModelIfNotExists() async {
+  Future<void> createOrUpdateGeoLocMeasurementModel() async {
+    // await delayedSeconds(4);
     if (currentMissionModel.measurementModel == null) {
       await missionService.createMeasurementModel(
-          currentMissionModel, currentUser, geoLocService);
+          currentMissionModel, currentUser);
+    } else {
+      await measurementService.updateGeoLocation(currentMissionModel.measurementModel);
     }
   }
 
   Future<void> insert_Measurement_photolines(String photoBase64) async {
-    await createMeasurementModelIfNotExists();
+    await createOrUpdateGeoLocMeasurementModel();
 
     MeasurementPhotoLinesModel measurementPhotoLinesModel =
         MeasurementPhotoLinesModel(
@@ -124,7 +130,7 @@ class ServiceNotifier extends ChangeNotifier {
 
   Future<void> insert_Measurement_PriceComparisonLinesModel(
       double price, String photoBase64) async {
-    await createMeasurementModelIfNotExists();
+    await createOrUpdateGeoLocMeasurementModel();
 
     MeasurementPriceComparisonLinesModel measurementPriceComparisonLinesModel =
         MeasurementPriceComparisonLinesModel(
@@ -164,6 +170,16 @@ class ServiceNotifier extends ChangeNotifier {
   setCurrentUser(User user) {
     currentUser = user;
     globalcurrentUser = currentUser;
+  }
+
+
+  bool get geoLocationOk => _geoLocationOk;
+
+  set geoLocationOk(bool value) {
+    bool oldValue = _geoLocationOk;
+    _geoLocationOk = value;
+    if (oldValue != value)
+      notifyListeners();
   }
 
   List<MissionModel> getlistMissionModelDistinct = <MissionModel>[];

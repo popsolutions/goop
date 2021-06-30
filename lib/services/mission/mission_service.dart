@@ -44,6 +44,7 @@ class MissionService {
     MissionModel missionModel = MissionModel.fromJson(json[0]);
 
     await setMissionEstablishment(missionModel);
+    missionModel.measurementModel = await getMeasurementModel(missionModel, globalcurrentUser.partnerId);
     return missionModel;
   }
 
@@ -139,14 +140,14 @@ class MissionService {
   }
 
   Future<void> createMeasurementModel(MissionModel missionModel,
-      User currentUser, GeoLocService geoLocService) async {
+      User currentUser) async {
     MeasurementModel measurementModelExistent =
         await getMeasurementModel(missionModel, currentUser.partnerId);
 
     if (measurementModelExistent != null) {
       missionModel.measurementModel = measurementModelExistent;
     } else {
-      geoLocService.update();
+      await globalGeoLocService.update();
 
       MeasurementModel measurementModelInsert = MeasurementModel(
         id: null,
@@ -157,8 +158,8 @@ class MissionService {
         state: 'doing',
         dateStarted: DateTime.now(),
         // dateFinished: "2021-05-02",
-        measurementLatitude: geoLocService.latitude,
-        measurementLongitude: geoLocService.longitude,
+        measurementLatitude: globalGeoLocService.latitude(),
+        measurementLongitude: globalGeoLocService.longitude(),
         // lines_ids: [],
         // quizz_lines_ids: [],
         // photo_lines_ids: [],

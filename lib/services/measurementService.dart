@@ -8,6 +8,7 @@ import 'package:goop/models/mission.dart';
 import 'package:goop/services/MeasurementPhotoLinesService.dart';
 import 'package:goop/services/MeasurementQuizzlinesService.dart';
 import 'package:goop/services/measurementPriceComparisonLinesService.dart';
+import 'package:goop/utils/global.dart';
 
 import 'constants.dart';
 
@@ -90,6 +91,35 @@ class MeasurementService {
     }
   }
 
+  Future<bool> update(MeasurementModel measurementModel) async {
+    await _odoo.write(
+      Strings.meassurement,
+      [measurementModel.id],
+      measurementModel.toJson(),
+    );
+
+    return true;
+  }
+
+  Future<int> updateGeoLocation(MeasurementModel measurementModel) async {
+    await globalGeoLocService.update();
+
+    measurementModel.measurementLatitude = globalGeoLocService.latitude();
+    measurementModel.measurementLongitude = globalGeoLocService.longitude();
+    update(measurementModel);
+  }
+
+  Future<bool> delete(MeasurementModel measurementModel) async {
+    await _odoo.unlink(
+      Strings.meassurement,
+      [measurementModel.id]
+    );
+
+    return true;
+  }
 
 
-}
+
+
+
+  }

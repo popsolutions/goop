@@ -7,6 +7,7 @@ import 'package:goop/pages/components/StateGoop.dart';
 import 'package:goop/pages/components/goop_button.dart';
 import 'package:goop/pages/components/goop_mission_body.dart';
 import 'package:goop/services/ServiceNotifier.dart';
+import 'package:goop/utils/global.dart';
 import 'package:provider/provider.dart';
 import '../components/goop_back.dart';
 import 'package:goop/utils/goop_images.dart';
@@ -46,7 +47,6 @@ class _MissionAboutPageState extends StateGoop<MissionAboutPage> {
   }
 
   situacional({ifCompleted, ifInProgress, ifOrdered}) {
-    print(currentMissionModel.status);
     if (currentMissionModel.status == MissionStatus.Ordered) {
       return ifCompleted;
     } else if (currentMissionModel.status == MissionStatus.InProgress) {
@@ -143,8 +143,7 @@ class _MissionAboutPageState extends StateGoop<MissionAboutPage> {
                               text: 'Iniciar',
                               showCircularProgress: true,
                               action: () async {
-                                await serviceNotifier
-                                    .createMeasurementModelIfNotExists();
+                                await serviceNotifier.createOrUpdateGeoLocMeasurementModel();
                                 serviceNotifier.notifyListeners();
                               },
                             )
@@ -155,8 +154,7 @@ class _MissionAboutPageState extends StateGoop<MissionAboutPage> {
                     child: GoopButton(
                       text: 'Enviar',
                       action: () {
-                        Navigator.pushNamed(
-                          context,
+                        navigatorPushNamed(
                           Routes.mission_completed,
                         );
                       },

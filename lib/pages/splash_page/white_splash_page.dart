@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goop/config/routes.dart';
+import 'package:goop/pages/components/goop_libComponents.dart';
 import 'package:goop/utils/goop_images.dart';
 
 class WhiteSplashPage extends StatelessWidget {
@@ -9,7 +10,7 @@ class WhiteSplashPage extends StatelessWidget {
     Future.delayed(
       Duration(seconds: 3),
     ).then(
-      (_) => Navigator.pushReplacementNamed(
+      (_) => goop_LibComponents.pushReplacementNamed(
         context,
         Routes.initial,
       ),

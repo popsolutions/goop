@@ -92,7 +92,7 @@ class _SettingsPageState extends StateGoop<SettingsPage> {
   }
 
   void _onSuccess() {
-    Navigator.pop(context);
+    navigatorPop();
   }
 
   void _onError() {

@@ -7,6 +7,7 @@ import 'package:goop/config/routes.dart';
 import 'package:goop/pages/components/StateGoop.dart';
 import 'package:goop/pages/components/goop_back.dart';
 import 'package:goop/pages/components/goop_button.dart';
+import 'package:goop/pages/components/goop_libComponents.dart';
 import 'package:goop/pages/components/goop_text_form_field.dart';
 import 'package:goop/pages/login_page/login_controller.dart';
 import 'package:goop/services/ServiceNotifier.dart';
@@ -74,8 +75,7 @@ class _LoginPageState extends StateGoop<LoginPage> {
     serviceNotifier.setCurrentUser(user);
 
     _authenticationController.authenticate(user);
-    Navigator.pushNamedAndRemoveUntil(
-      context,
+    pushNamedAndRemoveUntil(
       Routes.home,
       (route) => false,
     );
@@ -128,8 +128,7 @@ class _LoginPageState extends StateGoop<LoginPage> {
                       ),
                     ),
                     onPressed: () {
-                      Navigator.pushNamed(
-                        context,
+                      navigatorPushNamed(
                         Routes.recover_password,
                       );
                     },

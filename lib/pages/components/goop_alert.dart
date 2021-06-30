@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:goop/pages/components/goop_libComponents.dart';
 import 'package:goop/utils/goop_colors.dart';
 
 class GoopAlert extends StatelessWidget {
@@ -25,7 +26,7 @@ class GoopAlert extends StatelessWidget {
         children: [
           title != null ? title : Container(height: 0),
           GestureDetector(
-            onTap: () => Navigator.pop(context),
+            onTap: () => goop_LibComponents.navigatorPop(context),
             child: Stack(
               alignment: Alignment(0, 0),
               children: [

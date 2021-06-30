@@ -42,7 +42,7 @@ String convertDateToStringFormat(DateTime date) {
 }
 
 String DateToSql(DateTime date) {
-  return DateFormat('yyyy-MM-dd').format(date);
+  return (date == null) ? null : DateFormat('yyyy-MM-dd').format(date);
 }
 
 String DateTimeToSql(DateTime date) {

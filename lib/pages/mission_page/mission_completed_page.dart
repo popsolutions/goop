@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:goop/config/routes.dart';
 import 'package:goop/pages/components/goop_back.dart';
 import 'package:goop/pages/components/goop_button.dart';
+import 'package:goop/pages/components/goop_libComponents.dart';
 import 'package:goop/utils/goop_images.dart';
 
 class MissionCompletedPage extends StatelessWidget {
@@ -42,7 +43,7 @@ class MissionCompletedPage extends StatelessWidget {
               GoopButton(
                 text: 'Home',
                 action: () {
-                  Navigator.pushNamed(
+                  goop_LibComponents.navigatorPushNamed(
                     context,
                     Routes.white_splash,
                   );

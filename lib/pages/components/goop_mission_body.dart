@@ -41,7 +41,7 @@ class _GoopMissionBodyState extends StateGoop<GoopMissionBody> {
             base64Encode(file.readAsBytesSync()));
       });
 
-      Navigator.pop(context);
+      navigatorPop();
     }
 
     return Column(
@@ -132,22 +132,19 @@ class _GoopMissionBodyState extends StateGoop<GoopMissionBody> {
                     });
 
                     if (serviceNotifier.currentActivity.isQuizz()) {
-                      Navigator.pushNamed(
-                        context,
+                      navigatorPushNamed(
                         Routes.mission_question,
                         arguments: currentMissionModel,
                       );
                     } else if (serviceNotifier.currentActivity
                         .isPriceComparison()) {
-                      Navigator.pushNamed(
-                        context,
+                      navigatorPushNamed(
                         Routes.mission_price_comparison,
                         arguments: currentMissionModel,
                       );
                     } else if (serviceNotifier.currentActivity.isPhoto()) {
                       if (serviceNotifier.currentActivity.isChecked) {
-                        Navigator.pushNamed(
-                          context,
+                        navigatorPushNamed(
                           Routes.mission_photo_page,
                           arguments: currentMissionModel,
                         );
