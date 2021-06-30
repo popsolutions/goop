@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
     }
 
     Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.best,
+      desiredAccuracy: LocationAccuracy.lowest,
       forceAndroidLocationManager: true,
     ).then((Position position) {
       setState(() {
@@ -69,6 +69,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final serviceNotifier =
         Provider.of<ServiceNotifier>(context, listen: false);
+    var missionLocation = ModalRoute.of(context).settings.arguments;
+    print(missionLocation);
 
     return Scaffold(
       appBar: AppBar(
