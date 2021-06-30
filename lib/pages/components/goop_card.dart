@@ -110,10 +110,12 @@ class _GoopCardState extends StateGoop<GoopCard> {
                       Navigator.pushNamed(
                         context,
                         Routes.home,
-                        // arguments: {
-                        //   'latitude': 1,
-                        //   'longitude': 1,
-                        // },
+                        arguments: [
+                          widget
+                              .currentMissionModel.establishmentModel.latitude,
+                          widget
+                              .currentMissionModel.establishmentModel.longitude,
+                        ],
                       ); //TODO: CENTRALIZAR NO PIN NO QUAL FOI CLICADO
                     },
                     child: Padding(

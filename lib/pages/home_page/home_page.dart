@@ -19,6 +19,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   LatLng userLocation;
   bool _serviceEnabled;
+  var locationMap;
+  var missionLocation;
 
   Future _getCurrentLocation() async {
     _serviceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -66,10 +68,18 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    missionLocation = ModalRoute.of(context).settings.arguments;
+    if (missionLocation == null) {
+      locationMap = userLocation;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final serviceNotifier =
         Provider.of<ServiceNotifier>(context, listen: false);
-    var missionLocation = ModalRoute.of(context).settings.arguments;
     print(missionLocation);
 
     return Scaffold(
@@ -94,8 +104,11 @@ class _HomePageState extends State<HomePage> {
             return FlutterMap(
               // mapController: controller,
               options: MapOptions(
-                center: LatLng(-23.553583043580996, -46.65204460659839),
-                // center: userLocation,
+                // center: LatLng(-23.553583043580996, -46.65204460659839),
+
+                center: missionLocation == null
+                    ? userLocation
+                    : LatLng(missionLocation[0], missionLocation[1]),
                 interactiveFlags:
                     InteractiveFlag.pinchZoom | InteractiveFlag.drag,
                 zoom: 13.0,

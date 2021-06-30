@@ -15,6 +15,7 @@ abstract class StateGoop<T extends StatefulWidget> extends State<T> {
 
   @override
   void didChangeDependencies() {
+    super.didChangeDependencies();
     if (didChangeDependenciesLoad == true) return;
     serviceNotifier =
         Provider.of<ServiceNotifier>(context, listen: listenServiceNotifier);
@@ -53,7 +54,10 @@ abstract class StateGoop<T extends StatefulWidget> extends State<T> {
     return await goop_LibComponents.getPhotoBase64(context, mediaQuery);
   }
 
-  Widget imagePhotoBase64(ImageGoop imageBase64, {Function onTap, String defaultImage = GoopImages.avatar, bool editing = true}) {
+  Widget imagePhotoBase64(ImageGoop imageBase64,
+      {Function onTap,
+      String defaultImage = GoopImages.avatar,
+      bool editing = true}) {
     return goop_LibComponents.imagePhotoBase64(
         imageBase64.imageBase64,
         (onTap != null)
@@ -63,8 +67,7 @@ abstract class StateGoop<T extends StatefulWidget> extends State<T> {
 
                 String fileBase64 = await getPhotoBase64();
 
-                if (fileBase64 != null)
-                  imageBase64.imageBase64 = fileBase64;
+                if (fileBase64 != null) imageBase64.imageBase64 = fileBase64;
 
                 setState_();
               });
@@ -72,10 +75,10 @@ abstract class StateGoop<T extends StatefulWidget> extends State<T> {
 
   setState_() => setState(() {});
 
-  throwIf(bool value, String message){
+  throwIf(bool value, String message) {
     if (value == true) throw message;
   }
 
-  throwIfDoubleIsZero(double value, String message) => throwIf(value == 0, message);
-
+  throwIfDoubleIsZero(double value, String message) =>
+      throwIf(value == 0, message);
 }
