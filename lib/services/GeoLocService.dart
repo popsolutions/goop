@@ -5,13 +5,17 @@ import 'package:goop/pages/components/goop_libComponents.dart';
 import 'package:goop/utils/global.dart';
 import 'package:latlong2/latlong.dart';
 
-class GeoLocService{
+class GeoLocService {
   Position position;
 
   double latitude() => position.latitude;
   double longitude() => position.longitude;
 
-  String currentLocationStr() => 'Latitude:' + latitude().toString() + ' Longitude:' + longitude().toString();
+  String currentLocationStr() =>
+      'Latitude:' +
+      latitude().toString() +
+      ' Longitude:' +
+      longitude().toString();
 
   update([BuildContext context = null, bool getCurrentPosition = false]) async {
     print('-----------------------------------------');
@@ -28,19 +32,20 @@ class GeoLocService{
 
     if (_serviceEnabled) {
       try {
-        await goop_LibComponents.dialogProcess(context, () async {
-          if (getCurrentPosition == true) {
-            position = await Geolocator.getCurrentPosition(
-                desiredAccuracy: LocationAccuracy.medium, forceAndroidLocationManager: true, timeLimit: Duration(seconds: 15));
-          } else {
-            position = await Geolocator.getLastKnownPosition();
-          }
-        }, 'Buscando Localização');
-
+        // await goop_LibComponents.dialogProcess(context, () async {
+        if (getCurrentPosition == true) {
+          position = await Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.medium,
+            forceAndroidLocationManager: true,
+            timeLimit: Duration(seconds: 15),
+          );
+        } else {
+          position = await Geolocator.getLastKnownPosition();
+        }
+        // }, 'Buscando Localização');
 
         if (!globalServiceNotifier.geoLocationOk)
           globalServiceNotifier.geoLocationOk = true;
-
       } catch (e) {
         print('erro:' + e.toString());
       }
@@ -51,5 +56,4 @@ class GeoLocService{
   }
 
   LatLng latLng() => LatLng(latitude(), longitude());
-
 }
