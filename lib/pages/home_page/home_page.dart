@@ -24,10 +24,22 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends StateGoop<HomePage> {
   bool _serviceEnabled;
+  var locationMap;
+  var missionLocation;
+
 
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    missionLocation = ModalRoute.of(context).settings.arguments;
+    if (missionLocation == null) {
+      locationMap = userLocation;
+    }
   }
 
   @override
@@ -61,7 +73,9 @@ class _HomePageState extends StateGoop<HomePage> {
                 return FlutterMap(
                   // mapController: controller,
                   options: MapOptions(
-                    center: globalGeoLocService.latLng(),
+                    center: missionLocation == null
+                    ? userLocation
+                    : LatLng(missionLocation[0], missionLocation[1]),
                     interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
                     zoom: 13.0,
                   ),

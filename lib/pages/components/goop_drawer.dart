@@ -111,11 +111,16 @@ class _GoopDrawerState extends StateGoop<GoopDrawer> {
                         child: GoopButton(
                           text: 'Mapa',
                           action: () {
-                            goop_LibComponents.pushNamedAndRemoveUntil(
+                            goop_LibComponents.pushReplacementNamed(
                               context,
                               Routes.home,
-                              (route) => false,
                             );
+
+                            // Navigator.pushNamedAndRemoveUntil(
+                            //   context,
+                            //   Routes.home,
+                            //   (route) => false,
+                            // );
                           },
                         ),
                       ),
@@ -124,16 +129,16 @@ class _GoopDrawerState extends StateGoop<GoopDrawer> {
                 ),
                 Column(
                   children: [
-                    // goopTile(
-                    //   title: 'Carteira',
-                    //   img: GoopImages.wallet_red,
-                    //   action: () {
-                    //     Navigator.popAndPushNamed(
-                    //       context,
-                    //       Routes.wallet,
-                    //     );
-                    //   },
-                    // ),
+                    goopTile(
+                      title: 'Carteira',
+                      img: GoopImages.wallet_red,
+                      action: () {
+                        Navigator.popAndPushNamed(
+                          context,
+                          Routes.wallet,
+                        );
+                      },
+                    ),
                     // goopTile(
                     //   title: 'Minha Conta',
                     //   img: GoopImages.account,
