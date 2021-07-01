@@ -27,7 +27,6 @@ class GoopCard extends StatefulWidget {
 class _GoopCardState extends StateGoop<GoopCard> {
   @override
   Widget build(BuildContext context) {
-    final inProgress = widget.currentMissionModel.inProgress;
 
     return GestureDetector(
       onTap: !widget.goToPage
@@ -47,10 +46,10 @@ class _GoopCardState extends StateGoop<GoopCard> {
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          color: inProgress ? Color(0XFFFDEEF2) : Colors.white,
+          color:  widget.currentMissionModel.inProgress ? Color(0XFFFDEEF2) : Colors.white,
           border: Border.all(
-            width: inProgress ? 2 : 1,
-            color: (inProgress == true) ? GoopColors.red : widget.border,
+            width:  widget.currentMissionModel.inProgress ? 2 : 1,
+            color: ( widget.currentMissionModel.inProgress == true) ? GoopColors.red : widget.border,
           ),
         ),
         padding: EdgeInsets.all(20),
