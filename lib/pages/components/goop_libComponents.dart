@@ -10,6 +10,7 @@ import 'package:goop/utils/goop_images.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_svg/svg.dart';
 
+int dialogProcessIndex = 0;
 class goop_LibComponents {
   static Widget paddingZ() {
     return Padding(padding: EdgeInsets.only(top: 0));
@@ -53,18 +54,29 @@ class goop_LibComponents {
   }
 
   static Future<void> dialogProcess(BuildContext context, Function function,
-      [String caption = 'Aguarde por favor...']) async {
+      [String caption = 'Aguarde por favor...', String exceptionMessage]) async {
+
     showProgressDialog(context, caption);
     try {
-      // await delayedSeconds(1);
-      try {
-        await function();
-      } finally {
-        goop_LibComponents.navigatorPop(context);
-      }
+      dialogProcessIndex += 1;
+
+        try {
+          await function();
+        } finally {
+          dialogProcessIndex -= 1;
+          goop_LibComponents.navigatorPop(context);
+        }
+
     } catch (e) {
-      showMessage(context, 'Opss', e.toString());
-      throw '';
+      if (exceptionMessage == null)
+        exceptionMessage = e.toString();
+
+      if (dialogProcessIndex == 0){
+        showMessage(context, 'Opss', exceptionMessage);
+        throw '';
+      } else {
+        throw exceptionMessage;
+      }
     }
   }
 

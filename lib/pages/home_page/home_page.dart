@@ -74,7 +74,7 @@ class _HomePageState extends StateGoop<HomePage> {
                   // mapController: controller,
                   options: MapOptions(
                     center: missionLocation == null
-                        ? userLocation
+                        ? globalGeoLocService.latLng()
                         : LatLng(missionLocation[0], missionLocation[1]),
                     interactiveFlags:
                         InteractiveFlag.pinchZoom | InteractiveFlag.drag,
@@ -154,7 +154,7 @@ class _HomePageState extends StateGoop<HomePage> {
             showCircularProgress: true,
             action: () async {
               await globalGeoLocService.update(context, true);
-              setState_();
+              serviceNotifier.notifyListeners();
             },
           ),
           paddingT(20),
