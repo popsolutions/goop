@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:goop/config/app/authentication_controller.dart';
 import 'package:goop/models/AlternativeModel.dart';
 import 'package:goop/models/activity.dart';
+import 'package:goop/models/measurement.dart';
 import 'package:goop/models/measurementPhotoLines.dart';
 import 'package:goop/models/measurementPriceComparisonLines.dart';
 import 'package:goop/models/measurementQuizzlines.dart';
@@ -97,7 +98,7 @@ class ServiceNotifier extends ChangeNotifier {
     await activityService.setMeasurementQuizzlinesModel(
         currentActivity, currentMissionModel.measurementModel, currentUser);
 
-    notifyListeners();
+    await missionAfterActivityExec();
   }
 
   Future<void> createOrUpdateGeoLocMeasurementModel() async {
@@ -127,7 +128,7 @@ class ServiceNotifier extends ChangeNotifier {
     await activityService.setMeasurementPhotoLinesModel(
         currentActivity, currentMissionModel.measurementModel, currentUser);
 
-    notifyListeners();
+    await missionAfterActivityExec();
   }
 
   Future<void> insert_Measurement_PriceComparisonLinesModel(
@@ -149,7 +150,22 @@ class ServiceNotifier extends ChangeNotifier {
     await activityService.setMeasurementPriceComparisonLinesModel(
         currentActivity, currentMissionModel.measurementModel, currentUser);
 
+    await missionAfterActivityExec();
+  }
+
+  Future<void> missionAfterActivityExec(){
+    currentMissionModel.updateStatus();
     notifyListeners();
+  }
+
+  Future<void> measurementDone() async {
+    if (currentMissionModel.status != MissionStatus.Done)
+      throw 'Status inválido da missão';
+
+    MeasurementModel measurementModel = currentMissionModel.measurementModel;
+    measurementModel.state = 'done';
+    measurementService.updateGeoLocation(measurementModel, currentMissionModel);
+    missionAfterActivityExec();
   }
 
   setcurrentMissionModel(MissionModel missionModel) async {

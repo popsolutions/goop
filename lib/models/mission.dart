@@ -1,6 +1,7 @@
 import 'package:goop/models/activity.dart';
 import 'package:goop/models/establishment.dart';
 import 'package:goop/models/measurement.dart';
+import 'package:goop/utils/global.dart';
 import 'package:goop/utils/utils.dart';
 
 class MissionModel {
@@ -24,8 +25,10 @@ class MissionModel {
   double price;
   String time;
   bool inProgress = false;
+  bool inProgressOrDone = false;
   MissionStatus _status = MissionStatus.Ordered;
   String timeToCompletMission = '';
+  bool secondsRedMissionTime = false;
 
   List<Activity> listActivity = <Activity>[];
   MeasurementModel _measurementModel;
@@ -162,27 +165,50 @@ class MissionModel {
 
   set measurementModel(MeasurementModel measurementModel) {
     this._measurementModel = measurementModel;
+    updateStatus();
+  }
+
+  void updateStatus(){
+    MissionStatus newStatus;
 
     if (this._measurementModel == null) {
-      this.status = MissionStatus.Ordered;
+      newStatus = MissionStatus.Ordered;
     } else {
       if ((_measurementModel.state == 'draft') ||
           (_measurementModel.state == 'ordered'))
-        this.status = MissionStatus.Ordered;
+        newStatus = MissionStatus.Ordered;
       else if (_measurementModel.state == 'doing')
-        this.status = MissionStatus.InProgress;
+        newStatus = MissionStatus.InProgress;
       else
-        this.status = MissionStatus.Closed;
+        newStatus = MissionStatus.Closed;
+
+      if ((newStatus == MissionStatus.Ordered) || (newStatus == MissionStatus.InProgress)){
+        if (this.activityAllDone() == true)
+          newStatus = MissionStatus.Done;
+        else if (this.endTime())
+          newStatus = MissionStatus.EndTime;
+      }
     }
+
+    if (this.status != newStatus)
+      this.status = newStatus;
   }
 
   MeasurementModel get measurementModel => this._measurementModel;
 
   String getTimeToCompletMission() {
-    if (_measurementModel != null)
-      return _measurementModel.getTimeToCompletMission();
-    else
+    if (_measurementModel == null)
       return '';
+    else{
+      int secondsToCompletMission = _measurementModel.secondsToCompletMission();
+
+      if ((secondsToCompletMission <= 0) & (this.status == MissionStatus.InProgress))
+        updateStatus();
+
+      secondsRedMissionTime = (secondsToCompletMission < globalConfig.secondsRedMissionTime);
+
+      return convertSecondsToHHMMSS(secondsToCompletMission);
+    }
   }
 
   MissionStatus get status => _status;
@@ -190,15 +216,31 @@ class MissionModel {
   set status(MissionStatus value) {
     _status = value;
     inProgress = _status == MissionStatus.InProgress;
+    inProgressOrDone  = (_status == MissionStatus.InProgress) || (_status == MissionStatus.Done) || (_status == MissionStatus.Closed);
   }
 
   void settimeToCompletMission() {
     timeToCompletMission = getTimeToCompletMission();
+  }
+
+  bool activityAllDone() => listActivity.length == activityAmoutDone();
+  bool endTime() => (_measurementModel == null) ? false : (_measurementModel.endTime);
+
+  int activityAmoutDone(){
+    int amountDone = 0;
+    listActivity.forEach((element) {
+      if (element.isChecked)
+        amountDone += 1;
+    });
+
+    return amountDone;
   }
 }
 
 enum MissionStatus {
   Ordered,
   InProgress,
+  EndTime,
+  Done,
   Closed,
 }

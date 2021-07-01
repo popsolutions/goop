@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 import 'package:goop/models/measurementQuizzlines.dart';
 import 'package:goop/models/mission.dart';
+import 'package:goop/utils/global.dart';
 import 'package:goop/utils/utils.dart';
 
 class MeasurementModel {
@@ -32,15 +33,22 @@ class MeasurementModel {
   String legendDoing;
   int create_Uid;
   String create_Uname;
-  DateTime createDate;
+  DateTime create_date;
   int write_Uid;
   String write_Uname;
   DateTime writeDate;
   String kanbanStateLabel;
   String displayName;
-  String lastUpdate; //original name "__last_update"
-  DateTime dateEnd = DateTime.now().add(Duration(hours: 2, minutes: 30));
+  String lastUpdate;
 
+
+  DateTime dateEnd(){
+    DateTime dateEnd = create_date.add(Duration(hours: globalConfig.hoursDiffServer));
+    // dateEnd = dateEnd.add(Duration(minutes: 10));
+    dateEnd = dateEnd.add(Duration(hours: globalConfig.hoursCompletMission));
+
+    return dateEnd;
+  }
 
   List<MeasurementQuizzlinesModel> listMeasurementQuizzlinesModel;
 
@@ -71,7 +79,7 @@ class MeasurementModel {
     this.legendDoing,
     this.create_Uid,
     this.create_Uname,
-    this.createDate,
+    this.create_date,
     this.write_Uid,
     this.write_Uname,
     this.writeDate,
@@ -130,7 +138,7 @@ class MeasurementModel {
     legendDoing = json['legend_doing'];
     create_Uid = getArrJsonInt('create_uid', 0);
     create_Uname = getArrJson('create_uid', 1);
-    createDate = DateTime.parse(json['create_date']);
+    create_date = DateTime.parse(json['create_date']);
     write_Uid = getArrJsonInt('write_Uid', 0);
     write_Uname = getArrJson('write_Uid', 1);
     writeDate = DateTime.parse(json['write_date']);
@@ -174,7 +182,10 @@ class MeasurementModel {
     return data;
   }
 
-  String getTimeToCompletMission() {
-    return difDateSecondsStr(DateTime.now(), dateEnd);
+  int secondsToCompletMission() {
+    return difDateSeconds(DateTime.now(), dateEnd());
   }
+
+  get endTime => DateTime.now().isAfter(dateEnd());
+
 }

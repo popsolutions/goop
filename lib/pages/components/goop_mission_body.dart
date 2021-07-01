@@ -7,6 +7,7 @@ import 'package:goop/config/routes.dart';
 import 'package:goop/models/activity.dart';
 import 'package:goop/models/mission.dart';
 import 'package:goop/pages/components/StateGoop.dart';
+import 'package:goop/pages/components/goop_libComponents.dart';
 import 'package:goop/pages/settings_page/preview_page.dart';
 import 'package:goop/services/ServiceNotifier.dart';
 import 'package:goop/utils/goop_colors.dart';
@@ -28,7 +29,7 @@ class _GoopMissionBodyState extends StateGoop<GoopMissionBody> {
 
     MissionModel currentMissionModel = widget.currentMissionModel_;
 
-    Future<void> showPreview(File file) async {
+    Future<void> showPreview(BuildContext context, File file) async {
       file = await Navigator.push(
         context,
         MaterialPageRoute(
@@ -36,12 +37,12 @@ class _GoopMissionBodyState extends StateGoop<GoopMissionBody> {
         ),
       );
 
-      await dialogProcess(() async {
+      navigatorPop();
+
+      goop_LibComponents.dialogProcess(context, () async {
         await serviceNotifier.insert_Measurement_photolines(
             base64Encode(file.readAsBytesSync()));
       });
-
-      navigatorPop();
     }
 
     return Column(
@@ -105,20 +106,20 @@ class _GoopMissionBodyState extends StateGoop<GoopMissionBody> {
                     currentMissionModel.listActivity[index];
 
                 return ListTile(
-                  enabled: currentMissionModel.inProgress,
+                  enabled: currentMissionModel.inProgressOrDone,
                   focusColor: Colors.grey[400],
                   leading: Icon(
                     (currentActivity.isChecked == true)
                         ? Icons.star
                         : Icons.star_border,
-                    color: currentMissionModel.inProgress
+                    color: currentMissionModel.inProgressOrDone
                         ? Colors.deepPurple
                         : Colors.grey[400],
                   ),
                   title: Text(
                     currentMissionModel.listActivity[index].name,
                     style: TextStyle(
-                      color: currentMissionModel.inProgress
+                      color: (currentMissionModel.inProgressOrDone)
                           ? currentActivity.isChecked
                               ? GoopColors.red
                               : GoopColors.darkBlue
@@ -149,15 +150,16 @@ class _GoopMissionBodyState extends StateGoop<GoopMissionBody> {
                           arguments: currentMissionModel,
                         );
                       } else {
-                        Navigator.push(
+                        await Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (_) => CameraCamera(
                               enableZoom: true,
-                              onFile: (file) async => await showPreview(file),
+                              onFile: (file) async => await showPreview(context, file),
                             ),
                           ),
                         );
+                        print('x');
                       }
                     }
                   },

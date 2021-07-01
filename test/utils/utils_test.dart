@@ -2,6 +2,16 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:goop/utils/utils.dart';
 
 main() {
+  test('global', () {
+    DateTime a = convertStringToDateTime('2021-12-01 12:00:00');
+    print(a.toString());
+
+    a = a.add(Duration(hours: -2));
+    print(a.toString());
+
+  });
+
+
   test('ListInt_test', () {
     var model = {"id": 45, "name": "name sample", "quizz_line_ids": []};
 
@@ -102,7 +112,7 @@ main() {
       DateTime d1 = DateTime.parse(value1);
       DateTime d2 = DateTime.parse(value2);
 
-      print(value1 + ' - ' + value2 + ': ' + difDateSecondsStr(d1, d2));
+      print(value1 + ' - ' + value2 + ': ' + convertSecondsToHHMMSS(difDateSeconds(d1, d2)));
     }
 
     pDif('2021-06-21 12:00:00.000', '2021-06-21 15:27:59.000');

@@ -46,10 +46,10 @@ class _GoopCardState extends StateGoop<GoopCard> {
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          color:  widget.currentMissionModel.inProgress ? Color(0XFFFDEEF2) : Colors.white,
+          color:  widget.currentMissionModel.inProgressOrDone ? Color(0XFFFDEEF2) : Colors.white,
           border: Border.all(
-            width:  widget.currentMissionModel.inProgress ? 2 : 1,
-            color: ( widget.currentMissionModel.inProgress == true) ? GoopColors.red : widget.border,
+            width:  widget.currentMissionModel.inProgressOrDone ? 2 : 1,
+            color: ( widget.currentMissionModel.inProgressOrDone == true) ? GoopColors.red : widget.border,
           ),
         ),
         padding: EdgeInsets.all(20),

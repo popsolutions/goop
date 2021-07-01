@@ -12,4 +12,7 @@ GlobalConfig globalConfig = GlobalConfig();
 
 class GlobalConfig {
   double distanceMetersLimitUser = 200;
+  int hoursDiffServer = -3;
+  int hoursCompletMission = 2;
+  int secondsRedMissionTime = 300;
 }

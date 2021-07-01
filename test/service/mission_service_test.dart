@@ -155,7 +155,7 @@ void main() {
   test('Measurement.insert', () async {
     MeasurementModel measurementModelInsert = MeasurementModel(
         id: null,
-        mission_Id: 74,
+        mission_Id: 82,
         name: 'Teste Insert - vendor test-quizz',
         partner_Id: currentUser.partnerId,
         partner_Name: null,
@@ -191,8 +191,10 @@ void main() {
     MeasurementModel measurementModel =
         await measurementService.insertAndGet(measurementModelInsert);
 
-    print(JSONToStringWrapQuotClear(measurementModel.toJson()));
+    // print(JSONToStringWrapQuotClear(measurementModel.toJson()));
 
+    print('create_date:' + measurementModel.create_date.toString());
+    print('dateStarted:' + measurementModel.dateStarted.toString());
     expect(measurementModel, isNotNull);
     print('INSERT OK!');
   });

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goop/config/routes.dart';
-import 'package:goop/pages/components/goop_back.dart';
 import 'package:goop/pages/components/goop_button.dart';
 import 'package:goop/pages/components/goop_libComponents.dart';
 import 'package:goop/utils/goop_images.dart';
@@ -14,7 +13,6 @@ class MissionCompletedPage extends StatelessWidget {
         toolbarHeight: 80,
         centerTitle: true,
         automaticallyImplyLeading: false,
-        leading: GoopBack(),
         title: Container(
           height: 80,
           child: SvgPicture.asset(
@@ -43,9 +41,10 @@ class MissionCompletedPage extends StatelessWidget {
               GoopButton(
                 text: 'Home',
                 action: () {
+                  // goop_LibComponents.na
                   goop_LibComponents.navigatorPushNamed(
                     context,
-                    Routes.white_splash,
+                    Routes.mission_home,
                   );
                 },
               ),

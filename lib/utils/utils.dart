@@ -58,6 +58,11 @@ String convertDateTimeToStringFormat(DateTime date) {
   return '${convertDateToStringFormat(date)} ${convertTimeToStringFormat(date)}';
 }
 
+DateTime convertStringToDateTime(String dateTime) {
+  //dateTime in Format Example => '2021-12-01 23:59:59'
+  return DateTime.parse(dateTime);
+}
+
 void ToDevelop(String s) {
   print(':: To Develop: $s');
 }
@@ -84,8 +89,11 @@ double CurrencyStringtoDouble(String value) {
   return formatCurrencyDouble(double.parse(vlCurrency.trim()));
 }
 
-String difDateSecondsStr(DateTime dateFrom, DateTime dateTo) {
-  int seconds = dateTo.difference(dateFrom).inSeconds;
+int difDateSeconds(DateTime dateFrom, DateTime dateTo) {
+  return dateTo.difference(dateFrom).inSeconds;
+}
+
+String convertSecondsToHHMMSS(int seconds){
   int minutes = 0;
   int hours = 0;
   int days = 0;

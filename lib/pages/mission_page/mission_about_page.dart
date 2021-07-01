@@ -19,6 +19,7 @@ class MissionAboutPage extends StatefulWidget {
 
 class _MissionAboutPageState extends StateGoop<MissionAboutPage> {
   MissionModel currentMissionModel;
+  Timer timer;
 
   bool _isRunning = true;
 
@@ -27,11 +28,19 @@ class _MissionAboutPageState extends StateGoop<MissionAboutPage> {
     serviceNotifier.notifyListeners();
   }
 
+
+  @override
+  void didChangeDependencies() {
+    if (didChangeDependenciesLoad == true) return;
+    listenServiceNotifier = true;
+    super.didChangeDependencies();
+  }
+
   @override
   void initState() {
     super.initState();
 
-    Timer.periodic(Duration(seconds: 1), (Timer timer) {
+    timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
       if (!_isRunning) {
         timer.cancel();
         return;
@@ -42,18 +51,24 @@ class _MissionAboutPageState extends StateGoop<MissionAboutPage> {
 
   @override
   void dispose() {
-    super.dispose();
+    timer.cancel();
     _isRunning = false;
+    super.dispose();
   }
 
-  situacional({ifCompleted, ifInProgress, ifOrdered}) {
+  situacional({ifOrdered, ifInProgress, ifEndTime, ifDone, ifClosed}) {
     if (currentMissionModel.status == MissionStatus.Ordered) {
-      return ifCompleted;
+      return ifOrdered;
     } else if (currentMissionModel.status == MissionStatus.InProgress) {
       return ifInProgress;
-    } else {
-      return ifOrdered;
-    }
+    } else if (currentMissionModel.status == MissionStatus.EndTime) {
+      return ifEndTime;
+    } else if (currentMissionModel.status == MissionStatus.Done) {
+      return ifDone;
+    } else if (currentMissionModel.status == MissionStatus.Closed) {
+      return ifClosed;
+    } else
+      throw 'Status de missão não implementado ';
   }
 
   @override
@@ -86,7 +101,7 @@ class _MissionAboutPageState extends StateGoop<MissionAboutPage> {
               Consumer<ServiceNotifier>(builder:
                   (BuildContext context, ServiceNotifier value, Widget child) {
                 return situacional(
-                  ifCompleted: Text(
+                  ifOrdered: Text(
                     currentMissionModel.timeToCompletMission,
                     style: theme,
                     textAlign: TextAlign.center,
@@ -105,15 +120,33 @@ class _MissionAboutPageState extends StateGoop<MissionAboutPage> {
                       ),
                     ],
                   ),
-                  ifOrdered: Text(
+                  ifEndTime: Text(
                     'Tempo Esgotado',
                     style: theme,
+                  ),
+                  ifDone: Text(
+                    'Concluída',//??-pedro
+                    style: theme,
+                  ),
+                  ifClosed: GestureDetector(
+                    onTap: (){
+                      navigatorPushNamed(
+                        Routes.mission_completed,
+                      );
+                      },
+                    child: Text(
+                      'Concluída.',//??-pedro
+                      style: theme,
+                    ),
                   ),
                 );
               }),
               SizedBox(height: 10),
               situacional(
-                ifCompleted: Column(
+                ifOrdered: Container(),
+                ifInProgress: Container(),
+                ifEndTime: Container(),
+                ifDone: Column(
                   children: [
                     Text(
                       'Prêmio da missão: ',
@@ -129,14 +162,13 @@ class _MissionAboutPageState extends StateGoop<MissionAboutPage> {
                     ),
                   ],
                 ),
-                ifInProgress: Container(),
-                ifOrdered: Container(),
+                ifClosed: Container(),
               ),
               SizedBox(height: 20),
               Consumer<ServiceNotifier>(builder:
                   (BuildContext context, ServiceNotifier value, Widget child) {
                 return situacional(
-                  ifCompleted: Container(
+                  ifOrdered: Container(
                       margin: EdgeInsets.only(bottom: 30),
                       child: (currentMissionModel.inProgress == false)
                           ? GoopButton(
@@ -149,17 +181,23 @@ class _MissionAboutPageState extends StateGoop<MissionAboutPage> {
                             )
                           : null),
                   ifInProgress: Container(),
-                  ifOrdered: Container(
+                  ifEndTime: Container(),
+                  ifDone: Container(
                     margin: EdgeInsets.only(bottom: 30),
                     child: GoopButton(
                       text: 'Enviar',
-                      action: () {
+                      action: () async {
+                        await dialogProcess(() async {
+                          await serviceNotifier.measurementDone();
+                        });
+
                         navigatorPushNamed(
                           Routes.mission_completed,
                         );
                       },
                     ),
                   ),
+                  ifClosed: Container(),
                 );
               }),
             ],
