@@ -19,6 +19,10 @@ class GeoLocService {
       longitude().toString();
 
   update([BuildContext context = null, bool getCurrentPosition = false]) async {
+
+    if (context == null)
+      context = globalServiceNotifier.currentBuildContext;
+
     bool _serviceEnabled;
 
     _serviceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -50,6 +54,24 @@ class GeoLocService {
     } else {
       throw 'Serviço de GPS está inativo.';
     }
+  }
+
+  double distanceBetween(
+      double startLatitude,
+      double startLongitude,
+      double endLatitude,
+      double endLongitude,
+      ){
+    return Geolocator.distanceBetween(startLatitude, startLongitude, endLatitude, endLongitude);
+  }
+
+  double distanceBetweenInMeter(
+      double startLatitude,
+      double startLongitude,
+      double endLatitude,
+      double endLongitude,
+      ){
+    return Geolocator.distanceBetween(startLatitude, startLongitude, endLatitude, endLongitude);
   }
 
   LatLng latLng() => LatLng(latitude(), longitude());

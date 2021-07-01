@@ -34,6 +34,7 @@ class _HomePageState extends StateGoop<HomePage> {
 
   @override
   void didChangeDependencies() {
+    listenServiceNotifier = true;
     super.didChangeDependencies();
     missionLocation = ModalRoute.of(context).settings.arguments;
     if (missionLocation == null) {
