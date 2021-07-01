@@ -7,4 +7,9 @@ import 'SharedPreferencesGoop.dart';
 SharedPreferencesGoop prefsGoop = SharedPreferencesGoop();
 User globalcurrentUser;
 ServiceNotifier globalServiceNotifier;
-GeoLocService globalGeoLocService = new GeoLocService();
+GeoLocService globalGeoLocService = GeoLocService();
+GlobalConfig globalConfig = GlobalConfig();
+
+class GlobalConfig {
+  double distanceMetersLimitUser = 200;
+}

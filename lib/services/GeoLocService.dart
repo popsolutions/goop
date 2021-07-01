@@ -6,13 +6,17 @@ import 'package:goop/utils/global.dart';
 import 'package:goop/utils/utils.dart';
 import 'package:latlong2/latlong.dart';
 
-class GeoLocService{
+class GeoLocService {
   Position position;
 
   double latitude() => position.latitude;
   double longitude() => position.longitude;
 
-  String currentLocationStr() => 'Latitude:' + latitude().toString() + ' Longitude:' + longitude().toString();
+  String currentLocationStr() =>
+      'Latitude:' +
+      latitude().toString() +
+      ' Longitude:' +
+      longitude().toString();
 
   update([BuildContext context = null, bool getCurrentPosition = false]) async {
     bool _serviceEnabled;
@@ -49,5 +53,4 @@ class GeoLocService{
   }
 
   LatLng latLng() => LatLng(latitude(), longitude());
-
 }

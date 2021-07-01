@@ -101,11 +101,22 @@ class MeasurementService {
     return true;
   }
 
-  Future<int> updateGeoLocation(MeasurementModel measurementModel) async {
+  Future<int> updateGeoLocation(MeasurementModel measurementModel, MissionModel missionModelOwner) async {
     await globalGeoLocService.update();
+
+    double distanceMeters = globalGeoLocService.distanceBetweenInMeter(
+        globalGeoLocService.latitude(),
+        globalGeoLocService.longitude(),
+        missionModelOwner.establishmentModel.latitude,
+        missionModelOwner.establishmentModel.longitude);
+
+    if (distanceMeters > globalConfig.distanceMetersLimitUser){
+      throw 'Você não está no local da missão!';
+    }
 
     measurementModel.measurementLatitude = globalGeoLocService.latitude();
     measurementModel.measurementLongitude = globalGeoLocService.longitude();
+
     update(measurementModel);
   }
 

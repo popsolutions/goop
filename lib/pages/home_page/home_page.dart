@@ -137,35 +137,50 @@ class _HomePageState extends StateGoop<HomePage> {
 
   Widget geoLocationError() {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-              'Falha ao obter localização do GPS. Verifique se seu GPS está ativo e se o Goop tem permissão para acessar o GPS'),
-          GoopButton(
-            text: 'Abrir configurações do GPS',
-            showCircularProgress: true,
-            action: () async {
-              Geolocator.openLocationSettings();
-            },
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(30),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Falha ao obter localização do GPS.\nVerifique se seu GPS está ativo.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              GoopButton(
+                text: 'Habilitar GPS',
+                showCircularProgress: true,
+                action: () async {
+                  Geolocator.openLocationSettings();
+                },
+              ),
+              GoopButton(
+                text: 'Tentar novamente',
+                showCircularProgress: true,
+                action: () async {
+                  await globalGeoLocService.update(context, true);
+                  serviceNotifier.notifyListeners();
+                },
+              ),
+              GoopButton(
+                text: 'Fechar Goop',
+                showCircularProgress: true,
+                action: () async {
+                  exit(0);
+                },
+              ),
+            ],
           ),
-          GoopButton(
-            text: 'Tentar novamente',
-            showCircularProgress: true,
-            action: () async {
-              await globalGeoLocService.update(context, true);
-              serviceNotifier.notifyListeners();
-            },
-          ),
-          paddingT(20),
-          GoopButton(
-            text: 'Fechar Goop',
-            showCircularProgress: true,
-            action: () async {
-              exit(0);
-            },
-          ),
-        ],
+        ),
       ),
     );
   }

@@ -60,6 +60,7 @@ class _GoopButtonState extends StateGoop<GoopButton> {
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
+                    textAlign: TextAlign.center,
                   ),
             onPressed: () async {
               if (widget.showCircularProgress == true) {

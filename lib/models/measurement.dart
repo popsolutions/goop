@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 import 'package:goop/models/measurementQuizzlines.dart';
+import 'package:goop/models/mission.dart';
 import 'package:goop/utils/utils.dart';
 
 class MeasurementModel {

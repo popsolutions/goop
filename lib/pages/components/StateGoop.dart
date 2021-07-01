@@ -21,7 +21,7 @@ abstract class StateGoop<T extends StatefulWidget> extends State<T> {
         Provider.of<ServiceNotifier>(context, listen: listenServiceNotifier);
     mediaQuery = MediaQuery.of(context).size.width;
     theme = Theme.of(context).textTheme.headline2;
-
+    serviceNotifier.currentBuildContext = context;
     didChangeDependenciesLoad = true;
   }
 

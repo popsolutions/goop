@@ -27,6 +27,7 @@ class ServiceNotifier extends ChangeNotifier {
   // ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context);
 
   bool _geoLocationOk = false;
+  BuildContext currentBuildContext;
   AlternativeService alternativeService = new AlternativeService();
   MeasurementService measurementService = new MeasurementService();
   MeasurementQuizzlinesService measurement_quizzlinesService =
@@ -71,6 +72,7 @@ class ServiceNotifier extends ChangeNotifier {
     listMissionModelEstablishment =
         await missionService.getListMissionModelEstablishment(listMissionModel);
     await globalGeoLocService.update(context);
+    notifyListeners();
   }
 
   void listAlternativeModelLoad() async {
@@ -104,7 +106,7 @@ class ServiceNotifier extends ChangeNotifier {
       await missionService.createMeasurementModel(
           currentMissionModel, currentUser);
     } else {
-      await measurementService.updateGeoLocation(currentMissionModel.measurementModel);
+      await measurementService.updateGeoLocation(currentMissionModel.measurementModel, currentMissionModel);
     }
   }
 
