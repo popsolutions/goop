@@ -94,11 +94,11 @@ void main() {
 
     while (!missionService.getMissionsCompletLoad()) {
       await Future.delayed(Duration(milliseconds: 60));
-      print('Aguardando finalização de missionService.getMissions()');
+      printL('Aguardando finalização de missionService.getMissions()');
     }
 
     await Future.delayed(Duration(milliseconds: 300));
-    print('missionService.getMissions() Finalizado');
+    printL('missionService.getMissions() Finalizado');
 
     return listMissionModel;
   }

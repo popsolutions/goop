@@ -15,12 +15,12 @@ class MissionHomePage extends StatefulWidget {
 class _MissionHomePageState extends StateGoop<MissionHomePage> {
   List<MissionModel> listMissionModel;
 
-  // @override
-  // void didChangeDependencies() {
-  //   if (didChangeDependenciesLoad == true) return;
-  //   listenServiceNotifier = true;
-  //   super.didChangeDependencies();
-  // }
+  @override
+  void didChangeDependencies() {
+    if (didChangeDependenciesLoad == true) return;
+    listenServiceNotifier = true;
+    super.didChangeDependencies();
+  }
 
   @override
   void initState() {
