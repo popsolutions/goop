@@ -105,8 +105,8 @@ class _GoopCardState extends StateGoop<GoopCard> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(
-                        context,
+                      // navigatorPushNamed(
+                      navigatorPushReplacementNamed(
                         Routes.home,
                         arguments: [
                           widget
