@@ -5,6 +5,7 @@ import 'package:goop/pages/components/goop_button.dart';
 import 'package:goop/pages/components/goop_libComponents.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class InitialPage extends StatelessWidget {
   @override
@@ -37,12 +38,18 @@ class InitialPage extends StatelessWidget {
               ),
             ),
             GoopButton(
-              text: 'Cadastre-se Agora',
-              buttonColor: Colors.white,
-              textColor: GoopColors.red,
-              borderColor: GoopColors.red,
-              action: () => goop_LibComponents.navigatorPushNamed(context, Routes.register),
-            ),
+                text: 'Cadastre-se Agora',
+                buttonColor: Colors.white,
+                textColor: GoopColors.red,
+                borderColor: GoopColors.red,
+                action: () {
+                  Navigator.pushNamed(
+                    context,
+                    Routes.register,
+                  );
+                }
+                // action: () => launch('https://dev.charismabi.com/web/signup'),
+                ),
           ],
         ),
       ),

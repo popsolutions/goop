@@ -6,7 +6,7 @@ class GoopImages {
   static const login = 'assets/images/login.svg';
   static const recover_password = 'assets/images/recover_password.svg';
   static const charisma = 'assets/images/charisma.svg';
-  static const cadastro = 'assets/images/Cadastro.svg';
+  static const cadastro = 'assets/images/Cadastro.png';
   static const avatar = 'assets/images/avatar.svg';
   static const red_smile = 'assets/images/red_smile.svg';
   static const back = 'assets/images/back.svg';
