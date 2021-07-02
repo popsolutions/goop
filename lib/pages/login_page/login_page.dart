@@ -75,7 +75,7 @@ class _LoginPageState extends StateGoop<LoginPage> {
     serviceNotifier.setCurrentUser(user);
 
     _authenticationController.authenticate(user);
-    pushNamedAndRemoveUntil(
+    navigatorPushNamedAndRemoveUntil(
       Routes.home,
       (route) => false,
     );

@@ -5,8 +5,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:goop/pages/settings_page/preview_page.dart';
+import 'package:goop/utils/StackUtil.dart';
+import 'package:goop/utils/global.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
+import 'package:goop/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -58,13 +61,13 @@ class goop_LibComponents {
 
     showProgressDialog(context, caption);
     try {
-      dialogProcessIndex += 1;
+      ++dialogProcessIndex;
 
         try {
           await function();
         } finally {
-          dialogProcessIndex -= 1;
-          goop_LibComponents.navigatorPop(context);
+          --dialogProcessIndex;
+          goop_LibComponents.navigatorPop(context, null, false);
         }
 
     } catch (e) {
@@ -186,7 +189,7 @@ class goop_LibComponents {
         ),
       );
     }catch(e){
-      print(e.toString());
+      printL(e.toString());
     }
   }
 
@@ -234,7 +237,7 @@ class goop_LibComponents {
 
   static Future<String> showPreview(BuildContext context, File file) async {
     String fileBase64;
-    file = await Navigator.push(
+    file = await navigatorPush(
       context,
       MaterialPageRoute(builder: (_) => PreviewPage(file)),
     );
@@ -363,40 +366,100 @@ class goop_LibComponents {
     );
   }
 
-  static navigatorPop(BuildContext context){
-    Navigator.pop(context);
+  //################################################ Navigator ################################################
+  static Future<T> navigatorPop<T extends Object>(BuildContext context, [T result, bool popStack = true]) {
+    globalScreenStackPop('navigatorPop', popStack);
+
+    Navigator.pop(context, result);
   }
 
-  static navigatorPopAndPushNamed(BuildContext context, String route){
-    Navigator.popAndPushNamed(
+  static Future<T> navigatorPopAndPushNamed<T extends Object>(BuildContext context, String route, Object arguments) {
+    globalScreenStackPop('navigatorPopAndPushNamed');
+    globalScreenStackPush(route, 'navigatorPopAndPushNamed(2)');
+    return Navigator.popAndPushNamed(context, route, arguments: arguments);
+  }
+
+  static Future<T> navigatorPush<T extends Object>(BuildContext context, Route<T> route) {
+    globalScreenStackPush('/unknown', 'navigatorPush');
+
+    return Navigator.push(
         context,
-        route,
+        route
     );
   }
 
-  static navigatorPushNamed(BuildContext context, String route, {Object arguments}){
-    Navigator.pushNamed(
+  static Future<T> navigatorPushNamed<T extends Object>(BuildContext context, String route, {Object arguments}) {
+    globalScreenStackPush(route, 'navigatorPushNamed');
+
+    return Navigator.pushNamed(
       context,
       route,
       arguments: arguments
     );
   }
 
-  static pushNamedAndRemoveUntil(BuildContext context, String route, RoutePredicate predicate, {Object arguments}){
-    Navigator.pushNamed(
+  static Future<T> navigatorPushNamedAndRemoveUntil<T extends Object>(BuildContext context, String route, RoutePredicate predicate, {Object arguments}) {
+    globalScreenStackClear();
+    globalScreenStackPush(route, 'navigatorPushNamedAndRemoveUntil');
+
+    return Navigator.pushNamedAndRemoveUntil(
         context,
         route,
+        predicate,
         arguments: arguments
     );
   }
 
-  static pushReplacementNamed(BuildContext context, String route){
-    Navigator.pushReplacementNamed(
+  static Future<T> navigatorPushReplacementNamed<T extends Object>(BuildContext context, String route, {Object arguments}) {
+    globalScreenStackPop('navigatorPushReplacementNamed');
+    globalScreenStackPush(route, 'navigatorPushReplacementNamed(2)');
+
+    return Navigator.pushReplacementNamed(
       context,
-      route
+      route,
+      arguments: arguments
     );
   }
 
+  static void globalScreenStackPop(String origin, [popStack = true]){
+    if (globalScreenStack.length == 0)
+      navigatorLog('($origin) pop: [current zero, not pop]   ----  navigatorLogCurrentScreenTree: ' + navigatorLogCurrentScreenTree());
+    else {
+      if (popStack) {
+        String s = globalScreenStack.pop();
+        navigatorLog('($origin) pop: $s   --- navigatorLogCurrentScreenTree: ' + navigatorLogCurrentScreenTree());
+      } else
+        navigatorLog('($origin) pop whitout Stack   --- navigatorLogCurrentScreenTree: ' + navigatorLogCurrentScreenTree());
+    }
+  }
 
+  static void globalScreenStackPush(String route, String origin){
+    globalScreenStack.push(route);
+    navigatorLog('($origin) push: $route   --- navigatorLogCurrentScreenTree: ' + navigatorLogCurrentScreenTree());
+  }
+
+  static void globalScreenStackClear(){
+    globalScreenStack.Clear();
+    navigatorLog('clear All: ');
+  }
+
+  static void navigatorLogVoid(String value){
+    navigatorLog('void call: ' + value);
+  }
+
+  static String navigatorLogCurrentScreenTree(){
+    String currentScreenTree = '';
+
+    for (var i = 0; i < globalScreenStack.length; ++i){
+      currentScreenTree += globalScreenStack.item(i);
+    }
+
+    return currentScreenTree;
+  }
+
+  static void navigatorLog(String value){
+    printL2('*** navigatorLog *** ' + value);
+  }
+//################################################ Navigator ################################################
 
 }

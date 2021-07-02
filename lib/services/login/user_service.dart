@@ -3,6 +3,7 @@ import 'package:goop/models/login_result.dart';
 import 'package:goop/models/update_user.dart';
 import 'package:goop/models/user.dart';
 import 'package:goop/models/user_profile.dart';
+import 'package:goop/utils/utils.dart';
 
 import '../../config/http/odoo_api.dart';
 import '../../models/basic_user_dto.dart';
@@ -54,7 +55,7 @@ class UserServiceImpl {
       [updateProfileDto.partnerId],
       updateProfileDto.toJson(),
     );
-    print(response);
+    printL(response);
   }
 
   Future<User> getUserFromLoginResult(LoginResult loginResult) async {
@@ -95,8 +96,6 @@ class UserServiceImpl {
     LoginDto loginDto = LoginDto('support@popsolutions.co', '1ND1C0p4c1f1c0');
 
     LoginResult currentLoginResult = await login.login(loginDto);
-    print('x');
-
 
     final response = await _odoo.create(Strings.resUsers, userProfile.toJson());
 

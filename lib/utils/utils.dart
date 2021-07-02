@@ -64,7 +64,7 @@ DateTime convertStringToDateTime(String dateTime) {
 }
 
 void ToDevelop(String s) {
-  print(':: To Develop: $s');
+  printL(':: To Develop: $s');
 }
 
 String doubleToStringValue(double value) =>
@@ -138,7 +138,6 @@ class CurrencyInputFormatter extends TextInputFormatter {
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
     if (newValue.selection.baseOffset == 0) {
-      print(true);
       return newValue;
     }
 
@@ -154,7 +153,9 @@ class CurrencyInputFormatter extends TextInputFormatter {
   }
 }
 
-printL(String value) => print(value);
+// printL(Object object) => print(object);
+printL(Object object) => null;
+printL2(Object object) => print(object);
 
 class ImageGoop{
   String imageBase64;

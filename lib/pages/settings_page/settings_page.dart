@@ -96,7 +96,7 @@ class _SettingsPageState extends StateGoop<SettingsPage> {
   }
 
   void _onError() {
-    print('Deu erro');
+    printL('Deu erro');
   }
 
   submit() {

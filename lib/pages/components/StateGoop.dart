@@ -81,19 +81,26 @@ abstract class StateGoop<T extends StatefulWidget> extends State<T> {
 
   throwIfDoubleIsZero(double value, String message) => throwIf(value == 0, message);
 
-  navigatorPop(){
-    goop_LibComponents.navigatorPop(context);
+  Future<T> navigatorPop<T extends Object>([T result]) {
+    goop_LibComponents.navigatorPop(context, result);
   }
 
-  navigatorPopAndPushNamed(String route){
-    goop_LibComponents.navigatorPopAndPushNamed(
-      context,
-      route,
+  Future<T> navigatorPopAndPushNamed<T extends Object>(
+      String routeName,
+      {Object arguments}
+      ) {
+    return goop_LibComponents.navigatorPopAndPushNamed(context, routeName, arguments);
+  }
+
+  Future<T> navigatorPush<T extends Object>(Route<T> route) {
+    return goop_LibComponents.navigatorPush(
+        context,
+        route
     );
   }
 
-  pushNamedAndRemoveUntil(String route, RoutePredicate predicate, {Object arguments}) {
-    goop_LibComponents.pushNamedAndRemoveUntil(
+  Future<T> navigatorPushNamedAndRemoveUntil<T extends Object>(String route, RoutePredicate predicate, {Object arguments}) {
+    return goop_LibComponents.navigatorPushNamedAndRemoveUntil(
         context,
         route,
         predicate,
@@ -101,14 +108,15 @@ abstract class StateGoop<T extends StatefulWidget> extends State<T> {
     );
   }
 
-  navigatorPushNamed(String route, {Object arguments}){
-    goop_LibComponents.navigatorPushNamed(context, route, arguments: arguments);
+  Future<T> navigatorPushNamed<T extends Object>(String route, {Object arguments}) {
+    return goop_LibComponents.navigatorPushNamed(context, route, arguments: arguments);
   }
 
-  pushReplacementNamed(String route){
-    goop_LibComponents.pushReplacementNamed(
+  Future<T> navigatorPushReplacementNamed<T extends Object>(String route, {Object arguments}) {
+    return goop_LibComponents.navigatorPushReplacementNamed(
         context,
-        route
+        route,
+        arguments: arguments
     );
   }
 }

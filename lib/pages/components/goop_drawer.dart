@@ -20,8 +20,8 @@ class GoopDrawer extends StatefulWidget {
 class _GoopDrawerState extends StateGoop<GoopDrawer> {
   @override
   Widget build(BuildContext context) {
-    ServiceNotifier serviceNotifier =
-        Provider.of<ServiceNotifier>(context, listen: false);
+    // ServiceNotifier serviceNotifier =
+    //     Provider.of<ServiceNotifier>(context, listen: false);
     AuthenticationController authenticationController =
         serviceNotifier.authenticationController;
     final user = authenticationController.currentUser;
@@ -111,12 +111,11 @@ class _GoopDrawerState extends StateGoop<GoopDrawer> {
                         child: GoopButton(
                           text: 'Mapa',
                           action: () {
-                            goop_LibComponents.pushReplacementNamed(
-                              context,
+                            navigatorPushReplacementNamed(
                               Routes.home,
                             );
 
-                            // Navigator.pushNamedAndRemoveUntil(
+                            // navigatorPushNamedAndRemoveUntil(
                             //   context,
                             //   Routes.home,
                             //   (route) => false,
@@ -133,8 +132,7 @@ class _GoopDrawerState extends StateGoop<GoopDrawer> {
                       title: 'Carteira',
                       img: GoopImages.wallet_red,
                       action: () {
-                        Navigator.popAndPushNamed(
-                          context,
+                        navigatorPopAndPushNamed(
                           Routes.wallet,
                         );
                       },
@@ -161,7 +159,7 @@ class _GoopDrawerState extends StateGoop<GoopDrawer> {
                     goopTile(
                       title: 'Sair',
                       img: GoopImages.quit,
-                      action: () => goop_LibComponents.pushNamedAndRemoveUntil(
+                      action: () => goop_LibComponents.navigatorPushNamedAndRemoveUntil(
                         context,
                         Routes.initial,
                         (route) => false,

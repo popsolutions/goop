@@ -38,7 +38,7 @@ class PreviewPage extends StatelessWidget {
                                 size: 30,
                               ),
                               onPressed: () {
-                                Navigator.of(context).pop(file);
+                                goop_LibComponents.navigatorPop(context, file);
                               },
                             ),
                           ),

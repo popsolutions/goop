@@ -31,8 +31,7 @@ class _GoopMissionBodyState extends StateGoop<GoopMissionBody> {
     MissionModel currentMissionModel = widget.currentMissionModel_;
 
     Future<void> showPreview(BuildContext context, File file) async {
-      file = await Navigator.push(
-        context,
+      file = await navigatorPush(
         MaterialPageRoute(
           builder: (_) => PreviewPage(file),
         ),
@@ -150,8 +149,7 @@ class _GoopMissionBodyState extends StateGoop<GoopMissionBody> {
                           arguments: currentMissionModel,
                         );
                       } else {
-                        await Navigator.push(
-                          context,
+                        await navigatorPush(
                           MaterialPageRoute(
                             builder: (_) => CameraCamera(
                               enableZoom: true,
@@ -159,7 +157,7 @@ class _GoopMissionBodyState extends StateGoop<GoopMissionBody> {
                             ),
                           ),
                         );
-                        print('x');
+                        printL('x');
                       }
                     }
                   },

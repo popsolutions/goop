@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:goop/utils/goop_colors.dart';
+import 'package:goop/utils/utils.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/otp_field_style.dart';
 
@@ -39,7 +40,7 @@ class GoopWalletVerification extends StatelessWidget {
               width: double.infinity,
               textFieldAlignment: MainAxisAlignment.center,
               onCompleted: (pin) {
-                print("Completed: " + pin);
+                printL("Completed: " + pin);
               },
             ),
           ),

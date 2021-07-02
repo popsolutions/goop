@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:goop/utils/global.dart';
+import 'package:goop/utils/utils.dart';
 import 'package:http/http.dart' as http;
 import 'package:uuid/uuid.dart';
 import 'odoo_response.dart';
@@ -199,18 +200,18 @@ class Odoo {
     var body = json.encode(payload);
     _headers["Content-type"] = "application/json; charset=UTF-8";
     _headers["Cookie"] = prefsGoop.getString(Constants.SESSION);
-    print("------------------------------------------->>>>");
-    print("REQUEST: $url\n");
-    print("BODY:\n $body\n");
-    print("HEADERS.:");
-    _headers.forEach((key, value) {print(key + ':' + (value ?? '') + '\n');});
-    print("------------------------------------------->>>>");
+    printL("------------------------------------------->>>>");
+    printL("REQUEST: $url\n");
+    printL("BODY:\n $body\n");
+    printL("HEADERS.:");
+    _headers.forEach((key, value) {printL(key + ':' + (value ?? '') + '\n');});
+    printL("------------------------------------------->>>>");
     final response =
         await _client.post(Uri.parse(url), body: body, headers: _headers);
     _updateCookies(response);
-    print("<<<<============================================");
-    print("RESPONSE: ${response.body}");
-    print("<<<<============================================");
+    printL("<<<<============================================");
+    printL("RESPONSE: ${response.body}");
+    printL("<<<<============================================");
     return response;
   }
 

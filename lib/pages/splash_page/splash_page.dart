@@ -11,7 +11,7 @@ class SplashPage extends StatelessWidget {
     Future.delayed(
       Duration(seconds: 3),
     ).then(
-      (_) =>  goop_LibComponents.pushReplacementNamed(
+      (_) =>  goop_LibComponents.navigatorPushReplacementNamed(
         context,
         Routes.initial,
       ),
