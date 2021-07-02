@@ -101,18 +101,18 @@ class ServiceNotifier extends ChangeNotifier {
     await missionAfterActivityExec();
   }
 
-  Future<void> createOrUpdateGeoLocMeasurementModel() async {
+  Future<void> createOrUpdateGeoLocMeasurementModel([BuildContext context]) async {
     // await delayedSeconds(4);
     if (currentMissionModel.measurementModel == null) {
       await missionService.createMeasurementModel(
           currentMissionModel, currentUser);
     } else {
-      await measurementService.updateGeoLocation(currentMissionModel.measurementModel, currentMissionModel);
+      await measurementService.updateGeoLocation(currentMissionModel.measurementModel, currentMissionModel, context);
     }
   }
 
-  Future<void> insert_Measurement_photolines(String photoBase64) async {
-    await createOrUpdateGeoLocMeasurementModel();
+  Future<void> insert_Measurement_photolines(String photoBase64, BuildContext context) async {
+    await createOrUpdateGeoLocMeasurementModel(context);
 
     MeasurementPhotoLinesModel measurementPhotoLinesModel =
         MeasurementPhotoLinesModel(
@@ -158,13 +158,13 @@ class ServiceNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> measurementDone() async {
+  Future<void> measurementDone(BuildContext context) async {
     if (currentMissionModel.status != MissionStatus.Done)
       throw 'Status inválido da missão';
 
     MeasurementModel measurementModel = currentMissionModel.measurementModel;
     measurementModel.state = 'done';
-    measurementService.updateGeoLocation(measurementModel, currentMissionModel);
+    measurementService.updateGeoLocation(measurementModel, currentMissionModel, context);
     missionAfterActivityExec();
   }
 

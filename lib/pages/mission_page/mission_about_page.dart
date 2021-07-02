@@ -101,32 +101,53 @@ class _MissionAboutPageState extends StateGoop<MissionAboutPage> {
               Consumer<ServiceNotifier>(builder:
                   (BuildContext context, ServiceNotifier value, Widget child) {
                 return situacional(
-                  ifOrdered: Text(
-                    currentMissionModel.timeToCompletMission,
-                    style: theme,
-                    textAlign: TextAlign.center,
-                  ),
-                  ifInProgress: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  ifOrdered: Column(
                     children: [
-                      SvgPicture.asset(
-                        GoopImages.clock,
-                        height: 60,
-                      ),
-                      SizedBox(width: 20),
                       Text(
-                        currentMissionModel.timeToCompletMission,
-                        style: Theme.of(context).textTheme.headline5,
+                        'Prazo para cumprir a missão:',
+                        style: theme,
+                      ),
+                      paddingT(15),
+                      Text(
+                        // currentMissionModel.timeToCompletMission,
+                        '3 Horas',
+                        style: theme,
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                  ifInProgress: Column(
+                    children: [
+                      Text(
+                        'Prazo para cumprir a missão:',
+                        style: theme,
+                      ),
+                      paddingT(15),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(
+                            GoopImages.clock,
+                            height: 60,
+                          ),
+                          SizedBox(width: 20),
+                          Text(
+                            currentMissionModel.timeToCompletMission,
+                            style: Theme.of(context).textTheme.headline5,
+                          ),
+                        ],
                       ),
                     ],
                   ),
                   ifEndTime: Text(
                     'Tempo Esgotado',
                     style: theme,
+                    textAlign: TextAlign.center,
                   ),
                   ifDone: Text(
-                    'Concluída',//??-pedro
+                    'Concluída',
                     style: theme,
+                    textAlign: TextAlign.center,
                   ),
                   ifClosed: GestureDetector(
                     onTap: (){
@@ -135,8 +156,9 @@ class _MissionAboutPageState extends StateGoop<MissionAboutPage> {
                       );
                       },
                     child: Text(
-                      'Concluída.',//??-pedro
+                      'Concluída',
                       style: theme,
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 );
@@ -185,10 +207,10 @@ class _MissionAboutPageState extends StateGoop<MissionAboutPage> {
                   ifDone: Container(
                     margin: EdgeInsets.only(bottom: 30),
                     child: GoopButton(
-                      text: 'Enviar',
+                      text: 'Concluir Missão',
                       action: () async {
                         await dialogProcess(() async {
-                          await serviceNotifier.measurementDone();
+                          await serviceNotifier.measurementDone(context);
                         });
 
                         navigatorPushNamed(

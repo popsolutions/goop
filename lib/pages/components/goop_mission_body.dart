@@ -12,6 +12,7 @@ import 'package:goop/pages/settings_page/preview_page.dart';
 import 'package:goop/services/ServiceNotifier.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
+import 'package:goop/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 class GoopMissionBody extends StatefulWidget {
@@ -38,10 +39,9 @@ class _GoopMissionBodyState extends StateGoop<GoopMissionBody> {
       );
 
       navigatorPop();
-
-      goop_LibComponents.dialogProcess(context, () async {
+      dialogProcess(() async {
         await serviceNotifier.insert_Measurement_photolines(
-            base64Encode(file.readAsBytesSync()));
+            base64Encode(file.readAsBytesSync()), context);
       });
     }
 
@@ -168,10 +168,6 @@ class _GoopMissionBodyState extends StateGoop<GoopMissionBody> {
             ),
           );
         }),
-        Text(
-          'Prazo para cumprir a missão:',
-          style: theme,
-        ),
         Container(
           width: MediaQuery.of(context).size.width * .7,
           child: Divider(color: Colors.deepPurple),

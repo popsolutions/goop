@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:goop/config/http/odoo_api.dart';
 import 'package:goop/models/activity.dart';
 import 'package:goop/models/measurement.dart';
@@ -101,8 +102,8 @@ class MeasurementService {
     return true;
   }
 
-  Future<int> updateGeoLocation(MeasurementModel measurementModel, MissionModel missionModelOwner) async {
-    await globalGeoLocService.update();
+  Future<int> updateGeoLocation(MeasurementModel measurementModel, MissionModel missionModelOwner, [BuildContext context]) async {
+    await globalGeoLocService.update(context);
 
     double distanceMeters = globalGeoLocService.distanceBetweenInMeter(
         globalGeoLocService.latitude(),
