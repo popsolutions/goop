@@ -37,12 +37,18 @@ class InitialPage extends StatelessWidget {
               ),
             ),
             GoopButton(
-              text: 'Cadastre-se Agora',
-              buttonColor: Colors.white,
-              textColor: GoopColors.red,
-              borderColor: GoopColors.red,
-              action: () => goop_LibComponents.navigatorPushNamed(context, Routes.register),
-            ),
+                text: 'Cadastre-se Agora',
+                buttonColor: Colors.white,
+                textColor: GoopColors.red,
+                borderColor: GoopColors.red,
+                action: () {
+                  Navigator.pushNamed(
+                    context,
+                    Routes.register,
+                  );
+                }
+                // action: () => launch('https://dev.charismabi.com/web/signup'),
+                ),
           ],
         ),
       ),

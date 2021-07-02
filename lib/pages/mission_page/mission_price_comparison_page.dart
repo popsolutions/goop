@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:goop/pages/components/StateGoop.dart';
 import 'package:goop/pages/components/goop_libComponents.dart';
@@ -10,7 +9,6 @@ import 'package:goop/pages/components/goop_button.dart';
 import 'package:goop/services/ServiceNotifier.dart';
 import 'package:goop/utils/goop_images.dart';
 import 'package:goop/utils/utils.dart';
-import 'package:provider/provider.dart';
 
 class MissionPriceComparisionPage extends StatefulWidget {
   @override

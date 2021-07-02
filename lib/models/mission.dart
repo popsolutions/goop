@@ -168,7 +168,7 @@ class MissionModel {
     updateStatus();
   }
 
-  void updateStatus(){
+  void updateStatus() {
     MissionStatus newStatus;
 
     if (this._measurementModel == null) {
@@ -182,16 +182,15 @@ class MissionModel {
       else
         newStatus = MissionStatus.Closed;
 
-      if ((newStatus == MissionStatus.Ordered) || (newStatus == MissionStatus.InProgress)){
+      if ((newStatus == MissionStatus.Ordered) ||
+          (newStatus == MissionStatus.InProgress)) {
         if (this.activityAllDone() == true)
           newStatus = MissionStatus.Done;
-        else if (this.endTime())
-          newStatus = MissionStatus.EndTime;
+        else if (this.endTime()) newStatus = MissionStatus.EndTime;
       }
     }
 
-    if (this.status != newStatus)
-      this.status = newStatus;
+    if (this.status != newStatus) this.status = newStatus;
   }
 
   MeasurementModel get measurementModel => this._measurementModel;
@@ -199,13 +198,14 @@ class MissionModel {
   String getTimeToCompletMission() {
     if (_measurementModel == null)
       return '';
-    else{
+    else {
       int secondsToCompletMission = _measurementModel.secondsToCompletMission();
 
-      if ((secondsToCompletMission <= 0) & (this.status == MissionStatus.InProgress))
-        updateStatus();
+      if ((secondsToCompletMission <= 0) &
+          (this.status == MissionStatus.InProgress)) updateStatus();
 
-      secondsRedMissionTime = (secondsToCompletMission < globalConfig.secondsRedMissionTime);
+      secondsRedMissionTime =
+          (secondsToCompletMission < globalConfig.secondsRedMissionTime);
 
       return convertSecondsToHHMMSS(secondsToCompletMission);
     }
@@ -216,7 +216,9 @@ class MissionModel {
   set status(MissionStatus value) {
     _status = value;
     inProgress = _status == MissionStatus.InProgress;
-    inProgressOrDone  = (_status == MissionStatus.InProgress) || (_status == MissionStatus.Done) || (_status == MissionStatus.Closed);
+    inProgressOrDone = (_status == MissionStatus.InProgress) ||
+        (_status == MissionStatus.Done) ||
+        (_status == MissionStatus.Closed);
   }
 
   void settimeToCompletMission() {
@@ -224,13 +226,13 @@ class MissionModel {
   }
 
   bool activityAllDone() => listActivity.length == activityAmoutDone();
-  bool endTime() => (_measurementModel == null) ? false : (_measurementModel.endTime);
+  bool endTime() =>
+      (_measurementModel == null) ? false : (_measurementModel.endTime);
 
-  int activityAmoutDone(){
+  int activityAmoutDone() {
     int amountDone = 0;
     listActivity.forEach((element) {
-      if (element.isChecked)
-        amountDone += 1;
+      if (element.isChecked) amountDone += 1;
     });
 
     return amountDone;

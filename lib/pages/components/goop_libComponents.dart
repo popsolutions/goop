@@ -14,6 +14,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter_svg/svg.dart';
 
 int dialogProcessIndex = 0;
+
 class goop_LibComponents {
   static Widget paddingZ() {
     return Padding(padding: EdgeInsets.only(top: 0));
@@ -33,7 +34,7 @@ class goop_LibComponents {
             backgroundColor: GoopColors.red,
             valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
           ),
-          SizedBox(width: 50),
+          SizedBox(width: 20),
           Container(
             margin: EdgeInsets.only(left: 3),
             child: Text(
@@ -57,8 +58,8 @@ class goop_LibComponents {
   }
 
   static Future<void> dialogProcess(BuildContext context, Function function,
-      [String caption = 'Aguarde por favor...', String exceptionMessage]) async {
-
+      [String caption = 'Aguarde por favor...',
+      String exceptionMessage]) async {
     showProgressDialog(context, caption);
     try {
       ++dialogProcessIndex;
@@ -71,10 +72,9 @@ class goop_LibComponents {
         }
 
     } catch (e) {
-      if (exceptionMessage == null)
-        exceptionMessage = e.toString();
+      if (exceptionMessage == null) exceptionMessage = e.toString();
 
-      if (dialogProcessIndex == 0){
+      if (dialogProcessIndex == 0) {
         showMessage(context, 'Opss', exceptionMessage);
         throw '';
       } else {
@@ -303,14 +303,13 @@ class goop_LibComponents {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) =>
-                          CameraCamera(
-                            enableZoom: true,
-                            onFile: (file) async {
-                              fileBase64 = await showPreview(context, file);
-                              navigatorPop(context);
-                            },
-                          ),
+                      builder: (_) => CameraCamera(
+                        enableZoom: true,
+                        onFile: (file) async {
+                          fileBase64 = await showPreview(context, file);
+                          navigatorPop(context);
+                        },
+                      ),
                     ),
                   );
                 },
@@ -394,7 +393,6 @@ class goop_LibComponents {
     return Navigator.pushNamed(
       context,
       route,
-      arguments: arguments
     );
   }
 
