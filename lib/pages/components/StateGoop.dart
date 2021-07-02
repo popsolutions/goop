@@ -81,15 +81,15 @@ abstract class StateGoop<T extends StatefulWidget> extends State<T> {
 
   throwIfDoubleIsZero(double value, String message) => throwIf(value == 0, message);
 
-  Future<T> navigatorPop<T extends Object>([T result]) {
-    goop_LibComponents.navigatorPop(context, result);
+  Future<T> navigatorPop<T extends Object>([T result, bool popStack = true]) {
+    goop_LibComponents.navigatorPop(context, result, popStack);
   }
 
   Future<T> navigatorPopAndPushNamed<T extends Object>(
       String routeName,
       {Object arguments}
       ) {
-    return goop_LibComponents.navigatorPopAndPushNamed(context, routeName, arguments);
+    return goop_LibComponents.navigatorPopAndPushNamed(context, routeName, arguments: arguments);
   }
 
   Future<T> navigatorPush<T extends Object>(Route<T> route) {

@@ -373,7 +373,7 @@ class goop_LibComponents {
     Navigator.pop(context, result);
   }
 
-  static Future<T> navigatorPopAndPushNamed<T extends Object>(BuildContext context, String route, Object arguments) {
+  static Future<T> navigatorPopAndPushNamed<T extends Object>(BuildContext context, String route, {Object arguments}) {
     globalScreenStackPop('navigatorPopAndPushNamed');
     globalScreenStackPush(route, 'navigatorPopAndPushNamed(2)');
     return Navigator.popAndPushNamed(context, route, arguments: arguments);

@@ -100,6 +100,7 @@ class _GoopDrawerState extends StateGoop<GoopDrawer> {
                           text: 'Missões',
                           action: () {
                             serviceNotifier.viewByEstablishment = false;
+                            navigatorPop(null, false);
                             navigatorPopAndPushNamed(
                               Routes.mission_home,
                             );
