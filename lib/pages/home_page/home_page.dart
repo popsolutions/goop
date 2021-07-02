@@ -126,8 +126,8 @@ class _HomePageState extends StateGoop<HomePage> {
           } else {
             return Center(
               child: CircularProgressIndicator(
-                strokeWidth: 3,
-                // color: GoopColors.red,
+                strokeWidth: 5,
+                color: GoopColors.red,
               ),
             );
           }

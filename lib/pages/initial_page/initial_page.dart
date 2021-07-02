@@ -5,7 +5,6 @@ import 'package:goop/pages/components/goop_button.dart';
 import 'package:goop/pages/components/goop_libComponents.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class InitialPage extends StatelessWidget {
   @override

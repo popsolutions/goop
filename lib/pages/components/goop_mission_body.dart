@@ -7,12 +7,10 @@ import 'package:goop/config/routes.dart';
 import 'package:goop/models/activity.dart';
 import 'package:goop/models/mission.dart';
 import 'package:goop/pages/components/StateGoop.dart';
-import 'package:goop/pages/components/goop_libComponents.dart';
 import 'package:goop/pages/settings_page/preview_page.dart';
 import 'package:goop/services/ServiceNotifier.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
-import 'package:goop/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 class GoopMissionBody extends StatefulWidget {
@@ -155,11 +153,11 @@ class _GoopMissionBodyState extends StateGoop<GoopMissionBody> {
                           MaterialPageRoute(
                             builder: (_) => CameraCamera(
                               enableZoom: true,
-                              onFile: (file) async => await showPreview(context, file),
+                              onFile: (file) async =>
+                                  await showPreview(context, file),
                             ),
                           ),
                         );
-                        print('x');
                       }
                     }
                   },

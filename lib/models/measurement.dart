@@ -1,6 +1,5 @@
 // ignore_for_file: non_constant_identifier_names
 import 'package:goop/models/measurementQuizzlines.dart';
-import 'package:goop/models/mission.dart';
 import 'package:goop/utils/global.dart';
 import 'package:goop/utils/utils.dart';
 
@@ -41,10 +40,10 @@ class MeasurementModel {
   String displayName;
   String lastUpdate;
 
-
-  DateTime dateEnd(){
-    DateTime dateEnd = create_date.add(Duration(hours: globalConfig.hoursDiffServer));
-    // dateEnd = dateEnd.add(Duration(minutes: 10));
+  DateTime dateEnd() {
+    DateTime dateEnd =
+        create_date.add(Duration(hours: globalConfig.hoursDiffServer));
+    // dateEnd = dateEnd.add(Duration(seconds: 5));
     dateEnd = dateEnd.add(Duration(hours: globalConfig.hoursCompletMission));
 
     return dateEnd;
@@ -187,5 +186,4 @@ class MeasurementModel {
   }
 
   get endTime => DateTime.now().isAfter(dateEnd());
-
 }

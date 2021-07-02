@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:goop/pages/components/goop_libComponents.dart';
 import 'package:goop/utils/global.dart';
-import 'package:goop/utils/utils.dart';
 import 'package:latlong2/latlong.dart';
 
 class GeoLocService {
@@ -19,9 +18,7 @@ class GeoLocService {
       longitude().toString();
 
   update([BuildContext context = null, bool getCurrentPosition = false]) async {
-
-    if (context == null)
-      context = globalServiceNotifier.currentBuildContext;
+    if (context == null) context = globalServiceNotifier.currentBuildContext;
 
     bool _serviceEnabled;
 
@@ -34,44 +31,48 @@ class GeoLocService {
     }
 
     if (_serviceEnabled) {
-        await goop_LibComponents.dialogProcess(context, () async {
-          if (getCurrentPosition == true) {
-            position = await Geolocator.getCurrentPosition(
-                desiredAccuracy: LocationAccuracy.medium, forceAndroidLocationManager: true, timeLimit: Duration(seconds: 15));
-          } else {
-            position = await Geolocator.getLastKnownPosition();
-          }
-        }, 'Acessando GPS', 'Excedido o tempo de espera do GPS. Verifique se o seu GPS está funcionando corretamente.');
-
-
-        if ((position == null) || ((position.latitude == 0) || (position.longitude == 0))) {
-          globalServiceNotifier.geoLocationOk = false;
+      await goop_LibComponents.dialogProcess(context, () async {
+        if (getCurrentPosition == true) {
+          position = await Geolocator.getCurrentPosition(
+              desiredAccuracy: LocationAccuracy.medium,
+              forceAndroidLocationManager: true,
+              timeLimit: Duration(seconds: 15));
         } else {
-          if (!globalServiceNotifier.geoLocationOk)
-            globalServiceNotifier.geoLocationOk = true;
+          position = await Geolocator.getLastKnownPosition();
         }
+      }, 'Acessando GPS',
+          'Excedido o tempo de espera do GPS. Verifique se o seu GPS está funcionando corretamente.');
 
+      if ((position == null) ||
+          ((position.latitude == 0) || (position.longitude == 0))) {
+        globalServiceNotifier.geoLocationOk = false;
+      } else {
+        if (!globalServiceNotifier.geoLocationOk)
+          globalServiceNotifier.geoLocationOk = true;
+      }
     } else {
       throw 'Serviço de GPS está inativo.';
     }
   }
 
   double distanceBetween(
-      double startLatitude,
-      double startLongitude,
-      double endLatitude,
-      double endLongitude,
-      ){
-    return Geolocator.distanceBetween(startLatitude, startLongitude, endLatitude, endLongitude);
+    double startLatitude,
+    double startLongitude,
+    double endLatitude,
+    double endLongitude,
+  ) {
+    return Geolocator.distanceBetween(
+        startLatitude, startLongitude, endLatitude, endLongitude);
   }
 
   double distanceBetweenInMeter(
-      double startLatitude,
-      double startLongitude,
-      double endLatitude,
-      double endLongitude,
-      ){
-    return Geolocator.distanceBetween(startLatitude, startLongitude, endLatitude, endLongitude);
+    double startLatitude,
+    double startLongitude,
+    double endLatitude,
+    double endLongitude,
+  ) {
+    return Geolocator.distanceBetween(
+        startLatitude, startLongitude, endLatitude, endLongitude);
   }
 
   LatLng latLng() => LatLng(latitude(), longitude());

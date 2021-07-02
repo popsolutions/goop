@@ -7,7 +7,6 @@ import 'package:goop/pages/components/StateGoop.dart';
 import 'package:goop/pages/components/goop_button.dart';
 import 'package:goop/pages/components/goop_mission_body.dart';
 import 'package:goop/services/ServiceNotifier.dart';
-import 'package:goop/utils/global.dart';
 import 'package:provider/provider.dart';
 import '../components/goop_back.dart';
 import 'package:goop/utils/goop_images.dart';
@@ -27,7 +26,6 @@ class _MissionAboutPageState extends StateGoop<MissionAboutPage> {
     currentMissionModel.settimeToCompletMission();
     serviceNotifier.notifyListeners();
   }
-
 
   @override
   void didChangeDependencies() {
@@ -150,11 +148,11 @@ class _MissionAboutPageState extends StateGoop<MissionAboutPage> {
                     textAlign: TextAlign.center,
                   ),
                   ifClosed: GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       navigatorPushNamed(
                         Routes.mission_completed,
                       );
-                      },
+                    },
                     child: Text(
                       'Concluída',
                       style: theme,
@@ -197,7 +195,8 @@ class _MissionAboutPageState extends StateGoop<MissionAboutPage> {
                               text: 'Iniciar',
                               showCircularProgress: true,
                               action: () async {
-                                await serviceNotifier.createOrUpdateGeoLocMeasurementModel();
+                                await serviceNotifier
+                                    .createOrUpdateGeoLocMeasurementModel();
                                 serviceNotifier.notifyListeners();
                               },
                             )
