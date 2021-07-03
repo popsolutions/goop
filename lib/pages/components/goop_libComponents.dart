@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:goop/pages/settings_page/preview_page.dart';
+import 'package:goop/utils/GoopClass.dart';
 import 'package:goop/utils/StackUtil.dart';
 import 'package:goop/utils/global.dart';
 import 'package:goop/utils/goop_colors.dart';
@@ -15,7 +16,7 @@ import 'package:flutter_svg/svg.dart';
 
 int dialogProcessIndex = 0;
 
-class goop_LibComponents {
+class goop_LibComponents extends GoopClass{
   static Widget paddingZ() {
     return Padding(padding: EdgeInsets.only(top: 0));
   }
@@ -101,6 +102,8 @@ class goop_LibComponents {
   }
 
   static showMessage(BuildContext context, String title, String message) async {
+    printL2('goop_LibComponents.showMessage - title: "$title", message:"$message"');
+
     if (Platform.isAndroid) {
       showDialog(
         context: context,

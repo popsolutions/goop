@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:goop/utils/GoopClass.dart';
 import 'package:goop/utils/global.dart';
 import 'package:goop/utils/utils.dart';
 import 'package:http/http.dart' as http;
@@ -9,7 +10,7 @@ import 'odoo_version.dart';
 
 const SERVER_URL = 'https://dev.charismabi.com';
 
-class Odoo {
+class Odoo extends GoopClass {
   Odoo({String url}) {
     _serverURL = 'https://dev.charismabi.com';
   }
@@ -191,7 +192,7 @@ class Odoo {
     OdooResponse odooResponse = new OdooResponse(json.decode(response.body), response.statusCode);
 
     if (odooResponse.hasError())
-      throw odooResponse.getErrorMessage();
+      throwG(odooResponse.getErrorMessage(), 'callRequest');
 
     return odooResponse;
   }
