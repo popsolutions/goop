@@ -27,21 +27,6 @@ class _GoopMissionBodyState extends StateGoop<GoopMissionBody> {
     final TextStyle theme = Theme.of(context).textTheme.headline2;
 
     MissionModel currentMissionModel = widget.currentMissionModel_;
-
-    Future<void> showPreview(BuildContext context, File file) async {
-      file = await navigatorPush(
-        MaterialPageRoute(
-          builder: (_) => PreviewPage(file),
-        ),
-      );
-
-      navigatorPop();
-      dialogProcess(() async {
-        await serviceNotifier.insert_Measurement_photolines(
-            base64Encode(file.readAsBytesSync()), context);
-      });
-    }
-
     return Column(
       children: [
         SizedBox(height: 40),
@@ -147,15 +132,10 @@ class _GoopMissionBodyState extends StateGoop<GoopMissionBody> {
                           arguments: currentMissionModel,
                         );
                       } else {
-                        await navigatorPush(
-                          MaterialPageRoute(
-                            builder: (_) => CameraCamera(
-                              enableZoom: true,
-                              onFile: (file) async =>
-                                  await showPreview(context, file),
-                            ),
-                          ),
-                        );
+                        String file = await getPhotoBase64();
+                        dialogProcess(() async {
+                          await serviceNotifier.insert_Measurement_photolines(file, context);
+                        });
                       }
                     }
                   },

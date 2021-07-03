@@ -59,7 +59,7 @@ abstract class StateGoop<T extends StatefulWidget> extends State<T> {
       String defaultImage = GoopImages.avatar,
       bool editing = true}) {
     return goop_LibComponents.imagePhotoBase64(
-        imageBase64.imageBase64,
+        imageBase64,
         (onTap != null)
             ? onTap
             : () async {

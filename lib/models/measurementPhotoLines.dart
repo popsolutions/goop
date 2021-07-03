@@ -1,5 +1,6 @@
 //Class Measurement_quizzlinesModel is a Response to quizz into Measurement
 import 'package:goop/services/constants.dart';
+import 'package:goop/utils/utils.dart';
 
 class MeasurementPhotoLinesModel {
   String modelName = Strings.measurement_photoLine;
@@ -18,7 +19,7 @@ class MeasurementPhotoLinesModel {
     id = json['id'];
     measurement_id = json['measurement_id'][0];
     name = json['name'];
-    photo = json['photo'];
+    photo = jsonGetStr(json, 'photo');
     photo_id = json['photo_id'][0];
     create_uid = json['create_uid'][0];
     write_uid = json['write_uid'][0];
