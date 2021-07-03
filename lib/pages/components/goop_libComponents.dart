@@ -393,6 +393,7 @@ class goop_LibComponents {
     return Navigator.pushNamed(
       context,
       route,
+      arguments: arguments
     );
   }
 
@@ -404,6 +405,18 @@ class goop_LibComponents {
         context,
         route,
         predicate,
+        arguments: arguments
+    );
+  }
+
+  static Future<T> navigatorPushNamedAndRemoveAll<T extends Object>(BuildContext context, String route, {Object arguments}) {
+    globalScreenStackClear();
+    globalScreenStackPush(route, 'navigatorPushNamedAndRemoveAll');
+
+    return Navigator.pushNamedAndRemoveUntil(
+        context,
+        route,
+        (route) => false,
         arguments: arguments
     );
   }

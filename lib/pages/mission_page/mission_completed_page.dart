@@ -42,9 +42,9 @@ class MissionCompletedPage extends StatelessWidget {
                 text: 'Home',
                 action: () {
                   // goop_LibComponents.na
-                  goop_LibComponents.navigatorPushNamed(
+                  goop_LibComponents.navigatorPushNamedAndRemoveAll(
                     context,
-                    Routes.mission_home,
+                    Routes.mission_home
                   );
                 },
               ),
