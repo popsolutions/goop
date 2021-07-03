@@ -329,33 +329,19 @@ class goop_LibComponents extends GoopClass{
                   onPrimary: Colors.white,
                 ),
                 onPressed: () async {
-
-                  PickedFile image = await ImagePicker().getImage(
-                    source: ImageSource.camera,
-                    imageQuality: 25,
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => CameraCamera(
+                        enableZoom: true,
+                        resolutionPreset: ResolutionPreset.medium,
+                        onFile: (file) async {
+                          fileBase64 = await showPreview(context, file);
+                          navigatorPop(context);
+                        },
+                      ),
+                    ),
                   );
-
-                  File file = File(image.path);
-
-                  fileBase64 = await showPreview(context, file);
-                  // navigatorPop(context);
-
-
-
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (_) => CameraCamera(
-                  //       enableZoom: true,
-                  //       // resolutionPreset: ResolutionPreset.ultraHigh, //default
-                  //       resolutionPreset: ResolutionPreset.medium,
-                  //       onFile: (file) async {
-                  //         fileBase64 = await showPreview(context, file);
-                  //         navigatorPop(context);
-                  //       },
-                  //     ),
-                  //   ),
-                  // );
                 },
               ),
             ),
