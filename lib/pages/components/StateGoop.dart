@@ -31,7 +31,7 @@ abstract class StateGoop<T extends StatefulWidget> extends State<T> {
 
   Future<void> dialogProcess(Function function,
       [String caption = 'Aguarde por favor...']) async {
-    await goop_LibComponents.dialogProcess(context, function, caption);
+    await goop_LibComponents.dialogProcess(context, function, caption: caption);
   }
 
   showMessage(String title, String message) async {

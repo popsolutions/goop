@@ -59,17 +59,26 @@ class goop_LibComponents extends GoopClass{
   }
 
   static Future<void> dialogProcess(BuildContext context, Function function,
-      [String caption = 'Aguarde por favor...',
-      String exceptionMessage]) async {
+      {String caption = 'Aguarde por favor...', String exceptionMessage, timeOutSeconds = 0, timeOutMessage = 'Operação cancelada. Tempo de espera esgotado.',
+      timeOutFunctionOrigin = ''}) async {
     void dialogProcessLog(String s) => printL2('goop_LibComponents.dialogProcess - dialogProcessIndex: $dialogProcessIndex - $s');
 
     showProgressDialog(context, caption);
     try {
-      dialogProcessLog('Start - caption:"$caption" - exceptionMessage:"$exceptionMessage"');
+      dialogProcessLog('Start - caption:"$caption" - exceptionMessage:"$exceptionMessage"' +
+          ((timeOutSeconds == 0)? '': ' - whit timeOut timeOutSeconds:"$timeOutSeconds" - timeOutMessage:"$timeOutMessage"'));
       ++dialogProcessIndex;
 
         try {
-          await function();
+          if (timeOutSeconds == 0) {
+            await function();
+          }else {
+            await Future(() => function()).timeout(Duration(seconds: timeOutSeconds), onTimeout: (){
+              dialogProcessLog('TimeOut exception - timeOutSeconds:"$timeOutSeconds" - timeOutMessage:"$timeOutMessage"');
+              throw FormatException(timeOutMessage, timeOutFunctionOrigin);
+            });
+          }
+
         } finally {
           --dialogProcessIndex;
           dialogProcessLog('finally');
@@ -319,19 +328,34 @@ class goop_LibComponents extends GoopClass{
                   primary: GoopColors.redSplash,
                   onPrimary: Colors.white,
                 ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => CameraCamera(
-                        enableZoom: true,
-                        onFile: (file) async {
-                          fileBase64 = await showPreview(context, file);
-                          navigatorPop(context);
-                        },
-                      ),
-                    ),
+                onPressed: () async {
+
+                  PickedFile image = await ImagePicker().getImage(
+                    source: ImageSource.camera,
+                    imageQuality: 25,
                   );
+
+                  File file = File(image.path);
+
+                  fileBase64 = await showPreview(context, file);
+                  // navigatorPop(context);
+
+
+
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (_) => CameraCamera(
+                  //       enableZoom: true,
+                  //       // resolutionPreset: ResolutionPreset.ultraHigh, //default
+                  //       resolutionPreset: ResolutionPreset.medium,
+                  //       onFile: (file) async {
+                  //         fileBase64 = await showPreview(context, file);
+                  //         navigatorPop(context);
+                  //       },
+                  //     ),
+                  //   ),
+                  // );
                 },
               ),
             ),
@@ -361,10 +385,11 @@ class goop_LibComponents extends GoopClass{
       },
     );
 
+
     return fileBase64;
   }
 
-  static Widget imagePhotoBase64(String imageBase64, Function _onTap) {
+  static Widget imagePhotoBase64(ImageGoop imageBase64, Function _onTap) {
     return GestureDetector(
       onTap: () async {
         await _onTap();
@@ -377,7 +402,7 @@ class goop_LibComponents extends GoopClass{
                   height: 150,
                 )
               : Image.memory(
-                  Base64Codec().decode(imageBase64),
+                  imageBase64.uint8List(),
                   fit: BoxFit.cover,
                   width: 150,
                   height: 150,

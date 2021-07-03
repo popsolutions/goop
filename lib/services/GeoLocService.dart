@@ -51,12 +51,15 @@ class GeoLocService extends GoopClass{
           position = await Geolocator.getCurrentPosition(
               desiredAccuracy: LocationAccuracy.medium,
               forceAndroidLocationManager: true,
-              timeLimit: Duration(seconds: 15));
+              timeLimit: Duration(seconds: globalConfig.gpsTimeOutSeconds1));
         } else {
           position = await Geolocator.getLastKnownPosition();
         }
-      }, 'Acessando GPS',
-          'Excedido o tempo de espera do GPS. Verifique se o seu GPS está funcionando corretamente.');
+      }, caption: 'Acessando GPS',
+         exceptionMessage: 'Excedido o tempo de espera do GPS. Verifique se o seu GPS está funcionando corretamente.',
+        timeOutSeconds: globalConfig.gpsTimeOutSeconds2,
+        timeOutMessage: 'Tempo de espera do GPS excedido. Verifique se o seu GPS está funcionando corretamente.'
+      );
 
       if ((position == null) ||
           ((position.latitude == 0) || (position.longitude == 0))) {
