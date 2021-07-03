@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:goop/pages/components/goop_libComponents.dart';
 import 'package:goop/utils/global.dart';
+import 'package:goop/utils/utils.dart';
 import 'package:latlong2/latlong.dart';
 
 class GeoLocService {
@@ -16,6 +17,19 @@ class GeoLocService {
       latitude().toString() +
       ' Longitude:' +
       longitude().toString();
+
+  String currentPositionStr() => (position == null)? 'Position = Null':
+     'Position : \n'
+    'longitude: ${position.longitude} \n'
+    'latitude: ${position.latitude} \n'
+    'timestamp: ${position.timestamp} \n'
+    'accuracy: ${position.accuracy} \n'
+    'altitude: ${position.altitude} \n'
+    'heading: ${position.heading} \n'
+    'floor: ${position.floor} \n'
+    'speed: ${position.speed} \n'
+    'speedAccuracy: ${position.speedAccuracy} \n'
+    'isMocked: ${position.isMocked}';
 
   update([BuildContext context = null, bool getCurrentPosition = false]) async {
     if (context == null) context = globalServiceNotifier.currentBuildContext;
@@ -53,6 +67,10 @@ class GeoLocService {
     } else {
       throw 'Serviço de GPS está inativo.';
     }
+
+    printL('::GeoLocService.update:');
+    printL(currentPositionStr());
+
   }
 
   double distanceBetween(
@@ -71,8 +89,17 @@ class GeoLocService {
     double endLatitude,
     double endLongitude,
   ) {
-    return Geolocator.distanceBetween(
+    double discanteinMeters =  Geolocator.distanceBetween(
         startLatitude, startLongitude, endLatitude, endLongitude);
+
+    printL('::GeoLocService.distanceBetweenInMeter: ');
+    printL('startLatitude: $startLatitude');
+    printL('startLongitude: $startLongitude');
+    printL('endLatitude: $endLatitude');
+    printL('endLongitude: $endLongitude');
+    printL('discanteinMeters: $discanteinMeters');
+
+    return discanteinMeters;
   }
 
   LatLng latLng() => LatLng(latitude(), longitude());

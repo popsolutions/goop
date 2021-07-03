@@ -153,8 +153,8 @@ class CurrencyInputFormatter extends TextInputFormatter {
   }
 }
 
-// printL(Object object) => print(object);
-printL(Object object) => null;
+printL(Object object) => print(object);
+// printL(Object object) => null;
 printL2(Object object) => print(object);
 
 class ImageGoop{
