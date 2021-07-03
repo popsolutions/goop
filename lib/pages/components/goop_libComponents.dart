@@ -60,25 +60,42 @@ class goop_LibComponents {
   static Future<void> dialogProcess(BuildContext context, Function function,
       [String caption = 'Aguarde por favor...',
       String exceptionMessage]) async {
+    void dialogProcessLog(String s) => printL2('goop_LibComponents.dialogProcess - dialogProcessIndex: $dialogProcessIndex - $s');
+
     showProgressDialog(context, caption);
     try {
+      dialogProcessLog('Start - caption:"$caption" - exceptionMessage:"$exceptionMessage"');
       ++dialogProcessIndex;
 
         try {
           await function();
         } finally {
           --dialogProcessIndex;
+          dialogProcessLog('finally');
           goop_LibComponents.navigatorPop(context, null, false);
         }
 
     } catch (e) {
-      if (exceptionMessage == null) exceptionMessage = e.toString();
+      String eMessage;
+
+      if (e is FormatException) {
+        dialogProcessLog('Catch exception - Source:"${e.source}", message:"${e.message}"');
+        eMessage = e.message;
+      } else {
+        eMessage = e.toString();
+        dialogProcessLog('Catch exception - message:"${eMessage}"');
+      }
+
+      if (exceptionMessage == null) exceptionMessage = eMessage;
 
       if (dialogProcessIndex == 0) {
         showMessage(context, 'Opss', exceptionMessage);
         throw '';
       } else {
-        throw exceptionMessage;
+        if (exceptionMessage != null)
+          throw exceptionMessage;
+        else
+          throw e;
       }
     }
   }

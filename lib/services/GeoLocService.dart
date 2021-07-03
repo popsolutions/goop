@@ -2,11 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:goop/pages/components/goop_libComponents.dart';
+import 'package:goop/utils/GoopClass.dart';
 import 'package:goop/utils/global.dart';
 import 'package:goop/utils/utils.dart';
 import 'package:latlong2/latlong.dart';
 
-class GeoLocService {
+class GeoLocService extends GoopClass{
   Position position;
 
   double latitude() => position.latitude;
@@ -41,7 +42,7 @@ class GeoLocService {
     if (!_serviceEnabled) {
       globalServiceNotifier.geoLocationOk = false;
 
-      throw 'Falha ao obter localização do GPS. Verifique se seu GPS está ativo e se o Goop tem permissão para acessar o GPS';
+      throwG('Falha ao obter localização do GPS. Verifique se seu GPS está ativo e se o Goop tem permissão para acessar o GPS', 'update');
     }
 
     if (_serviceEnabled) {
@@ -65,7 +66,7 @@ class GeoLocService {
           globalServiceNotifier.geoLocationOk = true;
       }
     } else {
-      throw 'Serviço de GPS está inativo.';
+      throwG('Serviço de GPS está inativo.', 'update');
     }
 
     printL('::GeoLocService.update:');
