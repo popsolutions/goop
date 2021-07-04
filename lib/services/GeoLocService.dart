@@ -9,8 +9,8 @@ import 'package:goop/utils/utils.dart';
 import 'package:latlong2/latlong.dart';
 
 class GeoLocService extends GoopClass{
-  double latitudeMocked = -22.4808083; double longitudeMocked = -48.5619883;
-  // double latitudeMocked = 0; double longitudeMocked = 0;
+  //double latitudeMocked = -22.4808083; double longitudeMocked = -48.5619883;
+  double latitudeMocked = 0; double longitudeMocked = 0;
 
 
   Position position;
