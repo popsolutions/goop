@@ -13,13 +13,14 @@ class QuizzLinesModel extends AbsModels {
     this.correct
   });
 
-  factory QuizzLinesModel.fromJson(Map<String, dynamic> json) =>
-      QuizzLinesModel(
-        id: json["id"],
-        alternative_id: json["alternative_id"][0],
-        alternative_name: json["alternative_id"][1],
-        correct: json["correct"],
-      );
+  QuizzLinesModel.fromJson(Map<String, dynamic> json) {
+    currentJson = json;
+
+    id = jGetInt("id");
+    alternative_id = jGetInt("alternative_id", 0);
+    alternative_name = jGetStr("alternative_id", 1);
+    correct = jGetBool("correct");
+  }
 
   Map<String, dynamic> toJson() => {
     "id": id,

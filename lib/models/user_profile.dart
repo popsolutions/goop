@@ -46,24 +46,26 @@ class UserProfile extends AbsModels {
   });
 
   UserProfile.fromJson(Map<String, dynamic> json) {
-    name = valueOrNull(json['name']);
-    phone = valueOrNull(json['phone']);
-    imageClass.imageBase64 = valueOrNull(json['image']);
-    birthdate = valueOrNull(json['birthdate']);
-    function = valueOrNull(json['function']);
-    cnpjCpf = valueOrNull(json['cnpj_cpf']);
-    educationLevel = valueOrNull(json['education_level']);
-    gender = valueOrNull(json['gender']);
-    missionsCount = valueOrNull(json['missions_count']);
-    mobile = valueOrNull(json['mobile']);
-    email = valueOrNull(json['email']);
-    street = valueOrNull(json['street']);
-    city = valueOrNull(json['city']);
-    district = valueOrNull(json['district']);
-    state = valueOrNull(json['state']);
-    zip = valueOrNull(json['zip']);
-    signupUrl = valueOrNull(json['signup_url']);
-    login = valueOrNull(json['login']);
+    currentJson = json;
+
+    name = jGetStr('name');
+    phone = jGetStr('phone');
+    imageClass.imageBase64 = jGetStr('image');
+    birthdate = jGetStr('birthdate');
+    function = jGetStr('function');
+    cnpjCpf = jGetStr('cnpj_cpf');
+    educationLevel = jGetStr('education_level');
+    gender = jGetStr('gender');
+    missionsCount = jGetInt('missions_count');
+    mobile = jGetStr('mobile');
+    email = jGetStr('email');
+    street = jGetStr('street');
+    city = jGetStr('city');
+    district = jGetStr('district');
+    state = jGetStr('state');
+    zip = jGetStr('zip');
+    signupUrl = jGetStr('signup_url');
+    login = jGetStr('login');
   }
 
   Map<String, dynamic> toJson() => {

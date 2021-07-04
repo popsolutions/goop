@@ -85,32 +85,32 @@ class MissionDto extends AbsModels {
     };
   }
 
-  factory MissionDto.fromMap(Map<String, dynamic> map) {
-    return MissionDto(
-      id: map['id'],
-      name: map['name'],
-      subject: map['subject'],
-      partnerId: map['partnerId'],
-      establishmentId: map['establishmentId'],
-      measurementCount: map['measurementCount'],
-      createByUserId: map['createByUserId'],
-      limit: map['limit'],
-      priority: map['priority'],
-      scores: map['scores'],
-      reward: map['reward'],
-      typeMission: map['typeMission'],
-      instructions: map['instructions'],
-      missionState: map['missionState'],
-      address: map['address'],
-      dateCreated: map['dateCreated'],
-      dateFinished: map['dateFinished'],
-      price: map['price'],
-      time: map['time'],
-      nameEstablishment: map['nameEstablishment'],
-      addressEstablishment: map['addressEstablishment'],
-      latitude: map['latitude'],
-      longitude: map['longitude'],
-    );
+  MissionDto.fromMap(Map<String, dynamic> map) {
+    currentJson = map;
+
+    id = jGetInt('id');
+    name = jGetStr('name');
+    subject = jGetStr('subject');
+    partnerId = jGetInt('partnerId');
+    establishmentId = jGetInt('establishmentId');
+    measurementCount = jGetInt('measurementCount');
+    createByUserId = jGetInt('createByUserId');
+    limit = jGetInt('limit');
+    priority = jGetInt('priority');
+    scores = jGetDouble('scores');
+    reward = jGetDouble('reward');
+    typeMission = jGetStr('typeMission');
+    instructions = jGetStr('instructions');
+    missionState = jGetStr('missionState');
+    address = jGetStr('address');
+    dateCreated = jGetStr('dateCreated');
+    dateFinished = jGetStr('dateFinished');
+    price = jGetDouble('price');
+    time = jGetStr('time');
+    nameEstablishment = jGetStr('nameEstablishment');
+    addressEstablishment = jGetStr('addressEstablishment');
+    latitude = jGetStr('latitude');
+    longitude = jGetStr('longitude');
   }
 
   String toJson() => json.encode(toMap());

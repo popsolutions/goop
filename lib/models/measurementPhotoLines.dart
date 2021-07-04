@@ -17,13 +17,15 @@ class MeasurementPhotoLinesModel extends AbsModels{
   MeasurementPhotoLinesModel({this.id, this.measurement_id, this.name, this.photo, this.photo_id, this.create_uid, this.write_uid});
 
   MeasurementPhotoLinesModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    measurement_id = json['measurement_id'][0];
-    name = json['name'];
+    currentJson = json;
+
+    id = jGetInt('id');
+    measurement_id = jGetInt('measurement_id', 0);
+    name = jGetStr('name');
+    photo_id = jGetInt('photo_id', 0);
+    create_uid = jGetInt('create_uid', 0);
+    write_uid = jGetInt('write_uid', 0);
     photo = JsonGet.Str(json, 'photo');
-    photo_id = json['photo_id'][0];
-    create_uid = json['create_uid'][0];
-    write_uid = json['write_uid'][0];
   }
 
   Map<String, dynamic> toJson() {

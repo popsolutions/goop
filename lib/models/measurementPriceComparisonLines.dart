@@ -30,18 +30,20 @@ class MeasurementPriceComparisonLinesModel extends AbsModels {
       this.display_name});
 
   MeasurementPriceComparisonLinesModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    measurement_id = json['measurement_id'][0];
-    comparison_id = JsonGet.Str(json, 'comparison_id');
-    product_id = json['product_id'][0];
-    product_name = json['product_id'][1];
-    price = json['price'];
-    photo = json['photo'];
-    create_uid = json['create_uid'][0];
-    create_date = DateTime.parse(json['create_date']);
-    write_uid = json['write_uid'][0];
-    write_date =  DateTime.parse(json['write_date']);
-    display_name = json['display_name'];
+    currentJson = json;
+
+    id = jGetInt('id');
+    measurement_id = jGetInt('measurement_id', 0);
+    comparison_id = jGetStr('comparison_id');
+    product_id = jGetInt('product_id', 0);
+    product_name = jGetStr('product_id', 1);
+    price = jGetDouble('price');
+    photo = jGetStr('photo');
+    create_uid = jGetInt('create_uid', 0);
+    create_date = jGetDate('create_date');
+    write_uid = jGetInt('write_uid', 0);
+    write_date = jGetDate('write_date');
+    display_name = jGetStr('display_name');
   }
 
   Map<String, dynamic> toJson() {

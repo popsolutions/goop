@@ -30,17 +30,19 @@ class MeasurementQuizzlinesModel extends AbsModels {
       this.display_name});
 
   MeasurementQuizzlinesModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    quizz_id = json['quizz_id'][0];
-    quizz_name = json['quizz_id'][1];
-    alternative_id = json['alternative_id'][0];
-    alternative_name = json['alternative_id'][1];
-    measurement_id = json['measurement_id'][0];
-    create_uid = json['create_uid'][0];
-    create_date = DateTime.parse(json['create_date']);
-    write_uid = json['write_uid'][0];
-    display_name = json['display_name'];
+    currentJson = json;
+
+    id = jGetInt('id');
+    name = jGetStr('name');
+    quizz_id = jGetInt('quizz_id', 0);
+    quizz_name = jGetStr('quizz_id', 1);
+    alternative_id = jGetInt('alternative_id', 0);
+    alternative_name = jGetStr('alternative_id', 1);
+    measurement_id = jGetInt('measurement_id', 0);
+    create_uid = jGetInt('create_uid', 0);
+    create_date = jGetDate('create_date');
+    write_uid = jGetInt('write_uid', 0);
+    display_name = jGetStr('display_name');
   }
 
   Map<String, dynamic> toJson() {

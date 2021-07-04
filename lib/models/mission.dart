@@ -64,28 +64,28 @@ class MissionModel extends AbsModels {
     this.time,
   });
 
-  factory MissionModel.fromJson(Map<String, dynamic> map) {
-    return MissionModel(
-      id: valueOrNull(map['id']),
-      name: valueOrNull(map['name']),
-      partnerId: valueOrNull(map['partner_id'][0]),
-      establishmentId: valueOrNull(map['establishment_id'][0]),
-      createByUserId: valueOrNull(map['create_by_user_id'][0]),
-      measurementCount: valueOrNull(map['measurement_count']),
-      instructions: valueOrNull(map['instructions']),
-      missionState: valueOrNull(map['state']),
-      address: valueOrNull(map['address']),
-      dateCreated: valueOrNull(map['date_created']),
-      dateFinished: valueOrNull(map['date_finished']),
-      limit: valueOrNull(map['limit']),
-      subject: valueOrNull(map['subject']),
-      price: valueOrNull(map['price']),
-      time: valueOrNull(map['time']),
-      priority: valueOrNull(map['priority']),
-      reward: valueOrNull(map['reward']),
-      typeMission: valueOrNull(map['type_mission']),
-      scores: valueOrNull(map['scores']),
-    );
+  MissionModel.fromJson(Map<String, dynamic> map) {
+    currentJson = map;
+
+    id = jGetInt('id');
+    name = jGetStr('name');
+    partnerId = jGetInt('partner_id', 0);
+    establishmentId = jGetInt('establishment_id', 0);
+    createByUserId = jGetInt('create_by_user_id', 0);
+    measurementCount = jGetInt('measurement_count');
+    instructions = jGetStr('instructions');
+    missionState = jGetStr('state');
+    address = jGetStr('address');
+    dateCreated = jGetStr('date_created');
+    dateFinished = jGetStr('date_finished');
+    limit = jGetInt('limit');
+    subject = jGetStr('subject');
+    price = jGetDouble('price');
+    time = jGetStr('time');
+    priority = jGetInt('priority');
+    reward = jGetDouble('reward');
+    typeMission = jGetStr('type_mission');
+    scores = jGetDouble('scores');
   }
 
   Map<String, dynamic> toJson() {
