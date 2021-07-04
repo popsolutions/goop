@@ -1,6 +1,6 @@
 import 'package:goop/utils/utils.dart';
 
-class ModelsAbs{
+class AbsModels{
   Map<String, dynamic> currentJson;
 
   int jGetInt(String key, [int index]) => JsonGet.Int(currentJson, key, index);

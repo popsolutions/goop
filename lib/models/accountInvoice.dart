@@ -1,8 +1,8 @@
 import 'package:goop/services/constants.dart';
 
-import 'modelsAbs.dart';
+import 'absModels.dart';
 
-class AccountInvoiceModel extends ModelsAbs{
+class AccountInvoiceModel extends AbsModels{
   String modelName = Strings.accountInvoice;
 
   int id;
