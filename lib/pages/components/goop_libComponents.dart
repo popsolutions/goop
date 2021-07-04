@@ -382,7 +382,7 @@ class goop_LibComponents extends GoopClass{
       },
       child: ClipRRect(
           borderRadius: BorderRadius.circular(100),
-          child: ((imageBase64 ?? '') == '')
+          child: (imageBase64.isNullOrEmpty())
               ? SvgPicture.asset(
                   GoopImages.avatar,
                   height: 150,

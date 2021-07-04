@@ -46,12 +46,9 @@ class JsonGet {
   }
 
   static bool Bool(Map<String, dynamic> json, String key, [int index]) {
-    if (json[key] is bool) return false;
+    if (json[key] == null) return false;
 
-    if (jGet(json, key, index).toUpperCase() == 'TRUE')
-      return true;
-    else
-      return false;
+    return json[key];
   }
 
   static List<int> ListInt(Map<String, dynamic> json, String key) {

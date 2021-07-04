@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:goop/pages/components/goop_libComponents.dart';
 import 'package:goop/utils/GoopClass.dart';
@@ -8,6 +9,10 @@ import 'package:goop/utils/utils.dart';
 import 'package:latlong2/latlong.dart';
 
 class GeoLocService extends GoopClass{
+  //double latitudeMocked = -22.4808083; double longitudeMocked = -48.5619883;
+  double latitudeMocked = 0; double longitudeMocked = 0;
+
+
   Position position;
 
   double latitude() => position.latitude;
@@ -33,6 +38,14 @@ class GeoLocService extends GoopClass{
     'isMocked: ${position.isMocked}';
 
   update([BuildContext context = null, bool getCurrentPosition = false]) async {
+    if (latitudeMocked != 0){
+      printL('::GeoLocService.update - position Mocked');
+      printL(currentPositionStr());
+      position = Position(latitude:latitudeMocked, longitude: longitudeMocked );
+      globalServiceNotifier.geoLocationOk = true;
+      return;
+    }
+
     if (context == null) context = globalServiceNotifier.currentBuildContext;
 
     bool _serviceEnabled;
