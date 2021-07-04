@@ -68,7 +68,7 @@ class Activity extends AbsModels {
     write_date = jGetStr('write_date');
     display_name = jGetStr('display_name');
     last_update = jGetStr('last_update');
-    activityType = jGetStr(_activityType);
+    activityType = _activityType;
   }
 
   bool isPhoto() => activityType == ActivityTypeConsts.Photo;
