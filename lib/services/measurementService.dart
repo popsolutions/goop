@@ -11,17 +11,17 @@ import 'package:goop/services/MeasurementQuizzlinesService.dart';
 import 'package:goop/services/measurementPriceComparisonLinesService.dart';
 import 'package:goop/utils/global.dart';
 
+import 'absService.dart';
 import 'constants.dart';
 
-class MeasurementService {
-  final Odoo _odoo = Odoo();
+class MeasurementService extends absService{
 
   MeasurementQuizzlinesService measurementQuizzlinesService = new MeasurementQuizzlinesService();
   MeasurementPhotoLinesService measurementPhotoLinesService = new MeasurementPhotoLinesService();
   MeasurementPriceComparisonLinesService measurementPriceComparisonLinesService = new MeasurementPriceComparisonLinesService();
 
   Future<MeasurementModel> getMeasurementModelById(int id) async {
-    final response = await _odoo.searchRead(
+    final response = await odoo.searchRead(
       Strings.meassurement,
       [
         ['id', '=', id]
@@ -40,7 +40,7 @@ class MeasurementService {
   }
 
   Future<MeasurementModel> getMeasurementModelFromMissionIdAndPartner_id(int missionId, int partner_id) async {
-    final response = await _odoo.searchRead(
+    final response = await odoo.searchRead(
       Strings.meassurement,
       [
         ["missions_id", "in", [missionId]],
@@ -83,7 +83,7 @@ class MeasurementService {
 
 
   Future<int> insert(MeasurementModel measurementModel) async {
-    final response = await _odoo.create(Strings.meassurement, measurementModel.toJson());
+    final response = await odoo.create(Strings.meassurement, measurementModel.toJson());
 
     if (response.getStatusCode() == 200){
       return response.getResult(); //return id of MeasurementModel
@@ -93,7 +93,7 @@ class MeasurementService {
   }
 
   Future<bool> update(MeasurementModel measurementModel) async {
-    await _odoo.write(
+    await odoo.write(
       Strings.meassurement,
       [measurementModel.id],
       measurementModel.toJson(),
@@ -122,7 +122,7 @@ class MeasurementService {
   }
 
   Future<bool> delete(MeasurementModel measurementModel) async {
-    await _odoo.unlink(
+    await odoo.unlink(
       Strings.meassurement,
       [measurementModel.id]
     );
