@@ -1,6 +1,8 @@
+import 'package:goop/config/http/odoo_api.dart';
 import 'package:goop/models/activity.dart';
 import 'package:goop/models/establishment.dart';
 import 'package:goop/models/measurement.dart';
+import 'package:goop/services/mission/mission_service.dart';
 import 'package:goop/utils/global.dart';
 import 'package:goop/utils/utils.dart';
 
@@ -30,9 +32,13 @@ class MissionModel {
   String timeToCompletMission = '';
   bool secondsRedMissionTime = false;
 
+  bool activityAllDoneIsLoadlistActivity = false;
+
   List<Activity> listActivity = <Activity>[];
   MeasurementModel _measurementModel;
   EstablishmentModel establishmentModel;
+
+  MissionService missionService = new MissionService(Odoo());
 
   MissionModel({
     this.id,
@@ -168,7 +174,7 @@ class MissionModel {
     updateStatus();
   }
 
-  void updateStatus() {
+  void updateStatus() async {
     MissionStatus newStatus;
 
     if (this._measurementModel == null) {
@@ -184,7 +190,7 @@ class MissionModel {
 
       if ((newStatus == MissionStatus.Ordered) ||
           (newStatus == MissionStatus.InProgress)) {
-        if (this.activityAllDone() == true)
+        if ((await this.activityAllDone()) == true)
           newStatus = MissionStatus.Done;
         else if (this.endTime()) newStatus = MissionStatus.EndTime;
       }
@@ -225,7 +231,14 @@ class MissionModel {
     timeToCompletMission = getTimeToCompletMission();
   }
 
-  bool activityAllDone() => listActivity.length == activityAmoutDone();
+  Future<bool> activityAllDone() async {
+    if ((listActivity.length == 0) & (!activityAllDoneIsLoadlistActivity)) {
+      await missionService.setListActivity(this, globalcurrentUser);
+      activityAllDoneIsLoadlistActivity = true;
+    }
+
+    listActivity.length == activityAmoutDone();
+  }
   bool endTime() =>
       (_measurementModel == null) ? false : (_measurementModel.endTime);
 
