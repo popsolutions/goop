@@ -12,6 +12,5 @@ class Strings {
   static const String measurement_quizzLines = 'pops.measurement.quizzlines'; // Response of quizz
   static const String measurement_photoLine = 'pops.measurement.photolines'; // Response of photo
   static const String popsMeasurementPrice_comparisonLines = 'pops.measurement.price_comparison.lines'; // Response of price_comparison
-
-
+  static const String accountInvoice = 'account.invoice';
 }

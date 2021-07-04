@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:goop/config/app/authentication_controller.dart';
 import 'package:goop/models/AlternativeModel.dart';
+import 'package:goop/models/accountInvoice.dart';
 import 'package:goop/models/activity.dart';
 import 'package:goop/models/measurement.dart';
 import 'package:goop/models/measurementPhotoLines.dart';
@@ -10,6 +11,7 @@ import 'package:goop/models/mission.dart';
 import 'package:goop/models/models.dart';
 import 'package:goop/models/quizzLinesModel.dart';
 import 'package:goop/models/user.dart';
+import 'package:goop/services/AccountInvoiceService.dart';
 import 'package:goop/services/ActivityService.dart';
 import 'package:goop/services/AlternativeService.dart';
 import 'package:goop/services/GeoLocService.dart';
@@ -42,6 +44,8 @@ class ServiceNotifier extends ChangeNotifier {
   MeasurementPriceComparisonLinesService
       measurementPriceComparisonLinesService =
       new MeasurementPriceComparisonLinesService();
+  AccountInvoiceService accountInvoiceService = new AccountInvoiceService();
+
 
   bool initialization = false;
   Activity currentActivity;
@@ -190,6 +194,7 @@ class ServiceNotifier extends ChangeNotifier {
     globalcurrentUser = currentUser;
   }
 
+  Future<List<AccountInvoiceModel>> getAccountInvoicesCurrentUser() async => await accountInvoiceService.getAccountInvoiceModelCurrentUser();
 
   bool get geoLocationOk => _geoLocationOk;
 
