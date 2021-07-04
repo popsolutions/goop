@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:goop/models/absModels.dart';
+
 import 'mission.dart';
 
-class MissionDto {
+class MissionDto extends AbsModels {
   int id;
   String name;
   String subject;

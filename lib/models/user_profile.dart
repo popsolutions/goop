@@ -1,6 +1,7 @@
+import 'package:goop/models/absModels.dart';
 import 'package:goop/utils/utils.dart';
 
-class UserProfile {
+class UserProfile extends AbsModels {
   String name;
   // String image;
   ImageGoop imageClass = ImageGoop();

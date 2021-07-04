@@ -1,8 +1,9 @@
 //Class Measurement_quizzlinesModel is a Response to quizz into Measurement
+import 'package:goop/models/absModels.dart';
 import 'package:goop/services/constants.dart';
 import 'package:goop/utils/utils.dart';
 
-class MeasurementPhotoLinesModel{
+class MeasurementPhotoLinesModel extends AbsModels{
   String modelName = Strings.measurement_photoLine;
 
   int id;

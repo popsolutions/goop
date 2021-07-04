@@ -1,4 +1,6 @@
-class UpdateUser {
+import 'package:goop/models/absModels.dart';
+
+class UpdateUser extends AbsModels {
   final int partnerId;
   final String email;
   final String phone;

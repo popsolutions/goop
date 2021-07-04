@@ -1,4 +1,5 @@
 import 'package:goop/config/http/odoo_api.dart';
+import 'package:goop/models/absModels.dart';
 import 'package:goop/models/activity.dart';
 import 'package:goop/models/establishment.dart';
 import 'package:goop/models/measurement.dart';
@@ -6,7 +7,8 @@ import 'package:goop/services/mission/mission_service.dart';
 import 'package:goop/utils/global.dart';
 import 'package:goop/utils/utils.dart';
 
-class MissionModel {
+
+class MissionModel extends AbsModels {
   int id;
   String name;
   String subject;
@@ -237,8 +239,9 @@ class MissionModel {
       activityAllDoneIsLoadlistActivity = true;
     }
 
-    listActivity.length == activityAmoutDone();
+    return listActivity.length == activityAmoutDone();
   }
+
   bool endTime() =>
       (_measurementModel == null) ? false : (_measurementModel.endTime);
 

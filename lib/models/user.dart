@@ -1,4 +1,6 @@
-class User {
+import 'package:goop/models/absModels.dart';
+
+class User extends AbsModels {
   final String sessionId;
   final int uid;
   final bool isAdmin;

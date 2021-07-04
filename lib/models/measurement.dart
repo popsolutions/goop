@@ -1,9 +1,10 @@
 // ignore_for_file: non_constant_identifier_names
+import 'package:goop/models/absModels.dart';
 import 'package:goop/models/measurementQuizzlines.dart';
 import 'package:goop/utils/global.dart';
 import 'package:goop/utils/utils.dart';
 
-class MeasurementModel {
+class MeasurementModel extends AbsModels {
   int id;
   int mission_Id;
   String name;
@@ -42,7 +43,7 @@ class MeasurementModel {
 
   DateTime dateEnd() {
     DateTime dateEnd =
-        create_date.add(Duration(hours: globalConfig.hoursDiffServer));
+    create_date.add(Duration(hours: globalConfig.hoursDiffServer));
     // dateEnd = dateEnd.add(Duration(seconds: 5));
     dateEnd = dateEnd.add(Duration(hours: globalConfig.hoursCompletMission));
 
@@ -88,62 +89,48 @@ class MeasurementModel {
   });
 
   MeasurementModel.fromJson(Map<String, dynamic> json) {
+    currentJson = json;
+
     void intListAdd(String fieldName, List<int> list) {
       json[fieldName].forEach((s) => list.add(s as int));
     }
 
-    String getArrJson(String fieldName, int index) {
-      if ((json[fieldName] is bool) || (json[fieldName] == null))
-        return null;
-      else
-        return json[fieldName][index].toString();
-    }
+    id = jGetInt('id');
+    mission_Id = jGetInt('missions_id', 0);
+    name = jGetStr('name');
+    partner_Id = jGetInt('partner_id', 0);
+    partner_Name = jGetStr('partner_id', 1);
 
-    int getArrJsonInt(String fieldName, int index) {
-      if ((json[fieldName] is bool) || (json[fieldName] == null))
-        return null;
-      else
-        return json[fieldName][index];
-    }
-
-    String GetStr(String key) => JsonGet.Str(json, key);
-
-    id = json['id'];
-    mission_Id = getArrJsonInt('missions_id', 0);
-    name = json['name'];
-    partner_Id = getArrJsonInt('partner_id', 0);
-    partner_Name = getArrJson('partner_id', 1);
-
-    state = json['state'];
-    dateStarted = DateTime.parse(json['date_started']);
-    dateFinished = DateTime.parse(json['date_started']);
-    measurementLatitude = json['measurement_latitude'];
-    measurementLongitude = json['measurement_longitude'];
+    state = jGetStr('state');
+    dateStarted = jGetDate('date_started');
+    dateFinished = jGetDate('date_started');
+    measurementLatitude = jGetDouble('measurement_latitude');
+    measurementLongitude = jGetDouble('measurement_longitude');
 
     intListAdd('lines_ids', lines_ids);
     intListAdd('quizz_lines_ids', quizz_lines_ids);
     intListAdd('photo_lines_ids', photo_lines_ids);
     intListAdd('price_comparison_lines_ids', price_comparison_lines_ids);
 
-    color = json['color'];
-    priority = GetStr('priority');
-    sequence = json['sequence'];
-    active = json['active'];
-    kanbanState = GetStr('kanban_state');
-    legendPriority = json['legend_priority'];
-    legendBlocked = json['legend_blocked'];
-    legendDone = json['legend_done'];
-    legendNormal = json['legend_normal'];
-    legendDoing = json['legend_doing'];
-    create_Uid = getArrJsonInt('create_uid', 0);
-    create_Uname = getArrJson('create_uid', 1);
-    create_date = DateTime.parse(json['create_date']);
-    write_Uid = getArrJsonInt('write_Uid', 0);
-    write_Uname = getArrJson('write_Uid', 1);
-    writeDate = DateTime.parse(json['write_date']);
-    kanbanStateLabel = json['kanban_state_label'];
-    displayName = json['display_name'];
-    lastUpdate = json['__last_update'];
+    color = jGetInt('color');
+    priority = jGetStr('priority');
+    sequence = jGetInt('sequence');
+    active = jGetBool('active');
+    kanbanState = jGetStr('kanban_state');
+    legendPriority = jGetBool('legend_priority');
+    legendBlocked = jGetStr('legend_blocked');
+    legendDone = jGetStr('legend_done');
+    legendNormal = jGetStr('legend_normal');
+    legendDoing = jGetStr('legend_doing');
+    create_Uid = jGetInt('create_uid', 0);
+    create_Uname = jGetStr('create_uid', 1);
+    create_date = jGetDate('create_date');
+    write_Uid = jGetInt('write_uid', 0);
+    write_Uname = jGetStr('write_uid', 1);
+    writeDate = jGetDate('write_date');
+    kanbanStateLabel = jGetStr('kanban_state_label');
+    displayName = jGetStr('display_name');
+    lastUpdate = jGetStr('__last_update');
   }
 
   Map<String, dynamic> toJson() {

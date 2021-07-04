@@ -1,6 +1,8 @@
+import 'package:goop/models/absModels.dart';
 import 'package:goop/utils/utils.dart';
 
-class MeasurementPriceComparisonLinesModel {
+
+class MeasurementPriceComparisonLinesModel extends AbsModels {
   int id;
   int measurement_id;
   String comparison_id;

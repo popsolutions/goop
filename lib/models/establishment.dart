@@ -1,6 +1,7 @@
+import 'package:goop/models/absModels.dart';
 import 'package:goop/utils/utils.dart';
 
-class EstablishmentModel {
+class EstablishmentModel extends AbsModels {
   int id;
   String name;
   String address;
@@ -18,14 +19,14 @@ class EstablishmentModel {
     this.longitude,
   });
 
-  factory EstablishmentModel.fromJson(Map<String, dynamic> map) {
-    return EstablishmentModel(
-      id: valueOrNull(map['id']),
-      name: valueOrNull(map['name']),
-      address: valueOrNull(map['address']),
-      zipCode: valueOrNull(map['zip_code']),
-      latitude: JsonGet.Double(map, 'latitude'),
-      longitude: JsonGet.Double(map, 'longitude'),
-    );
+  EstablishmentModel.fromJson(Map<String, dynamic> map) {
+    currentJson = map;
+
+    id = jGetInt('id');
+    name = jGetStr('name');
+    address = jGetStr('address');
+    zipCode = jGetStr('zip_code');
+    latitude = jGetDouble('latitude');
+    longitude = jGetDouble('longitude');
   }
 }

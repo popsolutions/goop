@@ -1,4 +1,6 @@
-class QuizzLinesModel {
+import 'package:goop/models/absModels.dart';
+
+class QuizzLinesModel extends AbsModels {
   int id;
   int alternative_id;
   String alternative_name;
