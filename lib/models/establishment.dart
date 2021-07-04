@@ -24,8 +24,8 @@ class EstablishmentModel {
       name: valueOrNull(map['name']),
       address: valueOrNull(map['address']),
       zipCode: valueOrNull(map['zip_code']),
-      latitude: jsonGetdouble(map, 'latitude'),
-      longitude: jsonGetdouble(map, 'longitude'),
+      latitude: JsonGet.Double(map, 'latitude'),
+      longitude: JsonGet.Double(map, 'longitude'),
     );
   }
 }

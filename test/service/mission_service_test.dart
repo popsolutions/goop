@@ -2,6 +2,7 @@ import 'package:async/async.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:goop/config/http/odoo_api.dart';
 import 'package:goop/models/AlternativeModel.dart';
+import 'package:goop/models/accountInvoice.dart';
 import 'package:goop/models/establishment.dart';
 
 import 'package:goop/models/login_dto.dart';
@@ -15,6 +16,7 @@ import 'package:goop/models/models.dart';
 import 'package:goop/models/quizzLinesModel.dart';
 import 'package:goop/models/user.dart';
 import 'package:goop/models/user_profile.dart';
+import 'package:goop/services/AccountInvoiceService.dart';
 import 'package:goop/services/AlternativeService.dart';
 import 'package:goop/services/MeasurementPhotoLinesService.dart';
 import 'package:goop/services/MeasurementQuizzlinesService.dart';
@@ -46,6 +48,7 @@ void main() {
   MeasurementPriceComparisonLinesService
       measurementPriceComparisonLinesService =
       new MeasurementPriceComparisonLinesService();
+  AccountInvoiceService accountInvoiceService = new AccountInvoiceService();
 
   LoginResult currentLoginResult;
   User currentUser;
@@ -398,64 +401,10 @@ void main() {
     print('id:$id');
   });
 
-//   test("CancelableOperation with future", () async {
-//
-//     Future<void> tst() async {
-//       print('x');
-//           }
-//
-//     var cancellableOperation = CancelableOperation.fromFuture(
-//       tst,
-//       onCancel: () => {print('onCancel')},
-//     );
-//
-// // cancellableOperation.cancel();  // uncomment this to test cancellation
-//
-//     cancellableOperation.value.then((value) => {
-//       print('then: $value'),
-//     });
-//     cancellableOperation.value.whenComplete(() => {
-//       print('onDone'),
-//     });
-//   });
+  test('AccountInvoiceService.getAccountInvoiceModelCurrentUser', () async {
+    List<AccountInvoiceModel> listAccountInvoiceModel = await accountInvoiceService.getAccountInvoiceModelCurrentUser();
 
-
-  test("CancelableCompleter is cancelled", () async {
-
-    CancelableCompleter completer = CancelableCompleter(onCancel: () {
-      print('onCancel');
-    });
-
-    // completer.operation.cancel();  // uncomment this to test cancellation
-
-    completer.complete(Future.value('future result'));
-    // completer.complete((){
-    //   print('x');
-    // });
-    print('isCanceled: ${completer.isCanceled}');
-    print('isCompleted: ${completer.isCompleted}');
-    completer.operation.value.then((value) => {
-      print('then: $value'),
-    });
-    completer.operation.value.whenComplete(() => {
-      print('onDone'),
-    });
+    print(listAccountInvoiceModel.length);
   });
 
-  test("CancelableOperation with future - original", () async {
-
-    var cancellableOperation = CancelableOperation.fromFuture(
-      Future.value('future result'),
-      onCancel: () => {print('onCancel')},
-    );
-
-// cancellableOperation.cancel();  // uncomment this to test cancellation
-
-    cancellableOperation.value.then((value) => {
-      print('then: $value'),
-    });
-    cancellableOperation.value.whenComplete(() => {
-      print('onDone'),
-    });
-  });
 }

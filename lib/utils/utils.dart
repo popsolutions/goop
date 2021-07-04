@@ -1,7 +1,14 @@
 import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+
+import 'package:image/image.dart' as Im;
+// import 'package:path_provider/path_provider.dart';
+import 'dart:math' as Math;
 
 dynamic valueOrNull(dynamic value) {
   return value is! bool ? value : null;
@@ -13,28 +20,53 @@ String JSONToStringWrapQuotClear(dynamic JSON) {
   return s.replaceAll(',', ',\n').replaceAll('"', '').replaceAll(':', ': ');
 }
 
-String jsonGetStr(Map<String, dynamic> json, String key) {
-  if (json[key] is bool) return '';
+class JsonGet {
+  static bool jsonKeyIsNull(dynamic value) => ((value == null) || (value is bool));
 
-  return json[key];
-}
+  static dynamic jGet(Map<String, dynamic> json, String key, [int index, dynamic valueIfNull]){
+    if (jsonKeyIsNull(json[key]))
+      return valueIfNull;
 
-double jsonGetdouble(Map<String, dynamic> json, String key) {
-  if (json[key] is bool) return null;
+    if (index == null)
+      return json[key];
+    else
+      return json[key][index];
+  }
 
-  return double.parse(json[key]);
-}
+  static String Str(Map<String, dynamic> json, String key, [int index]) => jGet(json, key, index, '');
 
-List<int> jsonGetListInt(Map<String, dynamic> json, String key) {
-  List<dynamic> listDynamic = json[key];
-  List<int> listInt = <int>[];
+  static int Int(Map<String, dynamic> json, String key, [int index]) => jGet(json, key, index);
 
-  if (!listDynamic.isEmpty)
-    listDynamic.forEach((element) {
-      listInt.add(element);
-    });
+  static double Double(Map<String, dynamic> json, String key, [int index]) => convertDynamicToDouble(jGet(json, key, index));
 
-  return listInt;
+  static DateTime Datetime(Map<String, dynamic> json, String key, [int index]) {
+    if (json[key] is bool) return null;
+
+    return DateTime.parse(jGet(json, key, index));
+  }
+
+  static bool Bool(Map<String, dynamic> json, String key, [int index]) {
+    if (json[key] is bool) return false;
+
+    if (jGet(json, key, index).toUpperCase() == 'TRUE')
+      return true;
+    else
+      return false;
+  }
+
+  static List<int> ListInt(Map<String, dynamic> json, String key) {
+    //json in format [1, 2, 4, 100]
+
+    List<dynamic> listDynamic = json[key];
+    List<int> listInt = <int>[];
+
+    if (!listDynamic.isEmpty)
+      listDynamic.forEach((element) {
+        listInt.add(element);
+      });
+
+    return listInt;
+  }
 }
 
 String convertDateToStringFormat(DateTime date) {
@@ -89,6 +121,19 @@ double CurrencyStringtoDouble(String value) {
   return formatCurrencyDouble(double.parse(vlCurrency.trim()));
 }
 
+double convertDynamicToDouble(dynamic value) {
+  if (value == null)
+    return null;
+
+  String valueString = value.toString();
+  valueString = valueString
+      .replaceAll("R\$", '')
+      .replaceAll(' ', '')
+      .replaceAll(',', '.');
+
+  return double.parse(valueString);
+}
+
 int difDateSeconds(DateTime dateFrom, DateTime dateTo) {
   return dateTo.difference(dateFrom).inSeconds;
 }
@@ -134,6 +179,9 @@ String convertSecondsToHHMMSS(int seconds){
 Future<void> delayedSeconds(int _seconds) async =>
     await Future.delayed(Duration(seconds: _seconds));
 
+Future<void> delayedMileconds(int _mileSeconds) async =>
+    await Future.delayed(Duration(milliseconds: _mileSeconds));
+
 class CurrencyInputFormatter extends TextInputFormatter {
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
@@ -161,6 +209,8 @@ class ImageGoop{
   String imageBase64;
 
   ImageGoop([this.imageBase64 = null]);
+
+  Uint8List uint8List() => Base64Codec().decode(imageBase64);
 
   bool isNullOrEmpty() => (imageBase64 ?? '') == '';
 }

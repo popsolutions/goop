@@ -30,7 +30,7 @@ class MeasurementPriceComparisonLinesModel {
   MeasurementPriceComparisonLinesModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     measurement_id = json['measurement_id'][0];
-    comparison_id = jsonGetStr(json, 'comparison_id');
+    comparison_id = JsonGet.Str(json, 'comparison_id');
     product_id = json['product_id'][0];
     product_name = json['product_id'][1];
     price = json['price'];

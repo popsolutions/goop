@@ -106,7 +106,7 @@ class MeasurementModel {
         return json[fieldName][index];
     }
 
-    String GetStr(String key) => jsonGetStr(json, key);
+    String GetStr(String key) => JsonGet.Str(json, key);
 
     id = json['id'];
     mission_Id = getArrJsonInt('missions_id', 0);
