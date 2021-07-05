@@ -176,7 +176,7 @@ class MissionModel extends AbsModels {
     updateStatus();
   }
 
-  void updateStatus() async {
+  void updateStatus() {
     MissionStatus newStatus;
 
     if (this._measurementModel == null) {
@@ -192,7 +192,7 @@ class MissionModel extends AbsModels {
 
       if ((newStatus == MissionStatus.Ordered) ||
           (newStatus == MissionStatus.InProgress)) {
-        if ((await this.activityAllDone()) == true)
+        if ((this.activityAllDone()) == true)
           newStatus = MissionStatus.Done;
         else if (this.endTime()) newStatus = MissionStatus.EndTime;
       }
@@ -221,6 +221,14 @@ class MissionModel extends AbsModels {
 
   MissionStatus get status => _status;
 
+  String statusText(){
+    if (status == MissionStatus.Ordered) return 'Aguardando';
+    if (status == MissionStatus.InProgress) return 'Em execução';
+    if (status == MissionStatus.EndTime) return 'Tempo Esgotado';
+    if (status == MissionStatus.Done) return 'Concluída';
+    if (status == MissionStatus.Closed) return 'Fechada';
+  }
+
   set status(MissionStatus value) {
     _status = value;
     inProgress = _status == MissionStatus.InProgress;
@@ -233,14 +241,7 @@ class MissionModel extends AbsModels {
     timeToCompletMission = getTimeToCompletMission();
   }
 
-  Future<bool> activityAllDone() async {
-    if ((listActivity.length == 0) & (!activityAllDoneIsLoadlistActivity)) {
-      await missionService.setListActivity(this, globalcurrentUser);
-      activityAllDoneIsLoadlistActivity = true;
-    }
-
-    return listActivity.length == activityAmoutDone();
-  }
+  bool activityAllDone() => listActivity.length == activityAmoutDone();
 
   bool endTime() =>
       (_measurementModel == null) ? false : (_measurementModel.endTime);
