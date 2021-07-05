@@ -76,8 +76,17 @@ class ServiceNotifier extends ChangeNotifier {
     listMissionModel = await missionService.getOpenMissions();
     listMissionModelEstablishment =
         await missionService.getListMissionModelEstablishment(listMissionModel);
+
+    if (currentMissionModelEstablishment != null){
+      currentMissionModelEstablishment = listMissionModelEstablishmentGetById(currentMissionModelEstablishment.establishmentModel.id);
+    }
+
     await globalGeoLocService.update(context);
     notifyListeners();
+  }
+
+  MissionModelEstablishment listMissionModelEstablishmentGetById(int id){
+    return listMissionModelEstablishment.firstWhere((element) => element.establishmentModel.id == id, orElse: () => null);
   }
 
   void listAlternativeModelLoad() async {

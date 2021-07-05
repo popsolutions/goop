@@ -6,6 +6,7 @@ import 'package:goop/pages/components/goop_card.dart';
 import 'package:goop/pages/components/goop_drawer.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
+import 'package:goop/utils/utils.dart';
 
 class MissionHomePage extends StatefulWidget {
   @override
@@ -28,13 +29,20 @@ class _MissionHomePageState extends StateGoop<MissionHomePage> {
     listenServiceNotifier = true;
   }
 
-  @override
-  Widget build(BuildContext context) {
+  listMissionModelSet(bool force){
+    if ((listMissionModel !=null) & (!force))
+      return;
+
     if (serviceNotifier.viewByEstablishment == true)
       listMissionModel =
           serviceNotifier.currentMissionModelEstablishment.listMissionModel;
     else
       listMissionModel = serviceNotifier.listMissionModel;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    listMissionModelSet(false);
 
     return Scaffold(
       appBar: AppBar(
@@ -51,6 +59,7 @@ class _MissionHomePageState extends StateGoop<MissionHomePage> {
         color: GoopColors.red,
         onRefresh: () async {
           await serviceNotifier.update();
+          listMissionModelSet(true);
           serviceNotifier.notifyListeners();
         },
         child: Column(
