@@ -110,6 +110,7 @@ class MissionService {
           await activityService.setMeasurementPriceComparisonLinesModel(
               activity, missionModel.measurementModel, user);
         }
+        missionModel.updateStatus();
       }
     }
   }
@@ -127,6 +128,8 @@ class MissionService {
     for (MissionModel missionModel in listMissionModel) {
       missionModel.measurementModel =
           await getMeasurementModel(missionModel, globalcurrentUser.partnerId);
+
+      await setListActivity(missionModel, globalcurrentUser);
     }
 
     // globalServiceNotifier.notifyListeners();
@@ -152,7 +155,7 @@ class MissionService {
       MeasurementModel measurementModelInsert = MeasurementModel(
         id: null,
         mission_Id: missionModel.id,
-        name: missionModel.name,
+        name: missionModel.name + ' - ' + currentUser.name,
         partner_Id: currentUser.partnerId,
         partner_Name: null,
         state: 'doing',
