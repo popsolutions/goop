@@ -19,7 +19,7 @@ class GoopImages {
   static const close = 'assets/images/images/close.svg';
   static const mission = 'assets/images/mission.png';
   static const mission_about = 'assets/images/mission_about.png';
-  static const mission_completed = 'assets/images/mission_completed.svg';
+  static const mission_completed = 'assets/images/mission_completed.png';
   static const rocket_completed = 'assets/images/rocket_completed.svg';
   static const rocket = 'assets/images/rocket.svg';
   static const msg_completed = 'assets/images/msg_completed.svg';
