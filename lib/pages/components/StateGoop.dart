@@ -65,6 +65,13 @@ abstract class StateGoop<T extends StatefulWidget> extends State<T> {
             : () async {
                 if (!editing) return null;
 
+                {//removing Keyboard focus...
+                  FocusScopeNode currentFocus = FocusScope.of(context);
+                  if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+                    FocusManager.instance.primaryFocus.unfocus();
+                  }
+                }
+
                 String fileBase64 = await getPhotoBase64();
 
                 if (fileBase64 != null) imageBase64.imageBase64 = fileBase64;
