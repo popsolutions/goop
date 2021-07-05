@@ -9,10 +9,6 @@ import 'package:goop/utils/utils.dart';
 import 'package:latlong2/latlong.dart';
 
 class GeoLocService extends GoopClass{
-  //double latitudeMocked = -22.4808083; double longitudeMocked = -48.5619883;
-  double latitudeMocked = 0; double longitudeMocked = 0;
-
-
   Position position;
 
   double latitude() => position.latitude;
@@ -38,10 +34,14 @@ class GeoLocService extends GoopClass{
     'isMocked: ${position.isMocked}';
 
   update([BuildContext context = null, bool getCurrentPosition = false]) async {
-    if (latitudeMocked != 0){
+    if ((globalLatitudeMocked != '') & (globalLongitudeMocked != '')) {
+
+      double latitudeMocked = double.parse(globalLatitudeMocked);
+      double longitudeMocked = double.parse(globalLongitudeMocked);
+
       printL('::GeoLocService.update - position Mocked');
-      printL(currentPositionStr());
       position = Position(latitude:latitudeMocked, longitude: longitudeMocked );
+      printL(currentPositionStr());
       globalServiceNotifier.geoLocationOk = true;
       return;
     }

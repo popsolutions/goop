@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'package:flutter/widgets.dart';
 import 'package:goop/models/user.dart';
 import 'package:goop/services/GeoLocService.dart';
@@ -11,6 +12,9 @@ ServiceNotifier globalServiceNotifier;
 GeoLocService globalGeoLocService = GeoLocService();
 GlobalConfig globalConfig = GlobalConfig();
 StackUtil<String> globalScreenStack = StackUtil<String>();
+
+const String globalLatitudeMocked = String.fromEnvironment('latitude', defaultValue: ''); //--dart-define=latitude=-22.4808083 --dart-define=longitude=-48.5619883
+const String globalLongitudeMocked = String.fromEnvironment('longitude', defaultValue: '');
 
 class GlobalConfig {
   double distanceMetersLimitUser = 200;
