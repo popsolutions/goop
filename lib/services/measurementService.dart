@@ -10,6 +10,7 @@ import 'package:goop/services/MeasurementPhotoLinesService.dart';
 import 'package:goop/services/MeasurementQuizzlinesService.dart';
 import 'package:goop/services/measurementPriceComparisonLinesService.dart';
 import 'package:goop/utils/global.dart';
+import 'package:goop/utils/utils.dart';
 
 import 'absService.dart';
 import 'constants.dart';
@@ -44,7 +45,8 @@ class MeasurementService extends absService{
       Strings.meassurement,
       [
         ["missions_id", "in", [missionId]],
-        ["partner_id", "in", [partner_id]]
+        ["partner_id", "in", [partner_id]],
+        ["date_started", "=", [convertDateToStringOdoo(DateTime.now())]]
       ],
       [],
     );

@@ -70,6 +70,10 @@ String convertDateToStringFormat(DateTime date) {
   return DateFormat('dd/MM/yyyy').format(date);
 }
 
+String convertDateToStringOdoo(DateTime date) {
+  return DateFormat('yyyy-MM-dd').format(date);
+}
+
 String DateToSql(DateTime date) {
   return (date == null) ? null : DateFormat('yyyy-MM-dd').format(date);
 }
@@ -198,8 +202,8 @@ class CurrencyInputFormatter extends TextInputFormatter {
   }
 }
 
-// printL(Object object) => print(object);
-printL(Object object) => null;
+printL(Object object) => print(object);
+// printL(Object object) => null;
 printL2(Object object) => print(object);
 
 class ImageGoop{
