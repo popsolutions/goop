@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:goop/config/routes.dart';
 import 'package:goop/models/user_profile.dart';
 import 'package:goop/pages/components/StateGoop.dart';
 import 'package:goop/pages/components/goop_back.dart';
@@ -14,6 +15,25 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends StateGoop<RegisterPage> {
+  final flutterWebviewPlugin = new FlutterWebviewPlugin();
+  bool popExecuted = false;
+
+  void initState() {
+    super.initState();
+
+    flutterWebviewPlugin.onUrlChanged.listen((String url) {
+      print('*** url:' + url);
+      if (url != 'https://dev.charismabi.com/web/signup'){
+        if (popExecuted)
+          return;
+
+        print('*** url--- POP');
+        navigatorPushReplacementNamed(Routes.login);
+        popExecuted = true;
+      }
+    });
+  }
+
   UserProfile userProfile = UserProfile();
   int selecionedValue = 0;
 
