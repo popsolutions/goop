@@ -8,6 +8,7 @@ import 'package:goop/pages/components/StateGoop.dart';
 import 'package:goop/pages/components/goop_button.dart';
 import 'package:goop/pages/components/goop_libComponents.dart';
 import 'package:goop/services/ServiceNotifier.dart';
+import 'package:goop/utils/global.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
 import 'package:provider/provider.dart';
@@ -156,6 +157,15 @@ class _GoopDrawerState extends StateGoop<GoopDrawer> {
                       title: 'FAQ',
                       img: GoopImages.faq,
                       action: () {},
+                    ),
+                    goopTile(
+                      title:(globalDarMode)? 'Tema claro': 'Modo Escuro',
+                      img: GoopImages.faq,
+                      action: () {
+                        globalDarMode = !globalDarMode;
+                        setState_();
+                        navigatorPop();
+                      },
                     ),
                     goopTile(
                       title: 'Sair',
