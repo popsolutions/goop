@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:goop/models/activity.dart';
 import 'package:goop/pages/components/goop_back.dart';
 import 'package:goop/services/ServiceNotifier.dart';
+import 'package:goop/utils/global.dart';
 import 'package:goop/utils/goop_images.dart';
 import 'package:provider/provider.dart';
 
@@ -55,7 +56,7 @@ class _Mission_photo_pageState extends State<Mission_photo_page> {
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width * .7,
-                      child: Divider(color: Colors.deepPurple),
+                      child: Divider(color: goopColors.deepPurple),
                     ),
                     SizedBox(height: 30),
                     ClipRRect(

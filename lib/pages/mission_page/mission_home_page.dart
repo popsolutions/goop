@@ -4,6 +4,7 @@ import 'package:goop/models/mission.dart';
 import 'package:goop/pages/components/StateGoop.dart';
 import 'package:goop/pages/components/goop_card.dart';
 import 'package:goop/pages/components/goop_drawer.dart';
+import 'package:goop/utils/global.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
 import 'package:goop/utils/utils.dart';
@@ -46,7 +47,7 @@ class _MissionHomePageState extends StateGoop<MissionHomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: GoopColors.red),
+        iconTheme: IconThemeData(color: goopColors.red),
         centerTitle: true,
         title: Container(
           width: 100,
@@ -56,7 +57,7 @@ class _MissionHomePageState extends StateGoop<MissionHomePage> {
       drawer: GoopDrawer(),
       body: RefreshIndicator(
         strokeWidth: 3,
-        color: GoopColors.red,
+        color: goopColors.red,
         onRefresh: () async {
           await serviceNotifier.update();
           listMissionModelSet(true);

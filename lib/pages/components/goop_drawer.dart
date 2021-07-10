@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:goop/config/app/authentication_controller.dart';
@@ -31,7 +32,7 @@ class _GoopDrawerState extends StateGoop<GoopDrawer> {
       return ListTile(
         contentPadding: EdgeInsets.all(20),
         leading: SvgPicture.asset(img, height: 20),
-        title: Text(title),
+        title: Text(title, style: TextStyle(color: goopColors.black)),
         onTap: action,
       );
     }
@@ -47,8 +48,10 @@ class _GoopDrawerState extends StateGoop<GoopDrawer> {
           children: [
             Container(
               height: 300,
+              decoration: BoxDecoration(color: goopColors.white),
+
               child: DrawerHeader(
-                decoration: BoxDecoration(color: GoopColors.red),
+                decoration: BoxDecoration(color: goopColors.red),
                 child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -73,7 +76,7 @@ class _GoopDrawerState extends StateGoop<GoopDrawer> {
                       Text(
                         user.name,
                         style: TextStyle(
-                          color: Colors.white,
+                          color: goopColors.white,
                           fontSize: 20,
                         ),
                       ),
@@ -81,7 +84,7 @@ class _GoopDrawerState extends StateGoop<GoopDrawer> {
                       Text(
                         'Missões Cumpridas: ${user.missionsCount}',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: goopColors.white,
                           fontSize: 15,
                         ),
                       ),
@@ -90,95 +93,94 @@ class _GoopDrawerState extends StateGoop<GoopDrawer> {
                 ),
               ),
             ),
-            Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
-                  child: Row(
-                    children: [
-                      Flexible(
-                        child: GoopButton(
-                          text: 'Missões',
-                          action: () {
-                            serviceNotifier.viewByEstablishment = false;
-                            navigatorPop(null, false);
-                            navigatorPopAndPushNamed(
-                              Routes.mission_home,
-                            );
-                          },
-                        ),
-                      ),
-                      SizedBox(width: 5),
-                      Flexible(
-                        child: GoopButton(
-                          text: 'Mapa',
-                          action: () {
-                            navigatorPushReplacementNamed(
-                              Routes.home,
-                            );
+            Container(
+              decoration: BoxDecoration(color: goopColors.white),
 
-                            // navigatorPushNamedAndRemoveUntil(
-                            //   context,
-                            //   Routes.home,
-                            //   (route) => false,
-                            // );
-                          },
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    child: Row(
+                      children: [
+                        Flexible(
+                          child: GoopButton(
+                            text: 'Missões',
+                            action: () {
+                              serviceNotifier.viewByEstablishment = false;
+                              navigatorPop(null, false);
+                              navigatorPopAndPushNamed(
+                                Routes.mission_home,
+                              );
+                            },
+                          ),
+                        ),
+                        SizedBox(width: 5),
+                        Flexible(
+                          child: GoopButton(
+                            text: 'Mapa',
+                            action: () {
+                              navigatorPushReplacementNamed(
+                                Routes.home,
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      goopTile(
+                        title: 'Carteira',
+                        img: GoopImages.wallet_red,
+
+                        action: () {
+                          navigatorPopAndPushNamed(
+                            Routes.wallet,
+                          );
+                        },
+                      ),
+                      // goopTile(
+                      //   title: 'Minha Conta',
+                      //   img: GoopImages.account,
+                      //   action: () {},
+                      // ),
+                      goopTile(
+                        title: 'Minha Conta',
+                        img: GoopImages.account,
+                        action: () {
+                          navigatorPopAndPushNamed(
+                            Routes.settings,
+                          );
+                        },
+                      ),
+                      goopTile(
+                        title: 'FAQ',
+                        img: GoopImages.faq,
+                        action: () {},
+                      ),
+                      goopTile(
+                        title:(globalDarMode)? 'Tema claro': 'Modo Escuro',
+                        img: GoopImages.faq,
+                        action: () {
+                          globalDarMode = !globalDarMode;
+                          globalRebuildAllChildren();
+
+                        },
+                      ),
+                      goopTile(
+                        title: 'Sair',
+                        img: GoopImages.quit,
+                        action: () => goop_LibComponents.navigatorPushNamedAndRemoveUntil(
+                          context,
+                          Routes.initial,
+                          (route) => false,
                         ),
                       ),
                     ],
-                  ),
-                ),
-                Column(
-                  children: [
-                    goopTile(
-                      title: 'Carteira',
-                      img: GoopImages.wallet_red,
-                      action: () {
-                        navigatorPopAndPushNamed(
-                          Routes.wallet,
-                        );
-                      },
-                    ),
-                    // goopTile(
-                    //   title: 'Minha Conta',
-                    //   img: GoopImages.account,
-                    //   action: () {},
-                    // ),
-                    goopTile(
-                      title: 'Minha Conta',
-                      img: GoopImages.account,
-                      action: () {
-                        navigatorPopAndPushNamed(
-                          Routes.settings,
-                        );
-                      },
-                    ),
-                    goopTile(
-                      title: 'FAQ',
-                      img: GoopImages.faq,
-                      action: () {},
-                    ),
-                    goopTile(
-                      title:(globalDarMode)? 'Tema claro': 'Modo Escuro',
-                      img: GoopImages.faq,
-                      action: () {
-                        globalDarMode = !globalDarMode;
-                        setState_();
-                        navigatorPop();
-                      },
-                    ),
-                    goopTile(
-                      title: 'Sair',
-                      img: GoopImages.quit,
-                      action: () => goop_LibComponents.navigatorPushNamedAndRemoveUntil(
-                        context,
-                        Routes.initial,
-                        (route) => false,
-                      ),
-                    ),
-                  ],
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           ],
         ),

@@ -14,6 +14,7 @@ import 'package:goop/services/ServiceNotifier.dart';
 import 'package:goop/services/login/login_service.dart';
 import 'package:goop/services/login/user_service.dart';
 import 'package:goop/services/login/login_facade_impl.dart';
+import 'package:goop/utils/global.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
 import 'package:mobx/mobx.dart';
@@ -124,7 +125,7 @@ class _LoginPageState extends StateGoop<LoginPage> {
                       style: TextStyle(
                         fontSize: 16,
                         decoration: TextDecoration.underline,
-                        color: GoopColors.darkBlue,
+                        color: goopColors.darkBlue,
                       ),
                     ),
                     onPressed: () {

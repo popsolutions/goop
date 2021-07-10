@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:goop/utils/global.dart';
 import 'package:goop/utils/goop_colors.dart';
 
 class GoopAvailableBalance extends StatelessWidget {
@@ -9,7 +10,7 @@ class GoopAvailableBalance extends StatelessWidget {
         Text(
           'Saldo Disponível',
           style: TextStyle(
-            color: GoopColors.green,
+            color: goopColors.green,
             fontSize: 25,
             fontWeight: FontWeight.bold,
           ),
@@ -17,13 +18,13 @@ class GoopAvailableBalance extends StatelessWidget {
         Container(
           width: MediaQuery.of(context).size.width * .7,
           child: Divider(
-            color: Colors.black,
+            color: goopColors.black,
           ),
         ),
         Text(
           'R\$ 100,00',
           style: TextStyle(
-            color: GoopColors.green,
+            color: goopColors.green,
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
@@ -31,7 +32,7 @@ class GoopAvailableBalance extends StatelessWidget {
         Container(
           width: 300,
           decoration: BoxDecoration(
-            color: GoopColors.neutralGrey,
+            color: goopColors.neutralGrey,
             borderRadius: BorderRadius.circular(20),
           ),
           margin: EdgeInsets.all(10),

@@ -9,6 +9,7 @@ import 'package:goop/models/mission.dart';
 import 'package:goop/pages/components/StateGoop.dart';
 import 'package:goop/pages/settings_page/preview_page.dart';
 import 'package:goop/services/ServiceNotifier.dart';
+import 'package:goop/utils/global.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
 import 'package:provider/provider.dart';
@@ -50,7 +51,7 @@ class _GoopMissionBodyState extends StateGoop<GoopMissionBody> {
             SizedBox(height: 5),
             Container(
               width: MediaQuery.of(context).size.width * .7,
-              child: Divider(color: Colors.black),
+              child: Divider(color: goopColors.black),
             ),
             Container(
               width: MediaQuery.of(context).size.width * .75,
@@ -62,7 +63,7 @@ class _GoopMissionBodyState extends StateGoop<GoopMissionBody> {
             ),
             Container(
               width: MediaQuery.of(context).size.width * .7,
-              child: Divider(color: Colors.black),
+              child: Divider(color: goopColors.black),
             ),
             SizedBox(height: 20),
           ],
@@ -73,7 +74,7 @@ class _GoopMissionBodyState extends StateGoop<GoopMissionBody> {
         ),
         Container(
           width: MediaQuery.of(context).size.width * .7,
-          child: Divider(color: Colors.deepPurple),
+          child: Divider(color: goopColors.deepPurple),
         ),
         Consumer<ServiceNotifier>(builder:
             (BuildContext context, ServiceNotifier value, Widget child) {
@@ -89,23 +90,23 @@ class _GoopMissionBodyState extends StateGoop<GoopMissionBody> {
 
                 return ListTile(
                   enabled: currentMissionModel.inProgressOrDone,
-                  focusColor: Colors.grey[400],
+                  focusColor: goopColors.grey400,
                   leading: Icon(
                     (currentActivity.isChecked == true)
                         ? Icons.star
                         : Icons.star_border,
                     color: currentMissionModel.inProgressOrDone
-                        ? Colors.deepPurple
-                        : Colors.grey[400],
+                        ? goopColors.deepPurple
+                        : goopColors.grey400,
                   ),
                   title: Text(
                     currentMissionModel.listActivity[index].name,
                     style: TextStyle(
                       color: (currentMissionModel.inProgressOrDone)
                           ? currentActivity.isChecked
-                              ? GoopColors.red
-                              : GoopColors.darkBlue
-                          : Colors.grey[400],
+                              ? goopColors.red
+                              : goopColors.darkBlue
+                          : goopColors.grey400,
                     ),
                   ),
                   onTap: () async {
@@ -146,7 +147,7 @@ class _GoopMissionBodyState extends StateGoop<GoopMissionBody> {
         }),
         Container(
           width: MediaQuery.of(context).size.width * .7,
-          child: Divider(color: Colors.deepPurple),
+          child: Divider(color: goopColors.deepPurple),
         ),
       ],
     );

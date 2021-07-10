@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:goop/utils/global.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/utils.dart';
 import 'package:otp_text_field/otp_field.dart';
@@ -20,7 +21,7 @@ class GoopWalletVerification extends StatelessWidget {
           Container(
             width: MediaQuery.of(context).size.width * .5,
             child: Divider(
-              color: Colors.black,
+              color: goopColors.black,
             ),
           ),
           Text(
@@ -33,7 +34,7 @@ class GoopWalletVerification extends StatelessWidget {
             child: OTPTextField(
               length: 7,
               otpFieldStyle: OtpFieldStyle(
-                focusBorderColor: GoopColors.red,
+                focusBorderColor: goopColors.red,
               ),
               fieldWidth: 33,
               style: TextStyle(fontSize: 15),

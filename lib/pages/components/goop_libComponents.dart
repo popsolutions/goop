@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:ui';
 import 'package:camera_camera/camera_camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,12 +29,13 @@ class goop_LibComponents extends GoopClass{
   static showProgressDialog(BuildContext context,
       [String caption = 'Aguarde por favor...']) {
     AlertDialog alert = AlertDialog(
+      backgroundColor: Colors.black,
       content: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           CircularProgressIndicator(
-            backgroundColor: GoopColors.red,
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            backgroundColor: goopColors.red,
+            valueColor: AlwaysStoppedAnimation<Color>(goopColors.white),
           ),
           SizedBox(width: 20),
           Container(
@@ -43,7 +45,7 @@ class goop_LibComponents extends GoopClass{
               style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.normal,
-                  color: Colors.brown),
+                  color: goopColors.brown),
             ),
           ),
         ],
@@ -119,13 +121,14 @@ class goop_LibComponents extends GoopClass{
         barrierDismissible: false,
         builder: (BuildContext ctxt) {
           return AlertDialog(
+            backgroundColor: goopColors.white ,
             title: Text(
               title,
               style: TextStyle(
                 fontFamily: "Montserrat",
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
+                color: goopColors.black,
               ),
             ),
             content: Text(
@@ -133,7 +136,7 @@ class goop_LibComponents extends GoopClass{
               style: TextStyle(
                 fontFamily: "Montserrat",
                 fontSize: 18,
-                color: Colors.black,
+                color: goopColors.black,
               ),
             ),
             actions: <Widget>[
@@ -165,7 +168,7 @@ class goop_LibComponents extends GoopClass{
                 fontFamily: "Montserrat",
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
+                color: goopColors.black,
               ),
             ),
             content: Text(
@@ -173,7 +176,7 @@ class goop_LibComponents extends GoopClass{
               style: TextStyle(
                 fontFamily: "Montserrat",
                 fontSize: 18,
-                color: Colors.black,
+                color: goopColors.black,
               ),
             ),
             actions: <Widget>[
@@ -233,34 +236,47 @@ class goop_LibComponents extends GoopClass{
       bool autoFocus = false,
       Function onTap,
       bool border = false,
-      Color borderColor = Colors.teal,
+      Color borderColor,
       TextAlign textAlign = TextAlign.start}) {
-    return TextFormField(
-      autofocus: autoFocus,
-      readOnly: readOnly,
-      keyboardType: keyboardType,
-      inputFormatters: inputFormatters,
-      decoration: InputDecoration(
-          border: (border)
-              ? new OutlineInputBorder(
-                  borderSide: new BorderSide(color: borderColor))
-              : null,
-          labelText: _label,
-          suffixIcon: IconButton(
-            onPressed: () => _controller.clear(),
-            icon: Icon(Icons.clear, color: GoopColors.red),
-          )),
-      style: textStyle,
-      controller: _controller,
-      maxLength: maxLength,
-      textAlign: textAlign,
-      onTap: onTap,
-      onFieldSubmitted: (v) {},
-      validator: (value) {
-        if ((required) && (value.isEmpty))
-          return "Campo obrigatório, por favor informe o valor solicitado.";
-        return null;
-      },
+    if (borderColor == null) borderColor = goopColors.teal;
+
+    if (textStyle == null){
+      textStyle = TextStyle(color: goopColors.black);
+    }
+
+    return Theme(
+      data: ThemeData(primaryColorBrightness: Brightness.dark),
+      child: TextFormField(
+        autofocus: autoFocus,
+        readOnly: readOnly,
+        keyboardType: keyboardType,
+        // keyboardAppearance: Brightness.dark,
+        inputFormatters: inputFormatters,
+
+
+        decoration: InputDecoration(
+            fillColor: goopColors.neutralGrey,
+            border: (border)
+                ? new OutlineInputBorder(
+                    borderSide: new BorderSide(color: borderColor))
+                : null,
+            labelText: _label,
+            suffixIcon: IconButton(
+              onPressed: () => _controller.clear(),
+              icon: Icon(Icons.clear, color: goopColors.red),
+            )),
+        style: textStyle,
+        controller: _controller,
+        maxLength: maxLength,
+        textAlign: textAlign,
+        onTap: onTap,
+        onFieldSubmitted: (v) {},
+        validator: (value) {
+          if ((required) && (value.isEmpty))
+            return "Campo obrigatório, por favor informe o valor solicitado.";
+          return null;
+        },
+      ),
     );
   }
 
@@ -307,66 +323,69 @@ class goop_LibComponents extends GoopClass{
       isScrollControlled: true,
       context: context,
       builder: (_) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              margin: EdgeInsets.only(
-                top: 20,
-                bottom: 10,
-              ),
-              height: 3,
-              width: 60,
-              color: Colors.grey,
-            ),
-            Container(
-              width: mediaQuery * .5,
-              child: ElevatedButton.icon(
-                icon: Icon(Icons.camera_alt),
-                label: Text('Tire uma foto'),
-                style: ElevatedButton.styleFrom(
-                  primary: GoopColors.redSplash,
-                  onPrimary: Colors.white,
+        return Container(
+          color: goopColors.white,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                margin: EdgeInsets.only(
+                  top: 20,
+                  bottom: 10,
                 ),
-                onPressed: () async {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => CameraCamera(
-                        enableZoom: true,
-                        resolutionPreset: ResolutionPreset.medium,
-                        onFile: (file) async {
-                          fileBase64 = await showPreview(context, file);
-                          navigatorPop(context);
-                        },
+                height: 3,
+                width: 60,
+                color: goopColors.grey,
+              ),
+              Container(
+                width: mediaQuery * .5,
+                child: ElevatedButton.icon(
+                  icon: Icon(Icons.camera_alt),
+                  label: Text('Tire uma foto.'),
+                  style: ElevatedButton.styleFrom(
+                    primary: goopColors.redSplash,
+                    onPrimary: goopColors.white,
+                  ),
+                  onPressed: () async {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => CameraCamera(
+                          enableZoom: true,
+                          resolutionPreset: ResolutionPreset.medium,
+                          onFile: (file) async {
+                            fileBase64 = await showPreview(context, file);
+                            navigatorPop(context);
+                          },
+                        ),
                       ),
-                    ),
-                  );
-                },
-              ),
-            ),
-            Container(
-              width: mediaQuery * .5,
-              child: ElevatedButton.icon(
-                icon: Icon(Icons.attach_file_outlined),
-                label: Text('Escolha um arquivo'),
-                style: ElevatedButton.styleFrom(
-                  primary: GoopColors.redSplash,
-                  onPrimary: Colors.white,
+                    );
+                  },
                 ),
-                onPressed: () async {
-                  fileBase64 = await getFileFromGallery();
-                  navigatorPop(context);
-                },
               ),
-            ),
-            SizedBox(height: 10),
-            Container(
-              padding: EdgeInsets.only(bottom: 10),
-              height: 30,
-              child: SvgPicture.asset(GoopImages.charisma),
-            ),
-          ],
+              Container(
+                width: mediaQuery * .5,
+                child: ElevatedButton.icon(
+                  icon: Icon(Icons.attach_file_outlined),
+                  label: Text('Escolha um arquivo'),
+                  style: ElevatedButton.styleFrom(
+                    primary: goopColors.redSplash,
+                    onPrimary: goopColors.white,
+                  ),
+                  onPressed: () async {
+                    fileBase64 = await getFileFromGallery();
+                    navigatorPop(context);
+                  },
+                ),
+              ),
+              SizedBox(height: 10),
+              Container(
+                padding: EdgeInsets.only(bottom: 10),
+                height: 30,
+                child: SvgPicture.asset(GoopImages.charisma),
+              ),
+            ],
+          ),
         );
       },
     );

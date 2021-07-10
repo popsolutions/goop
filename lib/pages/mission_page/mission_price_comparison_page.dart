@@ -7,6 +7,7 @@ import 'package:goop/models/activity.dart';
 import 'package:goop/pages/components/goop_back.dart';
 import 'package:goop/pages/components/goop_button.dart';
 import 'package:goop/services/ServiceNotifier.dart';
+import 'package:goop/utils/global.dart';
 import 'package:goop/utils/goop_images.dart';
 import 'package:goop/utils/utils.dart';
 
@@ -75,7 +76,7 @@ class _MissionPriceComparisionPageState
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width * .7,
-                      child: Divider(color: Colors.deepPurple),
+                      child: Divider(color: goopColors.deepPurple),
                     ),
                     Text(
                       currentActivity.name,

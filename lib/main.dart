@@ -4,7 +4,6 @@ import 'package:goop/config/routes.dart';
 import 'package:goop/config/widgets_router.dart';
 import 'package:goop/services/ServiceNotifier.dart';
 import 'package:goop/utils/global.dart';
-import 'package:goop/utils/goop_colors.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -12,9 +11,32 @@ void main() {
   prefsGoop.init(false);
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  BuildContext myAppContext;
+
+  void rebuildAllChildren() {
+    void rebuild(Element el) {
+      el.markNeedsBuild();
+      el.visitChildren(rebuild);
+    }
+    (myAppContext as Element).visitChildren(rebuild);
+    setState(() {
+
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (myAppContext == null) {
+      myAppContext = context;
+      globalRebuildAllChildren = rebuildAllChildren;
+    }
+
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(statusBarColor: Colors.transparent),
     );
@@ -27,9 +49,10 @@ class MyApp extends StatelessWidget {
               headline1: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
+                color: goopColors.headline1
               ),
               headline2: TextStyle(
-                color: Colors.deepPurple[900],
+                color: goopColors.deepPurple900,
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
@@ -40,17 +63,17 @@ class MyApp extends StatelessWidget {
               ),
               headline4: TextStyle(
                 decoration: TextDecoration.underline,
-                color: GoopColors.red,
+                color: goopColors.red,
                 fontSize: 14,
               ),
               headline5: TextStyle(
-                color: Colors.deepPurple[900],
+                color: goopColors.deepPurple900,
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            splashColor: GoopColors.redSplash,
-            scaffoldBackgroundColor: Colors.white,
+            splashColor: goopColors.redSplash,
+            scaffoldBackgroundColor: goopColors.white,
             appBarTheme: AppBarTheme(elevation: 0),
             inputDecorationTheme: InputDecorationTheme(
               filled: true,
@@ -59,9 +82,9 @@ class MyApp extends StatelessWidget {
                 top: 25,
                 bottom: 25,
               ),
-              fillColor: GoopColors.neutralGrey,
+              fillColor: goopColors.neutralGrey,
               hintStyle: TextStyle(
-                color: GoopColors.textGrey,
+                color: goopColors.textGrey,
                 fontSize: 18,
                 fontFamily: 'Roboto',
                 fontWeight: FontWeight.w600,
@@ -73,8 +96,8 @@ class MyApp extends StatelessWidget {
                 ),
               ),
             ),
-            primaryColor: Colors.white,
-            primarySwatch: Colors.lightBlue,
+            primaryColor: goopColors.white,
+            primarySwatch: goopColors.lightBlue,
           ),
           routes: WidgetsRouter.routes,
           initialRoute: Routes.initial,

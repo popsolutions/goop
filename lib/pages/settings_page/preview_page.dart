@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:goop/pages/components/goop_libComponents.dart';
+import 'package:goop/utils/global.dart';
 
 class PreviewPage extends StatelessWidget {
   final File file;
@@ -30,11 +31,11 @@ class PreviewPage extends StatelessWidget {
                           padding: EdgeInsets.all(32),
                           child: CircleAvatar(
                             radius: 32,
-                            backgroundColor: Colors.black.withOpacity(.5),
+                            backgroundColor: goopColors.black.withOpacity(.5),
                             child: IconButton(
                               icon: Icon(
                                 Icons.check,
-                                color: Colors.white,
+                                color: goopColors.white,
                                 size: 30,
                               ),
                               onPressed: () {
@@ -47,11 +48,11 @@ class PreviewPage extends StatelessWidget {
                           padding: EdgeInsets.all(32),
                           child: CircleAvatar(
                             radius: 32,
-                            backgroundColor: Colors.black.withOpacity(.5),
+                            backgroundColor: goopColors.black.withOpacity(.5),
                             child: IconButton(
                               icon: Icon(
                                 Icons.close,
-                                color: Colors.white,
+                                color: goopColors.white,
                                 size: 30,
                               ),
                               onPressed: () {

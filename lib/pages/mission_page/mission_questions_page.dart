@@ -5,6 +5,7 @@ import 'package:goop/models/quizzLinesModel.dart';
 import 'package:goop/pages/components/StateGoop.dart';
 import 'package:goop/pages/components/goop_back.dart';
 import 'package:goop/pages/components/goop_button.dart';
+import 'package:goop/utils/global.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
 
@@ -52,7 +53,7 @@ class _MissionQuestionPageState extends StateGoop<MissionQuestionPage> {
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width * .7,
-                      child: Divider(color: Colors.deepPurple),
+                      child: Divider(color: goopColors.deepPurple),
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width * .65,
@@ -68,20 +69,26 @@ class _MissionQuestionPageState extends StateGoop<MissionQuestionPage> {
                       physics: NeverScrollableScrollPhysics(),
                       itemCount: currentActivity.listQuizzLinesModel.length,
                       itemBuilder: (_, index) {
-                        return RadioListTile(
-                          title: Text(
-                            currentActivity
-                                .listQuizzLinesModel[index].alternative_name,
-                          ),
-                          value: index,
-                          groupValue: value,
-                          onChanged: (int ind) {
-                            if (currentActivity.isChecked) return;
+                        return Theme(
+                          // data:ThemeData(unselectedWidgetColor: Colors.amber),
+                          data:ThemeData(unselectedWidgetColor: goopColors.headline1),
+                          child: RadioListTile(
+                            title: Text(
+                              currentActivity
+                                  .listQuizzLinesModel[index].alternative_name,
+                              style: TextStyle(color: goopColors.black),
+                            ),
+                            value: index,
+                            activeColor: Colors.blue,
+                            groupValue: value,
+                            onChanged: (int ind) {
+                              if (currentActivity.isChecked) return;
 
-                            setState(() {
-                              value = ind;
-                            });
-                          },
+                              setState(() {
+                                value = ind;
+                              });
+                            },
+                          ),
                         );
                       },
                     ),
@@ -97,7 +104,7 @@ class _MissionQuestionPageState extends StateGoop<MissionQuestionPage> {
                           action: () async {
                             if (value == null) {
                               showSnackBar(
-                                  'Selecione uma alternativa!', GoopColors.red);
+                                  'Selecione uma alternativa!', goopColors.red);
                             } else {
                               await dialogProcess(() async {
                                 await selectQuestion(
@@ -105,7 +112,7 @@ class _MissionQuestionPageState extends StateGoop<MissionQuestionPage> {
                               });
                               navigatorPop();
                               showSnackBar(
-                                  'Pergunta Registrada! 😉', GoopColors.red);
+                                  'Pergunta Registrada! 😉', goopColors.red);
                             }
                           },
                         ),

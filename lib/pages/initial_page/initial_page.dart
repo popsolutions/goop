@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:goop/config/routes.dart';
 import 'package:goop/pages/components/goop_button.dart';
 import 'package:goop/pages/components/goop_libComponents.dart';
+import 'package:goop/utils/global.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
 
@@ -38,9 +39,9 @@ class InitialPage extends StatelessWidget {
             ),
             GoopButton(
                 text: 'Cadastre-se Agora',
-                buttonColor: Colors.white,
-                textColor: GoopColors.red,
-                borderColor: GoopColors.red,
+                buttonColor: goopColors.white,
+                textColor: goopColors.red,
+                borderColor: goopColors.red,
                 action: () {
                   Navigator.pushNamed(
                     context,

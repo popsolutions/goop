@@ -49,7 +49,7 @@ class _HomePageState extends StateGoop<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: GoopColors.red),
+        iconTheme: IconThemeData(color: goopColors.red),
         actions: [
           Container(
             width: 45,
@@ -159,7 +159,7 @@ class _HomePageState extends StateGoop<HomePage> {
     return Center(
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
+          border: Border.all(color: goopColors.grey),
           borderRadius: BorderRadius.circular(30),
         ),
         child: Padding(

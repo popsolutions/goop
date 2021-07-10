@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goop/pages/components/goop_button.dart';
+import 'package:goop/utils/global.dart';
 import 'package:goop/utils/goop_images.dart';
 
 class GoopPixInfo extends StatelessWidget {
@@ -18,7 +19,7 @@ class GoopPixInfo extends StatelessWidget {
         Container(
           width: MediaQuery.of(context).size.width * .7,
           child: Divider(
-            color: Colors.black,
+            color: goopColors.black,
           ),
         ),
         Container(

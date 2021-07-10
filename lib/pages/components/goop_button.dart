@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:goop/pages/components/StateGoop.dart';
 import 'package:goop/services/ServiceNotifier.dart';
+import 'package:goop/utils/global.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:provider/provider.dart';
 
 class GoopButton extends StatefulWidget {
   final String text;
   final Function action;
-  final Color buttonColor;
-  final Color textColor;
+  Color buttonColor;
+  Color textColor;
   final Color borderColor;
   final bool isLoading;
   final bool showCircularProgress;
 
-  const GoopButton(
+  GoopButton(
       {Key key,
       @required this.text,
       this.action,
-      this.buttonColor = GoopColors.red,
-      this.textColor = GoopColors.neutralGrey,
+      this.buttonColor,
+      this.textColor,
       this.borderColor = Colors.transparent,
       this.isLoading = false,
       this.showCircularProgress = false})
@@ -31,6 +32,9 @@ class GoopButton extends StatefulWidget {
 class _GoopButtonState extends StateGoop<GoopButton> {
   @override
   Widget build(BuildContext context) {
+    if (widget.textColor == null) widget.textColor = goopColors.neutralGrey;
+    if (widget.buttonColor == null) widget.buttonColor = goopColors.red;
+
     ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context);
 
     return GestureDetector(
@@ -51,7 +55,7 @@ class _GoopButtonState extends StateGoop<GoopButton> {
             ),
             child: widget.isLoading
                 ? CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation(Colors.white),
+                    valueColor: AlwaysStoppedAnimation(goopColors.white),
                   )
                 : Text(
                     widget.text,

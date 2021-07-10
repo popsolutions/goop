@@ -12,6 +12,7 @@ import 'package:goop/pages/components/goop_text_form_field.dart';
 import 'package:goop/pages/settings_page/settings_controller.dart';
 import 'package:goop/services/ServiceNotifier.dart';
 import 'package:goop/services/login/user_service.dart';
+import 'package:goop/utils/global.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
 import 'package:goop/utils/utils.dart';
@@ -144,7 +145,7 @@ class _SettingsPageState extends StateGoop<SettingsPage> {
                           style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
-                            color: GoopColors.red,
+                            color: goopColors.red,
                           ),
                         ),
                       ],

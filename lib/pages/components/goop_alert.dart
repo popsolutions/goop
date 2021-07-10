@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:goop/pages/components/goop_libComponents.dart';
+import 'package:goop/utils/global.dart';
 import 'package:goop/utils/goop_colors.dart';
 
 class GoopAlert extends StatelessWidget {
@@ -31,10 +32,10 @@ class GoopAlert extends StatelessWidget {
               alignment: Alignment(0, 0),
               children: [
                 CircleAvatar(
-                  backgroundColor: Colors.white,
+                  backgroundColor: goopColors.white,
                   child: Icon(
                     Icons.close,
-                    color: GoopColors.red,
+                    color: goopColors.red,
                   ),
                 )
               ],
