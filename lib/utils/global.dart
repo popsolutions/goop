@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:goop/models/user.dart';
 import 'package:goop/services/GeoLocService.dart';
 import 'package:goop/services/ServiceNotifier.dart';
+import 'package:goop/utils/goop_colors.dart';
 import 'SharedPreferencesGoop.dart';
 import 'StackUtil.dart';
 
@@ -12,7 +13,9 @@ ServiceNotifier globalServiceNotifier;
 GeoLocService globalGeoLocService = GeoLocService();
 GlobalConfig globalConfig = GlobalConfig();
 StackUtil<String> globalScreenStack = StackUtil<String>();
-bool globalDarMode = false;
+bool globalDarMode = true;
+GoopColors goopColors = GoopColors();
+Function globalRebuildAllChildren;
 
 const String globalLatitudeMocked = String.fromEnvironment('latitude', defaultValue: ''); //--dart-define=latitude=-22.4808083 --dart-define=longitude=-48.5619883
 const String globalLongitudeMocked = String.fromEnvironment('longitude', defaultValue: '');
