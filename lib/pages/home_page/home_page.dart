@@ -71,57 +71,32 @@ class _HomePageState extends StateGoop<HomePage> {
               if (_serviceNotifier.geoLocationOk == false)
                 return geoLocationError();
               else
-                return FlutterMap(
-                  // mapController: controller,
-                  options: MapOptions(
-                    center: missionLocation == null
-                        ? globalGeoLocService.latLng()
-                        : LatLng(missionLocation[0], missionLocation[1]),
-                    interactiveFlags:
-                        InteractiveFlag.pinchZoom | InteractiveFlag.drag,
-                    zoom: 13.0,
-                  ),
-                  layers: [
-                    TileLayerOptions(
-                      urlTemplate:
-                          "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                      subdomains: ['a', 'b', 'c'],
-                    ),
-                    MarkerLayerOptions(
-                      markers: [
-                        for (MissionModelEstablishment missionModelEstablishment
-                            in _serviceNotifier.listMissionModelEstablishment)
-                          Marker(
-                            width: 40,
-                            height: 80.0,
-                            point: LatLng(
-                              missionModelEstablishment
-                                      .establishmentModel.latitude ??
-                                  0,
-                              missionModelEstablishment
-                                      .establishmentModel.longitude ??
-                                  0,
-                            ),
-                            builder: (ctx) => GestureDetector(
-                              onTap: () {
-                                // if (missionModelEstablishment.listMissionModel.length == 0){
-                                _serviceNotifier.viewByEstablishment = true;
-                                _serviceNotifier
-                                        .currentMissionModelEstablishment =
-                                    missionModelEstablishment;
-
-                                navigatorPopAndPushNamed(Routes.mission_home);
-                                // }
-                              },
-                              child: Container(
-                                child: SvgPicture.asset(GoopImages.local),
-                              ),
-                            ),
-                          ),
-                      ],
-                    ),
-                  ],
-                );
+                return (globalDarMode == true)
+                    ? ColorFiltered(
+                        colorFilter: const ColorFilter.matrix(<double>[
+                          -1,
+                          0,
+                          0,
+                          0,
+                          255,
+                          0,
+                          -1,
+                          0,
+                          0,
+                          255,
+                          0,
+                          0,
+                          -1,
+                          0,
+                          255,
+                          0,
+                          0,
+                          0,
+                          1,
+                          0,
+                        ]),
+                        child: flutterMap(_serviceNotifier))
+                    : flutterMap(_serviceNotifier);
             });
           } else {
             return Center(
@@ -133,6 +108,50 @@ class _HomePageState extends StateGoop<HomePage> {
           }
         },
       ),
+    );
+  }
+
+  Widget flutterMap(ServiceNotifier _serviceNotifier){
+    return FlutterMap(
+      options: MapOptions(
+        center: missionLocation == null ? globalGeoLocService.latLng() : LatLng(missionLocation[0], missionLocation[1]),
+        interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
+        zoom: 13.0,
+      ),
+      layers: [
+        TileLayerOptions(
+          urlTemplate:
+          "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+          // "http://a.tile.stamen.com/toner/{z}/{x}/{y}.png",
+          // "http://a.tile.stamen.com/maptiler-toner-gl-style/{z}/{x}/{y}.png",
+          subdomains: ['a', 'b', 'c'],
+        ),
+        MarkerLayerOptions(
+          markers: [
+            for (MissionModelEstablishment missionModelEstablishment in _serviceNotifier.listMissionModelEstablishment)
+              Marker(
+                width: 40,
+                height: 80.0,
+                point: LatLng(
+                  missionModelEstablishment.establishmentModel.latitude ?? 0,
+                  missionModelEstablishment.establishmentModel.longitude ?? 0,
+                ),
+                builder: (ctx) => GestureDetector(
+                  onTap: () {
+                    _serviceNotifier.viewByEstablishment = true;
+                    _serviceNotifier.currentMissionModelEstablishment = missionModelEstablishment;
+
+                    navigatorPopAndPushNamed(Routes.mission_home);
+                    // }
+                  },
+                  child: Container(
+                    child: SvgPicture.asset(GoopImages.local),
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ],
     );
   }
 
