@@ -12,6 +12,7 @@ ServiceNotifier globalServiceNotifier;
 GeoLocService globalGeoLocService = GeoLocService();
 GlobalConfig globalConfig = GlobalConfig();
 StackUtil<String> globalScreenStack = StackUtil<String>();
+bool globalDarMode = false;
 
 const String globalLatitudeMocked = String.fromEnvironment('latitude', defaultValue: ''); //--dart-define=latitude=-22.4808083 --dart-define=longitude=-48.5619883
 const String globalLongitudeMocked = String.fromEnvironment('longitude', defaultValue: '');
