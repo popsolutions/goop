@@ -59,13 +59,14 @@ class MobileVariablesService extends absService {
 
   Future<void> setGlobalConfig() async {
     Log('MobileVariablesService.setGlobalConfig', 'Start');
-    List<MobileVariablesModel> listMobileVariablesModel = await getMobileVariablesModel();
+    List<MobileVariablesModel> listMobileVariablesModel;
     MobileVariablesModel currentMobileVariablesModel;
 
     try {
       listMobileVariablesModel = await getMobileVariablesModel();
     } catch(e) {
       Log('MobileVariablesService.setGlobalConfig', 'catch: ${e.toString()}');
+      return;
     }
 
     bool findVar(String x_variable_name) {
