@@ -171,11 +171,14 @@ class _GoopDrawerState extends StateGoop<GoopDrawer> {
                       goopTile(
                         title: 'Sair',
                         img: GoopImages.quit,
-                        action: () => goop_LibComponents.navigatorPushNamedAndRemoveUntil(
-                          context,
-                          Routes.initial,
-                          (route) => false,
-                        ),
+                        action: () async {
+                          await serviceNotifier.close();
+                          goop_LibComponents.navigatorPushNamedAndRemoveUntil(
+                            context,
+                            Routes.initial,
+                                (route) => false,
+                          );
+                        },
                       ),
                     ],
                   )

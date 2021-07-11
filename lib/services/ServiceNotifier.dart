@@ -14,6 +14,7 @@ import 'package:goop/models/user.dart';
 import 'package:goop/services/AccountInvoiceService.dart';
 import 'package:goop/services/ActivityService.dart';
 import 'package:goop/services/AlternativeService.dart';
+import 'package:goop/services/Config_ParameterService.dart';
 import 'package:goop/services/GeoLocService.dart';
 import 'package:goop/services/MeasurementPhotoLinesService.dart';
 import 'package:goop/services/MeasurementQuizzlinesService.dart';
@@ -45,6 +46,7 @@ class ServiceNotifier extends ChangeNotifier {
       measurementPriceComparisonLinesService =
       new MeasurementPriceComparisonLinesService();
   AccountInvoiceService accountInvoiceService = new AccountInvoiceService();
+  Config_ParameterService config_parameterService = new Config_ParameterService();
 
 
   bool initialization = false;
@@ -71,8 +73,13 @@ class ServiceNotifier extends ChangeNotifier {
     initialization = true;
   }
 
+  Future<void> close([BuildContext context = null]) async {
+    initialization = false;
+  }
+
   update([BuildContext context = null]) async {
     await listAlternativeModelLoad();
+    await config_parameterService.setGlobalConfig();
     listMissionModel = await missionService.getOpenMissions();
     listMissionModelEstablishment =
         await missionService.getListMissionModelEstablishment(listMissionModel);
