@@ -68,6 +68,10 @@ class ServiceNotifier extends ChangeNotifier {
 
   Future<void> init([BuildContext context = null]) async {
     if (initialization == true) return;
+
+    if (context != null)
+      globalConfig.darkMode = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    
     globalServiceNotifier = this;
     await update(context);
     initialization = true;

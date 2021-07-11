@@ -13,7 +13,6 @@ ServiceNotifier globalServiceNotifier;
 GeoLocService globalGeoLocService = GeoLocService();
 GlobalConfig globalConfig = GlobalConfig();
 StackUtil<String> globalScreenStack = StackUtil<String>();
-bool globalDarMode = false;
 GoopColors goopColors = GoopColors();
 Function globalRebuildAllChildren;
 
@@ -25,6 +24,7 @@ class GlobalConfig {
   String serverURL = 'https://dev.charismabi.com';
   String userOdoo = 'support@popsolutions.co';
   String pass = '1ND1C0p4c1f1c0';
+  bool darkMode = false;
 
   // String dbName = 'odoo_mateus';
   // String serverURL = 'http://192.168.0.55:8069';

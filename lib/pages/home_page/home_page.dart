@@ -71,7 +71,7 @@ class _HomePageState extends StateGoop<HomePage> {
               if (_serviceNotifier.geoLocationOk == false)
                 return geoLocationError();
               else
-                return (globalDarMode == true)
+                return (globalConfig.darkMode == true)
                     ? ColorFiltered(
                         colorFilter: const ColorFilter.matrix(<double>[
                           -1,

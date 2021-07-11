@@ -160,10 +160,10 @@ class _GoopDrawerState extends StateGoop<GoopDrawer> {
                         action: () {},
                       ),
                       goopTile(
-                        title:(globalDarMode)? 'Tema claro': 'Modo Escuro',
+                        title:(globalConfig.darkMode)? 'Tema claro': 'Modo Escuro',
                         img: GoopImages.faq,
                         action: () {
-                          globalDarMode = !globalDarMode;
+                          globalConfig.darkMode = !globalConfig.darkMode;
                           globalRebuildAllChildren();
 
                         },
