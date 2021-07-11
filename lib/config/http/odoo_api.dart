@@ -8,15 +8,10 @@ import 'package:uuid/uuid.dart';
 import 'odoo_response.dart';
 import 'odoo_version.dart';
 
-const SERVER_URL = 'https://dev.charismabi.com';
-
 class Odoo extends GoopClass {
-  Odoo({String url}) {
-    _serverURL = 'https://dev.charismabi.com';
-  }
 
   http.Client _client = http.Client();
-  String _serverURL;
+  get _serverURL => globalConfig.serverURL;
   Map<String, String> _headers = {};
   OdooVersion version = new OdooVersion();
   String _sessionId;
@@ -28,15 +23,6 @@ class Odoo extends GoopClass {
 
   setSessionId(String sessionIid) {
     _sessionId = sessionIid;
-  }
-
-  initOdoo() async {
-    if (prefsGoop.getString("UserPrefs") != null) {
-      var jsonPrefs = jsonDecode(prefsGoop.getString("UserPrefs"));
-      _serverURL = jsonPrefs['url'];
-      authenticate(
-          jsonPrefs['username'], jsonPrefs['password'], jsonPrefs['db']);
-    }
   }
 
   Future<OdooResponse> getSessionInfo() async {
@@ -56,8 +42,7 @@ class Odoo extends GoopClass {
       String username, String password, String database) async {
     var url = createPath("/web/session/authenticate");
     var params = {
-      "db": "dev.charisma-prod",
-      //"db": database,
+      "db": globalConfig.dbName,
       "login": username,
       "password": password,
       "context": {}

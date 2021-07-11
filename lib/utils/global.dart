@@ -21,6 +21,19 @@ const String globalLatitudeMocked = String.fromEnvironment('latitude', defaultVa
 const String globalLongitudeMocked = String.fromEnvironment('longitude', defaultValue: '');
 
 class GlobalConfig {
+  String dbName = 'charisma-prod';
+  String serverURL = 'https://dev.charismabi.com';
+  String userOdoo = 'support@popsolutions.co';
+  String pass = '1ND1C0p4c1f1c0';
+
+  // String dbName = 'odoo_mateus';
+  // String serverURL = 'http://192.168.0.55:8069';
+  // String userOdoo = 'mateus.2006@gmail.com';
+  // String pass = 'mateus';
+
+
+  //variables that can be configured in Odoo "ir.config_parameter" module with "MobileParams." prefix.
+  //For example "distanceMetersLimit" should be set to "MobileParams..distanceMetersLimitUser"
   double distanceMetersLimitUser = 200;
   int hoursDiffServer = -3;
   int hoursCompletMission = 3;

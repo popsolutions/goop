@@ -1,5 +1,6 @@
 import 'package:goop/models/login_dto.dart';
 import 'package:goop/services/login/login_facade_impl.dart';
+import 'package:goop/utils/global.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../models/user.dart';
@@ -15,9 +16,9 @@ abstract class _LoginControllerBase with Store {
   @observable
   ObservableFuture<User> loginRequest = ObservableFuture.value(null);
   @observable
-  String login = 'support@popsolutions.co';
+  String login = globalConfig.userOdoo;
   @observable
-  String password = '1ND1C0p4c1f1c0';
+  String password = globalConfig.pass;
 
   @computed
   bool get canNext => login.isNotEmpty && password.isNotEmpty;

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:goop/utils/global.dart';
+
 import '../../config/exceptions/authentication_exception.dart';
 import '../../config/http/odoo_api.dart';
 import '../../models/login_dto.dart';
@@ -12,8 +14,7 @@ class LoginServiceImpl {
   Future<LoginResult> login(LoginDto loginDto) async {
     final path = _odoo.createPath("/web/session/authenticate");
     final params = {
-      // "db": "charisma-prod",
-      "db": "odoo_mateus",
+      "db": globalConfig.dbName,
       "login": loginDto.username,
       "password": loginDto.password,
       "context": {}

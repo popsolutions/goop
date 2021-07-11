@@ -3,6 +3,7 @@ import 'package:goop/models/login_result.dart';
 import 'package:goop/models/update_user.dart';
 import 'package:goop/models/user.dart';
 import 'package:goop/models/user_profile.dart';
+import 'package:goop/utils/global.dart';
 import 'package:goop/utils/utils.dart';
 
 import '../../config/http/odoo_api.dart';
@@ -93,7 +94,7 @@ class UserServiceImpl {
   Future<int> createUser(UserProfile userProfile) async {
 
     LoginServiceImpl login = LoginServiceImpl(Odoo());
-    LoginDto loginDto = LoginDto('support@popsolutions.co', '1ND1C0p4c1f1c0');
+    LoginDto loginDto = LoginDto(globalConfig.userOdoo, globalConfig.pass);
 
     LoginResult currentLoginResult = await login.login(loginDto);
 
@@ -105,8 +106,6 @@ class UserServiceImpl {
       throw 'MeasurementModel quizz lines Insert fail';
     }
   }
-
-
 
   /*
 
