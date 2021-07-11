@@ -12,7 +12,8 @@ class LoginServiceImpl {
   Future<LoginResult> login(LoginDto loginDto) async {
     final path = _odoo.createPath("/web/session/authenticate");
     final params = {
-      "db": "charisma-prod",
+      // "db": "charisma-prod",
+      "db": "odoo_mateus",
       "login": loginDto.username,
       "password": loginDto.password,
       "context": {}

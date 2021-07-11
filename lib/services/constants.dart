@@ -13,5 +13,5 @@ class Strings {
   static const String measurement_photoLine = 'pops.measurement.photolines'; // Response of photo
   static const String popsMeasurementPrice_comparisonLines = 'pops.measurement.price_comparison.lines'; // Response of price_comparison
   static const String accountInvoice = 'account.invoice';
-  static const String mobileVariables = 'x_pops.mobile.variables';
+  static const String config_Parameter = 'ir.config_parameter';
 }

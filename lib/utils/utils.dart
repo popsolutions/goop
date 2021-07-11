@@ -135,6 +135,14 @@ double convertDynamicToDouble(dynamic value) {
   return double.parse(valueString);
 }
 
+double convertStringToDouble(String value) {
+  return convertDynamicToDouble(value);
+}
+
+int convertStringToInt(String value) {
+  return int.parse(value);
+}
+
 int difDateSeconds(DateTime dateFrom, DateTime dateTo) {
   return dateTo.difference(dateFrom).inSeconds;
 }
@@ -205,6 +213,10 @@ class CurrencyInputFormatter extends TextInputFormatter {
 printL(Object object) => print(object);
 // printL(Object object) => null;
 printL2(Object object) => print(object);
+
+Log(String source, String log){
+  printL('**Log: $source - $log');
+}
 
 class ImageGoop{
   String imageBase64;

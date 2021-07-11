@@ -12,16 +12,15 @@ import 'package:goop/models/measurementPhotoLines.dart';
 import 'package:goop/models/measurementPriceComparisonLines.dart';
 import 'package:goop/models/measurementQuizzlines.dart';
 import 'package:goop/models/mission.dart';
-import 'package:goop/models/mobileVariables.dart';
 import 'package:goop/models/models.dart';
 import 'package:goop/models/quizzLinesModel.dart';
 import 'package:goop/models/user.dart';
 import 'package:goop/models/user_profile.dart';
 import 'package:goop/services/AccountInvoiceService.dart';
 import 'package:goop/services/AlternativeService.dart';
+import 'package:goop/services/Config_ParameterService.dart';
 import 'package:goop/services/MeasurementPhotoLinesService.dart';
 import 'package:goop/services/MeasurementQuizzlinesService.dart';
-import 'package:goop/services/MobileVariablesService.dart';
 import 'package:goop/services/QuizzLinesModelService.dart';
 import 'package:goop/services/ServiceNotifier.dart';
 import 'package:goop/services/login/login_service.dart';
@@ -51,7 +50,7 @@ void main() {
       measurementPriceComparisonLinesService =
       new MeasurementPriceComparisonLinesService();
   AccountInvoiceService accountInvoiceService = new AccountInvoiceService();
-  MobileVariablesService mobileVariablesService = new MobileVariablesService();
+  Config_ParameterService config_ParameterService = new Config_ParameterService();
 
   LoginResult currentLoginResult;
   User currentUser;
@@ -385,67 +384,9 @@ void main() {
     print(serviceNotifier.listMissionModel[0].name);
   });
 
-  test('user_service.createUser', () async {
-    UserProfile userProfile = UserProfile(
-      login: 'teste@popsolutions.co',
-      name: 'Teste',
-      phone: '(83) 9 8684-1882',
-      // birthdate: 'als',
-      // function: 'als',
-      cnpjCpf: '30152510826',
-      // gender: 'als',
-      // mobile: 'als',
-      email: 'teste@popsolutions.co',
-      // street: 'als',
-      city: 'São Paulo',
-      // district: 'als',
-      password: '123');
-
-    int id = await userServiceImpl.createUser(userProfile);
-    print('id:$id');
-  });
-
-  test('AccountInvoiceService.getAccountInvoiceModelCurrentUser', () async {
-    List<AccountInvoiceModel> listAccountInvoiceModel = await accountInvoiceService.getAccountInvoiceModelCurrentUser();
-
-    print(listAccountInvoiceModel.length);
-  });
-
-  test('MobileVariablesService.insert', () async {
-    MobileVariablesModel mobileVariablesModel = MobileVariablesModel(
-      x_variable_name: 'teste-name-2',
-      x_variable_value: 'teste-value-2',
-      x_variable_description: 'teste-description-2');
-
-    MobileVariablesModel mobileVariablesModelInserted = await mobileVariablesService.insertAndGet(mobileVariablesModel);
-
-    print(mobileVariablesModelInserted.toJson());
-  });
-
-  test('MobileVariablesService.getMobileVariablesModel', () async {
-    MobileVariablesModel mobileVariablesModelInserted = await mobileVariablesService.getMobileVariablesModelById(1);
-
-    print(mobileVariablesModelInserted.toJson());
-  });
-
-  test('MobileVariablesService.setGlobalConfig', () async {
-    // MobileVariablesModel mobileVariablesModel = MobileVariablesModel(
-    //     x_variable_name: 'distanceMetersLimitUser',
-    //     x_variable_value: '123',
-    //     x_variable_description: 'teste-description-distanceMetersLimitUser');
-    //
-    // MobileVariablesModel mobileVariablesModelInserted = await mobileVariablesService.insertAndGet(mobileVariablesModel);
-    // print(mobileVariablesModelInserted.x_variable_value.toString());
-
-    MobileVariablesModel mobileVariablesModelInserted = await mobileVariablesService.getMobileVariablesModelById(3);
-    print(mobileVariablesModelInserted.x_variable_value.toString());
-
-
-    await mobileVariablesService.setGlobalConfig();
+  test('Config_ParameterService.setGlobalConfig', () async {
+    await config_ParameterService.setGlobalConfig();
     print(globalConfig.minutesCompletMission.toString());
   });
-
-
-
 
 }
