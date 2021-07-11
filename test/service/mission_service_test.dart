@@ -12,6 +12,7 @@ import 'package:goop/models/measurementPhotoLines.dart';
 import 'package:goop/models/measurementPriceComparisonLines.dart';
 import 'package:goop/models/measurementQuizzlines.dart';
 import 'package:goop/models/mission.dart';
+import 'package:goop/models/mobileVariables.dart';
 import 'package:goop/models/models.dart';
 import 'package:goop/models/quizzLinesModel.dart';
 import 'package:goop/models/user.dart';
@@ -20,6 +21,7 @@ import 'package:goop/services/AccountInvoiceService.dart';
 import 'package:goop/services/AlternativeService.dart';
 import 'package:goop/services/MeasurementPhotoLinesService.dart';
 import 'package:goop/services/MeasurementQuizzlinesService.dart';
+import 'package:goop/services/MobileVariablesService.dart';
 import 'package:goop/services/QuizzLinesModelService.dart';
 import 'package:goop/services/ServiceNotifier.dart';
 import 'package:goop/services/login/login_service.dart';
@@ -49,13 +51,15 @@ void main() {
       measurementPriceComparisonLinesService =
       new MeasurementPriceComparisonLinesService();
   AccountInvoiceService accountInvoiceService = new AccountInvoiceService();
+  MobileVariablesService mobileVariablesService = new MobileVariablesService();
 
   LoginResult currentLoginResult;
   User currentUser;
 
   void initLogin() async {
     LoginServiceImpl login = LoginServiceImpl(Odoo());
-    LoginDto loginDto = LoginDto('support@popsolutions.co', '1ND1C0p4c1f1c0');
+    // LoginDto loginDto = LoginDto('support@popsolutions.co', '1ND1C0p4c1f1c0');
+    LoginDto loginDto = LoginDto('mateus.2006@gmail.com', 'mateus');
 
     currentLoginResult = await login.login(loginDto);
     currentUser =
@@ -406,5 +410,42 @@ void main() {
 
     print(listAccountInvoiceModel.length);
   });
+
+  test('MobileVariablesService.insert', () async {
+    MobileVariablesModel mobileVariablesModel = MobileVariablesModel(
+      x_variable_name: 'teste-name-2',
+      x_variable_value: 'teste-value-2',
+      x_variable_description: 'teste-description-2');
+
+    MobileVariablesModel mobileVariablesModelInserted = await mobileVariablesService.insertAndGet(mobileVariablesModel);
+
+    print(mobileVariablesModelInserted.toJson());
+  });
+
+  test('MobileVariablesService.getMobileVariablesModel', () async {
+    MobileVariablesModel mobileVariablesModelInserted = await mobileVariablesService.getMobileVariablesModelById(1);
+
+    print(mobileVariablesModelInserted.toJson());
+  });
+
+  test('MobileVariablesService.setGlobalConfig', () async {
+    // MobileVariablesModel mobileVariablesModel = MobileVariablesModel(
+    //     x_variable_name: 'distanceMetersLimitUser',
+    //     x_variable_value: '123',
+    //     x_variable_description: 'teste-description-distanceMetersLimitUser');
+    //
+    // MobileVariablesModel mobileVariablesModelInserted = await mobileVariablesService.insertAndGet(mobileVariablesModel);
+    // print(mobileVariablesModelInserted.x_variable_value.toString());
+
+    MobileVariablesModel mobileVariablesModelInserted = await mobileVariablesService.getMobileVariablesModelById(3);
+    print(mobileVariablesModelInserted.x_variable_value.toString());
+
+
+    await mobileVariablesService.setGlobalConfig();
+    print(globalConfig.minutesCompletMission.toString());
+  });
+
+
+
 
 }
