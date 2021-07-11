@@ -45,7 +45,7 @@ class MeasurementModel extends AbsModels {
     DateTime dateEnd =
     create_date.add(Duration(hours: globalConfig.hoursDiffServer));
     // dateEnd = dateEnd.add(Duration(seconds: 5));
-    dateEnd = dateEnd.add(Duration(hours: globalConfig.hoursCompletMission));
+    dateEnd = dateEnd.add(Duration(hours: globalConfig.hoursCompletMission, minutes: globalConfig.minutesCompletMission));
 
     return dateEnd;
   }

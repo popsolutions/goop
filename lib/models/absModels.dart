@@ -1,7 +1,7 @@
 import 'package:goop/utils/utils.dart';
 
 class AbsModels{
-  Map<String, dynamic> currentJson;
+  Map<String, dynamic> currentJson = new Map<String, dynamic>();
 
   int jGetInt(String key, [int index]) => JsonGet.Int(currentJson, key, index);
   double jGetDouble(String key, [int index]) => JsonGet.Double(currentJson, key, index);

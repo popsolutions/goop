@@ -13,7 +13,7 @@ ServiceNotifier globalServiceNotifier;
 GeoLocService globalGeoLocService = GeoLocService();
 GlobalConfig globalConfig = GlobalConfig();
 StackUtil<String> globalScreenStack = StackUtil<String>();
-bool globalDarMode = true;
+bool globalDarMode = false;
 GoopColors goopColors = GoopColors();
 Function globalRebuildAllChildren;
 
@@ -24,6 +24,7 @@ class GlobalConfig {
   double distanceMetersLimitUser = 200;
   int hoursDiffServer = -3;
   int hoursCompletMission = 3;
+  int minutesCompletMission = 0;
   int secondsRedMissionTime = 300;
 
   int gpsTimeOutSeconds1 = 15;
