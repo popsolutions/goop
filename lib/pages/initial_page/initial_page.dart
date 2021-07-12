@@ -9,7 +9,10 @@ import 'package:goop/utils/goop_images.dart';
 
 class InitialPage extends StatelessWidget {
   @override
+
   Widget build(BuildContext context) {
+    globalConfig.darkMode = MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
