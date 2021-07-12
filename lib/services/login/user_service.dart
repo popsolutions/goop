@@ -37,7 +37,7 @@ class UserServiceImpl {
       'cnpj_cpf',
       'education_level',
       'gender',
-      // 'missions_count',
+      'missions_count',
       'mobile',
       'email',
       'street',
