@@ -134,9 +134,11 @@ class _GoopMissionBodyState extends StateGoop<GoopMissionBody> {
                         );
                       } else {
                         String file = await getPhotoBase64();
-                        dialogProcess(() async {
-                          await serviceNotifier.insert_Measurement_photolines(file, context);
-                        });
+
+                        if (file != null)
+                          dialogProcess(() async {
+                            await serviceNotifier.insert_Measurement_photolines(file, context);
+                          });
                       }
                     }
                   },
