@@ -6,7 +6,7 @@ import 'package:goop/utils/utils.dart';
 import 'constants.dart';
 
 class Config_ParameterService extends absService{
-  final _prefixKey = 'MobileParams.';
+  final _prefixKey = 'MobileGoopParams.';
 
   Future<List<Config_ParameterModel>> getMobileVariablesModel() async {
     final response = await odoo.searchRead(
@@ -38,7 +38,7 @@ class Config_ParameterService extends absService{
       Log('Config_ParameterService.setGlobalConfig', 'findVar: $x_variable_name');
 
       currentConfig_ParameterModel = listConfig_ParameterModel.firstWhere((element) =>
-      element.key.toUpperCase() == ('MobileParams.' + x_variable_name).toUpperCase(), orElse: () => null);
+      element.key.toUpperCase() == ('MobileGoopParams.' + x_variable_name).toUpperCase(), orElse: () => null);
 
       if (currentConfig_ParameterModel == null)
         Log('Config_ParameterService.setGlobalConfig', 'findVar not found');

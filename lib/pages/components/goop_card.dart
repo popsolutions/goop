@@ -130,24 +130,14 @@ class _GoopCardState extends StateGoop<GoopCard> {
                       ),
                     ),
                   ),
-                  // Flexible(
-                  //   child: ListTile(
-                  //     minLeadingWidth: 0,
-                  //     horizontalTitleGap: 5,
-                  //     contentPadding: EdgeInsets.zero,
-                  //     leading: SvgPicture.asset(
-                  //       GoopImages.local,
-                  //       width: 20,
-                  //     ),
-                  //     title: Text(
-                  //       widget.currentMissionModel.time ?? '',
-                  //       style: Theme.of(context).textTheme.headline1,
-                  //     ),
-                  //   ),
-                  // ),
+
                 ],
               ),
-            // Text(widget.currentMissionModel.statusText())
+            Text(
+              widget.currentMissionModel.statusText(),
+              style: Theme.of(context).textTheme.headline1,
+              textAlign: TextAlign.center,
+            ),
           ],
         ),
       ),

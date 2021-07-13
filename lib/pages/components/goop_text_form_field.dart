@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:goop/utils/global.dart';
 
 class GoopTextFormField extends StatelessWidget {
   final String hintText;
@@ -30,6 +31,7 @@ class GoopTextFormField extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(bottom: 20),
       child: TextFormField(
+        style: TextStyle(color: goopColors.black87),
         initialValue: initialValue,
         autovalidateMode: autovalidateMode,
         inputFormatters: inputFormatters,

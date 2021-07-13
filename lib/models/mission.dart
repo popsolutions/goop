@@ -187,6 +187,8 @@ class MissionModel extends AbsModels {
         newStatus = MissionStatus.Ordered;
       else if (_measurementModel.state == 'doing')
         newStatus = MissionStatus.InProgress;
+      else if (_measurementModel.state == 'repproved')
+        newStatus = MissionStatus.Repproved;
       else
         newStatus = MissionStatus.Closed;
 
@@ -262,4 +264,5 @@ enum MissionStatus {
   EndTime,
   Done,
   Closed,
+  Repproved
 }

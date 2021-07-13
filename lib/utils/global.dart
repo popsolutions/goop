@@ -24,16 +24,16 @@ class GlobalConfig {
   String serverURL = 'https://dev.charismabi.com';
   String userOdoo = 'support@popsolutions.co';
   String pass = '1ND1C0p4c1f1c0';
-  bool darkMode = false;
 
   // String dbName = 'odoo_mateus';
   // String serverURL = 'http://192.168.0.55:8069';
   // String userOdoo = 'mateus.2006@gmail.com';
   // String pass = 'mateus';
 
+  bool darkMode = false;
 
-  //variables that can be configured in Odoo "ir.config_parameter" module with "MobileParams." prefix.
-  //For example "distanceMetersLimit" should be set to "MobileParams..distanceMetersLimitUser"
+  //variables that can be configured in Odoo "ir.config_parameter" module with "MobileGoopParams." prefix.
+  //For example "distanceMetersLimit" should be set to "MobileGoopParams..distanceMetersLimitUser"
   double distanceMetersLimitUser = 200;
   int hoursDiffServer = -3;
   int hoursCompletMission = 3;

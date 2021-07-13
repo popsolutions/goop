@@ -29,7 +29,7 @@ class goop_LibComponents extends GoopClass{
   static showProgressDialog(BuildContext context,
       [String caption = 'Aguarde por favor...']) {
     AlertDialog alert = AlertDialog(
-      backgroundColor: Colors.white,
+      backgroundColor: goopColors.white,
       content: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

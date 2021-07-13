@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:goop/config/routes.dart';
 import 'package:goop/config/widgets_router.dart';
@@ -31,6 +32,13 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    globalConfig.darkMode = SchedulerBinding.instance.window.platformBrightness == Brightness.dark;
+  }
+
+  @override
   Widget build(BuildContext context) {
     if (myAppContext == null) {
       myAppContext = context;
@@ -58,7 +66,7 @@ class _MyAppState extends State<MyApp> {
               ),
               headline3: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
+                color: goopColors.black,
                 fontSize: 20,
               ),
               headline4: TextStyle(
@@ -96,7 +104,7 @@ class _MyAppState extends State<MyApp> {
                 ),
               ),
             ),
-            primaryColor: goopColors.white,
+            primaryColor: goopColors.whitePrimaryColorTheme,
             primarySwatch: goopColors.lightBlue,
           ),
           routes: WidgetsRouter.routes,
