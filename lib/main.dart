@@ -35,7 +35,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
-    globalConfig.darkMode = SchedulerBinding.instance.window.platformBrightness == Brightness.dark;
+    // globalConfig.darkMode = SchedulerBinding.instance.window.platformBrightness == Brightness.dark;
   }
 
   @override

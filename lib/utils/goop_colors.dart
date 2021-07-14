@@ -3,9 +3,9 @@ import 'package:goop/utils/global.dart';
 
 class GoopColors {
 
-  Color getColor(colorLight, colorBlack) => (globalConfig.darkMode == true) ? colorBlack : colorLight;
+  // Color getColor(colorLight, colorBlack) => (globalConfig.darkMode == true) ? colorBlack : colorLight;
   // Color getColor(colorLight, colorBlack) => colorBlack;
-  // Color getColor(colorLight, colorBlack) => colorLight;
+  Color getColor(colorLight, colorBlack) => colorLight;
 
   Color get black => getColor(Colors.black, Colors.white);
   Color get black87 => getColor(Colors.black87, Colors.white70);
