@@ -119,21 +119,21 @@ class _LoginPageState extends StateGoop<LoginPage> {
                     onChanged: (e) => _loginController.password = e,
                     obscureText: true,
                   ),
-                  TextButton(
-                    child: Text(
-                      'Esqueci minha senha',
-                      style: TextStyle(
-                        fontSize: 16,
-                        decoration: TextDecoration.underline,
-                        color: goopColors.darkBlue,
-                      ),
-                    ),
-                    onPressed: () {
-                      navigatorPushNamed(
-                        Routes.recover_password,
-                      );
-                    },
-                  ),
+                  // TextButton(
+                  //   child: Text(
+                  //     'Esqueci minha senha',
+                  //     style: TextStyle(
+                  //       fontSize: 16,
+                  //       decoration: TextDecoration.underline,
+                  //       color: goopColors.darkBlue,
+                  //     ),
+                  //   ),
+                  //   onPressed: () {
+                  //     navigatorPushNamed(
+                  //       Routes.recover_password,
+                  //     );
+                  //   },
+                  // ),
                   Observer(
                     builder: (_) {
                       return GoopButton(
