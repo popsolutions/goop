@@ -28,10 +28,10 @@ class _GoopDrawerState extends StateGoop<GoopDrawer> {
         serviceNotifier.authenticationController;
     final user = authenticationController.currentUser;
 
-    ListTile goopTile({String title, img, action}) {
+    ListTile goopTile({String title, img, action, useSvg = true}) {
       return ListTile(
         contentPadding: EdgeInsets.all(20),
-        leading: SvgPicture.asset(img, height: 20),
+        leading: useSvg ? SvgPicture.asset(img, height: 20) : img,
         title: Text(title, style: TextStyle(color: goopColors.black)),
         onTap: action,
       );
@@ -49,7 +49,6 @@ class _GoopDrawerState extends StateGoop<GoopDrawer> {
             Container(
               height: 300,
               decoration: BoxDecoration(color: goopColors.white),
-
               child: DrawerHeader(
                 decoration: BoxDecoration(color: goopColors.red),
                 child: Center(
@@ -95,7 +94,6 @@ class _GoopDrawerState extends StateGoop<GoopDrawer> {
             ),
             Container(
               decoration: BoxDecoration(color: goopColors.white),
-
               child: Column(
                 children: [
                   Padding(
@@ -133,7 +131,6 @@ class _GoopDrawerState extends StateGoop<GoopDrawer> {
                       goopTile(
                         title: 'Carteira',
                         img: GoopImages.wallet_red,
-
                         action: () {
                           navigatorPopAndPushNamed(
                             Routes.wallet,
@@ -160,12 +157,19 @@ class _GoopDrawerState extends StateGoop<GoopDrawer> {
                         action: () {},
                       ),
                       goopTile(
-                        title:(globalConfig.darkMode)? 'Tema claro': 'Modo Escuro',
-                        img: GoopImages.faq,
+                        useSvg: false,
+                        title: (globalConfig.darkMode)
+                            ? 'Modo claro'
+                            : 'Modo escuro',
+                        img: Icon(
+                          (globalConfig.darkMode)
+                              ? Icons.dark_mode_outlined
+                              : Icons.light_mode_outlined,
+                          color: Colors.red,
+                        ),
                         action: () {
                           globalConfig.darkMode = !globalConfig.darkMode;
                           globalRebuildAllChildren();
-
                         },
                       ),
                       goopTile(
@@ -176,7 +180,7 @@ class _GoopDrawerState extends StateGoop<GoopDrawer> {
                           goop_LibComponents.navigatorPushNamedAndRemoveUntil(
                             context,
                             Routes.initial,
-                                (route) => false,
+                            (route) => false,
                           );
                         },
                       ),
