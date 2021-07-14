@@ -159,8 +159,8 @@ class _GoopDrawerState extends StateGoop<GoopDrawer> {
                       goopTile(
                         useSvg: false,
                         title: (globalConfig.darkMode)
-                            ? 'Modo claro'
-                            : 'Modo escuro',
+                            ? 'Modo Claro'
+                            : 'Modo Escuro',
                         img: Icon(
                           (globalConfig.darkMode)
                               ? Icons.dark_mode_outlined
