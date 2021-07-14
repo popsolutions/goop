@@ -244,39 +244,33 @@ class goop_LibComponents extends GoopClass{
       textStyle = TextStyle(color: goopColors.black);
     }
 
-    return Theme(
-      data: ThemeData(primaryColorBrightness: Brightness.dark),
-      child: TextFormField(
-        autofocus: autoFocus,
-        readOnly: readOnly,
-        keyboardType: keyboardType,
-        // keyboardAppearance: Brightness.dark,
-        inputFormatters: inputFormatters,
+    return TextFormField(
+      autofocus: autoFocus,
+      readOnly: readOnly,
+      keyboardType: keyboardType,
+      inputFormatters: inputFormatters,
 
-
-        decoration: InputDecoration(
-            fillColor: goopColors.neutralGrey,
-            border: (border)
-                ? new OutlineInputBorder(
-                    borderSide: new BorderSide(color: borderColor))
-                : null,
-            labelText: _label,
-            suffixIcon: IconButton(
-              onPressed: () => _controller.clear(),
-              icon: Icon(Icons.clear, color: goopColors.red),
-            )),
-        style: textStyle,
-        controller: _controller,
-        maxLength: maxLength,
-        textAlign: textAlign,
-        onTap: onTap,
-        onFieldSubmitted: (v) {},
-        validator: (value) {
-          if ((required) && (value.isEmpty))
-            return "Campo obrigatório, por favor informe o valor solicitado.";
-          return null;
-        },
-      ),
+      decoration: InputDecoration(
+          border: (border)
+              ? new OutlineInputBorder(
+                  borderSide: new BorderSide(color: borderColor))
+              : null,
+          labelText: _label,
+          suffixIcon: IconButton(
+            onPressed: () => _controller.clear(),
+            icon: Icon(Icons.clear, color: goopColors.red),
+          )),
+      style: textStyle,
+      controller: _controller,
+      maxLength: maxLength,
+      textAlign: textAlign,
+      onTap: onTap,
+      onFieldSubmitted: (v) {},
+      validator: (value) {
+        if ((required) && (value.isEmpty))
+          return "Campo obrigatório, por favor informe o valor solicitado.";
+        return null;
+      },
     );
   }
 
