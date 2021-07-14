@@ -226,7 +226,7 @@ class MissionModel extends AbsModels {
   String statusText(){
     if (status == MissionStatus.Ordered) return 'Aguardando';
     if (status == MissionStatus.InProgress) return 'Em execução';
-    if (status == MissionStatus.EndTime) return 'Tempo Esgotado';
+    if (status == MissionStatus.EndTime) return 'Não Concluída';
     if (status == MissionStatus.Done) return 'Concluída';
     if (status == MissionStatus.Closed) return 'Fechada';
   }
