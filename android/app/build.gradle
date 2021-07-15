@@ -32,10 +32,6 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    ...
-}
-
-android {
     compileSdkVersion 30
 
     sourceSets {
