@@ -187,8 +187,8 @@ class MissionModel extends AbsModels {
         newStatus = MissionStatus.Ordered;
       else if (_measurementModel.state == 'doing')
         newStatus = MissionStatus.InProgress;
-      else if (_measurementModel.state == 'repproved')
-        newStatus = MissionStatus.Repproved;
+      else if (_measurementModel.state == 'rejected')
+        newStatus = MissionStatus.Rejected;
       else
         newStatus = MissionStatus.Closed;
 
@@ -228,6 +228,7 @@ class MissionModel extends AbsModels {
     if (status == MissionStatus.InProgress) return 'Em execução';
     if (status == MissionStatus.EndTime) return 'Não Concluída';
     if (status == MissionStatus.Done) return 'Concluída';
+    if (status == MissionStatus.Rejected) return 'Rejeitada';
     if (status == MissionStatus.Closed) return 'Fechada';
   }
 
@@ -264,5 +265,5 @@ enum MissionStatus {
   EndTime,
   Done,
   Closed,
-  Repproved
+  Rejected
 }
