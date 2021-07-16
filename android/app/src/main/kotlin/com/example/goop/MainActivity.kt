@@ -1,4 +1,4 @@
-package co.popsolutions.GoOp
+package com.goop
 
 import io.flutter.embedding.android.FlutterActivity
 
