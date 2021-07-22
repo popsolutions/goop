@@ -5,9 +5,7 @@ import 'package:goop/pages/components/StateGoop.dart';
 import 'package:goop/pages/components/goop_card.dart';
 import 'package:goop/pages/components/goop_drawer.dart';
 import 'package:goop/utils/global.dart';
-import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
-import 'package:goop/utils/utils.dart';
 
 class MissionHomePage extends StatefulWidget {
   @override

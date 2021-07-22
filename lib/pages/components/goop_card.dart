@@ -28,7 +28,6 @@ class GoopCard extends StatefulWidget {
 class _GoopCardState extends StateGoop<GoopCard> {
   @override
   Widget build(BuildContext context) {
-
     print(Theme.of(context).textTheme.headline1.color);
 
     if (widget.border == null) widget.border = goopColors.borderCard;
@@ -52,10 +51,14 @@ class _GoopCardState extends StateGoop<GoopCard> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
           // color:  widget.currentMissionModel.inProgressOrDone ? Color(0XFFFDEEF2) : goopColors.white,
-          color:  widget.currentMissionModel.inProgressOrDone ? goopColors.inProgressCard : goopColors.white,
+          color: widget.currentMissionModel.inProgressOrDone
+              ? goopColors.inProgressCard
+              : goopColors.white,
           border: Border.all(
-            width:  widget.currentMissionModel.inProgressOrDone ? 2 : 1,
-            color: ( widget.currentMissionModel.inProgressOrDone == true) ? goopColors.red : widget.border,
+            width: widget.currentMissionModel.inProgressOrDone ? 2 : 1,
+            color: (widget.currentMissionModel.inProgressOrDone == true)
+                ? goopColors.red
+                : widget.border,
           ),
         ),
         padding: EdgeInsets.all(20),
@@ -111,7 +114,6 @@ class _GoopCardState extends StateGoop<GoopCard> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      // navigatorPushNamed(
                       navigatorPushReplacementNamed(
                         Routes.home,
                         arguments: [
@@ -120,7 +122,7 @@ class _GoopCardState extends StateGoop<GoopCard> {
                           widget
                               .currentMissionModel.establishmentModel.longitude,
                         ],
-                      ); //TODO: CENTRALIZAR NO PIN NO QUAL FOI CLICADO
+                      );
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(right: 20),
@@ -130,12 +132,13 @@ class _GoopCardState extends StateGoop<GoopCard> {
                       ),
                     ),
                   ),
-
                 ],
               ),
             Text(
               widget.currentMissionModel.statusText(),
-              style: Theme.of(context).textTheme.headline1,
+              style: Theme.of(context).textTheme.headline1.copyWith(
+                    color: goopColors.red,
+                  ),
               textAlign: TextAlign.center,
             ),
           ],

@@ -1,4 +1,5 @@
 import 'package:goop/config/routes.dart';
+import 'package:goop/pages/chat/chat_page.dart';
 import 'package:goop/pages/home_page/home_page.dart';
 import 'package:goop/pages/initial_page/initial_page.dart';
 import 'package:goop/pages/login_page/login_page.dart';
@@ -25,6 +26,7 @@ class WidgetsRouter {
     Routes.register: (_) => RegisterPage(),
     Routes.home: (_) => HomePage(),
     Routes.settings: (_) => SettingsPage(),
+    Routes.chat: (_) => ChatPage(),
     Routes.mission_completed: (_) => MissionCompletedPage(),
     Routes.mission_home: (_) => MissionHomePage(),
     Routes.mission_about: (_) => MissionAboutPage(),

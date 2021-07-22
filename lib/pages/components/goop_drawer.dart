@@ -152,6 +152,19 @@ class _GoopDrawerState extends StateGoop<GoopDrawer> {
                         },
                       ),
                       goopTile(
+                        useSvg: false,
+                        title: 'Chat',
+                        img: Icon(
+                          Icons.chat_bubble_outline,
+                          color: Colors.red,
+                        ),
+                        action: () {
+                          navigatorPopAndPushNamed(
+                            Routes.chat,
+                          );
+                        },
+                      ),
+                      goopTile(
                         title: 'FAQ',
                         img: GoopImages.faq,
                         action: () {},

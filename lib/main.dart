@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:goop/config/routes.dart';
 import 'package:goop/config/widgets_router.dart';
