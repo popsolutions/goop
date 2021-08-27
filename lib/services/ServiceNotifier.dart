@@ -11,6 +11,7 @@ import 'package:goop/models/mission.dart';
 import 'package:goop/models/models.dart';
 import 'package:goop/models/quizzLinesModel.dart';
 import 'package:goop/models/user.dart';
+import 'package:goop/pages/components/goop_libComponents.dart';
 import 'package:goop/services/AccountInvoiceService.dart';
 import 'package:goop/services/ActivityService.dart';
 import 'package:goop/services/AlternativeService.dart';
@@ -70,7 +71,11 @@ class ServiceNotifier extends ChangeNotifier {
     if (initialization == true) return;
 
     globalServiceNotifier = this;
-    await update(context);
+    try {
+      await update(context);
+    }catch(e){
+      goop_LibComponents.showMessage(context, 'Erro na inicialização', e.toString());
+    }
     initialization = true;
   }
 

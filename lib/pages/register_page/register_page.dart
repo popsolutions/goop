@@ -7,6 +7,7 @@ import 'package:goop/config/routes.dart';
 import 'package:goop/models/user_profile.dart';
 import 'package:goop/pages/components/StateGoop.dart';
 import 'package:goop/pages/components/goop_back.dart';
+import 'package:goop/utils/global.dart';
 import 'package:goop/utils/goop_images.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -23,7 +24,7 @@ class _RegisterPageState extends StateGoop<RegisterPage> {
 
     flutterWebviewPlugin.onUrlChanged.listen((String url) {
       print('*** url:' + url);
-      if (url != 'https://dev.charismabi.com/web/signup'){
+      if (url != globalConfig.serverURLRegisterPage){
         if (popExecuted)
           return;
 
@@ -49,7 +50,7 @@ class _RegisterPageState extends StateGoop<RegisterPage> {
         ),
         centerTitle: true,
       ),
-      body: WebviewScaffold(url: 'https://dev.charismabi.com/web/signup'),
+      body: WebviewScaffold(url: globalConfig.serverURLRegisterPage),
 
       // Center(
       //   child: SingleChildScrollView(
