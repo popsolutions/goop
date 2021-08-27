@@ -19,12 +19,12 @@ Function globalRebuildAllChildren;
 const String globalLatitudeMocked = String.fromEnvironment('latitude', defaultValue: ''); //--dart-define=latitude=-22.4808083 --dart-define=longitude=-48.5619883
 const String globalLongitudeMocked = String.fromEnvironment('longitude', defaultValue: '');
 
-final String _serverURL = 'https://charismabi.com.br';
+final String _serverURL = 'https://dev.charismabi.com';
 
 class GlobalConfig {
   String dbName = 'charisma-prod';
   String serverURL = _serverURL;
-  String userOdoo = '';
+  String userOdoo = 'support@popsolutions.co';
   String pass = '';
   String serverURLRegisterPage = _serverURL + '/web/signup';
 
