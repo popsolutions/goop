@@ -227,3 +227,8 @@ class ImageGoop{
 
   bool isNullOrEmpty() => (imageBase64 ?? '') == '';
 }
+
+void throwIf(bool b, String msg) {
+  if (b)
+    throw msg;
+}

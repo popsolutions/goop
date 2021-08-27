@@ -50,6 +50,7 @@ class _HomePageState extends StateGoop<HomePage> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: goopColors.red),
+        title: Center(child: Text(globalConfig.alertaApp ?? '')),
         actions: [
           Container(
             width: 45,

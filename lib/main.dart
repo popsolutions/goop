@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:goop/config/routes.dart';
@@ -33,8 +35,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-
-    // globalConfig.darkMode = SchedulerBinding.instance.window.platformBrightness == Brightness.dark;
+    globalConfig.readconfJson();
   }
 
   @override

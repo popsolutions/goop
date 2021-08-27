@@ -1,11 +1,15 @@
+import 'dart:convert';
 import 'dart:ffi';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:goop/models/user.dart';
 import 'package:goop/services/GeoLocService.dart';
 import 'package:goop/services/ServiceNotifier.dart';
 import 'package:goop/utils/goop_colors.dart';
+import 'package:goop/utils/utils.dart';
 import 'SharedPreferencesGoop.dart';
 import 'StackUtil.dart';
+import 'package:flutter/services.dart' as rootBundle;
 
 SharedPreferencesGoop prefsGoop = SharedPreferencesGoop();
 User globalcurrentUser;
@@ -16,22 +20,18 @@ StackUtil<String> globalScreenStack = StackUtil<String>();
 GoopColors goopColors = GoopColors();
 Function globalRebuildAllChildren;
 
-const String globalLatitudeMocked = String.fromEnvironment('latitude', defaultValue: ''); //--dart-define=latitude=-22.4808083 --dart-define=longitude=-48.5619883
-const String globalLongitudeMocked = String.fromEnvironment('longitude', defaultValue: '');
-
-final String _serverURL = 'https://dev.charismabi.com';
+const String globalConfJson = String.fromEnvironment('conf', defaultValue: ''); //--dart-define=conf=dev_charisma1
 
 class GlobalConfig {
-  String dbName = 'charisma-prod';
-  String serverURL = _serverURL;
-  String userOdoo = 'support@popsolutions.co';
-  String pass = '';
-  String serverURLRegisterPage = _serverURL + '/web/signup';
+  String confJsonPath = 'assets/jsons/conf.json';
 
-  // String dbName = 'odoo_mateus';
-  // String serverURL = 'http://192.168.0.55:8069';
-  // String userOdoo = 'mateus.2006@gmail.com';
-  // String pass = 'mateus';
+  String dbName = '';
+  String serverURL = '';
+  String userOdoo = '';
+  String pass = '';
+  String alertaApp = '';
+  
+  get serverURLRegisterPage => serverURL + '/web/signup';
 
   bool darkMode = false;
 
@@ -45,4 +45,43 @@ class GlobalConfig {
 
   int gpsTimeOutSeconds1 = 15;
   int gpsTimeOutSeconds2 = 18;
+
+  double LatitudeMocked;
+  double LongitudeMocked;
+
+
+  //###################
+
+  void readconfJson() async {
+    //### Esta rotina irá carregar as variáveis padrões de acordo com as configurações estabelecidas em "assets/jsons/conf.json"
+    if (globalConfJson != '') {
+      var jsonFile;
+      var json;
+
+      try {
+        jsonFile = await rootBundle.rootBundle.loadString(confJsonPath);
+      } catch (e) {
+        throw 'Foi definido "--dart-define=conf=" porém não foi encontrado o Arquivo "$confJsonPath".';
+      }
+
+      try {
+        json = jsonDecode(jsonFile);
+      } catch (e) {
+        throw 'Foi definido "--dart-define=conf=" porém o Arquivo "$confJsonPath" não parece um Json válido.' + e.toString();
+      }
+      var conf = json[globalConfJson];
+
+      throwIf(
+          conf == null, 'Configuração "$globalConfJson" definida em "--dart-define=conf=" não foi encontrada no arquivo "$confJsonPath"');
+
+      serverURL = conf['serverURL'];
+      dbName = conf['dbName'];
+      userOdoo = conf['userOdoo'];
+      pass = conf['pass'];
+      hoursDiffServer = conf['hoursDiffServer'];
+      LatitudeMocked = conf['LatitudeMocked'];
+      LongitudeMocked = conf['LongitudeMocked'];
+      alertaApp = conf['alertaApp'];
+    }
+  }
 }
