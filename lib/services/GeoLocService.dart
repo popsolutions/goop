@@ -34,10 +34,10 @@ class GeoLocService extends GoopClass{
     'isMocked: ${position.isMocked}';
 
   update([BuildContext context = null, bool getCurrentPosition = false]) async {
-    if ((globalLatitudeMocked != '') & (globalLongitudeMocked != '')) {
+    if ((globalConfig.LatitudeMocked != null) & (globalConfig.LongitudeMocked != null)) {
 
-      double latitudeMocked = double.parse(globalLatitudeMocked);
-      double longitudeMocked = double.parse(globalLongitudeMocked);
+      double latitudeMocked = globalConfig.LatitudeMocked;
+      double longitudeMocked = globalConfig.LongitudeMocked;
 
       printL('::GeoLocService.update - position Mocked');
       position = Position(latitude:latitudeMocked, longitude: longitudeMocked );
