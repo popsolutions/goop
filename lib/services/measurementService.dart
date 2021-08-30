@@ -114,7 +114,8 @@ class MeasurementService extends absService{
         missionModelOwner.establishmentModel.longitude);
 
     if (distanceMeters > globalConfig.distanceMetersLimitUser){
-      throw 'Você não está no local da missão!';
+      if (!globalConfig.devMode)
+        throw 'Você não está no local da missão!';
     }
 
     measurementModel.measurementLatitude = globalGeoLocService.latitude();

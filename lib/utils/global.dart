@@ -49,6 +49,8 @@ class GlobalConfig {
   double LatitudeMocked;
   double LongitudeMocked;
 
+  bool devMode = false;
+
 
   //###################
 
@@ -81,6 +83,7 @@ class GlobalConfig {
       hoursDiffServer = conf['hoursDiffServer'];
       LatitudeMocked = conf['LatitudeMocked'];
       LongitudeMocked = conf['LongitudeMocked'];
+      devMode = conf['devMode'] ?? false;
       alertaApp = conf['alertaApp'];
     }
   }
