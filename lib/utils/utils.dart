@@ -232,3 +232,8 @@ void throwIf(bool b, String msg) {
   if (b)
     throw msg;
 }
+
+void throwIfNull(dynamic value, String msg) {
+  if (value == null)
+    throw msg;
+}

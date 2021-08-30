@@ -137,6 +137,15 @@ class _GoopDrawerState extends StateGoop<GoopDrawer> {
                           );
                         },
                       ),
+                      goopTile(
+                        title: 'Missões executadas',//t.pedro.todo.
+                        img: GoopImages.wallet_red,
+                        action: () {
+                          navigatorPopAndPushNamed(
+                            Routes.Mission_executeds_Page,
+                          );
+                        },
+                      ),
                       // goopTile(
                       //   title: 'Minha Conta',
                       //   img: GoopImages.account,

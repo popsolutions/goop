@@ -9,6 +9,7 @@ import 'package:goop/pages/mission_page/mission_home_page.dart';
 import 'package:goop/pages/mission_page/mission_photo_page.dart';
 import 'package:goop/pages/mission_page/mission_price_comparison_page.dart';
 import 'package:goop/pages/mission_page/mission_questions_page.dart';
+import 'package:goop/pages/mission_page/mission_executeds_page.dart';
 import 'package:goop/pages/recover_password_page/recover_password_page.dart';
 import 'package:goop/pages/register_page/register_page.dart';
 import 'package:goop/pages/settings_page/settings_page.dart';
@@ -34,5 +35,6 @@ class WidgetsRouter {
     Routes.mission_price_comparison: (_) => MissionPriceComparisionPage(),
     Routes.mission_question: (_) => MissionQuestionPage(),
     Routes.wallet: (_) => WalletPage(),
+    Routes.Mission_executeds_Page: (_) => Mission_executeds_Page(),
   };
 }

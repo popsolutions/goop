@@ -17,6 +17,7 @@ import 'package:goop/services/ActivityService.dart';
 import 'package:goop/services/AlternativeService.dart';
 import 'package:goop/services/Config_ParameterService.dart';
 import 'package:goop/services/GeoLocService.dart';
+import 'package:goop/services/MeasurementExecutedsService.dart';
 import 'package:goop/services/MeasurementPhotoLinesService.dart';
 import 'package:goop/services/MeasurementQuizzlinesService.dart';
 import 'package:goop/utils/global.dart';
@@ -46,6 +47,7 @@ class ServiceNotifier extends ChangeNotifier {
   MeasurementPriceComparisonLinesService
       measurementPriceComparisonLinesService =
       new MeasurementPriceComparisonLinesService();
+  MeasurementExecutedsService measurementExecutedsService = MeasurementExecutedsService();
   AccountInvoiceService accountInvoiceService = new AccountInvoiceService();
   Config_ParameterService config_parameterService = new Config_ParameterService();
 
