@@ -73,6 +73,13 @@ class Odoo extends GoopClass {
     return await callRequest(url, createPayload(params));
   }
 
+  Future<List> searchReadGen(String model, {dynamic filter, dynamic fields, int offset = 0, int limit = 0, String order = ""}) async {
+    final response = await this.searchRead(model, filter, fields, offset: offset, limit: limit, order: order);
+    final List json = response.getRecords();
+    // final listMission = json.map((e) => MissionModel.fromJson(e)).toList();
+    return json;
+  }
+
   // Call any model method with arguments
   Future<OdooResponse> callKW(String model, String method, List args,
       {dynamic kwargs, Map context}) async {

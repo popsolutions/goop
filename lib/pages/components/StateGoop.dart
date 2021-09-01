@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 abstract class StateGoop<T extends StatefulWidget> extends State<T> {
   bool didChangeDependenciesLoad = false;
   bool listenServiceNotifier = false;
+  bool loading = true;
   ServiceNotifier serviceNotifier;
   double mediaQuery;
   TextStyle theme;
@@ -52,6 +53,12 @@ abstract class StateGoop<T extends StatefulWidget> extends State<T> {
 
   Future<String> getPhotoBase64() async {
     return await goop_LibComponents.getPhotoBase64(context, mediaQuery);
+  }
+
+  loadFinish(){
+    setState(() {
+      loading = false;
+    });
   }
 
   Widget imagePhotoBase64(ImageGoop imageBase64,
@@ -124,6 +131,14 @@ abstract class StateGoop<T extends StatefulWidget> extends State<T> {
         context,
         route,
         arguments: arguments
+    );
+  }
+
+  Widget inProgress() {
+    return Center(
+      child: CircularProgressIndicator(
+        strokeWidth: 5,
+      ),
     );
   }
 }

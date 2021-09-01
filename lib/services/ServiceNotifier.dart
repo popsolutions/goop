@@ -16,6 +16,7 @@ import 'package:goop/services/AccountInvoiceService.dart';
 import 'package:goop/services/ActivityService.dart';
 import 'package:goop/services/AlternativeService.dart';
 import 'package:goop/services/Config_ParameterService.dart';
+import 'package:goop/services/GenericService.dart';
 import 'package:goop/services/GeoLocService.dart';
 import 'package:goop/services/MeasurementExecutedsService.dart';
 import 'package:goop/services/MeasurementPhotoLinesService.dart';
@@ -50,6 +51,7 @@ class ServiceNotifier extends ChangeNotifier {
   MeasurementExecutedsService measurementExecutedsService = MeasurementExecutedsService();
   AccountInvoiceService accountInvoiceService = new AccountInvoiceService();
   Config_ParameterService config_parameterService = new Config_ParameterService();
+  GenericService genericService = new GenericService();
 
 
   bool initialization = false;

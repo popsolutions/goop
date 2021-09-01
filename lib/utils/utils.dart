@@ -38,11 +38,21 @@ class JsonGet {
   static int Int(Map<String, dynamic> json, String key, [int index]) => jGet(json, key, index);
 
   static double Double(Map<String, dynamic> json, String key, [int index]) => convertDynamicToDouble(jGet(json, key, index));
+  static String DoubleCurrency(Map<String, dynamic> json, String key, [int index]) => formatCurrency(jGet(json, key, index));
 
   static DateTime Datetime(Map<String, dynamic> json, String key, [int index]) {
     if (json[key] is bool) return null;
 
     return DateTime.parse(jGet(json, key, index));
+  }
+
+  static String DatetimeStr(Map<String, dynamic> json, String key, [int index]) {
+    DateTime d = Datetime(json, key, index);
+
+    if (d == null)
+      return '';
+    else
+      return d.toString();
   }
 
   static bool Bool(Map<String, dynamic> json, String key, [int index]) {
@@ -120,6 +130,19 @@ double CurrencyStringtoDouble(String value) {
       .replaceAll(',', '.');
 
   return formatCurrencyDouble(double.parse(vlCurrency.trim()));
+}
+
+String formatCurrency(double value) {
+  if (value == null)
+    return '0.00';
+
+  var vlDecimal = value.toStringAsFixed(2);
+
+  print(vlDecimal);
+  print(double.parse(vlDecimal));
+
+  final curr = new NumberFormat("#,##0.00", "pt_BR");
+  return curr.format(double.parse(vlDecimal));
 }
 
 double convertDynamicToDouble(dynamic value) {
@@ -236,4 +259,27 @@ void throwIf(bool b, String msg) {
 void throwIfNull(dynamic value, String msg) {
   if (value == null)
     throw msg;
+}
+
+String strSubstList(String strSubst, List<String> listStr){
+  /*
+    Exemplos de uso:
+
+    strSubstList('a', ['a', '1', 'b', '2'])              ==>  '1'
+    strSubstList('b', ['a', '1', 'b', '2'])              ==>  '2'
+    strSubstList('a', ['a', 'Value 1', 'b', 'Value 2'])  ==>  'Value 1'
+
+    test('strSubstList', () {
+      expect(strSubstList('a', ['a', '1', 'b', '2']), '1');
+      expect(strSubstList('b', ['a', '1', 'b', '2']), '2');
+      expect(strSubstList('c', ['a', '1', 'b', '2']), 'c');
+    });
+  */
+
+  for (var i = 0; i < listStr.length; i+=2 ){
+    if (strSubst.toUpperCase() == listStr[i].toUpperCase())
+      return listStr[i+1];
+  }
+
+  return strSubst;
 }
