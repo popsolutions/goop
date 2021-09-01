@@ -36,37 +36,24 @@ class _Mission_executedsPageS_tate extends StateGoop<Mission_executeds_Page> {
 
   @override
   void didChangeDependencies() {
-    if (didChangeDependenciesLoad == true) return;
     super.didChangeDependencies();
+    listMissionModelSet();
   }
 
-  @override
-  void initState() {
-    super.initState();
-    listenServiceNotifier = true;
-  }
-
-  listMissionModelSet(bool force) async {
-    if ((listMeasurementExecutedsDto !=null) & (!force))
-      return;
-    listMeasurementExecutedsDto = await serviceNotifier.measurementExecutedsService.getMeasurementExecutedsDto();
-    setState_();
+  listMissionModelSet() async {
+    try {
+      listMeasurementExecutedsDto = await serviceNotifier.measurementExecutedsService.getMeasurementExecutedsDto();
+    } finally {
+      loadFinish();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    listMissionModelSet(false);
-
-    if (listMeasurementExecutedsDto == null)
-      return Center(
-        child: CircularProgressIndicator(
-          strokeWidth: 5,
-        ),
-      );
-
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: goopColors.red),
+        automaticallyImplyLeading: false,
+        leading: GoopBack(),
         centerTitle: true,
         title: Container(
           width: 100,
@@ -74,59 +61,60 @@ class _Mission_executedsPageS_tate extends StateGoop<Mission_executeds_Page> {
         ),
       ),
       drawer: GoopDrawer(),
-      body: RefreshIndicator(
-        strokeWidth: 3,
-        color: goopColors.red,
-        onRefresh: () async {
-          await serviceNotifier.update();
-          listMissionModelSet(true);
-          serviceNotifier.notifyListeners();
-        },
-        child: Column(
-          children: [
-            paddingT(30),
-            Container(
-              color: Colors.black12,
-              child: Row(
+      body: loading
+          ? inProgress()
+          : RefreshIndicator(
+              strokeWidth: 3,
+              color: goopColors.red,
+              onRefresh: () async {
+                await serviceNotifier.update();
+                listMissionModelSet();
+                serviceNotifier.notifyListeners();
+              },
+              child: Column(
                 children: [
-                  Text('Missão'),
-                  Expanded(child: paddingZ()),
-                  Text('Valor'),
-                  Expanded(child: paddingZ()),
-                  Text('Status'),
+                  paddingT(30),
+                  Container(
+                    color: Colors.black12,
+                    child: Row(
+                      children: [
+                        Text('Missão'),
+                        Expanded(child: paddingZ()),
+                        Text('Valor'),
+                        Expanded(child: paddingZ()),
+                        Text('Status'),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                      child: ListView.separated(
+                    physics: BouncingScrollPhysics(),
+                    itemCount: listMeasurementExecutedsDto.length,
+                    separatorBuilder: (_, index) => SizedBox(height: 10),
+                    itemBuilder: (_, index) {
+                      final measurementExecutedsDto = listMeasurementExecutedsDto[index];
+
+                      return Container(
+                        padding: EdgeInsets.symmetric(vertical: 40),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Text(measurementExecutedsDto.name ?? ''),
+                                Expanded(child: paddingZ()),
+                                Text(formatCurrency(measurementExecutedsDto.reward)),
+                                Expanded(child: paddingZ()),
+                                Text(measurementExecutedsDto.stateText),
+                              ],
+                            )
+                          ],
+                        ),
+                      );
+                    },
+                  )),
                 ],
               ),
             ),
-
-            Expanded(
-                child: ListView.separated(
-                  physics: BouncingScrollPhysics(),
-                  itemCount: listMeasurementExecutedsDto.length,
-                  separatorBuilder: (_, index) => SizedBox(height: 10),
-                  itemBuilder: (_, index) {
-                    final measurementExecutedsDto = listMeasurementExecutedsDto[index];
-
-                    return Container(
-                      padding: EdgeInsets.symmetric(vertical: 40),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Text(measurementExecutedsDto.name),
-                              Expanded(child: paddingZ()),
-                              Text(measurementExecutedsDto.reward.toString()),
-                              Expanded(child: paddingZ()),
-                              Text(measurementExecutedsDto.stateText),
-                            ],
-                          )
-                        ],
-                      ),
-                    );
-                  },
-                )),
-          ],
-        ),
-      ),
     );
   }
 }
