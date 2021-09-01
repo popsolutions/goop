@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:encrypt/encrypt.dart' as encrypt;
 
 import 'package:image/image.dart' as Im;
 // import 'package:path_provider/path_provider.dart';
@@ -282,4 +283,41 @@ String strSubstList(String strSubst, List<String> listStr){
   }
 
   return strSubst;
+}
+
+class Crypto{
+/*
+  test('Crypto', () {
+    String word = 'Testing';
+    String wordCrypt = Crypto.crypt(word);
+    String wordDeCrypt = Crypto.decrypt(wordCrypt);
+    expect(wordDeCrypt, wordDeCrypt);
+
+    print('word: $word');
+    print('wordCrypt: $wordCrypt');
+    print('wordDeCrypt: $wordDeCrypt');
+  });
+*/
+  static final key1 = '#*&#HGVI&(KJN987KJHBujg&hjh-43=!'; //32 chars!! //t. send Key to Backend
+  static final key2 = 'TY%JGY*&hgduyg@!'; //16 chars!!
+
+  //encrypt
+  static String crypt(String text) {
+    final key = encrypt.Key.fromUtf8(key1); //32 chars
+    final iv = encrypt.IV.fromUtf8(key2); //16 chars
+
+    final e = encrypt.Encrypter(encrypt.AES(key, mode: encrypt.AESMode.cbc));
+    final encrypted_data = e.encrypt(text, iv: iv);
+    return encrypted_data.base64;
+  }
+
+  //dycrypt
+  static String decrypt(String text) {
+    final key = encrypt.Key.fromUtf8(key1); //32 chars
+    final iv = encrypt.IV.fromUtf8(key2);
+
+    final e = encrypt.Encrypter(encrypt.AES(key, mode: encrypt.AESMode.cbc));
+    final decrypted_data = e.decrypt(encrypt.Encrypted.fromBase64(text), iv: iv);
+    return decrypted_data;
+  }
 }

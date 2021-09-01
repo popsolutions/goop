@@ -17,6 +17,7 @@ import 'package:goop/services/login/login_facade_impl.dart';
 import 'package:goop/utils/global.dart';
 import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
+import 'package:goop/utils/utils.dart';
 import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 
@@ -50,6 +51,9 @@ class _LoginPageState extends StateGoop<LoginPage> {
   void didChangeDependencies() {
     ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context, listen: false);
     _authenticationController = serviceNotifier.authenticationController;
+    if (!didChangeDependenciesLoad)
+      restaurePersistingLogin();
+
     super.didChangeDependencies();
   }
 
@@ -76,6 +80,20 @@ class _LoginPageState extends StateGoop<LoginPage> {
     serviceNotifier.setCurrentUser(user);
 
     _authenticationController.authenticate(user);
+
+    //Persisting login
+    try {
+      String s = Crypto.crypt(_loginController.login);
+
+      if (s != prefsGoop.getString('key1'))
+        prefsGoop.setString('key1', s);
+
+      s = Crypto.crypt(_loginController.password);
+
+      if (s != prefsGoop.getString('key2'))
+        prefsGoop.setString('key2', s);
+    } catch (e) {}
+
     navigatorPushNamedAndRemoveUntil(
       Routes.home,
       (route) => false,
@@ -84,6 +102,18 @@ class _LoginPageState extends StateGoop<LoginPage> {
 
   void _onError() {
     showMessage('Opss', 'Usuário ou senha inválidos');
+  }
+
+  void restaurePersistingLogin() {
+    try {
+      if (_loginController.login == '') {
+        if ((prefsGoop.getString('key1') ?? '') != '')
+          _loginController.login = Crypto.decrypt(prefsGoop.getString('key1'));
+
+        if ((prefsGoop.getString('key2') ?? '') != '')
+        _loginController.password = Crypto.decrypt(prefsGoop.getString('key2'));
+      }
+    } catch (e) {}
   }
 
   @override

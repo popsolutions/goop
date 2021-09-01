@@ -78,8 +78,8 @@ class GlobalConfig {
 
       serverURL = conf['serverURL'];
       dbName = conf['dbName'];
-      userOdoo = conf['userOdoo'];
-      pass = conf['pass'];
+      userOdoo = conf['userOdoo'] ?? '';
+      pass = conf['pass'] ?? '';
       hoursDiffServer = conf['hoursDiffServer'];
       LatitudeMocked = conf['LatitudeMocked'];
       LongitudeMocked = conf['LongitudeMocked'];
