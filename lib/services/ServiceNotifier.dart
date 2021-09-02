@@ -75,11 +75,7 @@ class ServiceNotifier extends ChangeNotifier {
     if (initialization == true) return;
 
     globalServiceNotifier = this;
-    try {
-      await update(context);
-    }catch(e){
-      goop_LibComponents.showMessage(context, 'Erro na inicialização', e.toString());
-    }
+    await update(context);
     initialization = true;
   }
 

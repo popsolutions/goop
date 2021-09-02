@@ -60,59 +60,43 @@ class _HomePageState extends StateGoop<HomePage> {
         ],
       ),
       drawer: GoopDrawer(),
-      body: FutureBuilder(
-        future: serviceNotifier.init(context),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return Consumer<ServiceNotifier>(builder:
-                (BuildContext context, ServiceNotifier value, Widget child) {
-              ServiceNotifier _serviceNotifier =
-                  Provider.of<ServiceNotifier>(context, listen: false);
+      body: Consumer<ServiceNotifier>(builder: (BuildContext context, ServiceNotifier value, Widget child) {
+        ServiceNotifier _serviceNotifier = Provider.of<ServiceNotifier>(context, listen: false);
 
-              if (_serviceNotifier.geoLocationOk == false)
-                return geoLocationError();
-              else
-                return (globalConfig.darkMode == true)
-                    ? ColorFiltered(
-                        colorFilter: const ColorFilter.matrix(<double>[
-                          -1,
-                          0,
-                          0,
-                          0,
-                          255,
-                          0,
-                          -1,
-                          0,
-                          0,
-                          255,
-                          0,
-                          0,
-                          -1,
-                          0,
-                          255,
-                          0,
-                          0,
-                          0,
-                          1,
-                          0,
-                        ]),
-                        child: flutterMap(_serviceNotifier))
-                    : flutterMap(_serviceNotifier);
-            });
-          } else {
-            return Center(
-              child: CircularProgressIndicator(
-                strokeWidth: 5,
-                // color: GoopColors.red,
-              ),
-            );
-          }
-        },
-      ),
+        if (_serviceNotifier.geoLocationOk == false)
+          return geoLocationError();
+        else
+          return (globalConfig.darkMode == true)
+              ? ColorFiltered(
+                  colorFilter: const ColorFilter.matrix(<double>[
+                    -1,
+                    0,
+                    0,
+                    0,
+                    255,
+                    0,
+                    -1,
+                    0,
+                    0,
+                    255,
+                    0,
+                    0,
+                    -1,
+                    0,
+                    255,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                  ]),
+                  child: flutterMap(_serviceNotifier))
+              : flutterMap(_serviceNotifier);
+      }),
     );
   }
 
-  Widget flutterMap(ServiceNotifier _serviceNotifier){
+  Widget flutterMap(ServiceNotifier _serviceNotifier) {
     return FlutterMap(
       options: MapOptions(
         center: missionLocation == null ? globalGeoLocService.latLng() : LatLng(missionLocation[0], missionLocation[1]),

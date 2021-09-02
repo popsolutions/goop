@@ -75,7 +75,7 @@ class _LoginPageState extends StateGoop<LoginPage> {
     }
   }
 
-  void _onSuccess() {
+  void _onSuccess() async {
     final user = _loginController.loginRequest.value;
     serviceNotifier.setCurrentUser(user);
 
@@ -93,6 +93,13 @@ class _LoginPageState extends StateGoop<LoginPage> {
       if (s != prefsGoop.getString('key2'))
         prefsGoop.setString('key2', s);
     } catch (e) {}
+
+    try {
+      await serviceNotifier.init(context);
+    }catch(e) {
+      goop_LibComponents.showMessage(context, 'Erro na inicialização', e.toString());
+      rethrow;
+    }
 
     navigatorPushNamedAndRemoveUntil(
       Routes.home,

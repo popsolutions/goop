@@ -22,11 +22,21 @@ class EstablishmentModel extends AbsModels {
   EstablishmentModel.fromJson(Map<String, dynamic> map) {
     currentJson = map;
 
-    id = jGetInt('id');
-    name = jGetStr('name');
-    address = jGetStr('address');
-    zipCode = jGetStr('zip_code');
-    latitude = jGetDouble('latitude');
-    longitude = jGetDouble('longitude');
+    try {
+      id = jGetInt('id');
+      name = jGetStr('name');
+      address = jGetStr('address');
+      zipCode = jGetStr('zip_code');
+      latitude = jGetDouble('latitude');
+      longitude = jGetDouble('longitude');
+
+      if (latitude < -90 || latitude > 90) {
+        throw 'A latitude precisa ser valor entre -90 e +90 graus. Atualmente está: $latitude';
+      } else if (longitude < -180 || longitude > 180) {
+        throw 'A longitude precisa ser valor entre -180 e +180 graus. Atualmente está: $longitude';
+      }
+    } catch (e) {
+      throw 'Erro no cadastro do estabelecimento "$id-$name":\n${e.toString()}';
+    }
   }
 }
