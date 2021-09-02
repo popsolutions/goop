@@ -94,12 +94,9 @@ class _LoginPageState extends StateGoop<LoginPage> {
         prefsGoop.setString('key2', s);
     } catch (e) {}
 
-    try {
+    await dialogProcess(() async {
       await serviceNotifier.init(context);
-    }catch(e) {
-      goop_LibComponents.showMessage(context, 'Erro na inicialização', e.toString());
-      rethrow;
-    }
+    });
 
     navigatorPushNamedAndRemoveUntil(
       Routes.home,
