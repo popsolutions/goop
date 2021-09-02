@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:goop/models/update_user.dart';
 import 'package:goop/services/login/user_service.dart';
 import 'package:goop/utils/validators.dart';
@@ -9,6 +10,7 @@ class SettingsController = _SettingsControllerBase with _$SettingsController;
 abstract class _SettingsControllerBase with Store {
   final UserServiceImpl _userService;
   _SettingsControllerBase(this._userService);
+  final formKey = GlobalKey<FormState>();
 
   int _id;
   set id(int newId) => _id = newId;
@@ -29,10 +31,7 @@ abstract class _SettingsControllerBase with Store {
   bool get isLoading => _updateRequest.status == FutureStatus.pending;
 
   @computed
-  bool get canNext =>
-      Validators.validateEmail(email) == null &&
-      Validators.validatePhone(phone) == null &&
-      Validators.validateCPF(cpf) == null;
+  bool get canNext => (formKey == null)? false: formKey.currentState.validate();
 
   @observable
   ObservableFuture _updateRequest = ObservableFuture.value(null);

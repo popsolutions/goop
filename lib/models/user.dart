@@ -13,13 +13,13 @@ class User extends AbsModels {
   String image;
   final String birthdate;
   final String function;
-  final String cnpjCpf;
+  String cnpjCpf;
   final String educationLevel;
   final String gender;
   final int missionsCount;
   final String mobile;
-  final String phone;
-  final String email;
+  String phone;
+  String email;
   final String street;
   final String city;
   final String district;

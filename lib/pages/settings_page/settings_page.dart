@@ -101,10 +101,19 @@ class _SettingsPageState extends StateGoop<SettingsPage> {
   }
 
   submit() {
-    setState(() {
-      _controller.imageProfile = archive.imageBase64;
-    });
-    _controller.submit();
+    if (_controller.canNext) {
+      setState(() {
+        _controller.imageProfile = archive.imageBase64;
+      });
+
+      serviceNotifier.authenticationController.currentUser.cnpjCpf = _controller.cpf;
+      serviceNotifier.authenticationController.currentUser.phone = _controller.phone;
+      serviceNotifier.authenticationController.currentUser.email = _controller.email;
+
+      _controller.submit();
+    } else {
+      showMessage('Opss', 'Corrija os campos em vermelho');
+    }
   }
 
   @override
@@ -128,95 +137,108 @@ class _SettingsPageState extends StateGoop<SettingsPage> {
           leading: GoopBack(),
         ),
         body: Center(
-          child: Container(
-            width: MediaQuery.of(context).size.width * .8,
-            child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                    child: Column(
-                      children: [
-                        imagePhotoBase64(archive),
-                        SizedBox(height: 20),
-                        Text(
-                          '${user.name}',
-                          style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                            color: goopColors.red,
+          child: Form(
+            key: _controller.formKey,
+            child: Container(
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width * .8,
+              child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: Column(
+                        children: [
+                          imagePhotoBase64(archive),
+                          SizedBox(height: 20),
+                          Text(
+                            '${user.name}',
+                            style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                              color: goopColors.red,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 30),
-                  GoopTextFormField(
-                    //TODO: Atualizar os dados ao salvar
-                    hintText: 'E-mail',
-                    validator: Validators.validateEmail,
-                    initialValue: _controller.email,
-                    onChanged: (e) => _controller.email = e.trim(),
-                  ),
-                  GoopTextFormField(
-                    hintText: 'Celular',
-                    validator: Validators.validatePhone,
-                    inputFormatters: [phoneFormatter],
-                    initialValue: _controller.phone,
-                    onChanged: (e) => _controller.phone = e.trim(),
-                  ),
-                  GoopTextFormField(
-                    hintText: 'CPF',
-                    validator: Validators.validateCPF,
-                    inputFormatters: [cpfFormatter],
-                    initialValue: _controller.cpf,
-                    onChanged: (e) => _controller.cpf = e.trim(),
-                  ),
-                  SizedBox(height: 15),
-                  TextButton(
-                    child: Text(
-                      'Sobre o GoOp',
-                      style: Theme.of(context).textTheme.headline4,
+                    SizedBox(height: 30),
+                    GoopTextFormField(
+                      //TODO: Atualizar os dados ao salvar
+                      hintText: 'E-mail',
+                      validator: Validators.validateEmail,
+                      initialValue: _controller.email,
+                      onChanged: (e) => _controller.email = e.trim(),
                     ),
-                    onPressed: () {},
-                  ),
-                  TextButton(
-                    child: Text(
-                      'Termos de Uso',
-                      style: Theme.of(context).textTheme.headline4,
+                    GoopTextFormField(
+                      hintText: 'Celular',
+                      validator: Validators.validatePhone,
+                      inputFormatters: [phoneFormatter],
+                      initialValue: _controller.phone,
+                      onChanged: (e) => _controller.phone = e.trim(),
                     ),
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (_) => GoopAlert(
-                          title: Text('Termos de Uso'),
-                          contet: Text(
-                            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna ',
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  TextButton(
-                    child: Text(
-                      'Desativar minha conta',
-                      style: Theme.of(context).textTheme.headline4,
+                    GoopTextFormField(
+                      hintText: 'CPF',
+                      validator: Validators.validateCPF,
+                      inputFormatters: [cpfFormatter],
+                      initialValue: _controller.cpf,
+                      onChanged: (e) => _controller.cpf = e.trim(),
                     ),
-                    onPressed: () {},
-                  ),
-                  Observer(
-                    builder: (_) {
-                      return Center(
-                        child: GoopButton(
-                          text: 'Salvar',
-                          action: _controller.canNext ? submit : null,
-                        ),
-                      );
-                    },
-                  ),
-                  SizedBox(height: 40),
-                ],
+                    SizedBox(height: 15),
+                    TextButton(
+                      child: Text(
+                        'Sobre o GoOp',
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .headline4,
+                      ),
+                      onPressed: () {},
+                    ),
+                    TextButton(
+                      child: Text(
+                        'Termos de Uso',
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .headline4,
+                      ),
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (_) =>
+                              GoopAlert(
+                                title: Text('Termos de Uso'),
+                                contet: Text(
+                                  'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna ',
+                                ),
+                              ),
+                        );
+                      },
+                    ),
+                    TextButton(
+                      child: Text(
+                        'Desativar minha conta',
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .headline4,
+                      ),
+                      onPressed: () {},
+                    ),
+                    Center(
+                      child: GoopButton(
+                        text: 'Salvar',
+                        action: submit
+                        // action: _controller.canNext ? submit : null,
+                      ),
+                    ),
+                    SizedBox(height: 40),
+                  ],
+                ),
               ),
             ),
           ),
