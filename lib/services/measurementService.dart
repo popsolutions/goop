@@ -46,7 +46,7 @@ class MeasurementService extends absService{
       [
         ["missions_id", "in", [missionId]],
         ["partner_id", "in", [partner_id]],
-        ["date_started", "=", [convertDateToStringOdoo(DateTime.now())]]
+        ["date_started", "=", convertDateToStringOdoo(DateTime.now())]
       ],
       [],
     );
