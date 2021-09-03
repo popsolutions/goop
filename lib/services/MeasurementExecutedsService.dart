@@ -35,15 +35,15 @@ class MeasurementExecutedsService extends absService{
     );
 
     final List jsonMissions = responseMissions.getRecords();
-    MeasurementExecutedsDto measurementExecutedsDto;
-    jsonMissions.forEach((elementjsonMissions) {
-      measurementExecutedsDto = listMeasurementExecutedsDto.firstWhere((elementlistMeasurementExecutedsDto) => elementlistMeasurementExecutedsDto.missions_id == elementjsonMissions['id'], orElse:() => null);
 
-      throwIfNull(measurementExecutedsDto, 'Nao foi possível encontrar a mensuração');
-
-      measurementExecutedsDto.reward = JsonGet.Double(elementjsonMissions, 'reward');
-      measurementExecutedsDto.name = JsonGet.Str(elementjsonMissions, 'name');
-    });
+    for (var elementjsonMissions in jsonMissions) {
+      for (var elementlistMeasurementExecutedsDto in listMeasurementExecutedsDto) {
+        if (elementlistMeasurementExecutedsDto.missions_id == elementjsonMissions['id']) {
+          elementlistMeasurementExecutedsDto.reward = JsonGet.Double(elementjsonMissions, 'reward');
+          elementlistMeasurementExecutedsDto.name = JsonGet.Str(elementjsonMissions, 'name');
+        }
+      }
+    }
 
     return listMeasurementExecutedsDto;
   }
