@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:goop/utils/global.dart';
 
 class GoopColors {
-
   // Color getColor(colorLight, colorBlack) => (globalConfig.darkMode == true) ? colorBlack : colorLight;
   // Color getColor(colorLight, colorBlack) => colorBlack;
   Color getColor(colorLight, colorBlack) => colorLight;
@@ -35,7 +33,8 @@ class GoopColors {
   Color get deepPurple => getColor(Colors.deepPurple, Colors.green);
   Color get deepPurple900 => getColor(Colors.deepPurple[900], Colors.green);
   // Color get inProgressCard => getColor(Color(0xFFFDEEF2) , Color(0xFF808B96));
-  Color get inProgressCard => getColor(Color(0xFFFDEEF2) , Colors.amberAccent.withOpacity(.2));
+  Color get inProgressCard =>
+      getColor(Color(0xFFFDEEF2), Colors.amberAccent.withOpacity(.2));
   Color get brown => getColor(Colors.brown, Colors.brown);
   Color get teal => getColor(Colors.teal, Colors.teal);
   Color get headline1 => getColor(Color(0xFF808080), Color(0xFF808080));

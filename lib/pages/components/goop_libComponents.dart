@@ -17,7 +17,7 @@ import 'package:flutter_svg/svg.dart';
 
 int dialogProcessIndex = 0;
 
-class goop_LibComponents extends GoopClass{
+class goop_LibComponents extends GoopClass {
   static Widget paddingZ() {
     return Padding(padding: EdgeInsets.only(top: 0));
   }
@@ -61,37 +61,45 @@ class goop_LibComponents extends GoopClass{
   }
 
   static Future<void> dialogProcess(BuildContext context, Function function,
-      {String caption = 'Aguarde por favor...', String exceptionMessage, timeOutSeconds = 0, timeOutMessage = 'Operação cancelada. Tempo de espera esgotado.',
+      {String caption = 'Aguarde por favor...',
+      String exceptionMessage,
+      timeOutSeconds = 0,
+      timeOutMessage = 'Operação cancelada. Tempo de espera esgotado.',
       timeOutFunctionOrigin = ''}) async {
-    void dialogProcessLog(String s) => printL2('goop_LibComponents.dialogProcess - dialogProcessIndex: $dialogProcessIndex - $s');
+    void dialogProcessLog(String s) => printL2(
+        'goop_LibComponents.dialogProcess - dialogProcessIndex: $dialogProcessIndex - $s');
 
     showProgressDialog(context, caption);
     try {
-      dialogProcessLog('Start - caption:"$caption" - exceptionMessage:"$exceptionMessage"' +
-          ((timeOutSeconds == 0)? '': ' - whit timeOut timeOutSeconds:"$timeOutSeconds" - timeOutMessage:"$timeOutMessage"'));
+      dialogProcessLog(
+          'Start - caption:"$caption" - exceptionMessage:"$exceptionMessage"' +
+              ((timeOutSeconds == 0)
+                  ? ''
+                  : ' - whit timeOut timeOutSeconds:"$timeOutSeconds" - timeOutMessage:"$timeOutMessage"'));
       ++dialogProcessIndex;
 
-        try {
-          if (timeOutSeconds == 0) {
-            await function();
-          }else {
-            await Future(() => function()).timeout(Duration(seconds: timeOutSeconds), onTimeout: (){
-              dialogProcessLog('TimeOut exception - timeOutSeconds:"$timeOutSeconds" - timeOutMessage:"$timeOutMessage"');
-              throw FormatException(timeOutMessage, timeOutFunctionOrigin);
-            });
-          }
-
-        } finally {
-          --dialogProcessIndex;
-          dialogProcessLog('finally');
-          goop_LibComponents.navigatorPop(context, null, false);
+      try {
+        if (timeOutSeconds == 0) {
+          await function();
+        } else {
+          await Future(() => function())
+              .timeout(Duration(seconds: timeOutSeconds), onTimeout: () {
+            dialogProcessLog(
+                'TimeOut exception - timeOutSeconds:"$timeOutSeconds" - timeOutMessage:"$timeOutMessage"');
+            throw FormatException(timeOutMessage, timeOutFunctionOrigin);
+          });
         }
-
+      } finally {
+        --dialogProcessIndex;
+        dialogProcessLog('finally');
+        goop_LibComponents.navigatorPop(context, null, false);
+      }
     } catch (e) {
       String eMessage;
 
       if (e is FormatException) {
-        dialogProcessLog('Catch exception - Source:"${e.source}", message:"${e.message}"');
+        dialogProcessLog(
+            'Catch exception - Source:"${e.source}", message:"${e.message}"');
         eMessage = e.message;
       } else {
         eMessage = e.toString();
@@ -113,7 +121,8 @@ class goop_LibComponents extends GoopClass{
   }
 
   static showMessage(BuildContext context, String title, String message) async {
-    printL2('goop_LibComponents.showMessage - title: "$title", message:"$message"');
+    printL2(
+        'goop_LibComponents.showMessage - title: "$title", message:"$message"');
 
     if (Platform.isAndroid) {
       showDialog(
@@ -121,7 +130,7 @@ class goop_LibComponents extends GoopClass{
         barrierDismissible: false,
         builder: (BuildContext ctxt) {
           return AlertDialog(
-            backgroundColor: goopColors.white ,
+            backgroundColor: goopColors.white,
             title: Text(
               title,
               style: TextStyle(
@@ -220,7 +229,7 @@ class goop_LibComponents extends GoopClass{
           ),
         ),
       );
-    }catch(e){
+    } catch (e) {
       printL(e.toString());
     }
   }
@@ -240,7 +249,7 @@ class goop_LibComponents extends GoopClass{
       TextAlign textAlign = TextAlign.start}) {
     if (borderColor == null) borderColor = goopColors.teal;
 
-    if (textStyle == null){
+    if (textStyle == null) {
       textStyle = TextStyle(color: goopColors.black);
     }
 
@@ -249,7 +258,6 @@ class goop_LibComponents extends GoopClass{
       readOnly: readOnly,
       keyboardType: keyboardType,
       inputFormatters: inputFormatters,
-
       decoration: InputDecoration(
           border: (border)
               ? new OutlineInputBorder(
@@ -384,7 +392,6 @@ class goop_LibComponents extends GoopClass{
       },
     );
 
-
     return fileBase64;
   }
 
@@ -394,125 +401,126 @@ class goop_LibComponents extends GoopClass{
         await _onTap();
       },
       child: ClipRRect(
-          borderRadius: BorderRadius.circular(100),
-          child: (imageBase64.isNullOrEmpty())
-              ? SvgPicture.asset(
-                  GoopImages.avatar,
-                  height: 150,
-                )
-              : Image.memory(
-                  imageBase64.uint8List(),
-                  fit: BoxFit.cover,
-                  width: 150,
-                  height: 150,
-                )),
+        borderRadius: BorderRadius.circular(100),
+        child: (imageBase64.isNullOrEmpty())
+            ? SvgPicture.asset(
+                GoopImages.avatar,
+                height: 150,
+              )
+            : Image.memory(
+                imageBase64.uint8List(),
+                fit: BoxFit.cover,
+                width: 150,
+                height: 150,
+              ),
+      ),
     );
   }
 
   //################################################ Navigator ################################################
-  static Future<T> navigatorPop<T extends Object>(BuildContext context, [T result, bool popStack = true]) {
+  static Future<T> navigatorPop<T extends Object>(BuildContext context,
+      [T result, bool popStack = true]) {
     globalScreenStackPop('navigatorPop', popStack);
 
     Navigator.pop(context, result);
   }
 
-  static Future<T> navigatorPopAndPushNamed<T extends Object>(BuildContext context, String route, {Object arguments}) {
+  static Future<T> navigatorPopAndPushNamed<T extends Object>(
+      BuildContext context, String route,
+      {Object arguments}) {
     globalScreenStackPop('navigatorPopAndPushNamed');
     globalScreenStackPush(route, 'navigatorPopAndPushNamed(2)');
     return Navigator.popAndPushNamed(context, route, arguments: arguments);
   }
 
-  static Future<T> navigatorPush<T extends Object>(BuildContext context, Route<T> route) {
+  static Future<T> navigatorPush<T extends Object>(
+      BuildContext context, Route<T> route) {
     globalScreenStackPush('/unknown', 'navigatorPush');
 
-    return Navigator.push(
-        context,
-        route
-    );
+    return Navigator.push(context, route);
   }
 
-  static Future<T> navigatorPushNamed<T extends Object>(BuildContext context, String route, {Object arguments}) {
+  static Future<T> navigatorPushNamed<T extends Object>(
+      BuildContext context, String route,
+      {Object arguments}) {
     globalScreenStackPush(route, 'navigatorPushNamed');
 
-    return Navigator.pushNamed(
-      context,
-      route,
-      arguments: arguments
-    );
+    return Navigator.pushNamed(context, route, arguments: arguments);
   }
 
-  static Future<T> navigatorPushNamedAndRemoveUntil<T extends Object>(BuildContext context, String route, RoutePredicate predicate, {Object arguments}) {
+  static Future<T> navigatorPushNamedAndRemoveUntil<T extends Object>(
+      BuildContext context, String route, RoutePredicate predicate,
+      {Object arguments}) {
     globalScreenStackClear();
     globalScreenStackPush(route, 'navigatorPushNamedAndRemoveUntil');
 
-    return Navigator.pushNamedAndRemoveUntil(
-        context,
-        route,
-        predicate,
-        arguments: arguments
-    );
+    return Navigator.pushNamedAndRemoveUntil(context, route, predicate,
+        arguments: arguments);
   }
 
-  static Future<T> navigatorPushNamedAndRemoveAll<T extends Object>(BuildContext context, String route, {Object arguments}) {
+  static Future<T> navigatorPushNamedAndRemoveAll<T extends Object>(
+      BuildContext context, String route,
+      {Object arguments}) {
     globalScreenStackClear();
     globalScreenStackPush(route, 'navigatorPushNamedAndRemoveAll');
 
-    return Navigator.pushNamedAndRemoveUntil(
-        context,
-        route,
-        (route) => false,
-        arguments: arguments
-    );
+    return Navigator.pushNamedAndRemoveUntil(context, route, (route) => false,
+        arguments: arguments);
   }
 
-  static Future<T> navigatorPushReplacementNamed<T extends Object>(BuildContext context, String route, {Object arguments}) {
+  static Future<T> navigatorPushReplacementNamed<T extends Object>(
+      BuildContext context, String route,
+      {Object arguments}) {
     globalScreenStackPop('navigatorPushReplacementNamed');
     globalScreenStackPush(route, 'navigatorPushReplacementNamed(2)');
 
-    return Navigator.pushReplacementNamed(
-      context,
-      route,
-      arguments: arguments
-    );
+    return Navigator.pushReplacementNamed(context, route, arguments: arguments);
   }
 
-  static void globalScreenStackPop(String origin, [popStack = true]){
+  static void globalScreenStackPop(String origin, [popStack = true]) {
     if (globalScreenStack.length == 0)
-      navigatorLog('($origin) pop: [current zero, not pop]   ----  navigatorLogCurrentScreenTree: ' + navigatorLogCurrentScreenTree());
+      navigatorLog(
+          '($origin) pop: [current zero, not pop]   ----  navigatorLogCurrentScreenTree: ' +
+              navigatorLogCurrentScreenTree());
     else {
       if (popStack) {
         String s = globalScreenStack.pop();
-        navigatorLog('($origin) pop: $s   --- navigatorLogCurrentScreenTree: ' + navigatorLogCurrentScreenTree());
+        navigatorLog('($origin) pop: $s   --- navigatorLogCurrentScreenTree: ' +
+            navigatorLogCurrentScreenTree());
       } else
-        navigatorLog('($origin) pop whitout Stack   --- navigatorLogCurrentScreenTree: ' + navigatorLogCurrentScreenTree());
+        navigatorLog(
+            '($origin) pop whitout Stack   --- navigatorLogCurrentScreenTree: ' +
+                navigatorLogCurrentScreenTree());
     }
   }
 
-  static void globalScreenStackPush(String route, String origin){
+  static void globalScreenStackPush(String route, String origin) {
     globalScreenStack.push(route);
-    navigatorLog('($origin) push: $route   --- navigatorLogCurrentScreenTree: ' + navigatorLogCurrentScreenTree());
+    navigatorLog(
+        '($origin) push: $route   --- navigatorLogCurrentScreenTree: ' +
+            navigatorLogCurrentScreenTree());
   }
 
-  static void globalScreenStackClear(){
+  static void globalScreenStackClear() {
     globalScreenStack.Clear();
     navigatorLog('clear All: ');
   }
 
-  static void navigatorLogVoid(String value){
+  static void navigatorLogVoid(String value) {
     navigatorLog('void call: ' + value);
   }
 
-  static String navigatorLogCurrentScreenTree(){
+  static String navigatorLogCurrentScreenTree() {
     String currentScreenTree = '';
 
-    for (var i = 0; i < globalScreenStack.length; ++i){
+    for (var i = 0; i < globalScreenStack.length; ++i) {
       currentScreenTree += globalScreenStack.item(i);
     }
 
     return currentScreenTree;
   }
 
-  static void navigatorLog(String value){
+  static void navigatorLog(String value) {
     printL2('*** navigatorLog *** ' + value);
   }
 //################################################ Navigator ################################################

@@ -2,6 +2,7 @@ import 'package:goop/models/absModels.dart';
 
 class User extends AbsModels {
   final String sessionId;
+  final String password;
   final int uid;
   final bool isAdmin;
   final String name;
@@ -28,6 +29,7 @@ class User extends AbsModels {
 
   User({
     this.sessionId,
+    this.password,
     this.uid,
     this.isAdmin,
     this.name,

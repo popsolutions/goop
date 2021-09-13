@@ -109,7 +109,6 @@ class _SettingsPageState extends StateGoop<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-
     AuthenticationController authenticationController =
         serviceNotifier.authenticationController;
     final user = authenticationController.currentUser;
@@ -153,7 +152,6 @@ class _SettingsPageState extends StateGoop<SettingsPage> {
                   ),
                   SizedBox(height: 30),
                   GoopTextFormField(
-                    //TODO: Atualizar os dados ao salvar
                     hintText: 'E-mail',
                     validator: Validators.validateEmail,
                     initialValue: _controller.email,

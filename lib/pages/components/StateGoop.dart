@@ -65,9 +65,11 @@ abstract class StateGoop<T extends StatefulWidget> extends State<T> {
             : () async {
                 if (!editing) return null;
 
-                {//removing Keyboard focus...
+                {
+                  //removing Keyboard focus...
                   FocusScopeNode currentFocus = FocusScope.of(context);
-                  if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+                  if (!currentFocus.hasPrimaryFocus &&
+                      currentFocus.focusedChild != null) {
                     FocusManager.instance.primaryFocus.unfocus();
                   }
                 }
@@ -86,44 +88,40 @@ abstract class StateGoop<T extends StatefulWidget> extends State<T> {
     if (value == true) throw message;
   }
 
-  throwIfDoubleIsZero(double value, String message) => throwIf(value == 0, message);
+  throwIfDoubleIsZero(double value, String message) =>
+      throwIf(value == 0, message);
 
   Future<T> navigatorPop<T extends Object>([T result, bool popStack = true]) {
     goop_LibComponents.navigatorPop(context, result, popStack);
   }
 
-  Future<T> navigatorPopAndPushNamed<T extends Object>(
-      String routeName,
-      {Object arguments}
-      ) {
-    return goop_LibComponents.navigatorPopAndPushNamed(context, routeName, arguments: arguments);
+  Future<T> navigatorPopAndPushNamed<T extends Object>(String routeName,
+      {Object arguments}) {
+    return goop_LibComponents.navigatorPopAndPushNamed(context, routeName,
+        arguments: arguments);
   }
 
   Future<T> navigatorPush<T extends Object>(Route<T> route) {
-    return goop_LibComponents.navigatorPush(
-        context,
-        route
-    );
+    return goop_LibComponents.navigatorPush(context, route);
   }
 
-  Future<T> navigatorPushNamedAndRemoveUntil<T extends Object>(String route, RoutePredicate predicate, {Object arguments}) {
+  Future<T> navigatorPushNamedAndRemoveUntil<T extends Object>(
+      String route, RoutePredicate predicate,
+      {Object arguments}) {
     return goop_LibComponents.navigatorPushNamedAndRemoveUntil(
-        context,
-        route,
-        predicate,
-        arguments: arguments
-    );
+        context, route, predicate,
+        arguments: arguments);
   }
 
-  Future<T> navigatorPushNamed<T extends Object>(String route, {Object arguments}) {
-    return goop_LibComponents.navigatorPushNamed(context, route, arguments: arguments);
+  Future<T> navigatorPushNamed<T extends Object>(String route,
+      {Object arguments}) {
+    return goop_LibComponents.navigatorPushNamed(context, route,
+        arguments: arguments);
   }
 
-  Future<T> navigatorPushReplacementNamed<T extends Object>(String route, {Object arguments}) {
-    return goop_LibComponents.navigatorPushReplacementNamed(
-        context,
-        route,
-        arguments: arguments
-    );
+  Future<T> navigatorPushReplacementNamed<T extends Object>(String route,
+      {Object arguments}) {
+    return goop_LibComponents.navigatorPushReplacementNamed(context, route,
+        arguments: arguments);
   }
 }
