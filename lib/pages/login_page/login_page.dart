@@ -48,7 +48,8 @@ class _LoginPageState extends StateGoop<LoginPage> {
 
   @override
   void didChangeDependencies() {
-    ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context, listen: false);
+    ServiceNotifier serviceNotifier =
+        Provider.of<ServiceNotifier>(context, listen: false);
     _authenticationController = serviceNotifier.authenticationController;
     super.didChangeDependencies();
   }
@@ -94,6 +95,7 @@ class _LoginPageState extends StateGoop<LoginPage> {
       onTap: FocusScope.of(context).unfocus,
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.white,
           automaticallyImplyLeading: false,
           leading: GoopBack(),
         ),

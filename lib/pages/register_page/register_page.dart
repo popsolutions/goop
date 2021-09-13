@@ -24,9 +24,8 @@ class _RegisterPageState extends StateGoop<RegisterPage> {
 
     flutterWebviewPlugin.onUrlChanged.listen((String url) {
       print('*** url:' + url);
-      if (url != globalConfig.serverURLRegisterPage){
-        if (popExecuted)
-          return;
+      if (url != globalConfig.serverURLRegisterPage) {
+        if (popExecuted) return;
 
         print('*** url--- POP');
         navigatorPushReplacementNamed(Routes.login);
@@ -42,6 +41,7 @@ class _RegisterPageState extends StateGoop<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         leading: GoopBack(),
         title: Container(
