@@ -12,6 +12,7 @@ class GoopImages {
   static const back = 'assets/images/back.svg';
   static const wallet_red = 'assets/images/wallet_red.svg';
   static const wallet = 'assets/images/wallet.svg';
+  static const walletPng = 'assets/images/wallet.png';
   static const account = 'assets/images/my_account.svg';
   static const faq = 'assets/images/faq.svg';
   static const settings = 'assets/images/settings.svg';

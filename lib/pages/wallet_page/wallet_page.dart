@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:goop/pages/components/StateGoop.dart';
-import 'package:goop/pages/components/goop_alert.dart';
-import 'package:goop/pages/components/goop_available_balance.dart';
 import 'package:goop/pages/components/goop_back.dart';
-import 'package:goop/pages/components/goop_button.dart';
-import 'package:goop/pages/components/goop_pix_info.dart';
-import 'package:goop/pages/components/goop_wallet_completed.dart';
-import 'package:goop/pages/components/goop_wallet_verification.dart';
-import 'package:goop/utils/global.dart';
+import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
 import 'package:goop/utils/utils.dart';
+import 'package:intl/intl.dart';
 
 class WalletPage extends StatefulWidget {
   @override
@@ -19,6 +14,7 @@ class WalletPage extends StatefulWidget {
 
 class _WalletPageState extends StateGoop<WalletPage> {
   final bool isCompleted = false;
+  GoopColors goopColors = GoopColors();
 
   List listFaturasJson;
 
@@ -39,61 +35,117 @@ class _WalletPageState extends StateGoop<WalletPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          automaticallyImplyLeading: false,
-          leading: GoopBack(),
-          title: Container(
-            height: 40,
-            child: SvgPicture.asset(GoopImages.wallet_logo),
-          ),
+      appBar: AppBar(
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+        leading: GoopBack(),
+        title: Container(
+          height: 40,
+          child: Image.asset(GoopImages.walletPng),
         ),
-        body: loading
-            ? inProgress()
-            : RefreshIndicator(
-                strokeWidth: 3,
-                color: goopColors.red,
-                onRefresh: () async {
-                  carteira_Load();
-                },
-                child: Column(
-                  children: [
-                    paddingT(30),
-                    Container(
-                      color: Colors.black12,
-                      child: Row(
-                        children: [
-                          Text('Data'),
-                          Expanded(child: paddingZ()),
-                          Text('Ref. Pagamento'),
-                          Expanded(child: paddingZ()),
-                          Text('Total'),
-                          Expanded(child: paddingZ()),
-                          Text('Situação'),
-                        ],
-                      ),
+      ),
+      body: loading
+          ? inProgress()
+          : RefreshIndicator(
+              strokeWidth: 3,
+              color: goopColors.red,
+              onRefresh: () async {
+                carteira_Load();
+              },
+              child: Column(
+                children: [
+                  paddingT(30),
+                  Container(
+                    padding: EdgeInsets.all(20),
+                    width: double.infinity,
+                    height: 60,
+                    color: goopColors.redSplash,
+                    child: Row(
+                      children: [
+                        Text(
+                          'Data',
+                          style: TextStyle(
+                            color: goopColors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Expanded(child: paddingZ()),
+                        Text(
+                          'Ref. Pagamento',
+                          style: TextStyle(
+                            color: goopColors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Expanded(child: paddingZ()),
+                        Text(
+                          'Total',
+                          style: TextStyle(
+                            color: goopColors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Expanded(child: paddingZ()),
+                        Text(
+                          'Situação',
+                          style: TextStyle(
+                            color: goopColors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
-                    Expanded(
-                        child: ListView.separated(
-                      physics: BouncingScrollPhysics(),
-                      itemCount: listFaturasJson.length,
-                      separatorBuilder: (_, index) => SizedBox(height: 10),
-                      itemBuilder: (_, index) {
-                        final faturaJson = listFaturasJson[index];
+                  ),
+                  Expanded(
+                      child: ListView.separated(
+                    physics: BouncingScrollPhysics(),
+                    itemCount: listFaturasJson.length,
+                    separatorBuilder: (_, index) => SizedBox(height: 10),
+                    itemBuilder: (_, index) {
+                      final faturaJson = listFaturasJson[index];
+                      final format = DateFormat('dd/MM/yyyy');
 
-                        return Container(
-                          padding: EdgeInsets.symmetric(vertical: 40),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Text(JsonGet.DatetimeStr(faturaJson, 'date_invoice')),
-                                  Expanded(child: paddingZ()),
-                                  Text(JsonGet.Str(faturaJson, 'reference')),
-                                  Expanded(child: paddingZ()),
-                                  Text(JsonGet.DoubleCurrency(faturaJson, 'amount_total_signed')),
-                                  Expanded(child: paddingZ()),
-                                  Text(strSubstList(JsonGet.Str(faturaJson, 'state'), [
+                      return Container(
+                        padding: EdgeInsets.all(10),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  // format.format(
+                                  //   DateTime.parse(
+                                  //     JsonGet.DatetimeStr(
+                                  //       faturaJson,
+                                  //       'date_invoice',
+                                  //     ),
+                                  //   ),
+                                  // ), //TODO: REVER
+                                  JsonGet.DatetimeStr(
+                                    faturaJson,
+                                    'date_invoice',
+                                  ),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Expanded(child: paddingZ()),
+                                Text(
+                                  JsonGet.Str(faturaJson, 'reference'),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Expanded(child: paddingZ()),
+                                Text(
+                                  'R\$ ${JsonGet.DoubleCurrency(faturaJson, 'amount_total_signed')}',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Expanded(child: paddingZ()),
+                                Text(
+                                  strSubstList(
+                                      JsonGet.Str(faturaJson, 'state'), [
                                     'draft',
                                     'Provisório',
                                     'open',
@@ -104,16 +156,21 @@ class _WalletPageState extends StateGoop<WalletPage> {
                                     'Pago',
                                     'cancel',
                                     'Cancelado'
-                                  ]))
-                                ],
-                              )
-                            ],
-                          ),
-                        );
-                      },
-                    )),
-                  ],
-                ),
-              ));
+                                  ]),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      );
+                    },
+                  )),
+                ],
+              ),
+            ),
+    );
   }
 }
