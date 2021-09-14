@@ -42,9 +42,25 @@ class _Mission_executedsPageS_tate extends StateGoop<Mission_executeds_Page> {
 
   listMissionModelSet() async {
     try {
-      listMeasurementExecutedsDto = await serviceNotifier.measurementExecutedsService.getMeasurementExecutedsDto();
+      listMeasurementExecutedsDto = await serviceNotifier
+          .measurementExecutedsService
+          .getMeasurementExecutedsDto();
     } finally {
       loadFinish();
+    }
+  }
+
+  statusColor(state) {
+    switch (state) {
+      case 'Concluída':
+        return goopColors.green;
+        break;
+      case 'Aprovada':
+        return goopColors.lightBlue;
+        break;
+      case 'Rejeitada':
+        return goopColors.redSplash;
+        break;
     }
   }
 
@@ -75,14 +91,35 @@ class _Mission_executedsPageS_tate extends StateGoop<Mission_executeds_Page> {
                 children: [
                   paddingT(30),
                   Container(
-                    color: Colors.black12,
+                    padding: EdgeInsets.all(15),
+                    width: double.infinity,
+                    height: 60,
+                    color: goopColors.redSplash,
                     child: Row(
                       children: [
-                        Text('Missão'),
+                        Text(
+                          'Missão',
+                          style: TextStyle(
+                            color: goopColors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                         Expanded(child: paddingZ()),
-                        Text('Valor'),
+                        Text(
+                          'Valor',
+                          style: TextStyle(
+                            color: goopColors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                         Expanded(child: paddingZ()),
-                        Text('Status'),
+                        Text(
+                          'Status',
+                          style: TextStyle(
+                            color: goopColors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -92,19 +129,38 @@ class _Mission_executedsPageS_tate extends StateGoop<Mission_executeds_Page> {
                     itemCount: listMeasurementExecutedsDto.length,
                     separatorBuilder: (_, index) => SizedBox(height: 10),
                     itemBuilder: (_, index) {
-                      final measurementExecutedsDto = listMeasurementExecutedsDto[index];
+                      final measurementExecutedsDto =
+                          listMeasurementExecutedsDto[index];
 
                       return Container(
-                        padding: EdgeInsets.symmetric(vertical: 40),
+                        padding: EdgeInsets.all(20),
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Row(
                               children: [
-                                Text(measurementExecutedsDto.name ?? ''),
+                                Text(
+                                  measurementExecutedsDto.name ?? '',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                                 Expanded(child: paddingZ()),
-                                Text(formatCurrency(measurementExecutedsDto.reward)),
+                                Text(
+                                  'R\$ ${formatCurrency(measurementExecutedsDto.reward)}',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                                 Expanded(child: paddingZ()),
-                                Text(measurementExecutedsDto.stateText),
+                                Text(
+                                  measurementExecutedsDto.stateText,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: statusColor(
+                                        measurementExecutedsDto.stateText),
+                                  ),
+                                ),
                               ],
                             )
                           ],

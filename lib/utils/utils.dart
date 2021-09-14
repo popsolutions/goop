@@ -1,15 +1,11 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
 
-import 'package:image/image.dart' as Im;
 // import 'package:path_provider/path_provider.dart';
-import 'dart:math' as Math;
 
 dynamic valueOrNull(dynamic value) {
   return value is! bool ? value : null;
@@ -22,11 +18,12 @@ String JSONToStringWrapQuotClear(dynamic JSON) {
 }
 
 class JsonGet {
-  static bool jsonKeyIsNull(dynamic value) => ((value == null) || (value is bool));
+  static bool jsonKeyIsNull(dynamic value) =>
+      ((value == null) || (value is bool));
 
-  static dynamic jGet(Map<String, dynamic> json, String key, [int index, dynamic valueIfNull]){
-    if (jsonKeyIsNull(json[key]))
-      return valueIfNull;
+  static dynamic jGet(Map<String, dynamic> json, String key,
+      [int index, dynamic valueIfNull]) {
+    if (jsonKeyIsNull(json[key])) return valueIfNull;
 
     if (index == null)
       return json[key];
@@ -34,12 +31,17 @@ class JsonGet {
       return json[key][index];
   }
 
-  static String Str(Map<String, dynamic> json, String key, [int index]) => jGet(json, key, index, '');
+  static String Str(Map<String, dynamic> json, String key, [int index]) =>
+      jGet(json, key, index, '');
 
-  static int Int(Map<String, dynamic> json, String key, [int index]) => jGet(json, key, index);
+  static int Int(Map<String, dynamic> json, String key, [int index]) =>
+      jGet(json, key, index);
 
-  static double Double(Map<String, dynamic> json, String key, [int index]) => convertDynamicToDouble(jGet(json, key, index));
-  static String DoubleCurrency(Map<String, dynamic> json, String key, [int index]) => formatCurrency(jGet(json, key, index));
+  static double Double(Map<String, dynamic> json, String key, [int index]) =>
+      convertDynamicToDouble(jGet(json, key, index));
+  static String DoubleCurrency(Map<String, dynamic> json, String key,
+          [int index]) =>
+      formatCurrency(jGet(json, key, index));
 
   static DateTime Datetime(Map<String, dynamic> json, String key, [int index]) {
     if (json[key] is bool) return null;
@@ -47,13 +49,16 @@ class JsonGet {
     return DateTime.parse(jGet(json, key, index));
   }
 
-  static String DatetimeStr(Map<String, dynamic> json, String key, [int index]) {
+  static String DatetimeStr(Map<String, dynamic> json, String key,
+      [int index]) {
     DateTime d = Datetime(json, key, index);
+    final format = DateFormat('dd/MM/yyyy');
+    // d = DateTime.parse(format.format(d));
 
     if (d == null)
       return '';
     else
-      return d.toString();
+      return '$d';
   }
 
   static bool Bool(Map<String, dynamic> json, String key, [int index]) {
@@ -121,8 +126,7 @@ double formatCurrencyDouble(double value) {
 }
 
 double CurrencyStringtoDouble(String value) {
-  if ((value??'') == '')
-    value = '0';
+  if ((value ?? '') == '') value = '0';
 
   String vlCurrency = value
       .replaceAll("R\$", '')
@@ -134,8 +138,7 @@ double CurrencyStringtoDouble(String value) {
 }
 
 String formatCurrency(double value) {
-  if (value == null)
-    return '0.00';
+  if (value == null) return '0.00';
 
   var vlDecimal = value.toStringAsFixed(2);
 
@@ -147,8 +150,7 @@ String formatCurrency(double value) {
 }
 
 double convertDynamicToDouble(dynamic value) {
-  if (value == null)
-    return null;
+  if (value == null) return null;
 
   String valueString = value.toString();
   valueString = valueString
@@ -171,7 +173,7 @@ int difDateSeconds(DateTime dateFrom, DateTime dateTo) {
   return dateTo.difference(dateFrom).inSeconds;
 }
 
-String convertSecondsToHHMMSS(int seconds){
+String convertSecondsToHHMMSS(int seconds) {
   int minutes = 0;
   int hours = 0;
   int days = 0;
@@ -238,11 +240,11 @@ printL(Object object) => print(object);
 // printL(Object object) => null;
 printL2(Object object) => print(object);
 
-Log(String source, String log){
+Log(String source, String log) {
   printL('**Log: $source - $log');
 }
 
-class ImageGoop{
+class ImageGoop {
   String imageBase64;
 
   ImageGoop([this.imageBase64 = null]);
@@ -253,16 +255,14 @@ class ImageGoop{
 }
 
 void throwIf(bool b, String msg) {
-  if (b)
-    throw msg;
+  if (b) throw msg;
 }
 
 void throwIfNull(dynamic value, String msg) {
-  if (value == null)
-    throw msg;
+  if (value == null) throw msg;
 }
 
-String strSubstList(String strSubst, List<String> listStr){
+String strSubstList(String strSubst, List<String> listStr) {
   /*
     Exemplos de uso:
 
@@ -277,15 +277,15 @@ String strSubstList(String strSubst, List<String> listStr){
     });
   */
 
-  for (var i = 0; i < listStr.length; i+=2 ){
+  for (var i = 0; i < listStr.length; i += 2) {
     if (strSubst.toUpperCase() == listStr[i].toUpperCase())
-      return listStr[i+1];
+      return listStr[i + 1];
   }
 
   return strSubst;
 }
 
-class Crypto{
+class Crypto {
 /*
   test('Crypto', () {
     String word = 'Testing';
@@ -298,7 +298,8 @@ class Crypto{
     print('wordDeCrypt: $wordDeCrypt');
   });
 */
-  static final key1 = '#*&#HGVI&(KJN987KJHBujg&hjh-43=!'; //32 chars!! //t. send Key to Backend
+  static final key1 =
+      '#*&#HGVI&(KJN987KJHBujg&hjh-43=!'; //32 chars!! //t. send Key to Backend
   static final key2 = 'TY%JGY*&hgduyg@!'; //16 chars!!
 
   //encrypt
@@ -317,7 +318,8 @@ class Crypto{
     final iv = encrypt.IV.fromUtf8(key2);
 
     final e = encrypt.Encrypter(encrypt.AES(key, mode: encrypt.AESMode.cbc));
-    final decrypted_data = e.decrypt(encrypt.Encrypted.fromBase64(text), iv: iv);
+    final decrypted_data =
+        e.decrypt(encrypt.Encrypted.fromBase64(text), iv: iv);
     return decrypted_data;
   }
 }

@@ -15,7 +15,6 @@ import 'package:goop/services/login/login_service.dart';
 import 'package:goop/services/login/user_service.dart';
 import 'package:goop/services/login/login_facade_impl.dart';
 import 'package:goop/utils/global.dart';
-import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
 import 'package:goop/utils/utils.dart';
 import 'package:mobx/mobx.dart';
@@ -130,6 +129,7 @@ class _LoginPageState extends StateGoop<LoginPage> {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           leading: GoopBack(),
+          backgroundColor: Colors.white,
         ),
         body: Center(
           child: SingleChildScrollView(

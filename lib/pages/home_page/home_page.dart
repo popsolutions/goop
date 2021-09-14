@@ -10,7 +10,6 @@ import 'package:goop/pages/components/StateGoop.dart';
 import 'package:goop/pages/components/goop_button.dart';
 import 'package:goop/pages/components/goop_drawer.dart';
 import 'package:goop/utils/global.dart';
-import 'package:goop/utils/goop_colors.dart';
 import 'package:goop/utils/goop_images.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
@@ -51,6 +50,7 @@ class _HomePageState extends StateGoop<HomePage> {
       appBar: AppBar(
         iconTheme: IconThemeData(color: goopColors.red),
         title: Center(child: Text(globalConfig.alertaApp ?? '')),
+        backgroundColor: Colors.white,
         actions: [
           Container(
             width: 45,
@@ -60,8 +60,10 @@ class _HomePageState extends StateGoop<HomePage> {
         ],
       ),
       drawer: GoopDrawer(),
-      body: Consumer<ServiceNotifier>(builder: (BuildContext context, ServiceNotifier value, Widget child) {
-        ServiceNotifier _serviceNotifier = Provider.of<ServiceNotifier>(context, listen: false);
+      body: Consumer<ServiceNotifier>(
+          builder: (BuildContext context, ServiceNotifier value, Widget child) {
+        ServiceNotifier _serviceNotifier =
+            Provider.of<ServiceNotifier>(context, listen: false);
 
         if (_serviceNotifier.geoLocationOk == false)
           return geoLocationError();
@@ -99,21 +101,23 @@ class _HomePageState extends StateGoop<HomePage> {
   Widget flutterMap(ServiceNotifier _serviceNotifier) {
     return FlutterMap(
       options: MapOptions(
-        center: missionLocation == null ? globalGeoLocService.latLng() : LatLng(missionLocation[0], missionLocation[1]),
+        center: missionLocation == null
+            ? globalGeoLocService.latLng()
+            : LatLng(missionLocation[0], missionLocation[1]),
         interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
         zoom: 13.0,
       ),
       layers: [
         TileLayerOptions(
-          urlTemplate:
-          "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+          urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
           // "http://a.tile.stamen.com/toner/{z}/{x}/{y}.png",
           // "http://a.tile.stamen.com/maptiler-toner-gl-style/{z}/{x}/{y}.png",
           subdomains: ['a', 'b', 'c'],
         ),
         MarkerLayerOptions(
           markers: [
-            for (MissionModelEstablishment missionModelEstablishment in _serviceNotifier.listMissionModelEstablishment)
+            for (MissionModelEstablishment missionModelEstablishment
+                in _serviceNotifier.listMissionModelEstablishment)
               Marker(
                 width: 40,
                 height: 80.0,
@@ -124,7 +128,8 @@ class _HomePageState extends StateGoop<HomePage> {
                 builder: (ctx) => GestureDetector(
                   onTap: () {
                     _serviceNotifier.viewByEstablishment = true;
-                    _serviceNotifier.currentMissionModelEstablishment = missionModelEstablishment;
+                    _serviceNotifier.currentMissionModelEstablishment =
+                        missionModelEstablishment;
 
                     navigatorPopAndPushNamed(Routes.mission_home);
                     // }
