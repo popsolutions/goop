@@ -5,9 +5,23 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "goop",
+            "name": "dev-charisma",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "args": [
+                "--dart-define",
+                "conf=dev_charisma",
+            ]
+        },
+        {
+            "name": "prod-charisma",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "--dart-define",
+                "conf=prod_charisma",
+            ]
         }
     ]
+   
 }
