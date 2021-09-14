@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:goop/config/routes.dart';
@@ -26,10 +24,9 @@ class _MyAppState extends State<MyApp> {
       el.markNeedsBuild();
       el.visitChildren(rebuild);
     }
-    (myAppContext as Element).visitChildren(rebuild);
-    setState(() {
 
-    });
+    (myAppContext as Element).visitChildren(rebuild);
+    setState(() {});
   }
 
   @override
@@ -53,12 +50,13 @@ class _MyAppState extends State<MyApp> {
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
+            colorScheme:
+                ThemeData().colorScheme.copyWith(primary: Colors.white),
             textTheme: TextTheme(
               headline1: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-                color: goopColors.headline1
-              ),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: goopColors.headline1),
               headline2: TextStyle(
                 color: goopColors.deepPurple900,
                 fontSize: 20,
