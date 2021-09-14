@@ -123,6 +123,7 @@ class _Mission_executedsPageS_tate extends StateGoop<Mission_executeds_Page> {
                       ],
                     ),
                   ),
+                  SizedBox(height: 10),
                   Expanded(
                       child: ListView.separated(
                     physics: BouncingScrollPhysics(),
@@ -133,6 +134,11 @@ class _Mission_executedsPageS_tate extends StateGoop<Mission_executeds_Page> {
                           listMeasurementExecutedsDto[index];
 
                       return Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          color: goopColors.neutralGrey,
+                        ),
+                        margin: EdgeInsets.symmetric(horizontal: 10),
                         padding: EdgeInsets.all(20),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -143,6 +149,7 @@ class _Mission_executedsPageS_tate extends StateGoop<Mission_executeds_Page> {
                                   measurementExecutedsDto.name ?? '',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
+                                    color: goopColors.black,
                                   ),
                                 ),
                                 Expanded(child: paddingZ()),
@@ -150,6 +157,7 @@ class _Mission_executedsPageS_tate extends StateGoop<Mission_executeds_Page> {
                                   'R\$ ${formatCurrency(measurementExecutedsDto.reward)}',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
+                                    color: goopColors.black,
                                   ),
                                 ),
                                 Expanded(child: paddingZ()),

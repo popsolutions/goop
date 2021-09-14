@@ -54,9 +54,10 @@ class _MyAppState extends State<MyApp> {
                 ThemeData().colorScheme.copyWith(primary: Colors.white),
             textTheme: TextTheme(
               headline1: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                  color: goopColors.headline1),
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                color: goopColors.headline1,
+              ),
               headline2: TextStyle(
                 color: goopColors.deepPurple900,
                 fontSize: 20,

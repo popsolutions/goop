@@ -56,7 +56,7 @@ class _WalletPageState extends StateGoop<WalletPage> {
                 children: [
                   paddingT(30),
                   Container(
-                    padding: EdgeInsets.all(20),
+                    padding: EdgeInsets.symmetric(horizontal: 25),
                     width: double.infinity,
                     height: 60,
                     color: goopColors.redSplash,
@@ -96,6 +96,7 @@ class _WalletPageState extends StateGoop<WalletPage> {
                       ],
                     ),
                   ),
+                  SizedBox(height: 15),
                   Expanded(
                       child: ListView.separated(
                     physics: BouncingScrollPhysics(),
@@ -106,62 +107,75 @@ class _WalletPageState extends StateGoop<WalletPage> {
                       final format = DateFormat('dd/MM/yyyy');
 
                       return Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          color: goopColors.neutralGrey,
+                        ),
                         padding: EdgeInsets.all(10),
                         child: Column(
                           children: [
-                            Row(
-                              children: [
-                                Text(
-                                  // format.format(
-                                  //   DateTime.parse(
-                                  //     JsonGet.DatetimeStr(
-                                  //       faturaJson,
-                                  //       'date_invoice',
-                                  //     ),
+                            Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    format.format(DateTime.now()),
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  // Text(
+                                  //   // format.format(
+                                  //   //   DateTime.parse(
+                                  //   //     JsonGet.DatetimeStr(
+                                  //   //       faturaJson,
+                                  //   //       'date_invoice',
+                                  //   //     ),
+                                  //   //   ),
+                                  //   // ),
+                                  //   JsonGet.DatetimeStr(
+                                  //     faturaJson, //TODO: REVER
+                                  //     'date_invoice',
                                   //   ),
-                                  // ), //TODO: REVER
-                                  JsonGet.DatetimeStr(
-                                    faturaJson,
-                                    'date_invoice',
+                                  //   style: TextStyle(
+                                  //     fontWeight: FontWeight.bold,
+                                  //   ),
+                                  // ),
+                                  Expanded(child: paddingZ()),
+                                  Text(
+                                    JsonGet.Str(faturaJson, 'reference'),
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
+                                  Expanded(child: paddingZ()),
+                                  Text(
+                                    'R\$ ${JsonGet.DoubleCurrency(faturaJson, 'amount_total_signed')}',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                                Expanded(child: paddingZ()),
-                                Text(
-                                  JsonGet.Str(faturaJson, 'reference'),
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Expanded(child: paddingZ()),
-                                Text(
-                                  'R\$ ${JsonGet.DoubleCurrency(faturaJson, 'amount_total_signed')}',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Expanded(child: paddingZ()),
-                                Text(
-                                  strSubstList(
-                                      JsonGet.Str(faturaJson, 'state'), [
-                                    'draft',
-                                    'Provisório',
-                                    'open',
-                                    'Aberto',
-                                    'in_payment',
-                                    'Em Pagamento',
-                                    'paid',
-                                    'Pago',
-                                    'cancel',
-                                    'Cancelado'
-                                  ]),
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                )
-                              ],
+                                  Expanded(child: paddingZ()),
+                                  Text(
+                                    strSubstList(
+                                        JsonGet.Str(faturaJson, 'state'), [
+                                      'draft',
+                                      'Provisório',
+                                      'open',
+                                      'Aberto',
+                                      'in_payment',
+                                      'Em Pagamento',
+                                      'paid',
+                                      'Pago',
+                                      'cancel',
+                                      'Cancelado'
+                                    ]),
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  )
+                                ],
+                              ),
                             )
                           ],
                         ),

@@ -1,7 +1,4 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:goop/config/routes.dart';
 import 'package:goop/models/user_profile.dart';
@@ -24,9 +21,8 @@ class _RegisterPageState extends StateGoop<RegisterPage> {
 
     flutterWebviewPlugin.onUrlChanged.listen((String url) {
       print('*** url:' + url);
-      if (url != globalConfig.serverURLRegisterPage){
-        if (popExecuted)
-          return;
+      if (url != globalConfig.serverURLRegisterPage) {
+        if (popExecuted) return;
 
         print('*** url--- POP');
         navigatorPushReplacementNamed(Routes.login);
