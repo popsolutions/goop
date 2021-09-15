@@ -52,13 +52,21 @@ class JsonGet {
   static String DatetimeStr(Map<String, dynamic> json, String key,
       [int index]) {
     DateTime d = Datetime(json, key, index);
-    final format = DateFormat('dd/MM/yyyy');
-    // d = DateTime.parse(format.format(d));
-
     if (d == null)
       return '';
     else
       return '$d';
+  }
+
+  static String DateStr(Map<String, dynamic> json, String key, [int index]) {
+    DateTime d = Datetime(json, key, index);
+
+    if (d == null) {
+      return '';
+    } else {
+      final format = DateFormat('dd/MM/yyyy');
+      return format.format(d);
+    }
   }
 
   static bool Bool(Map<String, dynamic> json, String key, [int index]) {

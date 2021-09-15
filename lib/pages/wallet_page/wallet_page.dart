@@ -54,6 +54,11 @@ class _WalletPageState extends StateGoop<WalletPage> {
               },
               child: Column(
                 children: [
+                  SvgPicture.asset(
+                    GoopImages.money,
+                    height: 150,
+                    width: 150,
+                  ),
                   paddingT(30),
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 25),
@@ -119,28 +124,14 @@ class _WalletPageState extends StateGoop<WalletPage> {
                               child: Row(
                                 children: [
                                   Text(
-                                    format.format(DateTime.now()),
+                                    JsonGet.DateStr(
+                                      faturaJson,
+                                      'date_invoice',
+                                    ),
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  // Text(
-                                  //   // format.format(
-                                  //   //   DateTime.parse(
-                                  //   //     JsonGet.DatetimeStr(
-                                  //   //       faturaJson,
-                                  //   //       'date_invoice',
-                                  //   //     ),
-                                  //   //   ),
-                                  //   // ),
-                                  //   JsonGet.DatetimeStr(
-                                  //     faturaJson, //TODO: REVER
-                                  //     'date_invoice',
-                                  //   ),
-                                  //   style: TextStyle(
-                                  //     fontWeight: FontWeight.bold,
-                                  //   ),
-                                  // ),
                                   Expanded(child: paddingZ()),
                                   Text(
                                     JsonGet.Str(faturaJson, 'reference'),
