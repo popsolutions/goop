@@ -50,8 +50,8 @@ class _MyAppState extends State<MyApp> {
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-            colorScheme:
-                ThemeData().colorScheme.copyWith(primary: Colors.white),
+            // colorScheme:
+            //     ThemeData().colorScheme.copyWith(primary: Colors.white),
             textTheme: TextTheme(
               headline1: TextStyle(
                 fontWeight: FontWeight.bold,
