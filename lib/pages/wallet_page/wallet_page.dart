@@ -105,7 +105,7 @@ class _WalletPageState extends StateGoop<WalletPage> {
                   Expanded(
                       child: ListView.separated(
                     physics: BouncingScrollPhysics(),
-                    itemCount: listFaturasJson.length,
+                    itemCount: (listFaturasJson == null)? 0 : listFaturasJson.length,
                     separatorBuilder: (_, index) => SizedBox(height: 10),
                     itemBuilder: (_, index) {
                       final faturaJson = listFaturasJson[index];
