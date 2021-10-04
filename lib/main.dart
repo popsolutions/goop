@@ -81,7 +81,8 @@ class _MyAppState extends State<MyApp> {
             ),
             splashColor: goopColors.redSplash,
             scaffoldBackgroundColor: goopColors.white,
-            appBarTheme: AppBarTheme(elevation: 0),
+            appBarTheme:
+                AppBarTheme(elevation: 0, backgroundColor: Colors.white),
             inputDecorationTheme: InputDecorationTheme(
               filled: true,
               contentPadding: EdgeInsets.only(

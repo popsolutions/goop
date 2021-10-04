@@ -48,10 +48,10 @@ class _LoginPageState extends StateGoop<LoginPage> {
 
   @override
   void didChangeDependencies() {
-    ServiceNotifier serviceNotifier = Provider.of<ServiceNotifier>(context, listen: false);
+    ServiceNotifier serviceNotifier =
+        Provider.of<ServiceNotifier>(context, listen: false);
     _authenticationController = serviceNotifier.authenticationController;
-    if (!didChangeDependenciesLoad)
-      restaurePersistingLogin();
+    if (!didChangeDependenciesLoad) restaurePersistingLogin();
 
     super.didChangeDependencies();
   }
@@ -84,13 +84,11 @@ class _LoginPageState extends StateGoop<LoginPage> {
     try {
       String s = Crypto.crypt(_loginController.login);
 
-      if (s != prefsGoop.getString('key1'))
-        prefsGoop.setString('key1', s);
+      if (s != prefsGoop.getString('key1')) prefsGoop.setString('key1', s);
 
       s = Crypto.crypt(_loginController.password);
 
-      if (s != prefsGoop.getString('key2'))
-        prefsGoop.setString('key2', s);
+      if (s != prefsGoop.getString('key2')) prefsGoop.setString('key2', s);
     } catch (e) {}
 
     await dialogProcess(() async {
@@ -114,7 +112,8 @@ class _LoginPageState extends StateGoop<LoginPage> {
           _loginController.login = Crypto.decrypt(prefsGoop.getString('key1'));
 
         if ((prefsGoop.getString('key2') ?? '') != '')
-        _loginController.password = Crypto.decrypt(prefsGoop.getString('key2'));
+          _loginController.password =
+              Crypto.decrypt(prefsGoop.getString('key2'));
       }
     } catch (e) {}
   }
@@ -153,21 +152,22 @@ class _LoginPageState extends StateGoop<LoginPage> {
                     onChanged: (e) => _loginController.password = e,
                     obscureText: true,
                   ),
-                  // TextButton(
-                  //   child: Text(
-                  //     'Esqueci minha senha',
-                  //     style: TextStyle(
-                  //       fontSize: 16,
-                  //       decoration: TextDecoration.underline,
-                  //       color: goopColors.darkBlue,
-                  //     ),
-                  //   ),
-                  //   onPressed: () {
-                  //     navigatorPushNamed(
-                  //       Routes.recover_password,
-                  //     );
-                  //   },
-                  // ),
+                  TextButton(
+                    child: Text(
+                      'Esqueci minha senha',
+                      style: TextStyle(
+                        fontSize: 16,
+                        decoration: TextDecoration.underline,
+                        color: goopColors.darkBlue,
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        Routes.recover_password,
+                      );
+                    },
+                  ),
                   Observer(
                     builder: (_) {
                       return GoopButton(
